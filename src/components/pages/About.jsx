@@ -1,6 +1,7 @@
 import React from "react";
-import "./About.css";
+import "../../style/About.css";
 import { Button, TextField, Grid } from "@mui/material";
+import { Link } from "react-router-dom";
 
 const About = () => {
   return (
@@ -90,9 +91,11 @@ const About = () => {
           <p>750+</p>
         </div>
       </div>
-      <Button type="submit" variant="contained" sx={{ mt: 3, mb: 2 }}>
-        Next
-      </Button>
+      <Link href="/">
+        <Button variant="contained" sx={{ mt: 3, mb: 2 }}>
+          Next
+        </Button>
+      </Link>
     </>
   );
 };

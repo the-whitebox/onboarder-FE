@@ -6,6 +6,8 @@ import ForgotPassword from "./components/pages/ForgotPassword";
 import ResetPassword from "./components/pages/ResetPassword";
 import Welcome from "./components/pages/Welcome";
 import About from "./components/pages/About";
+import Step2 from "./components/pages/Step2";
+import Step3 from "./components/pages/Step3";
 
 function App() {
   return (
@@ -17,6 +19,8 @@ function App() {
         <Route path="/resetpassword" element={<ResetPassword />} />
         <Route path="/welcome" element={<Welcome />} />
         <Route path="/about" element={<About />} />
+        <Route path="/step2" element={<Step2 />} />
+        <Route path="/step3" element={<Step3 />} />
       </Routes>
     </BrowserRouter>
   );
