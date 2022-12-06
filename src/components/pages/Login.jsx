@@ -1,5 +1,5 @@
 import * as React from "react";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -17,15 +17,9 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 const theme = createTheme();
 
 export default function SignIn() {
-  const initialValues = { email: "", password: "" };
-  const [formValues, setFormValues] = useState(initialValues);
-  const [formErrors, setFormErrors] = useState({});
-  const [isSubmit, setIsSubmit] = useState(false);
+  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState("");
 
-  const handleChange = (e) => {
-    const { email, value } = e.target;
-    setFormValues({ ...formValues, [email]: value });
-  };
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
@@ -33,28 +27,21 @@ export default function SignIn() {
       email: data.get("email"),
       password: data.get("password"),
     });
-    setFormErrors(validate(formValues));
-    setIsSubmit(true);
   };
-
-  useEffect(() => {
-    if (Object.keys(formErrors).length === 0 && isSubmit) {
-      console.log(formValues);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [formErrors]);
-
-  const validate = (values) => {
-    const errors = {};
-    const regex = "^[a-zA-Z0-9._:$!%-]+@[a-zA-Z0-9.-]+.[a-zA-Z]$";
-    if (!values.email) {
-      errors.email = "Email is required!";
-    }
-    if (!values.password) {
-      errors.email = "Password is required!";
-    }
-    return errors;
-  };
+  async function logIn() {
+    console.warn(email, password);
+    let item = { email, password };
+    let result = await fetch("http://192.168.10.20:8000/api/auth/login/", {
+      method: "POST",
+      body: JSON.stringify(item),
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+    });
+    result = await result.json();
+    localStorage.setItem(JSON.stringify(result));
+  }
 
   return (
     <ThemeProvider theme={theme}>
@@ -88,7 +75,7 @@ export default function SignIn() {
               label="Email Address"
               name="email"
               autoFocus
-              onChange={handleChange}
+              onChange={(e) => setEmail(e.target.value)}
             />
             <TextField
               margin="normal"
@@ -99,12 +86,14 @@ export default function SignIn() {
               type="password"
               id="password"
               autoComplete="current-password"
+              onChange={(e) => setPassword(e.target.value)}
             />
             <FormControlLabel
               control={<Checkbox value="remember" color="primary" />}
               label="Remember me"
             />
             <Button
+              onClick={logIn}
               type="submit"
               fullWidth
               variant="contained"
