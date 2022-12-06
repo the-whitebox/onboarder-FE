@@ -91,7 +91,7 @@ const About = () => {
           <p>750+</p>
         </div>
       </div>
-      <Link href="/">
+      <Link to="/step2">
         <Button variant="contained" sx={{ mt: 3, mb: 2 }}>
           Next
         </Button>

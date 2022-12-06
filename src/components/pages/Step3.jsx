@@ -73,7 +73,7 @@ const Step3 = () => {
             <p>Other</p>
           </div>
         </div>
-        <Link href="/">
+        <Link to="/">
           <Button variant="contained" sx={{ mt: 3, mb: 2 }}>
             Create business
           </Button>

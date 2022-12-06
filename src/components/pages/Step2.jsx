@@ -81,7 +81,7 @@ const Step2 = () => {
             </div>
           </div>
         </div>
-        <Link href="/">
+        <Link to="/step3">
           <Button variant="contained" sx={{ mt: 3, mb: 2 }}>
             Next
           </Button>
