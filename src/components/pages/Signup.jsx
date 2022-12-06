@@ -10,18 +10,40 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
+import { useState } from "react";
 
 const theme = createTheme();
 
 export default function SignUp() {
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     console.log({
       email: data.get("email"),
-      password: data.get("password"),
     });
   };
+
+  async function signUp() {
+    let item = { name, email };
+    console.warn(item);
+
+    let result = await fetch(
+      "http://192.168.10.20:8000/api/auth/registration/",
+      {
+        method: "POST",
+        body: JSON.stringify(item),
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+      }
+    );
+    result = await result.json();
+    console.warn("result", result);
+  }
 
   return (
     <ThemeProvider theme={theme}>
@@ -52,11 +74,13 @@ export default function SignUp() {
                 <TextField
                   autoComplete="given-name"
                   name="firstName"
+                  value={name}
                   required
                   fullWidth
                   id="firstName"
                   label="First Name"
                   autoFocus
+                  onChange={(e) => setName(e.target.value)}
                 />
               </Grid>
               <Grid item xs={12}>
@@ -64,17 +88,23 @@ export default function SignUp() {
                   required
                   fullWidth
                   id="email"
+                  value={email}
                   label="Email Address"
                   name="email"
                   autoComplete="email"
+                  onChange={(e) => setEmail(e.target.value)}
                 />
               </Grid>
             </Grid>
-            <Link href="/welcome">
-              <Button fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>
-                Get Started
-              </Button>
-            </Link>
+
+            <Button
+              onClick={signUp}
+              fullWidth
+              variant="contained"
+              sx={{ mt: 3, mb: 2 }}
+            >
+              Get Started
+            </Button>
             <Button variant="contained" sx={{ mt: 0, mb: 2, mr: 2 }}>
               Apple
             </Button>
