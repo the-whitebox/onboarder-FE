@@ -109,7 +109,7 @@ export default function SignUp() {
               Apple
             </Button>
             <Button variant="contained" sx={{ mt: 0, mb: 2 }}>
-              Xerox
+              Xero
             </Button>
             <Grid container justifyContent="flex-end">
               <Grid item>

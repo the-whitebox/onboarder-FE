@@ -8,6 +8,7 @@ import Welcome from "./components/pages/Welcome";
 import About from "./components/pages/About";
 import Step2 from "./components/pages/Step2";
 import Step3 from "./components/pages/Step3";
+import People from "./components/pages/People";
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
         <Route path="/about" element={<About />} />
         <Route path="/step2" element={<Step2 />} />
         <Route path="/step3" element={<Step3 />} />
+        <Route path="/people" element={<People />}></Route>
       </Routes>
     </BrowserRouter>
   );
