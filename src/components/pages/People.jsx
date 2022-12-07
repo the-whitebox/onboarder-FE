@@ -1,65 +1,86 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
+import { Table } from "antd";
 import { NavLink } from "react-router-dom";
-import { Input, Table } from "antd";
+
 import "../../style/People.css";
 
 const People = () => {
-  const dataSource = [
-    {
-      key: 1,
-      name: "Asher Muneer",
-      access: "Supervisor",
-      location: "Whitebox2",
-      status: "employed",
-      email: "asher.munir@whitebox.com",
-      mobile: "0123123123",
-    },
-    {
-      key: 1,
-      name: "Asif",
-      access: "Advisor",
-      location: "Whitebox2",
-      status: "employed",
-      email: "asif.bashir@whitebox.com",
-      mobile: "0123123123",
-    },
-    {
-      key: 1,
-      name: "Talha",
-      access: "System Adminestrator",
-      location: "Whitebox2",
-      status: "employed",
-      email: "talha.tariq@whitebox.com",
-      mobile: "0123123123",
-    },
-  ];
-
   const columns = [
     {
       title: "Name",
       dataIndex: "name",
+      filters: [
+        {
+          text: "Joe",
+          value: "Joe",
+        },
+        {
+          text: "Category 1",
+          value: "Category 1",
+        },
+        {
+          text: "Category 2",
+          value: "Category 2",
+        },
+      ],
+      filterMode: "tree",
+      filterSearch: true,
+      onFilter: (value, record) => record.name.startsWith(value),
+      width: "30%",
     },
     {
-      title: "Access",
-      dataIndex: "access",
+      title: "Age",
+      dataIndex: "age",
+      sorter: (a, b) => a.age - b.age,
     },
     {
-      title: "Main Location",
-      dataIndex: "main location",
-    },
-    {
-      title: "Status",
-      dataIndex: "status",
-    },
-    {
-      title: "Email",
-      dataIndex: "email",
-    },
-    {
-      title: "Mobile",
-      dataIndex: "mobile",
+      title: "Address",
+      dataIndex: "address",
+      filters: [
+        {
+          text: "London",
+          value: "London",
+        },
+        {
+          text: "New York",
+          value: "New York",
+        },
+      ],
+      onFilter: (value, record) => record.address.startsWith(value),
+      filterSearch: true,
+      width: "40%",
     },
   ];
+  const data = [
+    {
+      key: "1",
+      name: "John Brown",
+      age: 32,
+      address: "New York No. 1 Lake Park",
+    },
+    {
+      key: "2",
+      name: "Jim Green",
+      age: 42,
+      address: "London No. 1 Lake Park",
+    },
+    {
+      key: "3",
+      name: "Joe Black",
+      age: 32,
+      address: "Sidney No. 1 Lake Park",
+    },
+    {
+      key: "4",
+      name: "Jim Red",
+      age: 32,
+      address: "London No. 2 Lake Park",
+    },
+  ];
+  const onChange = (pagination, filters, sorter, extra) => {
+    console.log("params", pagination, filters, sorter, extra);
+  };
+
   return (
     <>
       <div className="header">
@@ -77,10 +98,11 @@ const People = () => {
           </ul>
         </NavLink>
       </div>
-      <div className="table">
-        <Input.Search placeholder="Searh here..." />
-        <Table columns={columns} dataSource={dataSource}></Table>
+      <div>
+        <h1>People</h1>
+        <p>Showing 3 out of 3 users</p>
       </div>
+      <Table columns={columns} dataSource={data} onChange={onChange} />
     </>
   );
 };
