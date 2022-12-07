@@ -13,6 +13,7 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
+import PeopleProfileModal from "../feature/PeopleProfileModal";
 
 const theme = createTheme();
 
@@ -115,6 +116,7 @@ export default function SignIn() {
             </Grid>
           </Box>
         </Box>
+        <PeopleProfileModal />
       </Container>
     </ThemeProvider>
   );
