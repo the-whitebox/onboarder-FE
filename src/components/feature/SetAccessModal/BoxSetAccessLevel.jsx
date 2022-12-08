@@ -1,12 +1,13 @@
 import * as React from "react";
 import Box from "@mui/material/Box";
-import Modal from "@mui/material/Modal";
 import Button from "@mui/material/Button";
 import { useTheme } from "@mui/material/styles";
 import OutlinedInput from "@mui/material/OutlinedInput";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
+import { useState } from "react";
+import Modal from "react-bootstrap/Modal";
 import { styled } from "@mui/material/styles";
 
 const ITEM_HEIGHT = 48;
@@ -21,12 +22,11 @@ const MenuProps = {
 };
 
 const names = [
-  "2 days per week",
-  "24/7",
-  "CA Overtime 40hrs per week, 8hrs per day, max 6 days per week",
-  "Max 20 hours per week",
-  "Normal 38 hours per week",
-  "Standard 40 hours, 8 hours per day",
+  "System Administrator",
+  "Supervisor",
+  "Employee",
+  "Location Manager",
+  "Advisor",
 ];
 
 const style = {
@@ -55,14 +55,11 @@ const parentModal = {
   m: 4,
 };
 
-export default function SetStressProfile() {
-  const [open, setOpen] = React.useState(false);
-  const handleOpen = () => {
-    setOpen(true);
-  };
-  const handleClose = () => {
-    setOpen(false);
-  };
+export default function BoxSetAccessLevel() {
+  const [show, setShow] = useState(false);
+
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
 
   function getStyles(name, personName, theme) {
     return {
@@ -88,23 +85,20 @@ export default function SetStressProfile() {
 
   return (
     <React.Fragment>
-      <Button onClick={handleOpen}>Open Access Modal</Button>
+      <Button onClick={handleShow}>Open Access Modal</Button>
       <Modal
-        hideBackdrop
-        open={open}
-        onClose={handleClose}
+        backdrop="static"
+        show={show}
+        onHide={handleClose}
         aria-labelledby="child-modal-title"
         aria-describedby="child-modal-description"
       >
-        <Box sx={{ ...style, width: 600 }}>
-          <h2 id="access-modal-title">Set Stress Profile</h2>
+        <Box sx={{ ...style, width: 300 }}>
+          <h2 id="child-modal-title">Set Access Level</h2>
           <div>
             <p>Asher Muneer</p>
-            <p>
-              Stress Profiles are scheduling rules such as minimum and maximum
-              hours. Use our templates below or create your own
-            </p>
-            <FormControl sx={{ m: 1, width: 550, mt: 3 }}>
+            <p>Access level</p>
+            <FormControl sx={{ m: 1, width: 300, mt: 3 }}>
               <Select
                 multiple
                 displayEmpty
@@ -133,7 +127,7 @@ export default function SetStressProfile() {
               </Select>
             </FormControl>
           </div>
-          <Button onClick={handleClose}>Save</Button>
+          <Button onClick={handleClose}>Update</Button>
         </Box>
       </Modal>
     </React.Fragment>

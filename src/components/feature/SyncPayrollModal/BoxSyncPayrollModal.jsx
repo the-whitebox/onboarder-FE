@@ -1,7 +1,8 @@
 import * as React from "react";
 import Box from "@mui/material/Box";
-import Modal from "@mui/material/Modal";
+import Modal from "react-bootstrap/Modal";
 import Button from "@mui/material/Button";
+import { useState } from "react";
 
 import { styled } from "@mui/material/styles";
 
@@ -20,21 +21,18 @@ const style = {
 };
 
 export default function SyncPayroll() {
-  const [open, setOpen] = React.useState(false);
-  const handleOpen = () => {
-    setOpen(true);
-  };
-  const handleClose = () => {
-    setOpen(false);
-  };
+  const [show, setShow] = useState(false);
+
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
 
   return (
     <React.Fragment>
-      <Button onClick={handleOpen}>Open Access Modal</Button>
+      <Button onClick={handleShow}>Open Sync Modal</Button>
       <Modal
-        hideBackdrop
-        open={open}
-        onClose={handleClose}
+        backdrop="static"
+        show={show}
+        onHide={handleClose}
         aria-labelledby="child-modal-title"
         aria-describedby="child-modal-description"
       >

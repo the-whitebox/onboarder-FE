@@ -9,9 +9,10 @@ import About from "./components/pages/About";
 import Step2 from "./components/pages/Step2";
 import Step3 from "./components/pages/Step3";
 import People from "./components/pages/People";
-import SetAccessLevel from "./components/feature/SetAccessLevel";
-import SetStressProfile from "./components/feature/SetStressProfile";
-import SyncPayroll from "./components/feature/SyncPayroll";
+import SetAccessLevel from "./components/feature/SetAccessModal/BoxSetAccessLevel";
+import SetStressModal from "./components/feature/SetStressModal/SetStressModal";
+import SyncPayrollModal from "./components/feature/SyncPayrollModal/SyncPayrollModal";
+import Main from "./components/feature/SetAccessModal/SetAccessModal";
 
 function App() {
   return (
@@ -27,8 +28,9 @@ function App() {
         <Route path="/step3" element={<Step3 />} />
         <Route path="/people" element={<People />}></Route>
         <Route path="/set" element={<SetAccessLevel />}></Route>
-        <Route path="/stress" element={<SetStressProfile />}></Route>
-        <Route path="/sync" element={<SyncPayroll />}></Route>
+        <Route path="/stress" element={<SetStressModal />}></Route>
+        <Route path="/sync" element={<SyncPayrollModal />}></Route>
+        <Route path="/main" element={<Main />}></Route>
       </Routes>
     </BrowserRouter>
   );

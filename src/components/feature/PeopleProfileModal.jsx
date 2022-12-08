@@ -86,7 +86,6 @@ export default function NestedModal() {
       <Button onClick={handleOpen}>People Modal</Button>
       <Modal
         open={open}
-        onClose={handleClose}
         aria-labelledby="parent-modal-title"
         aria-describedby="parent-modal-description"
       >
