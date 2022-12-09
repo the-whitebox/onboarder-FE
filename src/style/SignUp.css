@@ -1,0 +1,38 @@
+.signUpBox {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.signup-text-field {
+  width: 65%;
+}
+
+.uproster-font {
+  @import url("https://fonts.googleapis.com/css2?family=Lora:wght@400;500;600;700&display=swap");
+  font-family: "Lora";
+  font-weight: bold;
+}
+.SignUplinks {
+  text-decoration: none !important;
+  color: #332a60 !important;
+  font-size: 10px !important;
+  cursor: pointer !important;
+}
+.iconOfSignUpLink {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  align-items: center;
+  width: 90px;
+}
+
+.SignUp-options {
+  display: flex !important;
+  flex-direction: row !important;
+  justify-content: space-evenly;
+  align-items: center;
+  height: 65px;
+  margin-top: 01px;
+  width: 65%;
+}

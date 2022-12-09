@@ -12,8 +12,17 @@ import People from "./components/pages/People";
 import SetAccessLevel from "./components/feature/SetAccessLevel";
 import SetStressProfile from "./components/feature/SetStressProfile";
 import SyncPayroll from "./components/feature/SyncPayroll";
+import WebFont from "webfontloader";
+import { useEffect } from "react";
 
 function App() {
+  useEffect(() => {
+    WebFont.load({
+      google: {
+        families: ["Open Sans"],
+      },
+    });
+  }, []);
   return (
     <BrowserRouter>
       <Routes>
