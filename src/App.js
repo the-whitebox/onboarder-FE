@@ -6,14 +6,24 @@ import ForgotPassword from "./components/pages/ForgotPassword";
 import ResetPassword from "./components/pages/ResetPassword";
 import Welcome from "./components/pages/Welcome";
 import About from "./components/pages/About";
+import Step1 from "./components/pages/Step1";
 import Step2 from "./components/pages/Step2";
 import Step3 from "./components/pages/Step3";
 import People from "./components/pages/People";
 import SetAccessLevel from "./components/feature/SetAccessLevel";
 import SetStressProfile from "./components/feature/SetStressProfile";
 import SyncPayroll from "./components/feature/SyncPayroll";
+import WebFont from "webfontloader";
+import { useEffect } from "react";
 
 function App() {
+  useEffect(() => {
+    WebFont.load({
+      google: {
+        families: ["Open Sans"],
+      },
+    });
+  }, []);
   return (
     <BrowserRouter>
       <Routes>
@@ -23,6 +33,7 @@ function App() {
         <Route path="/resetpassword" element={<ResetPassword />} />
         <Route path="/welcome" element={<Welcome />} />
         <Route path="/about" element={<About />} />
+        <Route path="/step1" element={<Step1 />} />
         <Route path="/step2" element={<Step2 />} />
         <Route path="/step3" element={<Step3 />} />
         <Route path="/people" element={<People />}></Route>

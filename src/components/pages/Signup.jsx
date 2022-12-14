@@ -1,126 +1,149 @@
 import * as React from "react";
-import Avatar from "@mui/material/Avatar";
-import Button from "@mui/material/Button";
-import CssBaseline from "@mui/material/CssBaseline";
-import TextField from "@mui/material/TextField";
-import Link from "@mui/material/Link";
-import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
-import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
+import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
-import Container from "@mui/material/Container";
-import { createTheme, ThemeProvider } from "@mui/material/styles";
-import { useState } from "react";
+import Avatar from "@mui/material/Avatar";
+import TextField from "@mui/material/TextField";
+import Grid from "@mui/material/Grid";
+import Checkbox from "@mui/material/Checkbox";
+import "../../style/SignUp.css";
+import Link from "@mui/material/Link";
+import facebookIcon from "../../assets/icons/facebook.png";
+import googleIcon from "../../assets/icons/google.png";
 
-const theme = createTheme();
+// import "lora";
 
-export default function SignUp() {
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
+const style = {
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  width: 650,
+  bgcolor: "background.paper",
+  borderRadius: "23px",
+  boxShadow: 24,
+  p: 4,
+};
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get("email"),
-    });
-  };
+const label = { inputProps: { "aria-label": "Checkbox" } };
 
-  async function signUp() {
-    let item = { name, email };
-    console.warn(item);
-
-    let result = await fetch(
-      "http://192.168.10.20:8000/api/auth/registration/",
-      {
-        method: "POST",
-        body: JSON.stringify(item),
-        headers: {
-          "Content-Type": "application/json",
-          Accept: "application/json",
-        },
-      }
-    );
-    result = await result.json();
-    console.warn("result", result);
-  }
-
+export default function BasicModal() {
   return (
-    <ThemeProvider theme={theme}>
-      <Container component="main" maxWidth="xs">
-        <CssBaseline />
-        <Box
+    <div>
+      <Box sx={style} className="signUpBox">
+        <Typography
+          id="modal-modal-title"
+          variant="h4"
+          component="h2"
+          className="uproster-font"
+        >
+          Try UROSTERS for free
+        </Typography>
+        <Typography
+          id="modal-modal-description"
           sx={{
-            marginTop: 8,
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
+            mt: 2,
+            fontSize: 14,
           }}
         >
-          <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
-            <LockOutlinedIcon />
-          </Avatar>
-          <Typography component="h1" variant="h5">
-            Sign up
-          </Typography>
-          <Box
-            component="form"
-            noValidate
-            onSubmit={handleSubmit}
-            sx={{ mt: 3 }}
-          >
-            <Grid container spacing={2}>
-              <Grid item xs={12}>
-                <TextField
-                  autoComplete="given-name"
-                  name="firstName"
-                  value={name}
-                  required
-                  fullWidth
-                  id="firstName"
-                  label="First Name"
-                  autoFocus
-                  onChange={(e) => setName(e.target.value)}
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  required
-                  fullWidth
-                  id="email"
-                  value={email}
-                  label="Email Address"
-                  name="email"
-                  autoComplete="email"
-                  onChange={(e) => setEmail(e.target.value)}
-                />
-              </Grid>
-            </Grid>
+          Get started in minutes, no credit card required
+        </Typography>
+        <TextField
+          sx={{
+            width: "100%",
+            mt: 3,
+          }}
+          id="nameForSignup"
+          label="Name"
+          variant="outlined"
+          className="signup-text-field"
+        />
+        <TextField
+          sx={{
+            width: "100%",
+            mt: 2,
+          }}
+          id="emailForSignup"
+          label="Work Email"
+          variant="outlined"
+          className="signup-text-field"
+        />
+        <Grid
+          sx={{
+            display: "flex",
+            direction: "row",
+            alignItems: "center",
+            justifyContent: "start",
+            width: "65%",
+          }}
+        >
+          <Checkbox {...label} />
 
-            <Button
-              onClick={signUp}
-              fullWidth
-              variant="contained"
-              sx={{ mt: 3, mb: 2 }}
+          <Typography
+            sx={{
+              fontSize: "9px",
+            }}
+          >
+            I agree to the terms of the Subscription Agreement & Privacy Policy
+          </Typography>
+        </Grid>
+
+        <Button
+          type="submit"
+          variant="contained"
+          className="btn-forgetPwd btn-login"
+          sx={{
+            mt: 4,
+            width: "65%",
+            justifyContent: "center",
+          }}
+        >
+          Get Started
+        </Button>
+        <Grid container className="SignUp-options">
+          <Typography
+            sx={{
+              fontSize: "9px",
+            }}
+          >
+            OR SIGN UP WITH
+          </Typography>
+          <Grid item>
+            <Link
+              href="#"
+              variant="body2"
+              className="SignUplinks iconOfSignUpLink"
             >
-              Get Started
-            </Button>
-            <Button variant="contained" sx={{ mt: 0, mb: 2, mr: 2 }}>
-              Apple
-            </Button>
-            <Button variant="contained" sx={{ mt: 0, mb: 2 }}>
-              Xero
-            </Button>
-            <Grid container justifyContent="flex-end">
-              <Grid item>
-                <Link href="/" variant="body2">
-                  Already have an account? Sign in
-                </Link>
-              </Grid>
-            </Grid>
-          </Box>
-        </Box>
-      </Container>
-    </ThemeProvider>
+              <Avatar
+                src={googleIcon}
+                aria-label="GOOGLE"
+                sx={{
+                  height: "15px",
+                  width: "15px",
+                }}
+              />
+              {"GOOGLE"}
+            </Link>
+          </Grid>
+          <Grid item>
+            <Link
+              href="#"
+              variant="body2"
+              className="SignUplinks iconOfSignUpLink"
+            >
+              <Avatar
+                src={facebookIcon}
+                aria-label="FACEBOOK"
+                sx={{
+                  height: "15px",
+                  width: "15px",
+                }}
+              />
+              {"FACEBOOK"}
+            </Link>
+          </Grid>
+        </Grid>
+      </Box>
+    </div>
   );
 }
