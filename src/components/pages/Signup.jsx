@@ -11,6 +11,8 @@ import Link from "@mui/material/Link";
 import facebookIcon from "../../assets/icons/facebook.png";
 import googleIcon from "../../assets/icons/google.png";
 
+// import "lora";
+
 const style = {
   position: "absolute",
   top: "50%",

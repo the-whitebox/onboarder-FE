@@ -17,13 +17,14 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import "../../style/Login.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import AppleIcon from "@mui/icons-material/Apple";
-import GoogleIcon from "@mui/icons-material/Google";
+import googleIcon from "../../assets/icons/google.png";
 import ManWithGraphs from "../../assets/images/man-with-graphs.png";
 import { CardMedia } from "@mui/material";
 import Card from "@mui/material/Card";
 import Modal from "@mui/material/Modal";
 import ForgetPasswordModalBody from "./ForgotPassword";
 import SignupModalBody from "./Signup";
+import WelcomeModalBody from "./Welcome";
 
 const theme = createTheme();
 
@@ -44,6 +45,15 @@ export default function SignInSide() {
   const handleOpenSignup = () => setOpenSignup(true);
   const handleCloseSignup = () => setOpenSignup(false);
 
+  const [openWelcome, setOpenWelcome] = React.useState(false);
+  const handleOpenWelcome = () => {
+    setOpenWelcome(true);
+    setTimeout(() => {
+      setOpenWelcome(false);
+    }, 8000);
+  };
+  // const handleCloseWelcome = () => setOpenWelcome(false);
+
   return (
     <ThemeProvider theme={theme}>
       <Modal
@@ -54,6 +64,7 @@ export default function SignInSide() {
       >
         <ForgetPasswordModalBody />
       </Modal>
+
       <Modal
         open={openSignup}
         onClose={handleCloseSignup}
@@ -61,6 +72,14 @@ export default function SignInSide() {
         aria-describedby="modal-modal-description"
       >
         <SignupModalBody />
+      </Modal>
+
+      <Modal
+        open={openWelcome}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <WelcomeModalBody />
       </Modal>
       <Grid container component="main" sx={{ height: "100vh" }}>
         <CssBaseline />
@@ -186,7 +205,14 @@ export default function SignInSide() {
               <Grid container className="sign-in-options">
                 <Grid item>
                   <Link href="#" variant="body2" className="links iconOfLink">
-                    <GoogleIcon />
+                    <Avatar
+                      src={googleIcon}
+                      aria-label="GOOGLE"
+                      sx={{
+                        height: "20px",
+                        width: "20px",
+                      }}
+                    />
                     {"Sign in with Google"}
                   </Link>
                 </Grid>

@@ -9,9 +9,10 @@
 }
 
 .uproster-font {
-  @import url("https://fonts.googleapis.com/css2?family=Lora:wght@400;500;600;700&display=swap");
-  font-family: "Lora";
-  font-weight: bold;
+  /* @import url("https://fonts.googleapis.com/css2?family=Lora:wght@400;500;600;700&display=swap"); */
+  font-family: Lora !important;
+  font-weight: bold !important;
+  color: #332a60 !important;
 }
 .SignUplinks {
   text-decoration: none !important;

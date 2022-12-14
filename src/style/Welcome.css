@@ -22,3 +22,8 @@ h1 {
   margin: 10px;
   padding: 10px;
 }
+
+.lora-bold {
+  font-family: Lora !important;
+  font-weight: bold !important;
+}

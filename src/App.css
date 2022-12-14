@@ -36,3 +36,14 @@
     transform: rotate(360deg);
   }
 }
+@font-face {
+  font-family: "Lora";
+  src: local("Lora"),
+    url(./fonts/Lora/static/Lora-Regular.ttf) format("truetype");
+}
+
+@font-face {
+  font-family: "Lora";
+  font-weight: 900;
+  src: local("Lora"), url(./fonts/Lora/static/Lora-Bold.ttf) format("truetype");
+}
