@@ -25,17 +25,35 @@ import Modal from "@mui/material/Modal";
 import ForgetPasswordModalBody from "./ForgotPassword";
 import SignupModalBody from "./Signup";
 import WelcomeModalBody from "./Welcome";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const theme = createTheme();
 
 export default function SignInSide() {
-  const handleSubmit = (event) => {
+  const url = "http://192.168.100.149:8000/api/auth/login/";
+  const [email, setEmail] = React.useState("");
+  const [password, setPassword] = React.useState("");
+  const navigate = useNavigate();
+
+  const handleSubmit = async (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     console.log({
       email: data.get("email"),
       password: data.get("password"),
     });
+    try {
+      const resp = await axios
+        .post(url, { username: email, password: password })
+        .then((response) => {
+          console.log("Login API was hit succesfully");
+          navigate("/about");
+          // Navigate to Home Screen
+        });
+    } catch (error) {
+      console.log(error.response);
+    }
   };
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
@@ -163,6 +181,8 @@ export default function SignInSide() {
                 className="input-email"
                 autoFocus
                 iconEnd={<AlternateEmailOutlinedIcon />}
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
               />
               <IconTextField
                 label="Password"
@@ -174,6 +194,8 @@ export default function SignInSide() {
                 id="password"
                 className="input-password"
                 iconEnd={<LockOutlinedIcon />}
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
               />
               <Grid
                 item
@@ -199,6 +221,7 @@ export default function SignInSide() {
                   width: "100%",
                   justifyContent: "center",
                 }}
+                onSubmit={handleSubmit}
               >
                 Login
               </Button>

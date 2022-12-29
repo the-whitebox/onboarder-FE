@@ -4,6 +4,9 @@ import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import TextField from "@mui/material/TextField";
 import Grid from "@mui/material/Grid";
+import { useNavigate } from "react-router-dom";
+
+import axios from "axios";
 
 const style = {
   position: "absolute",
@@ -18,6 +21,23 @@ const style = {
 };
 
 export default function BasicModal() {
+  const [email, setEmail] = React.useState("");
+  const navigate = useNavigate();
+  const sendEmail = () => {
+    // console.log(email);
+    axios
+      .post("http://192.168.100.149:8000/api/auth/password/reset/", {
+        email: email,
+      })
+      .then((response) => {
+        console.log(response.status);
+        if (response.status === 200) {
+          console.log("I am inside status 200 condition");
+          navigate("/home");
+        }
+      });
+  };
+
   return (
     <div>
       <Box sx={style}>
@@ -34,6 +54,7 @@ export default function BasicModal() {
           Alright, pop in your email address and we'll send you a link to reset
           your password.
         </Typography>
+
         <TextField
           sx={{
             width: "100%",
@@ -42,6 +63,8 @@ export default function BasicModal() {
           id="emailForForgotPwd"
           label="Email"
           variant="outlined"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
         />
         <Grid
           sx={{
@@ -58,6 +81,7 @@ export default function BasicModal() {
               width: "30%",
               justifyContent: "center",
             }}
+            onClick={sendEmail}
           >
             Let's do this
           </Button>

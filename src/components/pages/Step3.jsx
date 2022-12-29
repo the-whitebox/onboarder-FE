@@ -27,6 +27,9 @@ import BlogIcon from "../../assets/icons/blog-icon.png";
 import AdIcon from "../../assets/icons/ad-icon.png";
 import InternetIcon from "../../assets/icons/internet-icon.png";
 import OthersIcon from "../../assets/icons/others-icon.png";
+import { useLocation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 const style = {
   position: "absolute",
@@ -41,7 +44,56 @@ const style = {
 };
 
 export default function BasicModal() {
+  const url = "http://192.168.100.149:8000/api/business/";
+  const [state, setState] = React.useState({ data: "" });
+  const [process, setProcess] = React.useState("");
+  const [hear, setHear] = React.useState("");
+
+  const navigate = useNavigate();
   const theme = useTheme();
+  const location = useLocation();
+
+  const createBusiness = () => {
+    console.log("Inside createBusiness");
+    console.log(location.state, process, hear);
+    try {
+      axios
+        .post(url, {
+          business_name: location.state.business,
+          mobile_number: location.state.mobile,
+          business_type: location.state.businessType,
+          industry_type: location.state.industry,
+          employess_range: null,
+          joining_purpose: location.state.purpose,
+          payroll_type: location.state.payroll,
+          pay_proces_improvement_duration: process,
+          how_you_hear: hear,
+        })
+        .then((response) => {
+          console.log("Signup API was hit succesfully");
+
+          // Navigate to Home Screen
+        });
+    } catch (error) {
+      console.log(error.response.data);
+    }
+
+    console.log(process, hear);
+    // alert(process + hear);
+
+    navigate("/about", {
+      state: {
+        business: location.state.business,
+        mobile: location.state.mobile,
+        businessType: location.state.businesstype,
+        industry: location.state.industry,
+        purpose: location.state.purpose,
+        payroll: location.state.payroll,
+        process: process,
+        hear: hear,
+      },
+    });
+  };
 
   const icons = [
     PastIcon,
@@ -162,6 +214,7 @@ export default function BasicModal() {
                     overlay
                     size="lg"
                     sx={{ flexDirection: "row", gap: 1.5, mt: 2 }}
+                    onChange={(e) => setProcess(e.target.value)}
                   >
                     {[
                       "As soon as possible",
@@ -229,87 +282,112 @@ export default function BasicModal() {
             >
               How did you hear about UROSTER?
             </Typography>
-            {/* <Grid container spacing={2} columns={{md:12}} sx={{ mt: 1, display: "flex" }}> */}
-            <RadioGroup
-              aria-label="platform"
-              defaultValue="Website"
-              overlay
-              columns={{ md: 12 }}
-              name="platform"
+            <Grid
+              item
+              md={12}
               sx={{
-                mt: 2,
+                display: "flex",
                 flexDirection: "row",
-                width: "1174px",
-                gap: 2,
-                [`& .${radioClasses.checked}`]: {
-                  [`& .${radioClasses.action}`]: {
-                    inset: -1,
-                    border: "3px solid",
-                    borderColor: "primary.500",
-                  },
-                },
-                [`& .${radioClasses.radio}`]: {
-                  display: "contents",
-                  "& > svg": {
-                    zIndex: 2,
-                    position: "absolute",
-                    top: "-8px",
-                    right: "-8px",
-                    bgcolor: "background.body",
-                    borderRadius: "50%",
-                  },
-                },
+                justifyContent: "space-between",
+                alignItems: "center",
+                width: "100%",
               }}
             >
-              {[
-                "Using UROSTER in the past",
-                "Recommended from friend or colleague",
-                "Recommended from a business vendor",
-                "Read reviews or blog",
-                "Saw an ad about UROSTER",
-                "Searched the internet",
-                "Other",
-              ].map((value, idx) => (
-                <Sheet
-                  key={value}
-                  variant="outlined"
-                  md={3}
-                  sx={{
-                    borderRadius: "16px",
-                    bgcolor: "background.body",
-                    boxShadow: "sm",
-                    display: "flex",
-                    flexDirection: "column",
-                    alignItems: "flex-start",
-                    justifyContent: "center",
-                    gap: 1.5,
-                    p: 2,
-                    width: "228px",
-                    height: "170px",
-                  }}
-                >
-                  <Radio
-                    id={value}
-                    value={value}
-                    checkedIcon={<CheckCircleRoundedIcon />}
-                  />
-                  <Avatar
-                    variant="rounded"
-                    size="sm"
-                    src={icons[idx]}
-                    sx={{ height: "33.44px", width: "34.42px" }}
-                  />
-                  <FormLabel
-                    htmlFor={value}
-                    sx={{ fontSize: "16px", fontWeight: "semibold", mt: 1 }}
+              <RadioGroup
+                aria-label="platform"
+                defaultValue="Website"
+                overlay
+                size="lg"
+                name="platform"
+                sx={{
+                  mt: 2,
+                  display: "flex",
+                  flexWrap: "wrap",
+                  flexDirection: "row",
+                  width: "1000px",
+                  md: 12,
+                  lg: 12,
+                  gap: 2,
+                  [`& .${radioClasses.checked}`]: {
+                    [`& .${radioClasses.action}`]: {
+                      inset: -1,
+                      border: "3px solid",
+                      borderColor: "primary.500",
+                    },
+                  },
+                  [`& .${radioClasses.radio}`]: {
+                    display: "contents",
+                    "& > svg": {
+                      zIndex: 2,
+                      position: "absolute",
+                      top: "-8px",
+                      right: "-8px",
+                      bgcolor: "background.body",
+                      borderRadius: "50%",
+                    },
+                  },
+                }}
+                onChange={(e) => setHear(e.target.value)}
+              >
+                {[
+                  "Using UROSTER in the past",
+                  "Recommended from friend or colleague",
+                  "Recommended from a business vendor",
+                  "Read reviews or blog",
+                  "Saw an ad about UROSTER",
+                  "Searched the internet",
+                  "Other",
+                ].map((value, idx) => (
+                  <Sheet
+                    key={value}
+                    variant="outlined"
+                    md={3}
+                    sx={{
+                      borderRadius: "16px",
+                      bgcolor: "background.body",
+                      boxShadow: "sm",
+                      display: "flex",
+                      flexDirection: "column",
+                      alignItems: "flex-start",
+                      justifyContent: "center",
+
+                      gap: 1.5,
+                      p: 2,
+                      width: "120px",
+                      height: "120px",
+                    }}
                   >
-                    {value}
-                  </FormLabel>
-                </Sheet>
-              ))}
-            </RadioGroup>
+                    <Radio
+                      id={value}
+                      value={value}
+                      checkedIcon={<CheckCircleRoundedIcon />}
+                    />
+                    <Avatar
+                      variant="rounded"
+                      size="sm"
+                      src={icons[idx]}
+                      sx={{
+                        height: "33.44px",
+                        width: "34.42px",
+                      }}
+                    />
+                    <FormLabel
+                      htmlFor={value}
+                      sx={{
+                        fontSize: "16px",
+                        fontWeight: "semibold",
+                        minHeight: "30px",
+                        mt: 1,
+                      }}
+                    >
+                      {value}
+                    </FormLabel>
+                  </Sheet>
+                ))}
+              </RadioGroup>
+            </Grid>
             {/* </Grid> */}
-            <Link to="/step2">
+            <Link to="/step2" style={{ textDecoration: "none" }}>
               <Button
                 type="submit"
                 variant="contained"
@@ -321,6 +399,7 @@ export default function BasicModal() {
                   borderRadius: "10px",
                   justifyContent: "center",
                 }}
+                onClick={createBusiness}
               >
                 Create Business
               </Button>

@@ -10,7 +10,7 @@ import "../../style/SignUp.css";
 import Link from "@mui/material/Link";
 import facebookIcon from "../../assets/icons/facebook.png";
 import googleIcon from "../../assets/icons/google.png";
-
+import axios from "axios";
 // import "lora";
 
 const style = {
@@ -28,6 +28,30 @@ const style = {
 const label = { inputProps: { "aria-label": "Checkbox" } };
 
 export default function BasicModal() {
+  const url = "http://192.168.100.149:8000/api/auth/user/registration/";
+  const [username, setUserName] = React.useState("");
+  const [email, setEmail] = React.useState("");
+
+  const signUp = () => {
+    console.log("Inside signUp");
+    console.log(username, email, url);
+
+    try {
+      axios
+        .post(url, {
+          username: username,
+          email: email,
+        })
+        .then((response) => {
+          console.log("Signup API was hit succesfully");
+
+          // Navigate to Home Screen
+        });
+    } catch (error) {
+      console.log(error.response.data);
+    }
+  };
+
   return (
     <div>
       <Box sx={style} className="signUpBox">
@@ -57,6 +81,8 @@ export default function BasicModal() {
           label="Name"
           variant="outlined"
           className="signup-text-field"
+          value={username}
+          onChange={(e) => setUserName(e.target.value)}
         />
         <TextField
           sx={{
@@ -67,6 +93,8 @@ export default function BasicModal() {
           label="Work Email"
           variant="outlined"
           className="signup-text-field"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
         />
         <Grid
           sx={{
@@ -92,6 +120,7 @@ export default function BasicModal() {
           type="submit"
           variant="contained"
           className="btn-forgetPwd btn-login"
+          onClick={signUp}
           sx={{
             mt: 4,
             width: "65%",
