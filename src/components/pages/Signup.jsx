@@ -44,6 +44,7 @@ export default function BasicModal() {
         })
         .then((response) => {
           console.log("Signup API was hit succesfully");
+
           // Navigate to Home Screen
         });
     } catch (error) {

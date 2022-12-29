@@ -25,6 +25,7 @@ import Icon2 from "../../assets/icons/retail-icon.png";
 import Icon3 from "../../assets/icons/services-icon.png";
 import Icon4 from "../../assets/icons/charity-icon.png";
 import Icon5 from "../../assets/icons/others-icon.png";
+import { useNavigate } from "react-router-dom";
 
 const style = {
   position: "absolute",
@@ -39,12 +40,42 @@ const style = {
 };
 
 export default function BasicModal() {
+  const [state, setState] = React.useState({ data: "" });
+  const [business, setBusiness] = React.useState("");
+  const [mobile, setMobile] = React.useState("");
+  const [businesstype, setBusinesstype] = React.useState("");
+  const [industry, setIndustry] = React.useState("");
+
   const theme = useTheme();
   const [age, setAge] = React.useState("");
 
+  const navigate = useNavigate();
+
   const handleChange = (event) => {
-    setAge(event.target.value);
+    setState({ data: event.target.value });
   };
+
+  const toStep2 = () => {
+    console.log(mobile, business, businesstype, industry);
+    // alert(mobile + business + businesstype + industry);
+
+    navigate("/step2", {
+      state: {
+        business: business,
+        mobile: mobile,
+        businesstype: businesstype,
+        industry: industry,
+      },
+    });
+  };
+  // const changeState = () => {
+  //   // setState({
+  //   //   data: `state/props of parent component
+  //   // is send by onClick event to another component`,
+  //   // });
+
+  //   setBusiness
+  // };
 
   const icons = [Icon1, Icon2, Icon3, Icon4, Icon5];
 
@@ -141,6 +172,7 @@ export default function BasicModal() {
                 <TextField
                   id="business"
                   variant="outlined"
+                  onChange={(e) => setBusiness(e.target.value)}
                   sx={{
                     width: "90%",
                   }}
@@ -170,6 +202,7 @@ export default function BasicModal() {
                   sx={{
                     width: "90%",
                   }}
+                  onChange={(e) => setMobile(e.target.value)}
                 />
               </Grid>
             </Grid>
@@ -201,6 +234,7 @@ export default function BasicModal() {
                 name="platform"
                 sx={{
                   mt: 2,
+                  flexWrap: "wrap",
                   flexDirection: "row",
                   gap: 2,
                   [`& .${radioClasses.checked}`]: {
@@ -222,6 +256,7 @@ export default function BasicModal() {
                     },
                   },
                 }}
+                onChange={(e) => setBusinesstype(e.target.id)}
               >
                 {[
                   "Healthcare",
@@ -231,7 +266,7 @@ export default function BasicModal() {
                   "Other",
                 ].map((value, idx) => (
                   <Sheet
-                    key={value}
+                    key={idx}
                     variant="outlined"
                     sx={{
                       borderRadius: "md",
@@ -243,11 +278,12 @@ export default function BasicModal() {
                       justifyContent: "center",
                       gap: 1.5,
                       p: 2,
-                      minWidth: 120,
+                      width: "120px",
+                      height: "100px",
                     }}
                   >
                     <Radio
-                      id={value}
+                      id={idx}
                       value={value}
                       checkedIcon={<CheckCircleRoundedIcon />}
                     />
@@ -285,28 +321,32 @@ export default function BasicModal() {
                 sx={{
                   width: "50%",
                 }}
-                onChange={handleChange}
+                // onChange={handleSelectChange}
+                onChange={(e) => setIndustry(e.target.value)}
               >
                 <MenuItem value={10}>Ten</MenuItem>
                 <MenuItem value={20}>Twenty</MenuItem>
                 <MenuItem value={30}>Thirty</MenuItem>
               </Select>
             </FormControl>
-            <Link to="/step2">
-              <Button
-                type="submit"
-                variant="contained"
-                className="btn-forgetPwd btn-login"
-                sx={{
-                  mt: 4,
-                  width: "89px",
-                  borderRadius: "10px",
-                  justifyContent: "center",
-                }}
-              >
-                Next
-              </Button>
-            </Link>
+
+            <Button
+              type="submit"
+              variant="contained"
+              className="btn-forgetPwd btn-login"
+              sx={{
+                mt: 4,
+                width: "89px",
+                borderRadius: "10px",
+                justifyContent: "center",
+              }}
+              data={state.data}
+              onClick={() => {
+                toStep2();
+              }}
+            >
+              Next
+            </Button>
           </Box>
         </Grid>
         <Grid item xs={false} sm={4} md={5} sx={{ backgroundColor: "#FFFFFF" }}>

@@ -24,6 +24,8 @@ import ScheduleIcon from "../../assets/icons/schedule-icon.png";
 import TrackHoursIcon from "../../assets/icons/trackHours-icon.png";
 import PayIcon from "../../assets/icons/pay-icon.png";
 import XeroIcon from "../../assets/icons/xero-icon.png";
+import { useLocation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const style = {
   position: "absolute",
@@ -37,8 +39,31 @@ const style = {
   p: 4,
 };
 
-export default function BasicModal() {
+export default function BasicModal(props) {
+  const [state, setState] = React.useState({ data: "" });
+  const [purpose, setPurpose] = React.useState("");
+  const [payroll, setPayroll] = React.useState("");
+  const navigate = useNavigate();
+
   const theme = useTheme();
+  const location = useLocation();
+
+  console.log(location.state.business);
+  const toStep3 = () => {
+    console.log(purpose, payroll);
+    // alert(payroll + purpose);
+
+    navigate("/step3", {
+      state: {
+        business: location.state.business,
+        mobile: location.state.mobile,
+        businessType: location.state.businesstype,
+        industry: location.state.industry,
+        purpose: purpose,
+        payroll: payroll,
+      },
+    });
+  };
 
   const icons = [ScheduleIcon, TrackHoursIcon, PayIcon];
   const description = [
@@ -46,6 +71,8 @@ export default function BasicModal() {
     "I want a record of when my team works, so I can pay them correctly",
     "I want to be able to process pay cycle without headaches",
   ];
+
+  // console.log(props);
 
   return (
     <div>
@@ -177,6 +204,7 @@ export default function BasicModal() {
                         },
                       },
                     }}
+                    onChange={(e) => setPurpose(e.target.id)}
                   >
                     {[
                       "Save time scheduling",
@@ -184,7 +212,7 @@ export default function BasicModal() {
                       "Process your team's pay",
                     ].map((value, idx) => (
                       <Sheet
-                        key={value}
+                        key={idx}
                         variant="outlined"
                         sx={{
                           borderRadius: "md",
@@ -213,7 +241,12 @@ export default function BasicModal() {
                         />
                         <FormLabel
                           htmlFor={value}
-                          sx={{ fontSize: "16px", fontWeight: "bold", mt: 1 }}
+                          sx={{
+                            fontSize: "16px",
+                            fontWeight: "bold",
+
+                            mt: 1,
+                          }}
                         >
                           {value}
                         </FormLabel>
@@ -264,6 +297,7 @@ export default function BasicModal() {
               overlay
               size="lg"
               sx={{ flexDirection: "row", gap: 1.5, mt: 2 }}
+              onChange={(e) => setPayroll(e.target.value)}
             >
               {["XERO"].map((value) => (
                 <Sheet
@@ -314,7 +348,7 @@ export default function BasicModal() {
                 </Sheet>
               ))}
             </RadioGroup>
-            <Link to="/step3">
+            <Link to="/step3" style={{ textDecoration: "none" }}>
               <Button
                 type="submit"
                 variant="contained"
@@ -324,6 +358,9 @@ export default function BasicModal() {
                   width: "89px",
                   borderRadius: "10px",
                   justifyContent: "center",
+                }}
+                onClick={() => {
+                  toStep3();
                 }}
               >
                 Next

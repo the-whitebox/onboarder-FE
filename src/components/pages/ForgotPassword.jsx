@@ -4,7 +4,7 @@ import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import TextField from "@mui/material/TextField";
 import Grid from "@mui/material/Grid";
-import { Routes, Route, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 import axios from "axios";
 
@@ -33,7 +33,7 @@ export default function BasicModal() {
         console.log(response.status);
         if (response.status === 200) {
           console.log("I am inside status 200 condition");
-          navigate("home");
+          navigate("/home");
         }
       });
   };

@@ -26,6 +26,7 @@ import ForgetPasswordModalBody from "./ForgotPassword";
 import SignupModalBody from "./Signup";
 import WelcomeModalBody from "./Welcome";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const theme = createTheme();
 
@@ -33,6 +34,7 @@ export default function SignInSide() {
   const url = "http://192.168.100.149:8000/api/auth/login/";
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
+  const navigate = useNavigate();
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -46,6 +48,7 @@ export default function SignInSide() {
         .post(url, { username: email, password: password })
         .then((response) => {
           console.log("Login API was hit succesfully");
+          navigate("/about");
           // Navigate to Home Screen
         });
     } catch (error) {
