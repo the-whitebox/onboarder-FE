@@ -15,6 +15,12 @@ import SetStressProfile from "./components/feature/SetStressProfile";
 import SyncPayroll from "./components/feature/SyncPayroll";
 import WebFont from "webfontloader";
 import { useEffect } from "react";
+import Profile from "./components/pages/Profile";
+import Contact from "./components/feature/Contact";
+import Employment from "./components/pages/Employment";
+import EmploymentDetails from "./components/pages/EmploymentDetails";
+
+import Personal from "./components/pages/Personal";
 
 function App() {
   useEffect(() => {
@@ -28,6 +34,7 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Login />} />
+        <Route path="/home" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/forgotpassword" element={<ForgotPassword />} />
         <Route path="/resetpassword" element={<ResetPassword />} />
@@ -40,6 +47,11 @@ function App() {
         <Route path="/set" element={<SetAccessLevel />}></Route>
         <Route path="/stress" element={<SetStressProfile />}></Route>
         <Route path="/sync" element={<SyncPayroll />}></Route>
+        <Route path="/profile" element={<Profile />} />
+        <Route path="/contact" element={<Contact />} />
+        <Route path="/employment" element={<Employment />} />
+        <Route path="/employment_details" element={<EmploymentDetails />} />
+        <Route path="/personal" element={<Personal />} />
       </Routes>
     </BrowserRouter>
   );
