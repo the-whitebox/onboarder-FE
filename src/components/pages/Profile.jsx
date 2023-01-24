@@ -16,6 +16,7 @@ import LoginInfo from "../feature/LoginInfo";
 import Grid from "@mui/system/Unstable_Grid";
 import styled from "@mui/system/styled";
 import Link from "@mui/material/Link";
+import VerticalMenu from "../feature/VerticalMenu";
 
 const Item = styled("div")(({ theme }) => ({
   border: "none",
@@ -35,44 +36,7 @@ export default function Profile() {
             ml: `${drawerWidth}px`,
           }}
         ></AppBar>
-        <Drawer
-          sx={{
-            width: drawerWidth,
-            flexShrink: 0,
-            "& .MuiDrawer-paper": {
-              width: drawerWidth,
-              boxSizing: "border-box",
-              backgroundColor: "#38b492",
-              color: "white",
-            },
-          }}
-          variant="permanent"
-          anchor="left"
-        >
-          <Toolbar />
-          <Divider />
-          <List>
-            {["Profile", "Personal", "Employment", "Journals"].map(
-              (text, index) => (
-                <ListItem key={text} disablePadding>
-                  <ListItemButton>
-                    <ListItemText primary={text} />
-                  </ListItemButton>
-                </ListItem>
-              )
-            )}
-          </List>
-          <Divider />
-          <List>
-            {["All mail", "Trash", "Spam"].map((text, index) => (
-              <ListItem key={text} disablePadding>
-                <ListItemButton>
-                  <ListItemText primary={text} />
-                </ListItemButton>
-              </ListItem>
-            ))}
-          </List>
-        </Drawer>
+        <VerticalMenu />
         <Box
           component="main"
           sx={{ flexGrow: 1, bgcolor: "background.default", p: 3 }}

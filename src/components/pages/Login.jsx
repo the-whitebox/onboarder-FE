@@ -19,6 +19,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import AppleIcon from "@mui/icons-material/Apple";
 import googleIcon from "../../assets/icons/google.png";
 import ManWithGraphs from "../../assets/images/man-with-graphs.png";
+import MaxPilotLogo from "../../assets/logos/maxpilot-logo.svg";
 import { CardMedia } from "@mui/material";
 import Card from "@mui/material/Card";
 import Modal from "@mui/material/Modal";
@@ -93,7 +94,7 @@ export default function SignInSide() {
             // { auth: email, password }
           )
           .then((response) => {
-            console.log("Login API was hit succesfully");
+            console.log("Login API was hit successfully");
             navigate("/about");
             // Navigate to Home Screen
           });
@@ -332,7 +333,7 @@ export default function SignInSide() {
                 </Grid>
                 <Grid item className="flex-row">
                   <Typography variant="body2">
-                    {"Not using UROSTERS? "}
+                    {"Not using MaxPilot? "}
                   </Typography>
                   <Link
                     onClick={handleOpenSignup}

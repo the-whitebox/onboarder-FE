@@ -93,7 +93,7 @@ export default function BasicModal() {
           component="h2"
           className="uproster-font"
         >
-          Try UROSTERS for free
+          Try MaxPilot for free
         </Typography>
         <Typography
           id="modal-modal-description"

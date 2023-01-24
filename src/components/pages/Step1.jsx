@@ -20,6 +20,7 @@ import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
+import MaxPilotLogo from "../../assets/logos/maxpilot-logo.svg";
 import Icon1 from "../../assets/icons/health-icon.png";
 import Icon2 from "../../assets/icons/retail-icon.png";
 import Icon3 from "../../assets/icons/services-icon.png";
@@ -147,7 +148,7 @@ export default function BasicModal() {
                 color: "#38B492",
               }}
             >
-              UROSTERS
+              MaxPilot
             </Typography>
             <Typography
               className="font-loader"

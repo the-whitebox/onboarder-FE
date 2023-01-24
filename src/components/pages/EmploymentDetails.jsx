@@ -122,7 +122,7 @@ export default function EmploymentDetails() {
       <Box sx={{ pl: 33, pt: 2, pb: 2 }}>
         <Typography paragraph>
           A set of permissions that control what a team member can do in
-          Urosters. About access levels
+          MaxPilot. About access levels
         </Typography>
       </Box>
       <Box sx={{ pl: 33, pt: 2, pb: 2, display: "flex" }}>

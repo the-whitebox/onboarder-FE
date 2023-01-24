@@ -129,7 +129,7 @@ export default function BasicModal(props) {
                 color: "#38B492",
               }}
             >
-              UROSTERS
+              MaxPilot
             </Typography>
             <Typography
               className="font-loader"
@@ -194,7 +194,7 @@ export default function BasicModal(props) {
                     color: "#332A60",
                   }}
                 >
-                  What brings you to UROSTERS?
+                  What brings you to MaxPilot?
                 </Typography>
                 {/* Put 3 radio buttons here */}
                 <Grid
@@ -334,7 +334,7 @@ export default function BasicModal(props) {
               }}
             >
               We'll send you some tips on how you can integrate your payroll
-              provide with UROSTERS
+              provide with MaxPilot
             </Typography>
             <RadioGroup
               aria-labelledby="storage-label"

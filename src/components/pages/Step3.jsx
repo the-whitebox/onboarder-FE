@@ -158,7 +158,7 @@ export default function BasicModal() {
                 color: "#38B492",
               }}
             >
-              UROSTERS
+              MaxPilot
             </Typography>
             <Typography
               className="font-loader"
@@ -323,7 +323,7 @@ export default function BasicModal() {
                 color: "#332A60",
               }}
             >
-              How did you hear about UROSTER?
+              How did you hear about MaxPilot?
             </Typography>
             <Grid
               item
@@ -374,11 +374,11 @@ export default function BasicModal() {
                 onChange={(e) => setHear(e.target.value)}
               >
                 {[
-                  "Using UROSTER in the past",
+                  "Using MaxPilot in the past",
                   "Recommended from friend or colleague",
                   "Recommended from a business vendor",
                   "Read reviews or blog",
-                  "Saw an ad about UROSTER",
+                  "Saw an ad about MaxPilot",
                   "Searched the internet",
                   "Other",
                 ].map((value, idx) => (
