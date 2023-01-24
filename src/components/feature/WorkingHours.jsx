@@ -12,16 +12,17 @@ const Item = styled("div")(({ theme }) => ({
 export default function WorkingHours() {
   return (
     <>
-      <Box sx={{ pt: 5, pl: 33, pb: 2 }}>
+      <Box sx={{ pt: 3, pb: 2 }}>
         <Typography variant="h5">Working Hours</Typography>
       </Box>
       <Box
         sx={{
-          ml: 35,
-          mr: 40,
-          pt: 0.5,
+          mt: 0,
+          ml: 2,
+          maxWidth: "80%",
           border: "1px solid",
           borderColor: "#ced7e0",
+          borderRadius: "10px",
         }}
       >
         <Box sx={{ flexGrow: 1 }}>

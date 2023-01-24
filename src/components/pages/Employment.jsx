@@ -27,19 +27,9 @@ export default function Employment() {
   return (
     <>
       <Box sx={{ display: "flex" }}>
-        <CssBaseline />
-        <AppBar
-          position="fixed"
-          sx={{
-            width: `calc(100% - ${drawerWidth}px)`,
-            ml: `${drawerWidth}px`,
-          }}
-        ></AppBar>
         <VerticalMenu />
-        <Box
-          component="main"
-          sx={{ flexGrow: 1, bgcolor: "background.default", p: 3 }}
-        >
+
+        <Box component="main" sx={{ flexGrow: 1, bgcolor: "#fcfcfc", p: 3 }}>
           <Toolbar />
           <Box sx={{ display: "flex", justifyContent: "space-between" }}>
             <Typography variant="h5">Employment Details</Typography>
@@ -53,11 +43,13 @@ export default function Employment() {
           </Box>
           <Box
             sx={{
+              mt: 0,
               ml: 2,
-              mr: 40,
-              pt: 0.5,
+              maxWidth: "80%",
               border: "1px solid",
               borderColor: "#ced7e0",
+              borderRadius: "10px",
+              bgcolor: "#ffffff",
             }}
           >
             <Box sx={{ flexGrow: 1 }}>
@@ -125,70 +117,70 @@ export default function Employment() {
               </Grid>
             </Box>
           </Box>
-        </Box>
-      </Box>
-      <Box sx={{ pt: 3 }}>
-        <Box
-          sx={{
-            ml: 35,
-            mr: 40,
-            pt: 0.5,
-            border: "1px solid",
-            borderColor: "#ced7e0",
-          }}
-        >
-          <Box sx={{ flexGrow: 1 }}>
-            <Grid container spacing={2}>
-              <Grid container xs={12} md={7} lg={12} spacing={4}>
-                <Grid xs={6} lg={4}>
-                  <Item>
-                    <Box
-                      component="ul"
-                      aria-labelledby="category-a"
-                      sx={{ pl: 2 }}
-                    >
-                      <li>Payroll Id</li>
-                      <li>
-                        <Link>Add a payroll ID</Link>
-                      </li>
-                      <li>
-                        <Link>View all rates and allowances</Link>
-                      </li>
-                    </Box>
-                  </Item>
+          <Box sx={{ mt: 3, ml: 2, maxWidth: "80%" }}>
+            <Box
+              sx={{
+                pt: 0.5,
+                border: "1px solid",
+                borderColor: "#ced7e0",
+                borderRadius: "10px",
+                bgcolor: "#ffffff",
+              }}
+            >
+              <Box sx={{ flexGrow: 1 }}>
+                <Grid container spacing={2}>
+                  <Grid container xs={12} md={7} lg={12} spacing={2}>
+                    <Grid xs={6} lg={3}>
+                      <Item>
+                        <Box
+                          component="ul"
+                          aria-labelledby="category-a"
+                          sx={{ pl: 2 }}
+                        >
+                          <li>Payroll Id</li>
+                          <li>
+                            <Link>Add a payroll ID</Link>
+                          </li>
+                          <li>
+                            <Link>View all rates and allowances</Link>
+                          </li>
+                        </Box>
+                      </Item>
+                    </Grid>
+                    <Grid xs={6} lg={4}>
+                      <Item>
+                        <Box
+                          component="ul"
+                          aria-labelledby="category-b"
+                          sx={{ pl: 2 }}
+                        >
+                          <li>Pay rate (Default)</li>
+                          <li>
+                            <Link>Set a pay rate</Link>
+                          </li>
+                        </Box>
+                      </Item>
+                    </Grid>
+                  </Grid>
+                  <Grid
+                    xs={12}
+                    container
+                    justifyContent="space-between"
+                    alignItems="center"
+                    flexDirection={{ xs: "column", sm: "row" }}
+                    sx={{ fontSize: "12px" }}
+                  ></Grid>
                 </Grid>
-                <Grid xs={6} lg={4}>
-                  <Item>
-                    <Box
-                      component="ul"
-                      aria-labelledby="category-b"
-                      sx={{ pl: 2 }}
-                    >
-                      <li>Pay rate (Default)</li>
-                      <li>
-                        <Link>Set a pay rate</Link>
-                      </li>
-                    </Box>
-                  </Item>
-                </Grid>
-              </Grid>
-              <Grid
-                xs={12}
-                container
-                justifyContent="space-between"
-                alignItems="center"
-                flexDirection={{ xs: "column", sm: "row" }}
-                sx={{ fontSize: "12px" }}
-              ></Grid>
-            </Grid>
+              </Box>
+            </Box>
+          </Box>
+          <Box sx={{ pt: 3 }}>
+            <WorkingHours />
+          </Box>
+          <Box sx={{ pt: 3 }}>
+            <LeaveEntitlement />
           </Box>
         </Box>
-      </Box>
-      <Box sx={{ pt: 3 }}>
-        <WorkingHours />
-      </Box>
-      <Box sx={{ pt: 3 }}>
-        <LeaveEntitlement />
       </Box>
     </>
   );

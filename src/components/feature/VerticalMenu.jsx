@@ -1,122 +1,126 @@
 import * as React from "react";
+import Box from "@mui/material/Box";
 import List from "@mui/material/List";
-import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
+import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
-import Drawer from "@mui/material/Drawer";
-import Toolbar from "@mui/material/Toolbar";
-import { NavLink } from "react-router-dom";
+import Divider from "@mui/material/Divider";
+import { styled } from "@mui/material/styles";
+import InboxIcon from "@mui/icons-material/Inbox";
+import DraftsIcon from "@mui/icons-material/Drafts";
 
-import Link from "@mui/material/Link";
+const StyledList = styled(List)({
+  // selected and (selected + hover) states
+  "&& .Mui-selected, && .Mui-selected:hover": {
+    backgroundColor: "white",
+    borderRadius: "12px 0px 0px 12px",
+    "&, & .MuiListItemIcon-root": {
+      color: "#38B492",
+    },
+  },
+  // hover states
+  "& .MuiListItemButton-root:hover": {
+    backgroundColor: "white",
+    // borderRadius: "12px",
+    "&, & .MuiListItemIcon-root": {
+      color: "#38B492",
+    },
+  },
+});
 
-export default function IconMenu() {
-  const drawerWidth = 240;
-  // const location = useLocation();
+export default function SelectedListItem() {
+  const [selectedIndex, setSelectedIndex] = React.useState(1);
+  const handleListItemClick = (index: number) => {
+    setSelectedIndex(index);
+  };
 
-  // let CustomListItem = ({ to, primary }) => (
-  //   <ListItem component={Link} to={to}>
-  //     <ListItemButton selected={to === location.pathname}>
-  //       <ListItemText primary={primary} />
-  //     </ListItemButton>
-  //   </ListItem>
-  // );
   return (
-    <Drawer
+    <Box
       sx={{
-        width: drawerWidth,
-        flexShrink: 0,
-        "& .MuiDrawer-paper": {
-          width: drawerWidth,
-          boxSizing: "border-box",
-          backgroundColor: "#38b492",
-          color: "white",
-        },
+        width: "100%",
+        maxWidth: 240,
+        bgcolor: "#38B492",
+        height: "100vh",
+        color: "#ffffff",
       }}
-      variant="permanent"
-      anchor="left"
     >
-      <Toolbar />
-
-      <List>
-        <ListItem
-          sx={{
-            fontWeight: "bold",
-            fontSize: "20px",
-            pb: "0px !important",
-            pl: "30px !important",
-          }}
-        >
+      <StyledList
+        // sx={{
+        //   // selected and (selected + hover) states
+        //   '&& .Mui-selected, && .Mui-selected:hover': {
+        //     bgcolor: 'red',
+        //     '&, & .MuiListItemIcon-root': {
+        //       color: 'pink',
+        //     },
+        //   },
+        //   // hover states
+        //   '& .MuiListItemButton-root:hover': {
+        //     bgcolor: 'orange',
+        //     '&, & .MuiListItemIcon-root': {
+        //       color: 'yellow',
+        //     },
+        //   },
+        // }}
+        sx={{
+          pl: "10px",
+        }}
+      >
+        <List sx={{ fontWeight: "900 !important", pl: "10px", mt: "5px" }}>
+          {" "}
           Profile
-        </ListItem>
-      </List>
-      <List>
-        {/* <NavLink
-          to="../personal"
-          className={({ isActive }) =>
-            isActive ? "bg-green-500 font-bold" : "bg-red-500 font-thin"
-          }
-        >
-          Personal
-        </NavLink> */}
-        {["Personal", "Employment", "Journals"].map((text, index) => (
-          <ListItem
-            key={text}
-            sx={{ pt: "0px !important", pb: "0px !important" }}
-          >
-            <ListItemButton>
-              <ListItemText primary={text} />
-            </ListItemButton>
-          </ListItem>
-        ))}
-      </List>
-      <List>
-        <ListItem
-          sx={{
-            fontWeight: "bold",
-            fontSize: "20px",
-            pb: "0px !important",
-            pl: "30px !important",
-          }}
-        >
-          Scheduling
-        </ListItem>
-      </List>
-      <List>
-        {["Shifts", "Leaves", "Unavailability"].map((text, index) => (
-          <ListItem
-            key={text}
-            sx={{ pt: "0px !important", pb: "0px !important" }}
-          >
-            <ListItemButton>
-              <ListItemText primary={text} />
-            </ListItemButton>
-          </ListItem>
-        ))}
-      </List>
-      <List>
-        <ListItem
-          sx={{
-            fontWeight: "bold",
-            fontSize: "20px",
-            pb: "0px !important",
-            pl: "30px !important",
-          }}
-        >
-          Activity
-        </ListItem>
-        <List>
-          {["News Feed"].map((text, index) => (
-            <ListItem
-              key={text}
-              sx={{ pt: "0px !important", pb: "0px !important" }}
-            >
-              <ListItemButton>
-                <ListItemText primary={text} />
-              </ListItemButton>
-            </ListItem>
-          ))}
         </List>
-      </List>
-    </Drawer>
+        <ListItemButton
+          selected={selectedIndex === 0}
+          onClick={() => handleListItemClick(0)}
+        >
+          <ListItemText primary="Personal" />
+        </ListItemButton>
+        <ListItemButton
+          selected={selectedIndex === 1}
+          onClick={() => handleListItemClick(1)}
+        >
+          <ListItemText primary="Employment" />
+        </ListItemButton>
+
+        <ListItemButton
+          selected={selectedIndex === 2}
+          onClick={() => handleListItemClick(2)}
+        >
+          <ListItemText primary="Journals" />
+        </ListItemButton>
+        <List sx={{ fontWeight: "900 !important", pl: "10px", mt: "5px" }}>
+          {" "}
+          Scheduling
+        </List>
+        <ListItemButton
+          selected={selectedIndex === 3}
+          onClick={() => handleListItemClick(3)}
+        >
+          <ListItemText primary="Shifts" />
+        </ListItemButton>
+        <ListItemButton
+          selected={selectedIndex === 4}
+          onClick={() => handleListItemClick(4)}
+        >
+          <ListItemText primary="Leave" />
+        </ListItemButton>
+        <ListItemButton
+          selected={selectedIndex === 5}
+          onClick={() => handleListItemClick(5)}
+        >
+          <ListItemText primary="Unavailability" />
+        </ListItemButton>
+        <List sx={{ fontWeight: "900 !important", pl: "10px", mt: "5px" }}>
+          {" "}
+          Activity
+        </List>
+        <ListItemButton
+          selected={selectedIndex === 6}
+          onClick={() => handleListItemClick(6)}
+        >
+          <ListItemText primary="News feed" />
+        </ListItemButton>
+      </StyledList>
+    </Box>
   );
 }

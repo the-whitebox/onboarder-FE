@@ -16,9 +16,7 @@ export default function LeaveEntitlement() {
     <>
       <Box
         sx={{
-          pt: 5,
-          pl: 33,
-          pr: 20,
+          pt: 3,
           pb: 2,
           display: "flex",
           justifyContent: "space-between",
@@ -31,11 +29,12 @@ export default function LeaveEntitlement() {
       </Box>
       <Box
         sx={{
-          ml: 35,
-          mr: 40,
-          pt: 0.5,
+          mt: 0,
+          ml: 2,
+          maxWidth: "80%",
           border: "1px solid",
           borderColor: "#ced7e0",
+          borderRadius: "10px",
         }}
       >
         <Box sx={{ flexGrow: 1 }}>
