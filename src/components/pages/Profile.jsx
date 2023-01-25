@@ -25,6 +25,7 @@ const Item = styled("div")(({ theme }) => ({
 const drawerWidth = 240;
 
 export default function Profile() {
+  const indexToHL = 0;
   return (
     <>
       <Box sx={{ display: "flex" }}>
@@ -36,7 +37,7 @@ export default function Profile() {
             ml: `${drawerWidth}px`,
           }}
         ></AppBar>
-        <VerticalMenu />
+        <VerticalMenu indexToHL={indexToHL} />
         <Box
           component="main"
           sx={{ flexGrow: 1, bgcolor: "background.default", p: 3 }}
