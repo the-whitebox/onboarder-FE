@@ -24,10 +24,12 @@ const Item = styled("div")(({ theme }) => ({
 const drawerWidth = 240;
 
 export default function Employment() {
+  const indexToHL = 1;
+
   return (
     <>
       <Box sx={{ display: "flex" }}>
-        <VerticalMenu />
+        <VerticalMenu indexToHL={indexToHL} />
 
         <Box component="main" sx={{ flexGrow: 1, bgcolor: "#fcfcfc", p: 3 }}>
           <Toolbar />

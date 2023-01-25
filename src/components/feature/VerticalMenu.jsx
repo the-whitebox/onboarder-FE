@@ -6,8 +6,14 @@ import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import Divider from "@mui/material/Divider";
 import { styled } from "@mui/material/styles";
+import Avatar from "@mui/material/Avatar";
 import InboxIcon from "@mui/icons-material/Inbox";
 import DraftsIcon from "@mui/icons-material/Drafts";
+import Typography from "@mui/material/Typography";
+import Button from "@mui/material/Button";
+import "../../style/General.css";
+import { useNavigate } from "react-router-dom";
+import Employment from "../pages/Employment";
 
 const StyledList = styled(List)({
   // selected and (selected + hover) states
@@ -28,11 +34,26 @@ const StyledList = styled(List)({
   },
 });
 
-export default function SelectedListItem() {
-  const [selectedIndex, setSelectedIndex] = React.useState(1);
-  const handleListItemClick = (index: number) => {
-    setSelectedIndex(index);
-  };
+export default function VerticalMenu(props) {
+  const [selectedIndex, setSelectedIndex] = React.useState(props.indexToHL);
+  // const handleListItemClick = (index: number) => {
+  //   setSelectedIndex(index);
+  // };
+  console.log(props.indexToHL);
+
+  // setSelectedIndex(props.indexToHL);
+
+  const navigate = useNavigate();
+
+  function stringAvatar(name) {
+    return {
+      sx: {
+        bgcolor: "white",
+        color: "black",
+      },
+      children: `${name.split(" ")[0][0]}${name.split(" ")[1][0]}`,
+    };
+  }
 
   return (
     <Box
@@ -45,46 +66,85 @@ export default function SelectedListItem() {
       }}
     >
       <StyledList
-        // sx={{
-        //   // selected and (selected + hover) states
-        //   '&& .Mui-selected, && .Mui-selected:hover': {
-        //     bgcolor: 'red',
-        //     '&, & .MuiListItemIcon-root': {
-        //       color: 'pink',
-        //     },
-        //   },
-        //   // hover states
-        //   '& .MuiListItemButton-root:hover': {
-        //     bgcolor: 'orange',
-        //     '&, & .MuiListItemIcon-root': {
-        //       color: 'yellow',
-        //     },
-        //   },
-        // }}
         sx={{
           pl: "10px",
         }}
       >
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+            alignItems: "center",
+            height: 250,
+          }}
+        >
+          <Avatar
+            className="avatar-size"
+            // sx={{ width: "120px !important", height: 120 }}
+            {...stringAvatar("Asher Muneer")}
+          />
+          <Typography
+            component="h3"
+            variant="body1"
+            sx={{
+              fontWeight: "Semi-Bold",
+              fontSize: "20px",
+              color: "#ffffff",
+              mt: 2,
+            }}
+          >
+            Ashar Muneer
+          </Typography>
+          <Typography
+            component="h3"
+            variant="body1"
+            sx={{
+              fontWeight: "Regular",
+              fontSize: "16px",
+              color: "#ffffff",
+            }}
+          >
+            Advisor
+          </Typography>
+          <Button
+            type="submit"
+            variant="contained"
+            sx={{
+              mt: 4,
+              // width: "89px",
+              borderRadius: "5px",
+              justifyContent: "center",
+              backgroundColor: "#ffffff",
+              color: "#38B492",
+              fontSize: "12px",
+              mt: 0.5,
+            }}
+          >
+            Start unscheduled shift
+          </Button>
+        </Box>
+        <Divider />
         <List sx={{ fontWeight: "900 !important", pl: "10px", mt: "5px" }}>
           {" "}
           Profile
         </List>
         <ListItemButton
           selected={selectedIndex === 0}
-          onClick={() => handleListItemClick(0)}
+          onClick={() => navigate("/profile")}
         >
           <ListItemText primary="Personal" />
         </ListItemButton>
         <ListItemButton
           selected={selectedIndex === 1}
-          onClick={() => handleListItemClick(1)}
+          onClick={() => navigate("/employment")}
         >
           <ListItemText primary="Employment" />
         </ListItemButton>
 
         <ListItemButton
           selected={selectedIndex === 2}
-          onClick={() => handleListItemClick(2)}
+          // onClick={() => handleListItemClick(2)}
         >
           <ListItemText primary="Journals" />
         </ListItemButton>
@@ -94,19 +154,19 @@ export default function SelectedListItem() {
         </List>
         <ListItemButton
           selected={selectedIndex === 3}
-          onClick={() => handleListItemClick(3)}
+          // onClick={() => handleListItemClick(3)}
         >
           <ListItemText primary="Shifts" />
         </ListItemButton>
         <ListItemButton
           selected={selectedIndex === 4}
-          onClick={() => handleListItemClick(4)}
+          // onClick={() => handleListItemClick(4)}
         >
           <ListItemText primary="Leave" />
         </ListItemButton>
         <ListItemButton
           selected={selectedIndex === 5}
-          onClick={() => handleListItemClick(5)}
+          // onClick={() => handleListItemClick(5)}
         >
           <ListItemText primary="Unavailability" />
         </ListItemButton>
@@ -116,7 +176,7 @@ export default function SelectedListItem() {
         </List>
         <ListItemButton
           selected={selectedIndex === 6}
-          onClick={() => handleListItemClick(6)}
+          // onClick={() => handleListItemClick(6)}
         >
           <ListItemText primary="News feed" />
         </ListItemButton>

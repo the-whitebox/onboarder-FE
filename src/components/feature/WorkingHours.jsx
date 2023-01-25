@@ -23,6 +23,7 @@ export default function WorkingHours() {
           border: "1px solid",
           borderColor: "#ced7e0",
           borderRadius: "10px",
+          bgcolor: "#ffffff",
         }}
       >
         <Box sx={{ flexGrow: 1 }}>
