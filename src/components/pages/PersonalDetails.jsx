@@ -7,7 +7,7 @@ import Link from "@mui/material/Link";
 import { TbMessageCircle } from "react-icons/tb";
 import { Avatar } from "@mui/material";
 
-export default function Personal() {
+export default function PersonalDetails() {
   return (
     <>
       <Box
@@ -47,10 +47,10 @@ export default function Personal() {
           display: "flex",
         }}
       >
-        <Typography>Personal Details</Typography>
         <Button variant="outlined" sx={{ ml: 2 }}>
-          Contact
+          Personal Details
         </Button>
+        <Typography>Contact</Typography>
       </Box>
       <Box
         sx={{
@@ -67,6 +67,14 @@ export default function Personal() {
           pb: 2,
         }}
       >
+        {/* <Row>
+          <Form.Label column="lg" lg={2}>
+            Email
+          </Form.Label>
+          <Col>
+            <Form.Control size="lg" type="text" />
+          </Col>
+        </Row> */}
         <Box className="flex flex-row ">
           <Typography
             id="modal-modal-description"
@@ -99,7 +107,7 @@ export default function Personal() {
               fontSize: 14,
             }}
           >
-            Mobile
+            First Name
           </Typography>
           <TextField
             id="outlined-basic"
@@ -121,7 +129,7 @@ export default function Personal() {
               fontSize: 14,
             }}
           >
-            Address
+            Last Name
           </Typography>
           <TextField
             id="outlined-basic"
@@ -143,7 +151,7 @@ export default function Personal() {
               fontSize: 14,
             }}
           >
-            Postcode
+            Preferred Full Name
           </Typography>
           <TextField
             id="outlined-basic"
@@ -165,7 +173,7 @@ export default function Personal() {
               fontSize: 14,
             }}
           >
-            City
+            Pronouns
           </Typography>
           <TextField
             id="outlined-basic"
@@ -187,73 +195,7 @@ export default function Personal() {
               fontSize: 14,
             }}
           >
-            State
-          </Typography>
-          <TextField
-            id="outlined-basic"
-            label=""
-            variant="outlined"
-            sx={{
-              width: "300px",
-              mr: 30,
-            }}
-          />
-        </Box>
-        <br />
-        <Box className="flex flex-row ">
-          <Typography
-            id="modal-modal-description"
-            sx={{
-              mr: 30,
-              mt: 2,
-              fontSize: 14,
-            }}
-          >
-            Country
-          </Typography>
-          <TextField
-            id="outlined-basic"
-            label=""
-            variant="outlined"
-            sx={{
-              width: "300px",
-              mr: 30,
-            }}
-          />
-        </Box>
-        <br />
-        <Box className="flex flex-row ">
-          <Typography
-            id="modal-modal-description"
-            sx={{
-              mr: 30,
-              mt: 2,
-              fontSize: 14,
-            }}
-          >
-            Emergency contact name
-          </Typography>
-          <TextField
-            id="outlined-basic"
-            label=""
-            variant="outlined"
-            sx={{
-              width: "300px",
-              mr: 30,
-            }}
-          />
-        </Box>
-        <br />
-        <Box className="flex flex-row ">
-          <Typography
-            id="modal-modal-description"
-            sx={{
-              mr: 30,
-              mt: 2,
-              fontSize: 14,
-            }}
-          >
-            Emergency phone number
+            Date of Birth
           </Typography>
           <TextField
             id="outlined-basic"
