@@ -12,6 +12,7 @@
     "@mui/icons-material": "^5.10.16",
     "@mui/joy": "^5.0.0-alpha.57",
     "@mui/material": "^5.10.16",
+    "@mui/x-data-grid": "^5.17.20",
     "@sentry/react": "^7.33.0",
     "@sentry/tracing": "^7.33.0",
     "@testing-library/jest-dom": "^5.16.5",
