@@ -94,7 +94,7 @@ export default function VerticalMenu(props) {
               mt: 2,
             }}
           >
-            Ashar Muneer
+            Asher Muneer
           </Typography>
           <Typography
             component="h3"
@@ -111,7 +111,7 @@ export default function VerticalMenu(props) {
             type="submit"
             variant="contained"
             sx={{
-              mt: 4,
+              // mt: 4,
               // width: "89px",
               borderRadius: "5px",
               justifyContent: "center",
