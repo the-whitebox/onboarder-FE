@@ -16,6 +16,9 @@ import LeaveEntitlement from "../feature/LeaveEntitlement";
 import Grid from "@mui/system/Unstable_Grid";
 import styled from "@mui/system/styled";
 import Link from "@mui/material/Link";
+import { TbMessageCircle } from "react-icons/tb";
+import { Avatar } from "@mui/material";
+import "../../style/General.css";
 
 const Item = styled("div")(({ theme }) => ({
   border: "none",
@@ -24,16 +27,24 @@ const Item = styled("div")(({ theme }) => ({
 const drawerWidth = 240;
 
 export default function Employment() {
+  const indexToHL = 1;
+
   return (
     <>
       <Box sx={{ display: "flex" }}>
-        <VerticalMenu />
+        <VerticalMenu indexToHL={indexToHL} />
 
         <Box component="main" sx={{ flexGrow: 1, bgcolor: "#fcfcfc", p: 3 }}>
           <Toolbar />
           <Box sx={{ display: "flex", justifyContent: "space-between" }}>
             <Typography variant="h5">Employment Details</Typography>
-            <Button variant="outlined" backgroundColor="#38b492">
+            <Button
+              variant="contained"
+              sx={{
+                bgcolor: "#38b492",
+                color: "#ffffff",
+              }}
+            >
               Save
             </Button>
           </Box>
@@ -174,11 +185,32 @@ export default function Employment() {
               </Box>
             </Box>
           </Box>
-          <Box sx={{ pt: 3 }}>
+          <Box sx={{ mt: 1 }}>
             <WorkingHours />
           </Box>
-          <Box sx={{ pt: 3 }}>
+          <Box
+            sx={{
+              mt: 1,
+              display: "flex",
+              flexDirection: "row",
+              justifyContent: "space-between",
+            }}
+          >
             <LeaveEntitlement />
+            <Grid
+              container
+              sx={{
+                display: "flex",
+                alignItems: "end",
+              }}
+            >
+              <Avatar
+                className="messageCircle"
+                sx={{ backgroundColor: "#38b492" }}
+              >
+                <TbMessageCircle />
+              </Avatar>
+            </Grid>
           </Box>
         </Box>
       </Box>
