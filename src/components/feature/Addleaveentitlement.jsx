@@ -7,25 +7,25 @@ import OutlinedInput from "@mui/material/OutlinedInput";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
-import { styled } from "@mui/material/styles";
-import "../../style/SetAccesslevel.css";
+
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
 const MenuProps = {
   PaperProps: {
     style: {
       maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
-      width: 150,
+      width: 310,
     },
   },
 };
 
 const names = [
-  "System Administrator",
-  "Supervisor",
-  "Employee",
-  "Location Manager",
-  "Advisor",
+  "Annual Leave (Vacation)",
+  "Bereavement (Compassionate) Leave",
+  "Cummunity Services Leave",
+  "Long Services Leave",
+  "Other Paid Leave",
+  "Sick (Personal/Carer's) Leave ",
 ];
 
 const style = {
@@ -76,7 +76,7 @@ export default function SetAccessLevel() {
 
   return (
     <React.Fragment>
-      <Button onClick={handleOpen}>Open Access Modal</Button>
+      <Button onClick={handleOpen}>Add leave entitlement </Button>
       <Modal
         hideBackdrop
         open={open}
@@ -84,7 +84,7 @@ export default function SetAccessLevel() {
         aria-labelledby="child-modal-title"
         aria-describedby="child-modal-description"
       >
-        <Box sx={{ ...style, width: 350, height: 180 }}>
+        <Box sx={{ ...style, width: 380, height: 240 }}>
           <span
             onclick="document.getElementById('id01').style.display='none'"
             class="close"
@@ -92,12 +92,16 @@ export default function SetAccessLevel() {
           >
             ×
           </span>
-          <h2 id="child-modal-title" className="Access">
-            Set access level
-          </h2>
+          <h1 id="child-modal-title" className="Access">
+            Add leave entitlement
+          </h1>
           <div>
-            <p className="team">2 team members </p>
-            <p className="Access-level">Access level</p>
+            <p className="team">
+              Adding leave entitlement for 0 team members. 2 team members wil
+              not assigned the leave entitlement because they don't have a pay
+              rate.
+            </p>
+            <p className="Access-level">leave entitlement</p>
             <FormControl
               sx={{
                 m: "19px 0",
