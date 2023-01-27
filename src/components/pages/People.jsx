@@ -20,7 +20,6 @@ import Timesheets from "../feature/Timesheets";
 import { DataGrid } from "@mui/x-data-grid";
 import { fontWeight } from "@mui/system";
 import "../../style/People.css";
-// import { getMaxListeners } from "process";
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",

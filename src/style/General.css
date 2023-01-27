@@ -8,3 +8,9 @@
   height: 120px !important;
   font-size: 75px !important;
 }
+
+.flex-row {
+  display: flex !important;
+  flex-direction: row !important;
+  justify-content: space-between;
+}
