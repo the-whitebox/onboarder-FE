@@ -10,9 +10,14 @@ import Step1 from "./components/pages/Step1";
 import Step2 from "./components/pages/Step2";
 import Step3 from "./components/pages/Step3";
 import People from "./components/pages/People";
+import AddTeammember from "./components/feature/AddTeammember";
 import SetAccessLevel from "./components/feature/SetAccessLevel";
+import Setpayrates from "./components/feature/Setpayrates";
+import Addleaveentitlement from "./components/feature/Addleaveentitlement";
 import SetStressProfile from "./components/feature/SetStressProfile";
 import SyncPayroll from "./components/feature/SyncPayroll";
+import SetStandardHours from "./components/feature/SetStandardHours";
+import SetAgreedhours from "./components/feature/SetAgreedhours";
 import WebFont from "webfontloader";
 import { useEffect } from "react";
 import Profile from "./components/pages/Profile";
@@ -46,8 +51,14 @@ function App() {
         <Route path="/step3" element={<Step3 />} />
         <Route path="/people" element={<People />}></Route>
         <Route path="/set" element={<SetAccessLevel />}></Route>
+        <Route path="/Add" element={<Addleaveentitlement />}></Route>
         <Route path="/stress" element={<SetStressProfile />}></Route>
+        <Route path="/Sethours" element={<SetStandardHours />}></Route>
+        <Route path="/AddTeam" element={<AddTeammember />}></Route>
+        <Route path="/setAgreed" element={<SetAgreedhours />}></Route>
         <Route path="/sync" element={<SyncPayroll />}></Route>
+
+        <Route path="/Setpay" element={<Setpayrates />}></Route>
         <Route path="/profile" element={<Profile />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/employment" element={<Employment />} />
@@ -55,6 +66,7 @@ function App() {
         <Route path="/personal" element={<Personal />} />
         <Route path="/personal_details" element={<PersonalDetails />} />
         <Route path="/add" element={<AddNewPeople />} />
+
       </Routes>
     </BrowserRouter>
   );

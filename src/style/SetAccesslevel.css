@@ -1,0 +1,25 @@
+.close {
+  position: absolute;
+  right: 10px;
+  top: 5px;
+  font-size: 30px;
+  font-weight: bold;
+  color: black;
+}
+
+.text {
+  color: gray;
+}
+
+.Access-level {
+  font-weight: bold;
+}
+
+.team {
+  margin-left: 8px;
+  margin-top: -9px;
+}
+.Access {
+  margin-top: -2%;
+  font-size: xx-large;
+}
