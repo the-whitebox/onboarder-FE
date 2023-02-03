@@ -20,7 +20,9 @@ export default function LeaveEntitlement() {
           justifyContent: "space-between",
         }}
       >
-        <Typography variant="h5">Leave Entitlements</Typography>
+        <Typography variant="h6" fontWeight="Bold">
+          Leave Entitlements
+        </Typography>
       </Box>
       <Box
         sx={{
@@ -40,7 +42,7 @@ export default function LeaveEntitlement() {
               <Box component="ul" aria-labelledby="category-a" sx={{ pl: 2 }}>
                 <li>Leave Entitlements</li>
                 <li>
-                  <Link>Add leave entitlements</Link>
+                  <Link color="#38b492">Add leave entitlements</Link>
                 </li>
               </Box>
             </Item>

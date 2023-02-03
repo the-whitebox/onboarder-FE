@@ -50,13 +50,14 @@ export default function PayRate() {
   };
   return (
     <>
-      <Box sx={{ pt: 2, display: "flex" }}>
-        <Typography variant="h6" fontWeight="Bold">
+      <Box sx={{ pt: 2, pl: 2, display: "flex" }}>
+        <Typography inline variant="h6" fontWeight="Bold" sx={{ width: 100 }}>
           Pay Rate
         </Typography>
-        <FormControl sx={{ m: 1, width: 300, mt: 3 }}>
+        <FormControl sx={{ pl: 13.2, m: 1, width: 370, mt: 3 }}>
           <Select
             multiple
+            size="small"
             displayEmpty
             value={personName}
             onChange={handleChange}

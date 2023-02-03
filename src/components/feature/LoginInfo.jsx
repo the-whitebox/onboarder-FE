@@ -14,12 +14,12 @@ const Item = styled("div")(({ theme }) => ({
 export default function LoginInfo() {
   return (
     <>
-      <Box sx={{ pt: 5, pl: 33, pb: 2 }}>
+      <Box sx={{ pt: 2, pb: 2 }}>
         <Typography variant="h5">Login Information</Typography>
       </Box>
       <Box
         sx={{
-          ml: 35,
+          ml: 2,
           mr: 40,
           pt: 0.5,
           border: "1px solid",
@@ -38,7 +38,7 @@ export default function LoginInfo() {
                   >
                     <li>Kiosk PIN</li>
                     <li>
-                      <Link>Show</Link>
+                      <Link color="#38b492">Show</Link>
                     </li>
                   </Box>
                 </Item>
@@ -94,7 +94,6 @@ export default function LoginInfo() {
       <Box
         sx={{
           pt: 5,
-          pl: 33,
           pr: 20,
           pb: 2,
           display: "flex",
@@ -102,84 +101,85 @@ export default function LoginInfo() {
         }}
       >
         <Typography variant="h5">Login Information</Typography>
-
-        <Avatar sx={{ backgroundColor: "#38b492" }}>
+      </Box>
+      <Box display="flex">
+        <Box
+          sx={{
+            ml: 2,
+            mr: 40,
+            pt: 0,
+            border: "1px solid",
+            borderColor: "#ced7e0",
+          }}
+        >
+          <Box sx={{ flexGrow: 1 }}>
+            <Grid container spacing={2}>
+              <Grid container xs={12} md={7} lg={12} spacing={2}>
+                <Grid xs={6} lg={3}>
+                  <Item>
+                    <Box
+                      component="ul"
+                      aria-labelledby="category-a"
+                      sx={{ pl: 2 }}
+                    >
+                      <li>Kiosk PIN</li>
+                      <li>
+                        <Link color="#38b492">Show</Link>
+                      </li>
+                    </Box>
+                  </Item>
+                </Grid>
+                <Grid xs={6} lg={3}>
+                  <Item>
+                    <Box
+                      component="ul"
+                      aria-labelledby="category-b"
+                      sx={{ pl: 2 }}
+                    >
+                      <li>Login username</li>
+                      <li>Amuneer</li>
+                    </Box>
+                  </Item>
+                </Grid>
+                <Grid xs={6} lg={3}>
+                  <Item>
+                    <Box
+                      component="ul"
+                      aria-labelledby="category-c"
+                      sx={{ pl: 2 }}
+                    >
+                      <li>Device</li>
+                      <li>Not-installed</li>
+                    </Box>
+                  </Item>
+                </Grid>
+                <Grid xs={6} lg={3}>
+                  <Item>
+                    <Box
+                      component="ul"
+                      aria-labelledby="category-c"
+                      sx={{ pl: 2 }}
+                    >
+                      <li>2-Factor authentication</li>
+                      <li>Not set up</li>
+                    </Box>
+                  </Item>
+                </Grid>
+              </Grid>
+              <Grid
+                xs={12}
+                container
+                justifyContent="space-between"
+                alignItems="center"
+                flexDirection={{ xs: "column", sm: "row" }}
+                sx={{ fontSize: "12px" }}
+              ></Grid>
+            </Grid>
+          </Box>
+        </Box>
+        <Avatar className="messageCircle" sx={{ backgroundColor: "#38b492" }}>
           <TbMessageCircle />
         </Avatar>
-      </Box>
-      <Box
-        sx={{
-          ml: 35,
-          mr: 40,
-          pt: 0.5,
-          border: "1px solid",
-          borderColor: "#ced7e0",
-        }}
-      >
-        <Box sx={{ flexGrow: 1 }}>
-          <Grid container spacing={2}>
-            <Grid container xs={12} md={7} lg={12} spacing={2}>
-              <Grid xs={6} lg={3}>
-                <Item>
-                  <Box
-                    component="ul"
-                    aria-labelledby="category-a"
-                    sx={{ pl: 2 }}
-                  >
-                    <li>Kiosk PIN</li>
-                    <li>
-                      <Link>Show</Link>
-                    </li>
-                  </Box>
-                </Item>
-              </Grid>
-              <Grid xs={6} lg={3}>
-                <Item>
-                  <Box
-                    component="ul"
-                    aria-labelledby="category-b"
-                    sx={{ pl: 2 }}
-                  >
-                    <li>Login username</li>
-                    <li>Amuneer</li>
-                  </Box>
-                </Item>
-              </Grid>
-              <Grid xs={6} lg={3}>
-                <Item>
-                  <Box
-                    component="ul"
-                    aria-labelledby="category-c"
-                    sx={{ pl: 2 }}
-                  >
-                    <li>Device</li>
-                    <li>Not-installed</li>
-                  </Box>
-                </Item>
-              </Grid>
-              <Grid xs={6} lg={3}>
-                <Item>
-                  <Box
-                    component="ul"
-                    aria-labelledby="category-c"
-                    sx={{ pl: 2 }}
-                  >
-                    <li>2-Factor authentication</li>
-                    <li>Not set up</li>
-                  </Box>
-                </Item>
-              </Grid>
-            </Grid>
-            <Grid
-              xs={12}
-              container
-              justifyContent="space-between"
-              alignItems="center"
-              flexDirection={{ xs: "column", sm: "row" }}
-              sx={{ fontSize: "12px" }}
-            ></Grid>
-          </Grid>
-        </Box>
       </Box>
     </>
   );

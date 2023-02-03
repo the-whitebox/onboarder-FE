@@ -20,7 +20,6 @@ import Timesheets from "../feature/Timesheets";
 import { DataGrid } from "@mui/x-data-grid";
 import { fontWeight } from "@mui/system";
 import "../../style/People.css";
-// import { getMaxListeners } from "process";
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -230,7 +229,9 @@ export default function People() {
             <BulkActions />
           </Box>
           <Box sx={{ pt: 3, pb: 2 }}>
-            <Typography variant="h5">Personal Details</Typography>
+            <Typography variant="h6" fontWeight="Bold">
+              Personal Details
+            </Typography>
           </Box>
           <Box
             sx={{

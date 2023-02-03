@@ -19,6 +19,7 @@ import Link from "@mui/material/Link";
 import { TbMessageCircle } from "react-icons/tb";
 import { Avatar } from "@mui/material";
 import "../../style/General.css";
+import "../../style/Employment.css";
 
 const Item = styled("div")(({ theme }) => ({
   border: "none",
@@ -34,10 +35,15 @@ export default function Employment() {
       <Box sx={{ display: "flex" }}>
         <VerticalMenu indexToHL={indexToHL} />
 
-        <Box component="main" sx={{ flexGrow: 1, bgcolor: "#fcfcfc", p: 3 }}>
+        <Box
+          component="main"
+          sx={{ flexGrow: 1, bgcolor: "#fcfcfc", p: 3, pt: 1 }}
+        >
           <Toolbar />
           <Box sx={{ display: "flex", justifyContent: "space-between" }}>
-            <Typography variant="h5">Employment Details</Typography>
+            <Typography variant="h4" sx={{ fontWeight: "Bold" }}>
+              Employment Details
+            </Typography>
             <Button
               variant="contained"
               sx={{
@@ -50,7 +56,9 @@ export default function Employment() {
           </Box>
 
           <Box sx={{ pt: 3, pb: 2 }}>
-            <Typography variant="h5">Work Details</Typography>
+            <Typography variant="h6" fontWeight="Bold">
+              Work Details
+            </Typography>
           </Box>
           <Box
             sx={{
@@ -111,7 +119,7 @@ export default function Employment() {
                       >
                         <li>Training</li>
                         <li>
-                          <Link>Add Training</Link>
+                          <Link color="#38b492">Add Training</Link>
                         </li>
                       </Box>
                     </Item>
@@ -150,10 +158,12 @@ export default function Employment() {
                         >
                           <li>Payroll Id</li>
                           <li>
-                            <Link>Add a payroll ID</Link>
+                            <Link color="#38b492">Add a payroll ID</Link>
                           </li>
                           <li>
-                            <Link>View all rates and allowances</Link>
+                            <Link color="#38b492">
+                              View all rates and allowances
+                            </Link>
                           </li>
                         </Box>
                       </Item>
@@ -167,7 +177,7 @@ export default function Employment() {
                         >
                           <li>Pay rate (Default)</li>
                           <li>
-                            <Link>Set a pay rate</Link>
+                            <Link color="#38b492">Set a pay rate</Link>
                           </li>
                         </Box>
                       </Item>
