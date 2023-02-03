@@ -17,6 +17,7 @@ import Grid from "@mui/system/Unstable_Grid";
 import styled from "@mui/system/styled";
 import Link from "@mui/material/Link";
 import VerticalMenu from "../feature/VerticalMenu";
+import "../../style/General.css";
 
 const Item = styled("div")(({ theme }) => ({
   border: "none",
@@ -45,13 +46,19 @@ export default function Profile() {
           <Toolbar />
           <Box sx={{ display: "flex", justifyContent: "space-between" }}>
             <Typography variant="h5">Personal</Typography>
-            <Button variant="outlined" backgroundColor="#38b492">
+            <Button
+              variant="contained"
+              sx={{
+                bgcolor: "#38b492",
+                color: "#ffffff",
+              }}
+            >
               Save
             </Button>
           </Box>
           <Box>
-            <Button>Message</Button>
-            <Button>Archive Team member</Button>
+            <Button sx={{ color: "#38b492" }}>Message</Button>
+            <Button sx={{ color: "#38b492" }}>Archive Team member</Button>
           </Box>
           <Box sx={{ pt: 3, pb: 2 }}>
             <Typography variant="h5">Personal Details</Typography>
@@ -113,7 +120,7 @@ export default function Profile() {
                       >
                         <li>Date of Birth</li>
                         <li>
-                          <Link>Add a date of Birth</Link>
+                          <Link color="#38b492">Add a date of Birth</Link>
                         </li>
                       </Box>
                     </Item>
@@ -130,13 +137,13 @@ export default function Profile() {
               </Grid>
             </Box>
           </Box>
+          <Box sx={{ pt: 3 }}>
+            <Contact />
+          </Box>
+          <Box sx={{ pt: 3 }}>
+            <LoginInfo />
+          </Box>
         </Box>
-      </Box>
-      <Box sx={{ pt: 3 }}>
-        <Contact />
-      </Box>
-      <Box sx={{ pt: 3 }}>
-        <LoginInfo />
       </Box>
     </>
   );

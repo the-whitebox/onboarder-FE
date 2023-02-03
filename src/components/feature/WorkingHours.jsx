@@ -13,7 +13,9 @@ export default function WorkingHours() {
   return (
     <>
       <Box sx={{ pt: 3, pb: 2 }}>
-        <Typography variant="h5">Working Hours</Typography>
+        <Typography variant="h6" fontWeight="Bold">
+          Working Hours
+        </Typography>
       </Box>
       <Box
         sx={{
@@ -33,7 +35,7 @@ export default function WorkingHours() {
               <Box component="ul" aria-labelledby="category-a" sx={{ pl: 2 }}>
                 <li>Work Period</li>
                 <li>
-                  <Link>Set a work period</Link>
+                  <Link color="#38b492">Set a work period</Link>
                 </li>
               </Box>
             </Item>
@@ -43,7 +45,7 @@ export default function WorkingHours() {
               <Box component="ul" aria-labelledby="category-b" sx={{ pl: 2 }}>
                 <li>Hours per Period</li>
                 <li>
-                  <Link>Set hours per period</Link>
+                  <Link color="#38b492">Set hours per period</Link>
                 </li>
               </Box>
             </Item>
@@ -53,7 +55,7 @@ export default function WorkingHours() {
               <Box component="ul" aria-labelledby="category-c" sx={{ pl: 2 }}>
                 <li>Stress Profile</li>
                 <li>
-                  <Link>24/7</Link>
+                  <Link color="#38b492">24/7</Link>
                 </li>
               </Box>
             </Item>

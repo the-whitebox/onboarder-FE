@@ -17,6 +17,8 @@ import "../../style/AddNewPeople.css";
 import styled from "@mui/system/styled";
 import { DataGrid } from "@mui/x-data-grid";
 import AttachFileOutlinedIcon from "@mui/icons-material/AttachFileOutlined";
+import TextField from "@mui/material/TextField";
+import Switch from "@mui/material/Switch";
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -69,6 +71,8 @@ const rows = [
 ];
 
 export default function AddNewPeople() {
+  const [checked, setChecked] = React.useState(true);
+
   function getStyles(name, personName, theme) {
     return {
       fontWeight:
@@ -89,6 +93,10 @@ export default function AddNewPeople() {
       // On autofill we get a stringified value.
       typeof value === "string" ? value.split(",") : value
     );
+  };
+
+  const handleOnChange = (event) => {
+    setChecked(event.target.checked);
   };
   return (
     <>
@@ -129,49 +137,55 @@ export default function AddNewPeople() {
           <Box
             sx={{
               pt: 5,
+              pl: 2,
               pb: 2,
               display: "flex",
               justifyContent: "space-between",
             }}
           >
-            <Typography variant="h5" fontWeight="Bold">
+            <Typography variant="h4" fontWeight="Bold">
               Add New People
             </Typography>
           </Box>
-          <Box sx={{ pb: 2 }}>
+          <Box sx={{ pb: 2, pl: 2 }}>
             <Typography variant="h6" fontWeight="Bold">
               Invite with link
             </Typography>
           </Box>
-          <Box sx={{ pt: 2, pb: 2 }}>
+          <Box sx={{ pt: 2, pb: 2, pl: 2 }}>
             <Typography paragraph>
               Share a link with your team to get them on to your MaxPilot <br />
               workplace. You approve each request to keep your MaxPilot secure.
             </Typography>
           </Box>
-          <Box sx={{ pt: 2, pb: 2, display: "flex" }}>
-            <input type="text" />
-            <Button sx={{ ml: 2 }} variant="contained" className="btn-color">
+          <Box sx={{ pt: 2, pb: 2, pl: 2, display: "flex" }}>
+            <TextField size="small" />
+            <Button
+              sx={{ ml: 2, height: 30 }}
+              variant="contained"
+              className="btn-color"
+            >
               Copy link
             </Button>
           </Box>
-          <Box sx={{ pt: 2, pb: 2 }}>
+          <Box sx={{ pt: 2, pb: 2, pl: 2 }}>
             <Link sx={{ color: "#38b492", textDecoration: "none" }}>
-              <AttachFileOutlinedIcon /> How invite links work
+              How invite links work
             </Link>
           </Box>
-          <Box sx={{ pt: 2, pb: 2 }}>
+          <Box sx={{ pt: 2, pb: 2, pl: 2 }}>
             <Typography variant="h6" fontWeight="Bold">
               Add manually
             </Typography>
           </Box>
-          <Box>
+          <Box sx={{ pl: 2 }}>
             <Typography variant="paragraph">These people work at:</Typography>
           </Box>
-          <Box>
-            <FormControl sx={{ m: 1, width: 300, mt: 3 }}>
+          <Box sx={{ pl: 2 }}>
+            <FormControl sx={{ width: 300, mt: 3 }}>
               <Select
                 multiple
+                size="small"
                 displayEmpty
                 value={personName}
                 onChange={handleChange}
@@ -198,7 +212,7 @@ export default function AddNewPeople() {
               </Select>
             </FormControl>
           </Box>
-          <Box>
+          <Box sx={{ pl: 2, pt: 1 }}>
             <Typography variant="paragraph">
               Choose a location for you new people and then add as many as you
               want by typing their names and email addresses. <br /> You can
@@ -206,8 +220,13 @@ export default function AddNewPeople() {
               remember everything.
             </Typography>
           </Box>
-          <Box sx={{ pt: 2, pb: 2 }}>
-            <Button variant="contained" className="btn-color">
+          <Box sx={{ pt: 2, pb: 2, pl: 2 }}>
+            <Button
+              variant="contained"
+              className="btn-color"
+              sx={{ height: 30 }}
+            >
+              <AttachFileOutlinedIcon />
               Import and Export a file
             </Button>
           </Box>
@@ -227,8 +246,15 @@ export default function AddNewPeople() {
               rowsPerPageOptions={[5]}
             />
           </Box>
-          <Box sx={{ pt: 2 }}>
+          <Box sx={{ pt: 2, pl: 2, display: "flex" }}>
             <Typography color="#38b492">Send invitation Email?</Typography>
+            <Switch
+              checked={checked}
+              onChange={handleOnChange}
+              inputProps={{ "aria-label": "controlled" }}
+              size="small"
+              sx={{ color: "red" }}
+            />
           </Box>
           <Box
             sx={{
@@ -236,7 +262,11 @@ export default function AddNewPeople() {
             }}
           >
             <Button sx={{ color: "#38b492" }}>Cancel</Button>
-            <Button variant="contained" className="btn-color">
+            <Button
+              sx={{ ml: 2, height: 30 }}
+              variant="contained"
+              className="btn-color"
+            >
               Add People
             </Button>
           </Box>

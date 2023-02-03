@@ -10,8 +10,20 @@ import Grid from "@mui/material/Grid";
 import CssBaseline from "@mui/material/CssBaseline";
 import MaxPilotLogo from "../../assets/images/maxpilot-logo-w.png";
 import "../../style/General.css";
+import dayjs from "dayjs";
+import Stack from "@mui/material/Stack";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { DesktopDatePicker } from "@mui/x-date-pickers/DesktopDatePicker";
+import "../../style/PersonalDetails.css";
 
 export default function PersonalDetails() {
+  const [date, setDate] = React.useState(dayjs("2014-08-18T21:11:54"));
+
+  const handleOnChange = (newValue) => {
+    setDate(newValue);
+  };
+
   return (
     <>
       <Grid sx={{ display: "flex" }}>
@@ -50,14 +62,18 @@ export default function PersonalDetails() {
         <Grid>
           <Box
             sx={{
-              pt: 5,
+              pl: 2,
+              pt: 2,
             }}
           >
-            <Link color="#38b492">Back to Profile</Link>
+            <Link href="/profile" color="#38b492">
+              Back to Profile
+            </Link>
           </Box>
           <Box
             sx={{
-              pt: 5,
+              pl: 2,
+              pt: 2,
               pb: 2,
               pr: 10,
               display: "flex",
@@ -79,6 +95,7 @@ export default function PersonalDetails() {
           </Box>
           <Box
             sx={{
+              pl: 2,
               pb: 2,
             }}
           >
@@ -92,8 +109,14 @@ export default function PersonalDetails() {
             }}
           >
             <Button
+              className="btn-font-padding"
               variant="outlined"
-              sx={{ ml: 2, color: "#38b492", border: "1px solid #38b492" }}
+              sx={{
+                ml: 2,
+                color: "#38b492",
+                border: "1px solid #38b492",
+                fontSize: 12,
+              }}
             >
               Personal Details
             </Button>
@@ -101,6 +124,8 @@ export default function PersonalDetails() {
           </Box>
           <Box
             sx={{
+              pt: 1,
+              pl: 2,
               pb: 2,
             }}
           >
@@ -110,6 +135,7 @@ export default function PersonalDetails() {
           </Box>
           <Box
             sx={{
+              pl: 2,
               pb: 2,
             }}
           >
@@ -230,35 +256,47 @@ export default function PersonalDetails() {
               />
             </Box>
             <br />
-            <Box className="flex flex-row">
+            <Box
+              sx={{
+                display: "flex",
+                flexDirection: "row",
+                justifyContent: "space-between",
+              }}
+            >
               <Typography
+                inline
                 id="modal-modal-description"
                 sx={{
                   mt: 2,
-                  mr: 13,
+                  mr: 15,
                   fontSize: 14,
+                  width: 180,
                   fontWeight: "Bold",
                 }}
               >
                 Date of Birth
               </Typography>
-              <TextField
-                id="outlined-basic"
-                label=""
-                variant="outlined"
-                size="small"
-                sx={{
-                  width: "600px",
-                  mr: 0,
-                }}
-              />
-
+              <Box sx={{ width: 600, pl: 4 }}>
+                <LocalizationProvider
+                  dateAdapter={AdapterDayjs}
+                  sx={{ height: 0.1, pt: 5 }}
+                >
+                  <Stack spacing={3}>
+                    <DesktopDatePicker
+                      inputFormat="MM/DD/YYYY"
+                      value={date}
+                      onChange={handleOnChange}
+                      renderInput={(params) => <TextField {...params} />}
+                    />
+                  </Stack>
+                </LocalizationProvider>
+              </Box>
               <Grid
                 container
                 sx={{
                   display: "flex",
                   flexDirection: "row",
-                  alignItems: "center",
+                  alignItems: "end",
                   justifyContent: "flex-end",
                 }}
               >

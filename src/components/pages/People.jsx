@@ -229,7 +229,9 @@ export default function People() {
             <BulkActions />
           </Box>
           <Box sx={{ pt: 3, pb: 2 }}>
-            <Typography variant="h5">Personal Details</Typography>
+            <Typography variant="h6" fontWeight="Bold">
+              Personal Details
+            </Typography>
           </Box>
           <Box
             sx={{

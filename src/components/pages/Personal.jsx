@@ -50,14 +50,18 @@ export default function Personal() {
         <Grid>
           <Box
             sx={{
-              pt: 5,
+              pl: 2,
+              pt: 2,
             }}
           >
-            <Link color="#38b492">Back to Profile</Link>
+            <Link href="/profile" color="#38b492">
+              Back to Profile
+            </Link>
           </Box>
           <Box
             sx={{
-              pt: 5,
+              pl: 2,
+              pt: 2,
               pb: 2,
               pr: 10,
               display: "flex",
@@ -79,6 +83,7 @@ export default function Personal() {
           </Box>
           <Box
             sx={{
+              pl: 2,
               pb: 2,
             }}
           >
@@ -88,19 +93,28 @@ export default function Personal() {
           </Box>
           <Box
             sx={{
+              pl: 2,
               display: "flex",
             }}
           >
             <Typography>Personal Details</Typography>
             <Button
+              className="btn-font-padding"
               variant="outlined"
-              sx={{ ml: 2, color: "#38b492", border: "1px solid #38b492" }}
+              sx={{
+                ml: 2,
+                color: "#38b492",
+                border: "1px solid #38b492",
+                fontSize: 12,
+              }}
             >
               Contact
             </Button>
           </Box>
           <Box
             sx={{
+              pt: 1,
+              pl: 2,
               pb: 2,
             }}
           >
@@ -111,6 +125,7 @@ export default function Personal() {
           <Box
             sx={{
               pb: 2,
+              pl: 2,
             }}
           >
             <Box className="flex flex-row ">
@@ -292,7 +307,6 @@ export default function Personal() {
               </Typography>
               <TextField
                 id="outlined-basic"
-                label=""
                 variant="outlined"
                 size="small"
                 sx={{
@@ -307,38 +321,43 @@ export default function Personal() {
                 id="modal-modal-description"
                 sx={{
                   mt: 2,
+                  width: 250,
                   fontSize: 14,
                   fontWeight: "Bold",
                 }}
               >
                 Emergency phone number
               </Typography>
-              <TextField
-                id="outlined-basic"
-                label=""
-                variant="outlined"
-                size="small"
+              <Box sx={{ width: 50, pl: 1 }}>
+                <TextField
+                  id="outlined-basic"
+                  label=""
+                  variant="outlined"
+                  size="small"
+                  sx={{
+                    width: "300px",
+                    mr: 60,
+                  }}
+                />
+              </Box>
+              <Grid
+                container
                 sx={{
-                  width: "300px",
-                  mr: 60,
+                  pl: 10,
+                  display: "flex",
+                  alignItems: "end",
+                  justifyContent: "end",
                 }}
-              />
+              >
+                <Avatar
+                  className="messageCircle"
+                  sx={{ backgroundColor: "#38b492" }}
+                >
+                  <TbMessageCircle />
+                </Avatar>
+              </Grid>
             </Box>
           </Box>
-          <Grid
-            container
-            sx={{
-              display: "flex",
-              alignItems: "end",
-            }}
-          >
-            <Avatar
-              className="messageCircle"
-              sx={{ backgroundColor: "#38b492" }}
-            >
-              <TbMessageCircle />
-            </Avatar>
-          </Grid>
         </Grid>
       </Grid>
     </>
