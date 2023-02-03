@@ -12,12 +12,12 @@ const Item = styled("div")(({ theme }) => ({
 export default function Contact() {
   return (
     <>
-      <Box sx={{ pt: 5, pl: 33, pb: 2 }}>
+      <Box sx={{ pt: 2, pb: 2 }}>
         <Typography variant="h5">Contact</Typography>
       </Box>
       <Box
         sx={{
-          ml: 35,
+          ml: 2,
           mr: 40,
           pt: 0.5,
           border: "1px solid",
@@ -36,11 +36,11 @@ export default function Contact() {
                   >
                     <li>Email</li>
                     <li>
-                      <Link>Add an email</Link>
+                      <Link color="#38b492">Add an email</Link>
                     </li>
                     <li>Emergency contact</li>
                     <li>
-                      <Link>Add an emergency contact</Link>
+                      <Link color="#38b492">Add an emergency contact</Link>
                     </li>
                   </Box>
                 </Item>
@@ -54,11 +54,11 @@ export default function Contact() {
                   >
                     <li>Mobile</li>
                     <li>
-                      <Link>Add a mobile</Link>
+                      <Link color="#38b492">Add a mobile</Link>
                     </li>
                     <li>Contact Details</li>
                     <li>
-                      <Link>Add contact details</Link>
+                      <Link color="#38b492">Add contact details</Link>
                     </li>
                   </Box>
                 </Item>
@@ -72,7 +72,7 @@ export default function Contact() {
                   >
                     <li>Address</li>
                     <li>
-                      <Link>Add an address</Link>
+                      <Link color="#38b492">Add an address</Link>
                     </li>
                     <li></li>
                   </Box>

@@ -54,9 +54,10 @@ export default function EmploymentType() {
         <Typography variant="h6" fontWeight="Bold">
           Employment type
         </Typography>
-        <FormControl sx={{ m: 1, width: 300, mt: 3 }}>
+        <FormControl sx={{ pl: 5, m: 1, width: 300, mt: 3 }}>
           <Select
             multiple
+            size="small"
             displayEmpty
             value={personName}
             onChange={handleChange}

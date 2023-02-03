@@ -126,7 +126,6 @@ export default function VerticalMenu(props) {
         </Box>
         <Divider />
         <List sx={{ fontWeight: "900 !important", pl: "10px", mt: "5px" }}>
-          {" "}
           Profile
         </List>
         <ListItemButton
@@ -149,7 +148,6 @@ export default function VerticalMenu(props) {
           <ListItemText primary="Journals" />
         </ListItemButton>
         <List sx={{ fontWeight: "900 !important", pl: "10px", mt: "5px" }}>
-          {" "}
           Scheduling
         </List>
         <ListItemButton
