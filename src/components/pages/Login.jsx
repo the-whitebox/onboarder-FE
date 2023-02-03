@@ -34,7 +34,7 @@ import { useState } from "react";
 const theme = createTheme();
 
 export default function SignInSide() {
-  const url = "http://192.168.100.149:8000/api/auth/login/";
+  const url = "http://192.168.10.8:8000/api/auth/login/";
   const [email, setEmail] = useState("");
   const [emailError, setEmailError] = useState("");
   const [password, setPassword] = useState("");
@@ -95,7 +95,7 @@ export default function SignInSide() {
           )
           .then((response) => {
             console.log("Login API was hit successfully");
-            navigate("/about");
+            navigate("/people");
             // Navigate to Home Screen
           });
       } catch (error) {
