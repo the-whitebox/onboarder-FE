@@ -5,12 +5,13 @@ import Typography from "@mui/material/Typography";
 import Avatar from "@mui/material/Avatar";
 import TextField from "@mui/material/TextField";
 import Grid from "@mui/material/Grid";
-import Checkbox from "@mui/material/Checkbox";
+import { FormControlLabel, Checkbox } from "@mui/material";
 import "../../style/SignUp.css";
 import Link from "@mui/material/Link";
 import facebookIcon from "../../assets/icons/facebook.png";
 import googleIcon from "../../assets/icons/google.png";
-import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import { useForm } from "react-hook-form";
 // import "lora";
 
 const style = {
@@ -25,30 +26,61 @@ const style = {
   p: 4,
 };
 
-const label = { inputProps: { "aria-label": "Checkbox" } };
-
 export default function BasicModal() {
-  const url = "http://192.168.100.149:8000/api/auth/user/registration/";
+  const [state, setState] = React.useState({ data: "" });
   const [username, setUserName] = React.useState("");
   const [email, setEmail] = React.useState("");
+  const [error, setError] = React.useState(null);
+  const [userNameError, setUserNameError] = React.useState("");
+  const [emailError, setEmailError] = React.useState("");
 
-  const signUp = () => {
-    console.log("Inside signUp");
-    console.log(username, email, url);
+  const [checked, setChecked] = React.useState(false);
+  console.log({ checked });
 
-    try {
-      axios
-        .post(url, {
+  const handleChange = (event) => {
+    setChecked(event.target.checked);
+  };
+
+  const usernameValidation = () => {
+    if (username === "") {
+      setUserNameError("Please enter a User name");
+    } else setUserNameError("");
+  };
+
+  const emailValidation = () => {
+    const regEx = /^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[A-Za-z]+$/;
+    if (regEx.test(email)) {
+      setEmailError("");
+    } else if (email === "") {
+      setEmailError("Email should not be empty");
+    } else if (!regEx.test(email)) {
+      setEmailError("Email is not valid");
+    }
+  };
+
+  const {
+    register,
+    formState: { errors },
+  } = useForm();
+
+  const navigate = useNavigate();
+
+  const toStep1 = (e) => {
+    if (username !== "" && email !== "") {
+      console.log("Data Found");
+      setError(false);
+      console.log(username, email);
+      // alert(mobile + business + businesstype + industry);
+
+      navigate("/step1", {
+        state: {
           username: username,
           email: email,
-        })
-        .then((response) => {
-          console.log("Signup API was hit succesfully");
-
-          // Navigate to Home Screen
-        });
-    } catch (error) {
-      console.log(error.response.data);
+        },
+      });
+    } else {
+      setError(true);
+      setState({ data: e.target.value });
     }
   };
 
@@ -61,7 +93,7 @@ export default function BasicModal() {
           component="h2"
           className="uproster-font"
         >
-          Try UROSTERS for free
+          Try MaxPilot for free
         </Typography>
         <Typography
           id="modal-modal-description"
@@ -82,8 +114,21 @@ export default function BasicModal() {
           variant="outlined"
           className="signup-text-field"
           value={username}
+          {...register("Username", { required: true })}
           onChange={(e) => setUserName(e.target.value)}
         />
+        {errors.username?.type === "required" && "Username Required"}
+        <small>
+          {userNameError && (
+            <div
+              style={{
+                color: "red",
+              }}
+            >
+              {userNameError}
+            </div>
+          )}
+        </small>
         <TextField
           sx={{
             width: "100%",
@@ -94,8 +139,21 @@ export default function BasicModal() {
           variant="outlined"
           className="signup-text-field"
           value={email}
+          {...register("Email", { required: true })}
           onChange={(e) => setEmail(e.target.value)}
         />
+        {errors.email?.type === "required" && "Email Required"}
+        <small>
+          {emailError && (
+            <div
+              style={{
+                color: "red",
+              }}
+            >
+              {emailError}
+            </div>
+          )}
+        </small>
         <Grid
           sx={{
             display: "flex",
@@ -105,7 +163,9 @@ export default function BasicModal() {
             width: "65%",
           }}
         >
-          <Checkbox {...label} />
+          <FormControlLabel
+            control={<Checkbox checked={checked} onChange={handleChange} />}
+          />
 
           <Typography
             sx={{
@@ -120,7 +180,11 @@ export default function BasicModal() {
           type="submit"
           variant="contained"
           className="btn-forgetPwd btn-login"
-          onClick={signUp}
+          onClick={() => {
+            usernameValidation();
+            emailValidation();
+            toStep1();
+          }}
           sx={{
             mt: 4,
             width: "65%",

@@ -20,12 +20,15 @@ import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
+import MaxPilotLogo from "../../assets/logos/maxpilot-logo.svg";
 import Icon1 from "../../assets/icons/health-icon.png";
 import Icon2 from "../../assets/icons/retail-icon.png";
 import Icon3 from "../../assets/icons/services-icon.png";
 import Icon4 from "../../assets/icons/charity-icon.png";
 import Icon5 from "../../assets/icons/others-icon.png";
 import { useNavigate } from "react-router-dom";
+import { useState } from "react";
+import { useForm } from "react-hook-form";
 
 const style = {
   position: "absolute",
@@ -45,29 +48,72 @@ export default function BasicModal() {
   const [mobile, setMobile] = React.useState("");
   const [businesstype, setBusinesstype] = React.useState("");
   const [industry, setIndustry] = React.useState("");
+  const [error, setError] = React.useState(null);
+  const [businessError, setBusinessError] = useState("");
+  const [mobileError, setMobileError] = useState("");
+  const [businessTypeError, setBusinessTypeError] = useState("");
+  const [industryError, setIndustryError] = useState("");
 
   const theme = useTheme();
   const [age, setAge] = React.useState("");
 
+  const businessValidation = () => {
+    if (business == "") {
+      setBusinessError("Please enter a business name");
+    } else setBusinessError("");
+  };
+
+  const mobileValidation = () => {
+    if (mobile == "") {
+      setMobileError("Please enter your mobile number");
+    } else setMobileError("");
+  };
+
+  const businessTypeValidation = () => {
+    if (businesstype == "") {
+      setBusinessTypeError("Please describe your business type");
+    } else setBusinessTypeError("");
+  };
+
+  const industryValidation = () => {
+    if (industry == "") {
+      setIndustryError("Please describe your industry");
+    } else setIndustryError("");
+  };
+
+  const {
+    register,
+    formState: { errors },
+  } = useForm();
+
   const navigate = useNavigate();
 
-  const handleChange = (event) => {
-    setState({ data: event.target.value });
+  const toStep2 = (e) => {
+    if (
+      business !== "" &&
+      mobile !== "" &&
+      businesstype !== "" &&
+      industry !== ""
+    ) {
+      console.log("Data Found");
+      setError(false);
+      console.log(mobile, business, businesstype, industry);
+      // alert(mobile + business + businesstype + industry);
+
+      navigate("/step2", {
+        state: {
+          business: business,
+          mobile: mobile,
+          businesstype: businesstype,
+          industry: industry,
+        },
+      });
+    } else {
+      setError(true);
+      setState({ data: e.target.value });
+    }
   };
 
-  const toStep2 = () => {
-    console.log(mobile, business, businesstype, industry);
-    // alert(mobile + business + businesstype + industry);
-
-    navigate("/step2", {
-      state: {
-        business: business,
-        mobile: mobile,
-        businesstype: businesstype,
-        industry: industry,
-      },
-    });
-  };
   // const changeState = () => {
   //   // setState({
   //   //   data: `state/props of parent component
@@ -102,7 +148,7 @@ export default function BasicModal() {
                 color: "#38B492",
               }}
             >
-              UROSTERS
+              MaxPilot
             </Typography>
             <Typography
               className="font-loader"
@@ -171,13 +217,28 @@ export default function BasicModal() {
                 </Typography>
                 <TextField
                   id="business"
+                  required="true"
                   variant="outlined"
+                  {...register("Business", { required: true })}
                   onChange={(e) => setBusiness(e.target.value)}
                   sx={{
                     width: "90%",
                   }}
                 />
+                {errors.business?.type === "required" && "Business Required"}
+                <small>
+                  {businessError && (
+                    <div
+                      style={{
+                        color: "red",
+                      }}
+                    >
+                      {businessError}
+                    </div>
+                  )}
+                </small>
               </Grid>
+
               <Grid
                 sx={{
                   display: "flex",
@@ -199,11 +260,24 @@ export default function BasicModal() {
                 <TextField
                   id="mobile-number"
                   variant="outlined"
+                  {...register("Mobile", { required: true })}
                   sx={{
                     width: "90%",
                   }}
                   onChange={(e) => setMobile(e.target.value)}
                 />
+                {errors.mobile?.type === "required" && "Mobile Required"}
+                <small>
+                  {mobileError && (
+                    <div
+                      style={{
+                        color: "red",
+                      }}
+                    >
+                      {mobileError}
+                    </div>
+                  )}
+                </small>
               </Grid>
             </Grid>
             <Typography
@@ -256,6 +330,7 @@ export default function BasicModal() {
                     },
                   },
                 }}
+                {...register("Business Type", { required: true })}
                 onChange={(e) => setBusinesstype(e.target.id)}
               >
                 {[
@@ -295,6 +370,19 @@ export default function BasicModal() {
                 ))}
               </RadioGroup>
             </Grid>
+            {errors.businesstype?.type === "required" &&
+              "Business Type Required"}
+            <small>
+              {businessTypeError && (
+                <div
+                  style={{
+                    color: "red",
+                  }}
+                >
+                  {businessTypeError}
+                </div>
+              )}
+            </small>
             <Typography
               sx={{
                 mt: 2,
@@ -322,6 +410,7 @@ export default function BasicModal() {
                   width: "50%",
                 }}
                 // onChange={handleSelectChange}
+                {...register("Industry", { required: true })}
                 onChange={(e) => setIndustry(e.target.value)}
               >
                 <MenuItem value={10}>Ten</MenuItem>
@@ -329,6 +418,18 @@ export default function BasicModal() {
                 <MenuItem value={30}>Thirty</MenuItem>
               </Select>
             </FormControl>
+            {errors.industry?.type === "required" && "Industry Required"}
+            <small>
+              {industryError && (
+                <div
+                  style={{
+                    color: "red",
+                  }}
+                >
+                  {industryError}
+                </div>
+              )}
+            </small>
 
             <Button
               type="submit"
@@ -342,6 +443,10 @@ export default function BasicModal() {
               }}
               data={state.data}
               onClick={() => {
+                businessValidation();
+                mobileValidation();
+                businessTypeValidation();
+                industryValidation();
                 toStep2();
               }}
             >

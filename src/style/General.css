@@ -1,0 +1,16 @@
+.avatar-size {
+  width: 120px !important;
+  height: 120px !important;
+  font-size: 45px !important;
+}
+.messageCircle {
+  width: 120px !important;
+  height: 120px !important;
+  font-size: 75px !important;
+}
+
+.flex-row {
+  display: flex !important;
+  flex-direction: row !important;
+  justify-content: space-between;
+}

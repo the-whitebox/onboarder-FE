@@ -1,52 +1,184 @@
 import * as React from "react";
-import Divider from "@mui/material/Divider";
-import MenuList from "@mui/material/MenuList";
-import MenuItem from "@mui/material/MenuItem";
-import ListItemText from "@mui/material/ListItemText";
+import Box from "@mui/material/Box";
+import List from "@mui/material/List";
+import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
+import ListItemText from "@mui/material/ListItemText";
+import Divider from "@mui/material/Divider";
+import { styled } from "@mui/material/styles";
+import Avatar from "@mui/material/Avatar";
+import InboxIcon from "@mui/icons-material/Inbox";
+import DraftsIcon from "@mui/icons-material/Drafts";
 import Typography from "@mui/material/Typography";
-import ContentCut from "@mui/icons-material/ContentCut";
-import ContentCopy from "@mui/icons-material/ContentCopy";
-import ContentPaste from "@mui/icons-material/ContentPaste";
-import Cloud from "@mui/icons-material/Cloud";
+import Button from "@mui/material/Button";
+import "../../style/General.css";
+import { useNavigate } from "react-router-dom";
+import Employment from "../pages/Employment";
 
-export default function IconMenu() {
+const StyledList = styled(List)({
+  // selected and (selected + hover) states
+  "&& .Mui-selected, && .Mui-selected:hover": {
+    backgroundColor: "white",
+    borderRadius: "12px 0px 0px 12px",
+    "&, & .MuiListItemIcon-root": {
+      color: "#38B492",
+    },
+  },
+  // hover states
+  "& .MuiListItemButton-root:hover": {
+    backgroundColor: "white",
+    // borderRadius: "12px",
+    "&, & .MuiListItemIcon-root": {
+      color: "#38B492",
+    },
+  },
+});
+
+export default function VerticalMenu(props) {
+  const [selectedIndex, setSelectedIndex] = React.useState(props.indexToHL);
+  // const handleListItemClick = (index: number) => {
+  //   setSelectedIndex(index);
+  // };
+  console.log(props.indexToHL);
+
+  // setSelectedIndex(props.indexToHL);
+
+  const navigate = useNavigate();
+
+  function stringAvatar(name) {
+    return {
+      sx: {
+        bgcolor: "white",
+        color: "black",
+      },
+      children: `${name.split(" ")[0][0]}${name.split(" ")[1][0]}`,
+    };
+  }
+
   return (
-    <MenuList sx={{ width: "30%", maxWidth: "100%" }}>
-      <MenuItem>
-        <ListItemIcon>
-          <ContentCut fontSize="small" />
-        </ListItemIcon>
-        <ListItemText>Cut</ListItemText>
-        <Typography variant="body2" color="text.secondary">
-          ⌘X
-        </Typography>
-      </MenuItem>
-      <MenuItem>
-        <ListItemIcon>
-          <ContentCopy fontSize="small" />
-        </ListItemIcon>
-        <ListItemText>Copy</ListItemText>
-        <Typography variant="body2" color="text.secondary">
-          ⌘C
-        </Typography>
-      </MenuItem>
-      <MenuItem>
-        <ListItemIcon>
-          <ContentPaste fontSize="small" />
-        </ListItemIcon>
-        <ListItemText>Paste</ListItemText>
-        <Typography variant="body2" color="text.secondary">
-          ⌘V
-        </Typography>
-      </MenuItem>
-      <Divider />
-      <MenuItem>
-        <ListItemIcon>
-          <Cloud fontSize="small" />
-        </ListItemIcon>
-        <ListItemText>Web Clipboard</ListItemText>
-      </MenuItem>
-    </MenuList>
+    <Box
+      sx={{
+        width: "100%",
+        maxWidth: 240,
+        bgcolor: "#38B492",
+        height: "100vh",
+        color: "#ffffff",
+      }}
+    >
+      <StyledList
+        sx={{
+          pl: "10px",
+        }}
+      >
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+            alignItems: "center",
+            height: 250,
+          }}
+        >
+          <Avatar
+            className="avatar-size"
+            // sx={{ width: "120px !important", height: 120 }}
+            {...stringAvatar("Asher Muneer")}
+          />
+          <Typography
+            component="h3"
+            variant="body1"
+            sx={{
+              fontWeight: "Semi-Bold",
+              fontSize: "20px",
+              color: "#ffffff",
+              mt: 2,
+            }}
+          >
+            Asher Muneer
+          </Typography>
+          <Typography
+            component="h3"
+            variant="body1"
+            sx={{
+              fontWeight: "Regular",
+              fontSize: "16px",
+              color: "#ffffff",
+            }}
+          >
+            Advisor
+          </Typography>
+          <Button
+            type="submit"
+            variant="contained"
+            sx={{
+              // mt: 4,
+              // width: "89px",
+              borderRadius: "5px",
+              justifyContent: "center",
+              backgroundColor: "#ffffff",
+              color: "#38B492",
+              fontSize: "12px",
+              mt: 0.5,
+            }}
+          >
+            Start unscheduled shift
+          </Button>
+        </Box>
+        <Divider />
+        <List sx={{ fontWeight: "900 !important", pl: "10px", mt: "5px" }}>
+          Profile
+        </List>
+        <ListItemButton
+          selected={selectedIndex === 0}
+          onClick={() => navigate("/profile")}
+        >
+          <ListItemText primary="Personal" />
+        </ListItemButton>
+        <ListItemButton
+          selected={selectedIndex === 1}
+          onClick={() => navigate("/employment")}
+        >
+          <ListItemText primary="Employment" />
+        </ListItemButton>
+
+        <ListItemButton
+          selected={selectedIndex === 2}
+          // onClick={() => handleListItemClick(2)}
+        >
+          <ListItemText primary="Journals" />
+        </ListItemButton>
+        <List sx={{ fontWeight: "900 !important", pl: "10px", mt: "5px" }}>
+          Scheduling
+        </List>
+        <ListItemButton
+          selected={selectedIndex === 3}
+          // onClick={() => handleListItemClick(3)}
+        >
+          <ListItemText primary="Shifts" />
+        </ListItemButton>
+        <ListItemButton
+          selected={selectedIndex === 4}
+          // onClick={() => handleListItemClick(4)}
+        >
+          <ListItemText primary="Leave" />
+        </ListItemButton>
+        <ListItemButton
+          selected={selectedIndex === 5}
+          // onClick={() => handleListItemClick(5)}
+        >
+          <ListItemText primary="Unavailability" />
+        </ListItemButton>
+        <List sx={{ fontWeight: "900 !important", pl: "10px", mt: "5px" }}>
+          {" "}
+          Activity
+        </List>
+        <ListItemButton
+          selected={selectedIndex === 6}
+          // onClick={() => handleListItemClick(6)}
+        >
+          <ListItemText primary="News feed" />
+        </ListItemButton>
+      </StyledList>
+    </Box>
   );
 }

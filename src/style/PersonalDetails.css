@@ -1,0 +1,15 @@
+/* .css-1n4twyu-MuiInputBase-input-MuiOutlinedInput-input {
+  height: 1em !important;
+}
+
+.css-nxo287-MuiInputBase-input-MuiOutlinedInput-input {
+  height: 0.1em !important;
+} */
+
+#outlined-basic {
+  height: 1em !important;
+}
+
+.input-field {
+  padding: 5px 14px !important;
+}

@@ -30,6 +30,8 @@ import OthersIcon from "../../assets/icons/others-icon.png";
 import { useLocation } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { useState } from "react";
+import { useForm } from "react-hook-form";
 
 const style = {
   position: "absolute",
@@ -48,51 +50,79 @@ export default function BasicModal() {
   const [state, setState] = React.useState({ data: "" });
   const [process, setProcess] = React.useState("");
   const [hear, setHear] = React.useState("");
+  const [error, setError] = React.useState(null);
+  const [processError, setProcessError] = useState("");
+  const [hearError, setHearError] = useState("");
 
   const navigate = useNavigate();
   const theme = useTheme();
   const location = useLocation();
 
-  const createBusiness = () => {
+  const processValidation = () => {
+    if (process === "") {
+      setProcessError("What process you prefer?");
+    } else setProcessError("");
+  };
+
+  const hearValidation = () => {
+    if (hear === "") {
+      setHearError("How did you hear about us?");
+    } else setHearError("");
+  };
+
+  const {
+    register,
+    formState: { errors },
+  } = useForm();
+
+  const createBusiness = (e) => {
     console.log("Inside createBusiness");
     console.log(location.state, process, hear);
-    try {
-      axios
-        .post(url, {
-          business_name: location.state.business,
-          mobile_number: location.state.mobile,
-          business_type: location.state.businessType,
-          industry_type: location.state.industry,
-          employess_range: null,
-          joining_purpose: location.state.purpose,
-          payroll_type: location.state.payroll,
-          pay_proces_improvement_duration: process,
-          how_you_hear: hear,
-        })
-        .then((response) => {
-          console.log("Signup API was hit succesfully");
+    if (process !== "" && hear !== "") {
+      console.log("Data Found");
+      setError(false);
+      console.log(process, hear);
+      try {
+        axios
+          .post(url, {
+            business_name: location.state.business,
+            mobile_number: location.state.mobile,
+            business_type: location.state.businessType,
+            industry_type: location.state.industry,
+            employess_range: null,
+            joining_purpose: location.state.purpose,
+            payroll_type: location.state.payroll,
+            pay_proces_improvement_duration: process,
+            how_you_hear: hear,
+          })
+          .then((response) => {
+            console.log("Signup API was hit succesfully");
 
-          // Navigate to Home Screen
-        });
-    } catch (error) {
-      console.log(error.response.data);
+            // Navigate to Home Screen
+          });
+      } catch (error) {
+        console.log(error.response.data);
+      }
+
+      console.log(process, hear);
+      // alert(process + hear);
+
+      navigate("/about", {
+        state: {
+          business: location.state.business,
+          mobile: location.state.mobile,
+          businessType: location.state.businesstype,
+          industry: location.state.industry,
+          purpose: location.state.purpose,
+          payroll: location.state.payroll,
+          process: process,
+          hear: hear,
+        },
+      });
+    } else {
+      setError(true);
+      setState({ data: e.target.value });
     }
-
-    console.log(process, hear);
-    // alert(process + hear);
-
-    navigate("/about", {
-      state: {
-        business: location.state.business,
-        mobile: location.state.mobile,
-        businessType: location.state.businesstype,
-        industry: location.state.industry,
-        purpose: location.state.purpose,
-        payroll: location.state.payroll,
-        process: process,
-        hear: hear,
-      },
-    });
   };
 
   const icons = [
@@ -128,7 +158,7 @@ export default function BasicModal() {
                 color: "#38B492",
               }}
             >
-              UROSTERS
+              MaxPilot
             </Typography>
             <Typography
               className="font-loader"
@@ -210,10 +240,11 @@ export default function BasicModal() {
                 >
                   <RadioGroup
                     aria-labelledby="storage-label"
-                    defaultValue="As soon as possible"
+                    // defaultValue="As soon as possible"
                     overlay
                     size="lg"
                     sx={{ flexDirection: "row", gap: 1.5, mt: 2 }}
+                    {...register("Process", { required: true })}
                     onChange={(e) => setProcess(e.target.value)}
                   >
                     {[
@@ -269,6 +300,18 @@ export default function BasicModal() {
                     ))}
                   </RadioGroup>
                 </Grid>
+                {errors.process?.type === "required" && "Process Required"}
+                <small>
+                  {processError && (
+                    <div
+                      style={{
+                        color: "red",
+                      }}
+                    >
+                      {processError}
+                    </div>
+                  )}
+                </small>
               </Grid>
             </Grid>
 
@@ -280,7 +323,7 @@ export default function BasicModal() {
                 color: "#332A60",
               }}
             >
-              How did you hear about UROSTER?
+              How did you hear about MaxPilot?
             </Typography>
             <Grid
               item
@@ -295,7 +338,7 @@ export default function BasicModal() {
             >
               <RadioGroup
                 aria-label="platform"
-                defaultValue="Website"
+                // defaultValue="Website"
                 overlay
                 size="lg"
                 name="platform"
@@ -327,14 +370,15 @@ export default function BasicModal() {
                     },
                   },
                 }}
+                {...register("Hear", { required: true })}
                 onChange={(e) => setHear(e.target.value)}
               >
                 {[
-                  "Using UROSTER in the past",
+                  "Using MaxPilot in the past",
                   "Recommended from friend or colleague",
                   "Recommended from a business vendor",
                   "Read reviews or blog",
-                  "Saw an ad about UROSTER",
+                  "Saw an ad about MaxPilot",
                   "Searched the internet",
                   "Other",
                 ].map((value, idx) => (
@@ -386,6 +430,18 @@ export default function BasicModal() {
                 ))}
               </RadioGroup>
             </Grid>
+            {errors.hear?.type === "required" && "Hear Required"}
+            <small>
+              {hearError && (
+                <div
+                  style={{
+                    color: "red",
+                  }}
+                >
+                  {hearError}
+                </div>
+              )}
+            </small>
             {/* </Grid> */}
             <Link to="/step2" style={{ textDecoration: "none" }}>
               <Button
@@ -399,7 +455,11 @@ export default function BasicModal() {
                   borderRadius: "10px",
                   justifyContent: "center",
                 }}
-                onClick={createBusiness}
+                onClick={(e) => {
+                  processValidation();
+                  hearValidation();
+                  createBusiness(e);
+                }}
               >
                 Create Business
               </Button>

@@ -112,7 +112,7 @@ export default function BasicModal() {
                 color: "#332A60",
               }}
             >
-              We're setting up your UROSTERS trial
+              We're setting up your MaxPilot trial
             </Typography>
             <Typography
               className="font-loader"

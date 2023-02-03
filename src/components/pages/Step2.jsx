@@ -26,6 +26,8 @@ import PayIcon from "../../assets/icons/pay-icon.png";
 import XeroIcon from "../../assets/icons/xero-icon.png";
 import { useLocation } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+import { useState } from "react";
+import { useForm } from "react-hook-form";
 
 const style = {
   position: "absolute",
@@ -43,26 +45,56 @@ export default function BasicModal(props) {
   const [state, setState] = React.useState({ data: "" });
   const [purpose, setPurpose] = React.useState("");
   const [payroll, setPayroll] = React.useState("");
+  const [error, setError] = React.useState(null);
+  const [purposeError, setPurposeError] = useState("");
+  const [payrollError, setPayrollError] = useState("");
+
   const navigate = useNavigate();
 
   const theme = useTheme();
   const location = useLocation();
 
-  console.log(location.state.business);
-  const toStep3 = () => {
-    console.log(purpose, payroll);
-    // alert(payroll + purpose);
+  const purposeValidation = () => {
+    if (purpose == "") {
+      setPurposeError("What is the purpose to join?");
+    } else setPurposeError("");
+  };
 
-    navigate("/step3", {
-      state: {
-        business: location.state.business,
-        mobile: location.state.mobile,
-        businessType: location.state.businesstype,
-        industry: location.state.industry,
-        purpose: purpose,
-        payroll: payroll,
-      },
-    });
+  const payrollValidation = () => {
+    if (payroll == "") {
+      setPayrollError("Please provide a payroll");
+    } else setPayrollError("");
+  };
+
+  const {
+    register,
+    formState: { errors },
+  } = useForm();
+
+  const toStep3 = (e) => {
+    e.preventDefault();
+    console.log("to step", purpose, payroll);
+    if (purpose !== "" && payroll !== "") {
+      console.log("Data Found");
+      setError(false);
+      console.log(purpose, payroll);
+
+      // alert(payroll + purpose);
+
+      navigate("/step3", {
+        state: {
+          business: location.state.business,
+          mobile: location.state.mobile,
+          businessType: location.state.businesstype,
+          industry: location.state.industry,
+          purpose: purpose,
+          payroll: payroll,
+        },
+      });
+    } else {
+      setError(true);
+      setState({ data: e.target.value });
+    }
   };
 
   const icons = [ScheduleIcon, TrackHoursIcon, PayIcon];
@@ -97,7 +129,7 @@ export default function BasicModal(props) {
                 color: "#38B492",
               }}
             >
-              UROSTERS
+              MaxPilot
             </Typography>
             <Typography
               className="font-loader"
@@ -162,7 +194,7 @@ export default function BasicModal(props) {
                     color: "#332A60",
                   }}
                 >
-                  What brings you to UROSTERS?
+                  What brings you to MaxPilot?
                 </Typography>
                 {/* Put 3 radio buttons here */}
                 <Grid
@@ -204,7 +236,8 @@ export default function BasicModal(props) {
                         },
                       },
                     }}
-                    onChange={(e) => setPurpose(e.target.id)}
+                    {...register("Purpose", { required: true })}
+                    onChange={(e) => setPurpose(e.target.value)}
                   >
                     {[
                       "Save time scheduling",
@@ -264,6 +297,18 @@ export default function BasicModal(props) {
                     ))}
                   </RadioGroup>
                 </Grid>
+                {errors.purpose?.type === "required" && "Purpose Required"}
+                <small>
+                  {purposeError && (
+                    <div
+                      style={{
+                        color: "red",
+                      }}
+                    >
+                      {purposeError}
+                    </div>
+                  )}
+                </small>
               </Grid>
             </Grid>
 
@@ -289,19 +334,42 @@ export default function BasicModal(props) {
               }}
             >
               We'll send you some tips on how you can integrate your payroll
-              provide with UROSTERS
+              provide with MaxPilot
             </Typography>
             <RadioGroup
               aria-labelledby="storage-label"
-              defaultValue="XERO"
+              // defaultValue="XERO"
               overlay
               size="lg"
-              sx={{ flexDirection: "row", gap: 1.5, mt: 2 }}
+              sx={{
+                flexDirection: "row",
+                gap: 1.5,
+                mt: 2,
+                [`& .${radioClasses.checked}`]: {
+                  [`& .${radioClasses.action}`]: {
+                    inset: -1,
+                    border: "3px solid",
+                    borderColor: "primary.500",
+                  },
+                },
+                [`& .${radioClasses.radio}`]: {
+                  display: "contents",
+                  "& > svg": {
+                    zIndex: 2,
+                    position: "absolute",
+                    top: "-8px",
+                    right: "-8px",
+                    bgcolor: "background.body",
+                    borderRadius: "50%",
+                  },
+                },
+              }}
+              {...register("Payroll", { required: true })}
               onChange={(e) => setPayroll(e.target.value)}
             >
-              {["XERO"].map((value) => (
+              {["XERO"].map((value, idx) => (
                 <Sheet
-                  key={value}
+                  key={idx}
                   sx={{
                     p: 2,
                     display: "flex",
@@ -320,34 +388,49 @@ export default function BasicModal(props) {
                     sx={{ mr: 1 }}
                   />
                   <Radio
+                    id={value}
                     label={`${value}`}
                     overlay
                     disableIcon
                     value={value}
-                    slotProps={{
-                      label: ({ checked }) => ({
-                        sx: {
-                          fontWeight: "lg",
-                          fontSize: "md",
-                          color: checked ? "text.primary" : "text.secondary",
-                        },
-                      }),
-                      action: ({ checked }) => ({
-                        sx: (theme) => ({
-                          ...(checked && {
-                            "--variant-borderWidth": "2px",
-                            "&&": {
-                              // && to increase the specificity to win the base :hover styles
-                              borderColor: theme.vars.palette.primary[500],
-                            },
-                          }),
-                        }),
-                      }),
-                    }}
+                    checkedIcon={<CheckCircleRoundedIcon />}
+                    // slotProps={{
+                    //   label: ({ checked }) => ({
+                    //     sx: {
+                    //       fontWeight: "lg",
+                    //       fontSize: "md",
+                    //       color: checked ? "text.primary" : "text.secondary",
+                    //     },
+                    //   }),
+
+                    // action: ({ checked }) => ({
+                    //   sx: (theme) => ({
+                    //     ...(checked && {
+                    //       "--variant-borderWidth": "2px",
+                    //       "&&": {
+                    //         // && to increase the specificity to win the base :hover styles
+                    //         borderColor: theme.vars.palette.primary[500],
+                    //       },
+                    //     }),
+                    //   }),
+                    // }),
+                    // }}
                   />
                 </Sheet>
               ))}
             </RadioGroup>
+            {errors.payroll?.type === "required" && "Payroll Required"}
+            <small>
+              {payrollError && (
+                <div
+                  style={{
+                    color: "red",
+                  }}
+                >
+                  {payrollError}
+                </div>
+              )}
+            </small>
             <Link to="/step3" style={{ textDecoration: "none" }}>
               <Button
                 type="submit"
@@ -359,8 +442,11 @@ export default function BasicModal(props) {
                   borderRadius: "10px",
                   justifyContent: "center",
                 }}
-                onClick={() => {
-                  toStep3();
+                data={state.data}
+                onClick={(e) => {
+                  purposeValidation();
+                  payrollValidation();
+                  toStep3(e);
                 }}
               >
                 Next

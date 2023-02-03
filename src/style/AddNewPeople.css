@@ -1,0 +1,20 @@
+.max-width {
+  max-width: 100% !important;
+}
+
+.btn-color {
+  background-color: #38b492 !important;
+}
+
+.css-5ryogn-MuiButtonBase-root-MuiSwitch-switchBase.Mui-checked {
+  color: #38b492 !important;
+}
+
+.input-height {
+  height: 0.1em !important;
+  padding: 0 !important;
+}
+
+.css-1n4twyu-MuiInputBase-input-MuiOutlinedInput-input {
+  height: 1em !important;
+}

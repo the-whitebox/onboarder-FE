@@ -19,6 +19,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import AppleIcon from "@mui/icons-material/Apple";
 import googleIcon from "../../assets/icons/google.png";
 import ManWithGraphs from "../../assets/images/man-with-graphs.png";
+import MaxPilotLogo from "../../assets/logos/maxpilot-logo.svg";
 import { CardMedia } from "@mui/material";
 import Card from "@mui/material/Card";
 import Modal from "@mui/material/Modal";
@@ -27,32 +28,79 @@ import SignupModalBody from "./Signup";
 import WelcomeModalBody from "./Welcome";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { useForm } from "react-hook-form";
+import { useState } from "react";
 
 const theme = createTheme();
 
 export default function SignInSide() {
   const url = "http://192.168.100.149:8000/api/auth/login/";
-  const [email, setEmail] = React.useState("");
-  const [password, setPassword] = React.useState("");
+  const [email, setEmail] = useState("");
+  const [emailError, setEmailError] = useState("");
+  const [password, setPassword] = useState("");
+  const [passwordError, setPasswordError] = useState("");
   const navigate = useNavigate();
+
+  const emailValidation = () => {
+    const regEx = /^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[A-Za-z]+$/;
+    if (regEx.test(email)) {
+      setEmailError("");
+    } else if (email == "") {
+      setEmailError("Email should not be empty");
+    } else if (!regEx.test(email)) {
+      setEmailError("Email is not valid");
+    }
+  };
+
+  const passwordValidation = () => {
+    const regExp = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/;
+
+    if (regExp.test(password)) {
+      setPasswordError("");
+    } else if (password == "") {
+      setPasswordError("Password should not be empty");
+    } else if (!regExp.test(password)) {
+      setPasswordError("Password is not valid");
+    }
+  };
+
+  const handleOnEmailChange = (e) => {
+    setEmail(e.target.value);
+  };
+
+  const handleOnChange = (e) => {
+    setPassword(e.target.value);
+    // console.log(password);
+  };
+
+  const {
+    register,
+    formState: { errors },
+  } = useForm();
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get("email"),
-      password: data.get("password"),
-    });
-    try {
-      const resp = await axios
-        .post(url, { username: email, password: password })
-        .then((response) => {
-          console.log("Login API was hit succesfully");
-          navigate("/about");
-          // Navigate to Home Screen
-        });
-    } catch (error) {
-      console.log(error.response);
+    emailValidation();
+    passwordValidation();
+
+    console.log("Password and Email Validation checked");
+
+    if (passwordError === "" && emailError === "") {
+      try {
+        const resp = await axios
+          .post(
+            url,
+            { username: email, password: password }
+            // { auth: email, password }
+          )
+          .then((response) => {
+            console.log("Login API was hit successfully");
+            navigate("/about");
+            // Navigate to Home Screen
+          });
+      } catch (error) {
+        console.log(error.response);
+      }
     }
   };
   const [open, setOpen] = React.useState(false);
@@ -173,30 +221,57 @@ export default function SignInSide() {
               <IconTextField
                 label="Email Address"
                 margin="normal"
-                required
                 name="email"
                 type="email"
                 id="email"
                 autoComplete="email"
-                className="input-email"
+                // className={`input-email ${emailError ? "emailError" : ""}`}
+                error={emailError}
                 autoFocus
                 iconEnd={<AlternateEmailOutlinedIcon />}
                 value={email}
-                onChange={(e) => setEmail(e.target.value)}
+                {...register("Email", { required: true })}
+                onChange={handleOnEmailChange}
               />
+              {errors.Email?.type === "required" && "Email Required"}
+              <small>
+                {emailError && (
+                  <div
+                    style={{
+                      color: "red",
+                    }}
+                  >
+                    {emailError}
+                  </div>
+                )}
+              </small>
               <IconTextField
                 label="Password"
                 margin="normal"
-                required
                 fullWidth
                 name="password"
                 type="password"
                 id="password"
                 className="input-password"
+                error={passwordError}
                 iconEnd={<LockOutlinedIcon />}
                 value={password}
-                onChange={(e) => setPassword(e.target.value)}
+                // {...register("Confirmpassword", { required: true })}
+                onChange={handleOnChange}
               />
+              {errors.Confirmpassword?.type === "required" &&
+                "confirmpassword Required"}
+              <small>
+                {passwordError && (
+                  <div
+                    style={{
+                      color: "red",
+                    }}
+                  >
+                    {passwordError}
+                  </div>
+                )}
+              </small>
               <Grid
                 item
                 xs
@@ -258,7 +333,7 @@ export default function SignInSide() {
                 </Grid>
                 <Grid item className="flex-row">
                   <Typography variant="body2">
-                    {"Not using UROSTERS? "}
+                    {"Not using MaxPilot? "}
                   </Typography>
                   <Link
                     onClick={handleOpenSignup}
