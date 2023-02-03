@@ -96,7 +96,9 @@ export default function BasicModal() {
             how_you_hear: hear,
           })
           .then((response) => {
-            console.log("Signup API was hit succesfully");
+            console.log("Signup API was hit successfully");
+            console.log(response);
+            debugger;
 
             // Navigate to Home Screen
           });
@@ -107,18 +109,18 @@ export default function BasicModal() {
       console.log(process, hear);
       // alert(process + hear);
 
-      navigate("/about", {
-        state: {
-          business: location.state.business,
-          mobile: location.state.mobile,
-          businessType: location.state.businesstype,
-          industry: location.state.industry,
-          purpose: location.state.purpose,
-          payroll: location.state.payroll,
-          process: process,
-          hear: hear,
-        },
-      });
+      // navigate("/about", {
+      //   state: {
+      //     business: location.state.business,
+      //     mobile: location.state.mobile,
+      //     businessType: location.state.businesstype,
+      //     industry: location.state.industry,
+      //     purpose: location.state.purpose,
+      //     payroll: location.state.payroll,
+      //     process: process,
+      //     hear: hear,
+      //   },
+      // });
     } else {
       setError(true);
       setState({ data: e.target.value });
