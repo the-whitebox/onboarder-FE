@@ -1,0 +1,16 @@
+.btn {
+  color: white !important;
+  background-color: #38b492 !important;
+}
+.btn:hover {
+  background-color: #38b492 !important;
+}
+
+/* .css-1n4twyu-MuiInputBase-input-MuiOutlinedInput-input {
+  border-radius: 20px !important;
+  border: 5px !important;
+} */
+
+.css-jedpe8-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input.MuiSelect-select {
+  min-height: 1em !important;
+}

@@ -43,7 +43,7 @@ const style = {
   padding: "20px",
 };
 
-export default function SetAccessLevel() {
+export default function Addleaveentitlement() {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => {
     setOpen(true);

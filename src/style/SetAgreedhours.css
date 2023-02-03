@@ -1,0 +1,16 @@
+.team {
+  color: rgba(95, 91, 81, 0.518);
+}
+
+.work {
+  font-weight: bold;
+}
+
+.period {
+  margin-left: 12px;
+  display: flex;
+}
+
+.p {
+  margin-left: 12px;
+}
