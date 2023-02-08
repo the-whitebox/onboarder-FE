@@ -1,25 +1,14 @@
-.close {
-  position: absolute;
-  right: 10px;
-  top: 5px;
-  font-size: 30px;
-  font-weight: bold;
-  color: black;
-}
-
-.text {
-  color: gray;
-}
-
-.Access-level {
-  font-weight: bold;
-}
-
 .team {
+  margin-top: 2px;
   margin-left: 8px;
-  margin-top: -9px;
+  padding-bottom: 5px;
+  color: #bcbcbc;
 }
-.Access {
-  margin-top: -2%;
-  font-size: xx-large;
+
+.btn {
+  color: white !important;
+  background-color: #38b492 !important;
+}
+.btn:hover {
+  background-color: #38b492 !important;
 }

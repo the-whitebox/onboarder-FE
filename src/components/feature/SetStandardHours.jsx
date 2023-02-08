@@ -6,6 +6,7 @@ import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import InfoIcon from "@mui/icons-material/Info";
 import TextField from "@mui/material/TextField";
+import CloseIcon from "@mui/icons-material/Close";
 
 const style = {
   position: "absolute",
@@ -39,15 +40,13 @@ export default function SetStandardHours() {
         aria-labelledby="child-modal-title"
         aria-describedby="child-modal-description"
       >
-        <Box sx={{ ...style, width: 350, height: 300, mt: 0 }}>
-          <Typography
-            variant="h5"
-            sx={{ fontWeight: "Bold", fontSize: "large" }}
-          >
-            Set Standard Hours
-          </Typography>
+        <Box sx={{ ...style, width: 350, height: 350, mt: 0 }}>
+          <Box className="flex flex-row" sx={{ width: "375px" }}>
+            <h2>Set Standard Hours</h2>
+            <CloseIcon sx={{ pb: "48px" }}></CloseIcon>
+          </Box>
           <div>
-            <Typography sx={{ mt: "7px", color: "darkgray" }}>
+            <Typography sx={{ mt: "2px", color: "darkgray", ml: "2px" }}>
               2 Team members
             </Typography>
             <Box sx={{ display: "flex", flexDirection: "row" }}>
@@ -83,12 +82,13 @@ export default function SetStandardHours() {
             </Typography>
           </div>
           <Button
+            className="Btn"
             sx={{
-              mt: "25px",
+              mt: "32px",
               ml: 35,
-              borderRadius: "8px",
-              width: "20%",
-              bgcolor: "Blue",
+              borderRadius: "6px",
+              width: "22%",
+              textTransform: "none",
             }}
             onClick={handleClose}
           >

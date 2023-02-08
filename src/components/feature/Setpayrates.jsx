@@ -11,6 +11,7 @@ import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import { useTheme } from "@mui/material/styles";
+import CloseIcon from "@mui/icons-material/Close";
 import "../../style/Setpayrates.css";
 
 const ITEM_HEIGHT = 48;
@@ -81,19 +82,15 @@ export default function Setpayrates() {
         aria-describedby="child-modal-description"
       >
         <Box sx={{ ...style, width: 400, height: 680 }}>
-          <span
-            onclick="document.getElementById('id01').style.display='none'"
-            class="close"
-            title="Close Modal"
-          >
-            ×
-          </span>
-          <h1> Set pay rates</h1>
+          <Box className="flex flex-row" sx={{ width: "420px" }}>
+            <h2>Set Pay rates</h2>
+            <CloseIcon sx={{ pb: "45px" }}></CloseIcon>
+          </Box>
           <div>
             <Typography sx={{ pb: "5px" }}> 2 Team members </Typography>
             <Box
               sx={{
-                bgcolor: "lightgray",
+                bgcolor: "#d5f9f6",
                 display: "flex",
                 flexDirection: "row",
               }}
@@ -114,7 +111,7 @@ export default function Setpayrates() {
                   color: "wblack",
                 }}
               >
-                pay rates help track wage costs and can be expected to ensure
+                Pay rates help track wage costs and can be expected to ensure
                 team members are paid correctly. Select from our pay rates
                 library below. About pay rates
               </Typography>
@@ -258,6 +255,7 @@ export default function Setpayrates() {
               ml: 40,
               borderRadius: "8px",
               width: "10%",
+              textTransform: "none",
             }}
             onClick={handleClose}
           >

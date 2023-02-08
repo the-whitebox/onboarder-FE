@@ -9,6 +9,7 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 import FormControl from "@mui/material/FormControl";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
+import CloseIcon from "@mui/icons-material/Close";
 
 const style = {
   position: "absolute",
@@ -42,26 +43,67 @@ export default function SetAgreedhours() {
         aria-labelledby="child-modal-title"
         aria-describedby="child-modal-description"
       >
-        <Box sx={{ ...style, width: 400, height: 600, mt: 10 }}>
-          <h2>Set agreed hours</h2>
+        <Box
+          sx={{
+            ...style,
+            width: 450,
+            height: 600,
+            mt: 10,
+            overflowX: "scroll",
+          }}
+        >
+          <Box className="flex flex-row" sx={{ width: "400px" }}>
+            <h2 className="set">Set agreed hours</h2>
+            <CloseIcon sx={{ pb: "25px" }}></CloseIcon>
+          </Box>
           <div>
-            <p className="team">2 Team members</p>
-            <p className="work">Work period</p>
-            <h5 className="period">Create a new work period </h5>
-            <Typography className="p">
+            <Typography
+              sx={{
+                pt: "10px",
+                fontWeight: "bold",
+                color: "rgba(95, 91, 81, 0.518)",
+              }}
+            >
+              2 Team members
+            </Typography>
+            <Typography
+              sx={{
+                fontWeight: "bold",
+                mt: "20px",
+                pb: "20px",
+              }}
+            >
+              Work period
+            </Typography>
+            <Typography
+              variant="h6"
+              sx={{ fontWeight: "bold", ml: "20px", pb: "15px" }}
+            >
+              Create a new work period{" "}
+            </Typography>
+            <Typography sx={{ ml: "20px", pb: "30px" }}>
               Saving this template will allow it to be used across any team
               member profile.
             </Typography>
             <Typography
-              variant="h6"
-              sx={{ fontWeight: "Bold", fontSize: "Small" }}
+              sx={{
+                fontWeight: "Bold",
+                fontSize: "large",
+                ml: "20px",
+                pb: "10px",
+              }}
             >
               Work period length
             </Typography>
 
             <FormControl>
               <RadioGroup
-                sx={{ display: "flex", flexDirection: "row" }}
+                sx={{
+                  display: "flex",
+                  flexDirection: "row",
+                  ml: "20px",
+                  gap: 3,
+                }}
                 aria-labelledby="demo-radio-buttons-group-label"
                 defaultValue=""
                 name="radio-buttons-group"
@@ -85,8 +127,12 @@ export default function SetAgreedhours() {
             </FormControl>
 
             <Typography
-              variant="h6"
-              sx={{ fontWeight: "Bold", fontSize: "Small" }}
+              sx={{
+                ml: "20px",
+                fontWeight: "Bold",
+                fontSize: "large",
+                pb: "10px",
+              }}
             >
               {" "}
               Net Work period starts on{" "}
@@ -97,7 +143,8 @@ export default function SetAgreedhours() {
                 sx={{
                   display: "flex",
                   flexDirection: "row",
-                  gap: 1,
+                  gap: 2,
+                  ml: "20px",
                 }}
                 aria-labelledby="demo-radio-buttons-group-label"
                 defaultValue=""
@@ -113,16 +160,26 @@ export default function SetAgreedhours() {
               </RadioGroup>
             </FormControl>
 
-            <Typography variant="h5"> Hours per Work period </Typography>
-            <TextField size="small" placeholder="0 hours">
+            <Typography sx={{ fontWeight: "bold", pt: "15px", pb: "20px" }}>
+              {" "}
+              Hours per Work period{" "}
+            </Typography>
+            <TextField
+              sx={{ width: "140px" }}
+              size="small"
+              placeholder="0             hours"
+            >
               {" "}
             </TextField>
           </div>
           <Button
+            className="btn btn-primary"
             sx={{
               ml: 35,
-              borderRadius: "8px",
+              borderRadius: "6px",
               width: "20%",
+              textTransform: "none",
+              mb: 5,
             }}
             onClick={handleClose}
           >

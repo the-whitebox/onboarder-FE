@@ -9,25 +9,19 @@ import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import CloseIcon from "@mui/icons-material/Close";
 import Typography from "@mui/material/Typography";
-import "../../style/SetAccesslevel.css";
+
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
 const MenuProps = {
   PaperProps: {
     style: {
       maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
-      width: 150,
+      width: 230,
     },
   },
 };
 
-const names = [
-  "System Administrator",
-  "Supervisor",
-  "Employee",
-  "Location Manager",
-  "Advisor",
-];
+const names = ["Talha's professional service", "Whitebox cafe"];
 
 const style = {
   position: "absolute",
@@ -35,7 +29,7 @@ const style = {
   left: "50%",
   transform: "translate(-50%, -50%)",
   bgcolor: "background.paper",
-  // border: "2px solid #000",
+
   boxShadow: 24,
   pt: 2,
   px: 4,
@@ -85,20 +79,16 @@ export default function SetAccessLevel() {
         aria-labelledby="child-modal-title"
         aria-describedby="child-modal-description"
       >
-        <Box sx={{ ...style, width: 350, height: 230 }}>
-          <CloseIcon sx={{ float: "right" }}></CloseIcon>
-          <Typography
-            variant="h5"
-            sx={{ mt: 2, fontWeight: "bold", paddingBottom: 1 }}
-            id="child-modal-title"
-          >
-            Set Access level
-          </Typography>
+        <Box sx={{ ...style, width: 450, height: 240 }}>
+          <Box className="flex flex-row" sx={{ width: "450px" }}>
+            <h2>Add location</h2>
+            <CloseIcon sx={{ pb: "45px" }}></CloseIcon>
+          </Box>
 
           <div>
             <p className="team">2 team members </p>
             <Typography sx={{ fontWeight: "bold", ml: "8px" }}>
-              Access level
+              Location
             </Typography>
             <FormControl
               sx={{
@@ -139,11 +129,11 @@ export default function SetAccessLevel() {
           </div>
           <Button
             variant="primary"
-            className="btn"
             sx={{
-              ml: 34,
+              ml: 46,
+
               borderRadius: "6px",
-              width: "22%",
+              width: "18%",
               bgcolor: "#38b492",
               color: "white",
               textTransform: "none",
@@ -151,7 +141,7 @@ export default function SetAccessLevel() {
             }}
             onClick={handleClose}
           >
-            Update
+            Add
           </Button>
         </Box>
       </Modal>
