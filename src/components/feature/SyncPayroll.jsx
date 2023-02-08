@@ -20,35 +20,35 @@ const style = {
 };
 
 export default function SyncPayroll() {
-  const [open, setOpen] = React.useState(false);
-  const handleOpen = () => {
-    setOpen(true);
-  };
-  const handleClose = () => {
-    setOpen(false);
-  };
+  // const [open, setOpen] = React.useState(false);
+  // const handleOpen = () => {
+  //   setOpen(true);
+  // };
+  // const handleClose = () => {
+  //   setOpen(false);
+  // };
 
   return (
     <React.Fragment>
-      <Button onClick={handleOpen}>Open Access Modal</Button>
+      {/* <Button onClick={handleOpen}>Open Access Modal</Button>
       <Modal
         hideBackdrop
         open={open}
         onClose={handleClose}
         aria-labelledby="child-modal-title"
         aria-describedby="child-modal-description"
-      >
-        <Box sx={{ ...style, width: 300 }}>
-          <h2 id="child-modal-title">Sync Team member with payroll</h2>
-          <div>
-            <p>Asher Muneer</p>
-            <p>Refresh the mapping of Team members between Deputy and Xero.</p>
-            <br />
-            <p>Asher Muneer</p>
-          </div>
-          <Button onClick={handleClose}>Sync Team member</Button>
-        </Box>
-      </Modal>
+      > */}
+      <Box sx={{ ...style, width: 300 }}>
+        <h2 id="child-modal-title">Sync Team member with payroll</h2>
+        <div>
+          <p>Asher Muneer</p>
+          <p>Refresh the mapping of Team members between Deputy and Xero.</p>
+          <br />
+          <p>Asher Muneer</p>
+        </div>
+        <Button>Sync Team member</Button>
+      </Box>
+      {/* </Modal> */}
     </React.Fragment>
   );
 }

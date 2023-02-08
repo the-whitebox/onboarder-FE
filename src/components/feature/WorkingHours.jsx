@@ -10,6 +10,9 @@ const Item = styled("div")(({ theme }) => ({
 }));
 
 export default function WorkingHours() {
+  const [openHours, setOpenHours] = React.useState(false);
+  const handleOpenHours = () => setOpenHours(true);
+
   return (
     <>
       <Box sx={{ pt: 3, pb: 2 }}>
@@ -35,7 +38,9 @@ export default function WorkingHours() {
               <Box component="ul" aria-labelledby="category-a" sx={{ pl: 2 }}>
                 <li>Work Period</li>
                 <li>
-                  <Link color="#38b492">Set a work period</Link>
+                  <Link onClick={handleOpenHours} color="#38b492">
+                    Set a work period
+                  </Link>
                 </li>
               </Box>
             </Item>

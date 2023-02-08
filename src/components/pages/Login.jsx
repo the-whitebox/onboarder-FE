@@ -338,7 +338,7 @@ export default function SignInSide() {
                   <Link
                     onClick={handleOpenSignup}
                     variant="body2"
-                    className="links-signup "
+                    className="links-signup"
                   >
                     {" Start your free trail"}
                   </Link>
