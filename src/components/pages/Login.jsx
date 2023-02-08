@@ -34,7 +34,7 @@ import { useState } from "react";
 const theme = createTheme();
 
 export default function SignInSide() {
-  const url = "http://192.168.10.8:8000/api/auth/login/";
+  const url = process.env.REACT_APP_BASE_URL + "/auth/login/";
   const [email, setEmail] = useState("");
   const [emailError, setEmailError] = useState("");
   const [password, setPassword] = useState("");
