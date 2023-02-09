@@ -26,7 +26,7 @@ export default function BasicModal() {
   const sendEmail = () => {
     // console.log(email);
     axios
-      .post("http://192.168.100.149:8000/api/auth/password/reset/", {
+      .post(process.env.REACT_APP_BASE_URL + "/auth/password/reset/", {
         email: email,
       })
       .then((response) => {

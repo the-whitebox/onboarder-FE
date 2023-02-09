@@ -57,6 +57,21 @@ export default function BasicModal() {
   const theme = useTheme();
   const [age, setAge] = React.useState("");
 
+  function CharacterDropDown() {
+    const [items, setItems] = React.useState([]);
+
+    React.useEffect(() => {
+      async function getCharacters() {
+        const response = await fetch("https://swapi.co/api/people");
+        const body = await response.json();
+        setItems(
+          body.results.map(({ name }) => ({ label: name, value: name }))
+        );
+      }
+      getCharacters();
+    }, []);
+  }
+
   const businessValidation = () => {
     if (business == "") {
       setBusinessError("Please enter a business name");

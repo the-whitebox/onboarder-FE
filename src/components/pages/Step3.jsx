@@ -46,7 +46,7 @@ const style = {
 };
 
 export default function BasicModal() {
-  const url = "http://192.168.100.149:8000/api/business/";
+  const url = process.env.REACT_APP_BASE_URL + "/business";
   const [state, setState] = React.useState({ data: "" });
   const [process, setProcess] = React.useState("");
   const [hear, setHear] = React.useState("");
