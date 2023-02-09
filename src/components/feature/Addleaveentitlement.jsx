@@ -7,13 +7,15 @@ import OutlinedInput from "@mui/material/OutlinedInput";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
+import Typography from "@mui/material/Typography";
+import CloseIcon from "@mui/icons-material/Close";
 
-const ITEM_HEIGHT = 48;
-const ITEM_PADDING_TOP = 8;
+const ITEM_HEIGHT = 40;
+const ITEM_PADDING_TOP = 45;
 const MenuProps = {
   PaperProps: {
     style: {
-      maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
+      maxHeight: ITEM_HEIGHT * 6.5 + ITEM_PADDING_TOP,
       width: 310,
     },
   },
@@ -34,7 +36,7 @@ const style = {
   left: "50%",
   transform: "translate(-50%, -50%)",
   bgcolor: "background.paper",
-  // border: "2px solid #000",
+
   boxShadow: 24,
   pt: 2,
   px: 4,
@@ -84,34 +86,32 @@ export default function Addleaveentitlement() {
         aria-labelledby="child-modal-title"
         aria-describedby="child-modal-description"
       >
-        <Box sx={{ ...style, width: 380, height: 240 }}>
-          <span
-            onclick="document.getElementById('id01').style.display='none'"
-            class="close"
-            title="Close Modal"
+        <Box sx={{ ...style, width: 430, height: 340 }}>
+          <CloseIcon sx={{ float: "right" }}></CloseIcon>
+          <Typography
+            variant="h5"
+            sx={{ mt: 2, fontWeight: "bold", paddingBottom: 1 }}
+            id="child-modal-title"
           >
-            ×
-          </span>
-          <h1 id="child-modal-title" className="Access">
             Add leave entitlement
-          </h1>
+          </Typography>
+
           <div>
-            <p className="team">
+            <Typography sx={{ fontSize: "14px" }}>
               Adding leave entitlement for 0 team members. 2 team members wil
               not assigned the leave entitlement because they don't have a pay
               rate.
-            </p>
-            <p className="Access-level">leave entitlement</p>
+            </Typography>
+            <p className="Access-level">Leave entitlement</p>
             <FormControl
               sx={{
-                m: "19px 0",
                 width: 200,
-                height: 5,
-                mt: -2,
-                padding: "10px",
+                borderRadius: "2px",
+                ml: "5px",
               }}
             >
               <Select
+                sx={{ borderRadius: "7px" }}
                 size="small"
                 multiple
                 displayEmpty
@@ -142,17 +142,17 @@ export default function Addleaveentitlement() {
           </div>
           <Button
             variant="primary"
+            className="btn btn-primary"
             sx={{
-              ml: 35,
-              borderRadius: "8px",
-              width: "20%",
-              // justifyContent: "center",
-              bgcolor: "#38b492",
-              color: "white",
+              ml: 44,
+              borderRadius: "5px",
+              width: "18%",
+              mt: "80px",
+              textTransform: "none",
             }}
             onClick={handleClose}
           >
-            Update
+            Add
           </Button>
         </Box>
       </Modal>

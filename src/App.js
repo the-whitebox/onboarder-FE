@@ -18,6 +18,8 @@ import SetStressProfile from "./components/feature/SetStressProfile";
 import SyncPayroll from "./components/feature/SyncPayroll";
 import SetStandardHours from "./components/feature/SetStandardHours";
 import SetAgreedhours from "./components/feature/SetAgreedhours";
+import ArchiveTeammembers from "./components/feature/ArchiveTeammembers";
+import Addlocation from "./components/feature/Addlocation";
 import WebFont from "webfontloader";
 import { useEffect } from "react";
 import Profile from "./components/pages/Profile";
@@ -51,11 +53,13 @@ function App() {
         <Route path="/step3" element={<Step3 />} />
         <Route path="/people" element={<People />}></Route>
         <Route path="/set" element={<SetAccessLevel />}></Route>
+        <Route path="/location" element={<Addlocation />}></Route>
         <Route path="/Add" element={<Addleaveentitlement />}></Route>
         <Route path="/stress" element={<SetStressProfile />}></Route>
         <Route path="/Sethours" element={<SetStandardHours />}></Route>
         <Route path="/AddTeam" element={<AddTeammember />}></Route>
         <Route path="/setAgreed" element={<SetAgreedhours />}></Route>
+        <Route path="/Archive" element={<ArchiveTeammembers />}></Route>
         <Route path="/sync" element={<SyncPayroll />}></Route>
 
         <Route path="/Setpay" element={<Setpayrates />}></Route>
@@ -66,7 +70,6 @@ function App() {
         <Route path="/personal" element={<Personal />} />
         <Route path="/personal_details" element={<PersonalDetails />} />
         <Route path="/add" element={<AddNewPeople />} />
-
       </Routes>
     </BrowserRouter>
   );
