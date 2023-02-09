@@ -7,7 +7,8 @@ import OutlinedInput from "@mui/material/OutlinedInput";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
-import { styled } from "@mui/material/styles";
+import CloseIcon from "@mui/icons-material/Close";
+import Typography from "@mui/material/Typography";
 import "../../style/SetAccesslevel.css";
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -84,31 +85,31 @@ export default function SetAccessLevel() {
         aria-labelledby="child-modal-title"
         aria-describedby="child-modal-description"
       >
-        <Box sx={{ ...style, width: 350, height: 180 }}>
-          <span
-            onclick="document.getElementById('id01').style.display='none'"
-            class="close"
-            title="Close Modal"
+        <Box sx={{ ...style, width: 350, height: 230 }}>
+          <CloseIcon sx={{ float: "right" }}></CloseIcon>
+          <Typography
+            variant="h5"
+            sx={{ mt: 2, fontWeight: "bold", paddingBottom: 1 }}
+            id="child-modal-title"
           >
-            ×
-          </span>
-          <h2 id="child-modal-title" className="Access">
-            Set access level
-          </h2>
+            Set Access level
+          </Typography>
+
           <div>
             <p className="team">2 team members </p>
-            <p className="Access-level">Access level</p>
+            <Typography sx={{ fontWeight: "bold", ml: "8px" }}>
+              Access level
+            </Typography>
             <FormControl
               sx={{
-                m: "19px 0",
                 width: 200,
                 height: 5,
-                mt: -2,
-                padding: "10px",
+                padding: "5px  ",
               }}
             >
               <Select
                 size="small"
+                sx={{ borderRadius: "7px" }}
                 multiple
                 displayEmpty
                 value={personName}
@@ -138,13 +139,15 @@ export default function SetAccessLevel() {
           </div>
           <Button
             variant="primary"
+            className="btn"
             sx={{
-              ml: 35,
-              borderRadius: "8px",
-              width: "20%",
-              // justifyContent: "center",
+              ml: 34,
+              borderRadius: "6px",
+              width: "22%",
               bgcolor: "#38b492",
               color: "white",
+              textTransform: "none",
+              mt: 6,
             }}
             onClick={handleClose}
           >

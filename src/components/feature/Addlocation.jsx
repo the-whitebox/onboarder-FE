@@ -7,28 +7,21 @@ import OutlinedInput from "@mui/material/OutlinedInput";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
-import Typography from "@mui/material/Typography";
 import CloseIcon from "@mui/icons-material/Close";
+import Typography from "@mui/material/Typography";
 
-const ITEM_HEIGHT = 40;
-const ITEM_PADDING_TOP = 45;
+const ITEM_HEIGHT = 48;
+const ITEM_PADDING_TOP = 8;
 const MenuProps = {
   PaperProps: {
     style: {
-      maxHeight: ITEM_HEIGHT * 6.5 + ITEM_PADDING_TOP,
-      width: 310,
+      maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
+      width: 230,
     },
   },
 };
 
-const names = [
-  "Annual Leave (Vacation)",
-  "Bereavement (Compassionate) Leave",
-  "Cummunity Services Leave",
-  "Long Services Leave",
-  "Other Paid Leave",
-  "Sick (Personal/Carer's) Leave ",
-];
+const names = ["Talha's professional service", "Whitebox cafe"];
 
 const style = {
   position: "absolute",
@@ -45,14 +38,14 @@ const style = {
   padding: "20px",
 };
 
-export default function Addleaveentitlement() {
-  // const [open, setOpen] = React.useState(false);
-  // const handleOpen = () => {
-  //   setOpen(true);
-  // };
-  // const handleClose = () => {
-  //   setOpen(false);
-  // };
+export default function SetAccessLevel() {
+  const [open, setOpen] = React.useState(false);
+  const handleOpen = () => {
+    setOpen(true);
+  };
+  const handleClose = () => {
+    setOpen(false);
+  };
 
   function getStyles(name, personName, theme) {
     return {
@@ -78,41 +71,35 @@ export default function Addleaveentitlement() {
 
   return (
     <React.Fragment>
-      {/* <Button onClick={handleOpen}>Add leave entitlement </Button> */}
-      {/* <Modal
+      <Button onClick={handleOpen}>Open Access Modal</Button>
+      <Modal
         hideBackdrop
         open={open}
         onClose={handleClose}
         aria-labelledby="child-modal-title"
         aria-describedby="child-modal-description"
       >
-        <Box sx={{ ...style, width: 430, height: 340 }}>
-          <CloseIcon sx={{ float: "right" }}></CloseIcon>
-          <Typography
-            variant="h5"
-            sx={{ mt: 2, fontWeight: "bold", paddingBottom: 1 }}
-            id="child-modal-title"
-          >
-            Add leave entitlement
-          </Typography>
+        <Box sx={{ ...style, width: 450, height: 240 }}>
+          <Box className="flex flex-row" sx={{ width: "450px" }}>
+            <h2>Add location</h2>
+            <CloseIcon sx={{ pb: "45px" }}></CloseIcon>
+          </Box>
 
           <div>
-            <Typography sx={{ fontSize: "14px" }}>
-              Adding leave entitlement for 0 team members. 2 team members wil
-              not assigned the leave entitlement because they don't have a pay
-              rate.
+            <p className="team">2 team members </p>
+            <Typography sx={{ fontWeight: "bold", ml: "8px" }}>
+              Location
             </Typography>
-            <p className="Access-level">Leave entitlement</p>
             <FormControl
               sx={{
                 width: 200,
-                borderRadius: "2px",
-                ml: "5px",
+                height: 5,
+                padding: "5px  ",
               }}
             >
               <Select
-                sx={{ borderRadius: "7px" }}
                 size="small"
+                sx={{ borderRadius: "7px" }}
                 multiple
                 displayEmpty
                 value={personName}
@@ -142,13 +129,15 @@ export default function Addleaveentitlement() {
           </div>
           <Button
             variant="primary"
-            className="btn btn-primary"
             sx={{
-              ml: 44,
-              borderRadius: "5px",
+              ml: 46,
+
+              borderRadius: "6px",
               width: "18%",
-              mt: "80px",
+              bgcolor: "#38b492",
+              color: "white",
               textTransform: "none",
+              mt: 6,
             }}
             onClick={handleClose}
           >

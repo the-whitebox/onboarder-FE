@@ -1,0 +1,13 @@
+.own {
+  color: #38b492;
+  margin: 0;
+  margin-left: 35px;
+}
+
+.Btn {
+  color: white !important;
+  background-color: #3d1cba !important;
+}
+.Btn:hover {
+  background-color: #3d1cba !important;
+}
