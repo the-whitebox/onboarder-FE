@@ -85,7 +85,7 @@ export default function SetAccessLevel() {
         </Typography>
 
         <div>
-          <p className="team">2 team members </p>
+          <p className="team">2 Team members </p>
           <Typography sx={{ fontWeight: "bold", ml: "8px" }}>
             Access level
           </Typography>

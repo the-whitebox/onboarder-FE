@@ -49,11 +49,6 @@ function getStyles(name, personName, theme) {
   };
 }
 
-const modalWrapper = {
-  overflow: "auto",
-  display: "flex",
-};
-
 export default function Setpayrates() {
   const theme = useTheme();
   const [personName, setPersonName] = React.useState([]);

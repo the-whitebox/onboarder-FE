@@ -43,6 +43,11 @@ export default function Employment() {
     setOpen(false);
   };
 
+  const modalWrapper = {
+    overflow: "auto",
+    display: "flex",
+  };
+
   const [openAccess, setOpenAccess] = React.useState(false);
   const handleOpenAccess = () => setOpenAccess(true);
   const handleCloseAccess = () => setOpenAccess(false);
@@ -75,6 +80,7 @@ export default function Employment() {
         <Modal
           open={open}
           onClose={handleClose}
+          sx={modalWrapper}
           aria-labelledby="modal-modal-title"
           aria-describedby="modal-modal-description"
         >

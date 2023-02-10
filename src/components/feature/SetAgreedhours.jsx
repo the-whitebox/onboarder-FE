@@ -39,9 +39,8 @@ export default function SetAgreedhours() {
         sx={{
           ...style,
           width: 450,
-          height: 600,
+          height: 660,
           mt: 10,
-          overflowX: "scroll",
         }}
       >
         <Box className="flex flex-row" sx={{ width: "450px" }}>
@@ -136,6 +135,7 @@ export default function SetAgreedhours() {
                 display: "flex",
                 flexDirection: "row",
                 gap: 2,
+
                 ml: "20px",
               }}
               aria-labelledby="demo-radio-buttons-group-label"
@@ -152,12 +152,14 @@ export default function SetAgreedhours() {
             </RadioGroup>
           </FormControl>
 
-          <Typography sx={{ fontWeight: "bold", pt: "15px", pb: "20px" }}>
+          <Typography
+            sx={{ fontWeight: "bold", pt: "15px", pb: "20px", ml: 3 }}
+          >
             {" "}
             Hours per Work period{" "}
           </Typography>
           <TextField
-            sx={{ width: "140px" }}
+            sx={{ width: "140px", ml: 3 }}
             size="small"
             placeholder="0             hours"
           >
@@ -167,11 +169,11 @@ export default function SetAgreedhours() {
         <Button
           className="btn btn-primary"
           sx={{
-            ml: 35,
-            borderRadius: "6px",
-            width: "20%",
+            ml: 45,
+            borderRadius: "5px",
+            width: "16%",
             textTransform: "none",
-            mb: 5,
+            mt: 3,
           }}
         >
           Save

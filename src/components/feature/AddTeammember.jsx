@@ -56,11 +56,6 @@ const style = {
   pb: 3,
 };
 
-const modalWrapper = {
-  overflow: "auto",
-  display: "flex",
-};
-
 export default function Addteammember() {
   const theme = useTheme();
   const [personName, setPersonName] = React.useState([]);
@@ -88,19 +83,21 @@ export default function Addteammember() {
       <Box
         sx={{
           ...style,
-          mt: 10,
+          mt: 20,
           width: 660,
-          height: 830,
+          height: 930,
         }}
       >
-        <Box className="flex flex-row" sx={{ width: "660px" }}>
+        <Box className="flex flex-row" sx={{ width: "620px" }}>
           <h2 className="set">Add Team member</h2>
-          <CloseIcon onClick={handleClose} sx={{ pb: "25px" }}></CloseIcon>
+          <CloseIcon
+            onClick={handleClose}
+            sx={{ ml: "10px", mb: 4 }}
+          ></CloseIcon>
         </Box>
         <Grid sx={{ display: "flex", flexDirection: "row", pt: "20px" }}>
           <Avatar
             src={Capture}
-            aria-label="Busy Man"
             sx={{
               height: "150px",
               width: "150px",
@@ -134,7 +131,7 @@ export default function Addteammember() {
               sx={{
                 mt: "10px",
                 width: 350,
-                ml: 20,
+                ml: 18,
               }}
             ></TextField>
             <Button
@@ -152,14 +149,14 @@ export default function Addteammember() {
               Copy link
             </Button>
           </Box>
-          <Typography sx={{ color: "green", ml: 20, pt: "5px" }}>
+          <Typography sx={{ color: "green", ml: 18, pt: "5px" }}>
             How invite links work
           </Typography>
           <Box sx={{ pt: 2 }}>
             <Box sx={{ display: "flex", flexDirection: "row" }}>
               <Typography
                 sx={{
-                  ml: "8px",
+                  ml: "2px",
                   pt: "15px",
                   width: "100px",
                 }}
@@ -170,18 +167,18 @@ export default function Addteammember() {
                 size="small"
                 sx={{
                   width: 530,
-                  ml: "44px",
+                  ml: "46px",
                   pt: "10px",
                   borderRadius: 20,
                 }}
-                placeholder="Please input "
+                placeholder="Please input"
               ></TextField>
             </Box>
 
             <Box sx={{ display: "flex", flexDirection: "row" }}>
               <Typography
                 sx={{
-                  ml: "8px",
+                  ml: "2px",
                   pt: "30px",
                   width: "100px",
                 }}
@@ -192,11 +189,59 @@ export default function Addteammember() {
                 size="small"
                 sx={{
                   width: 530,
-                  ml: "44px",
+                  ml: "46px",
                   pt: "30px",
                 }}
                 placeholder="Please input "
               ></TextField>
+            </Box>
+
+            <Box sx={{ display: "flex", flexDirection: "row" }}>
+              <Typography sx={{ mt: "40px", width: "350px", ml: 1 }}>
+                Main Location{" "}
+              </Typography>
+              <FormControl
+                size="small"
+                sx={{
+                  mt: 4,
+                }}
+              >
+                <Select
+                  sx={{
+                    mb: "5px",
+                    font: "inherit",
+                    width: 460,
+                    mr: 98,
+                    borderRadius: "8px",
+                  }}
+                  multiple
+                  displayEmpty
+                  value={personName}
+                  onChange={handleChange}
+                  input={<OutlinedInput />}
+                  renderValue={(selected) => {
+                    if (selected.length === 0) {
+                      return <em>Location</em>;
+                    }
+
+                    return selected.join(", ");
+                  }}
+                  MenuProps={MenuProps}
+                  inputProps={{ "aria-label": "Without label" }}
+                >
+                  <MenuItem disabled value=""></MenuItem>
+                  <em>location </em>
+                  {names.map((name) => (
+                    <MenuItem
+                      key={name}
+                      value={name}
+                      style={getStyles(name, personName, theme)}
+                    >
+                      {name}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </FormControl>{" "}
             </Box>
 
             <FormControl
@@ -205,72 +250,20 @@ export default function Addteammember() {
                 m: 1,
                 mt: 3,
                 pt: "5px",
-                gap: 3,
                 display: "flex",
                 flexDirection: "row",
               }}
             >
-              <Typography sx={{ width: "180px", pt: "10px" }}>
-                Main Location
-              </Typography>
-              <Select
-                sx={{
-                  pb: "5px",
-                  font: "inherit",
-                  width: 850,
-                  ml: 1,
-                  borderRadius: "7px",
-                }}
-                multiple
-                displayEmpty
-                value={personName}
-                onChange={handleChange}
-                input={<OutlinedInput />}
-                renderValue={(selected) => {
-                  if (selected.length === 0) {
-                    return <em>Select location</em>;
-                  }
-
-                  return selected.join(", ");
-                }}
-                MenuProps={MenuProps}
-                inputProps={{ "aria-label": "Without label" }}
-              >
-                <MenuItem disabled value="">
-                  <em>Select location</em>
-                </MenuItem>
-                {names.map((name) => (
-                  <MenuItem
-                    key={name}
-                    value={name}
-                    style={getStyles(name, personName, theme)}
-                  >
-                    {name}
-                  </MenuItem>
-                ))}
-              </Select>
-            </FormControl>
-
-            <FormControl
-              size="small"
-              sx={{
-                m: 1,
-                mt: 3,
-                pt: "5px",
-                display: "flex",
-                flexDirection: "row",
-              }}
-            >
-              <Typography sx={{ pr: "10px", width: "350px", pt: "10px" }}>
+              <Typography sx={{ width: "400px", mt: "10px" }}>
                 {" "}
                 Other Location{" "}
               </Typography>
               <Select
                 sx={{
-                  mr: 40,
-                  pb: "5px",
+                  mr: 32,
+                  mb: "5px",
                   font: "inherit",
-                  width: "480px",
+                  width: "620px",
                 }}
                 multiple
                 displayEmpty
@@ -305,7 +298,7 @@ export default function Addteammember() {
             <Box sx={{ display: "flex", flexDirection: "row", mt: "25px" }}>
               <Typography
                 sx={{
-                  ml: "7px",
+                  ml: "2px",
                   pt: "15px",
                   pb: "20px",
                 }}
@@ -316,7 +309,7 @@ export default function Addteammember() {
                 size="small"
                 sx={{
                   width: 520,
-                  ml: "95px",
+                  ml: "87px",
                   pt: "10px",
                 }}
                 placeholder="Please input "
@@ -326,7 +319,7 @@ export default function Addteammember() {
             <Box sx={{ display: "flex", flexDirection: "row" }}>
               <Typography
                 sx={{
-                  ml: "7px",
+                  ml: "2px",
                   pt: "15px",
                 }}
               >
@@ -336,7 +329,7 @@ export default function Addteammember() {
                 size="small"
                 sx={{
                   width: 530,
-                  ml: "102px",
+                  ml: "95px",
                   pt: "10px",
                 }}
                 placeholder="Please input "
@@ -356,8 +349,8 @@ export default function Addteammember() {
                   sx={{
                     pb: "5px",
                     font: "inherit",
-                    width: 510,
-                    mr: 85,
+                    width: 460,
+                    mr: 88,
                     borderRadius: "8px",
                   }}
                   multiple
@@ -417,6 +410,7 @@ export default function Addteammember() {
               borderRadius: 2,
             }}
             className="bttn"
+            onClick={handleClose}
           >
             Add Team member
           </Button>

@@ -33,10 +33,10 @@ export default function SyncPayroll() {
 
   return (
     <React.Fragment>
-      <Box sx={{ ...style, width: 500, height: 360 }}>
-        <Box className="flex flex-row" sx={{ width: "520px" }}>
+      <Box sx={{ ...style, width: 550, height: 430 }}>
+        <Box className="flex flex-row" sx={{ width: "500px" }}>
           <h2>Archive Team members</h2>
-          <CloseIcon onClick={handleClose} sx={{ pb: "45px" }}></CloseIcon>
+          <CloseIcon onClick={handleClose} sx={{ mb: 6 }}></CloseIcon>
         </Box>
 
         <div>
@@ -51,8 +51,9 @@ export default function SyncPayroll() {
           >
             <InfoIcon
               sx={{
+                fontSize: "medium",
                 color: "Gray",
-                mt: "11px",
+                mt: "12px",
                 ml: "12px",
               }}
             />
@@ -96,9 +97,9 @@ export default function SyncPayroll() {
           className="button"
           sx={{
             textTransform: "none",
-            ml: 34,
+            ml: 35,
             borderRadius: "7px",
-            mt: 3,
+            mt: 4,
             width: "210px",
           }}
         >

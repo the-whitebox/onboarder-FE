@@ -85,7 +85,9 @@ export default function Addleaveentitlement() {
             Adding leave entitlement for 0 team members. 2 team members wil not
             assigned the leave entitlement because they don't have a pay rate.
           </Typography>
-          <p className="Access-level">Leave entitlement</p>
+          <Typography sx={{ fontWeight: "bold", pt: 4, ml: 1 }}>
+            Leave entitlement
+          </Typography>
           <FormControl
             sx={{
               width: 200,
@@ -127,10 +129,10 @@ export default function Addleaveentitlement() {
           variant="primary"
           className="btn btn-primary"
           sx={{
-            ml: 44,
+            ml: 40,
             borderRadius: "5px",
             width: "18%",
-            mt: "120px",
+            mt: "90px",
             textTransform: "none",
           }}
         >

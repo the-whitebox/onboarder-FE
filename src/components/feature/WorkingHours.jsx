@@ -29,11 +29,17 @@ export default function WorkingHours() {
   const handleOpenStress = () => setOpenStress(true);
   const handleCloseStress = () => setOpenStress(false);
 
+  const modalWrapper = {
+    overflow: "auto",
+    display: "flex",
+  };
+
   return (
     <>
       <ThemeProvider theme={theme}>
         <Modal
           open={openWorkPeriod}
+          sx={modalWrapper}
           onClose={handleCloseWorkPeriod}
           aria-labelledby="modal-modal-title"
           aria-describedby="modal-modal-description"
