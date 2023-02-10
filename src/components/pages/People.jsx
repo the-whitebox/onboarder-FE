@@ -123,6 +123,11 @@ export default function People() {
   };
   const handleClose = () => setOpen(false);
 
+  const modalWrapper = {
+    overflow: "auto",
+    display: "flex",
+  };
+
   const handleChange = (event) => {
     setPeople(event.target.value);
   };
@@ -131,6 +136,7 @@ export default function People() {
       <Modal
         open={open}
         onClose={handleClose}
+        sx={modalWrapper}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >

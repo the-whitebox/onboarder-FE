@@ -70,14 +70,17 @@ export default function SetAccessLevel() {
 
   return (
     <React.Fragment>
-      <Box sx={{ ...style, width: 450, height: 240 }}>
-        <Box className="flex flex-row" sx={{ width: "450px" }}>
+      <Box sx={{ ...style, width: 450, height: 280 }}>
+        <Box className="flex flex-row" sx={{ width: "410px" }}>
           <h2>Add location</h2>
-          <CloseIcon onClick={handleClose} sx={{ pb: "45px" }}></CloseIcon>
+          <CloseIcon
+            onClick={handleClose}
+            sx={{ ml: "10px", mb: 8 }}
+          ></CloseIcon>
         </Box>
 
         <div>
-          <p className="team">2 team members </p>
+          <p className="team">2 Team members </p>
           <Typography sx={{ fontWeight: "bold", ml: "8px" }}>
             Location
           </Typography>
@@ -119,16 +122,13 @@ export default function SetAccessLevel() {
           </FormControl>
         </div>
         <Button
-          variant="primary"
+          className="btn btn-primary"
           sx={{
-            ml: 46,
-
+            ml: 42,
             borderRadius: "6px",
             width: "18%",
-            bgcolor: "#38b492",
-            color: "white",
             textTransform: "none",
-            mt: 6,
+            mt: 4,
           }}
         >
           Add
