@@ -32,70 +32,60 @@ export default function SetStandardHours() {
 
   return (
     <React.Fragment>
-      <Button onClick={handleOpen}>Set Standard Hours</Button>
-      <Modal
-        hideBackdrop
-        open={open}
-        onClose={handleClose}
-        aria-labelledby="child-modal-title"
-        aria-describedby="child-modal-description"
-      >
-        <Box sx={{ ...style, width: 350, height: 350, mt: 0 }}>
-          <Box className="flex flex-row" sx={{ width: "375px" }}>
-            <h2>Set Standard Hours</h2>
-            <CloseIcon onClick={handleClose} sx={{ pb: "48px" }}></CloseIcon>
-          </Box>
-          <div>
-            <Typography sx={{ mt: "2px", color: "darkgray", ml: "2px" }}>
-              2 Team members
-            </Typography>
-            <Box sx={{ display: "flex", flexDirection: "row" }}>
-              <InfoIcon
-                sx={{
-                  fontSize: "small",
-                  color: "Gray",
-                  mt: "13px",
-                  ml: "12px",
-                }}
-              />
-              <Typography
-                sx={{
-                  fontSize: "small",
-                  ml: "10px",
-                  mt: "10px",
-                  color: "gray",
-                }}
-              >
-                Number of hours payable for a 'Day of leave'
-              </Typography>
-            </Box>
-            <h5 className="h5"> Hours </h5>
-            <TextField
-              size="small"
-              color="warning"
-              sx={{ width: 300, ml: "8px" }}
-            ></TextField>
-
-            <Typography sx={{ fontSize: "12px", ml: "10px", mt: "10px" }}>
-              Not applicable to 2 Team members selected as they do not a pay
-              rate assigned to their profile
-            </Typography>
-          </div>
-          <Button
-            className="Btn"
-            sx={{
-              mt: "32px",
-              ml: 35,
-              borderRadius: "6px",
-              width: "22%",
-              textTransform: "none",
-            }}
-            onClick={handleClose}
-          >
-            Save
-          </Button>
+      <Box sx={{ ...style, width: 350, height: 350, mt: 0 }}>
+        <Box className="flex flex-row" sx={{ width: "375px" }}>
+          <h2>Set Standard Hours</h2>
+          <CloseIcon onClick={handleClose} sx={{ pb: "48px" }}></CloseIcon>
         </Box>
-      </Modal>
+        <div>
+          <Typography sx={{ mt: "2px", color: "darkgray", ml: "2px" }}>
+            2 Team members
+          </Typography>
+          <Box sx={{ display: "flex", flexDirection: "row" }}>
+            <InfoIcon
+              sx={{
+                fontSize: "small",
+                color: "Gray",
+                mt: "13px",
+                ml: "12px",
+              }}
+            />
+            <Typography
+              sx={{
+                fontSize: "small",
+                ml: "10px",
+                mt: "10px",
+                color: "gray",
+              }}
+            >
+              Number of hours payable for a 'Day of leave'
+            </Typography>
+          </Box>
+          <h5 className="h5"> Hours </h5>
+          <TextField
+            size="small"
+            color="warning"
+            sx={{ width: 300, ml: "8px" }}
+          ></TextField>
+
+          <Typography sx={{ fontSize: "12px", ml: "10px", mt: "10px" }}>
+            Not applicable to 2 Team members selected as they do not a pay rate
+            assigned to their profile
+          </Typography>
+        </div>
+        <Button
+          className="Btn"
+          sx={{
+            mt: "32px",
+            ml: 35,
+            borderRadius: "6px",
+            width: "22%",
+            textTransform: "none",
+          }}
+        >
+          Save
+        </Button>
+      </Box>
     </React.Fragment>
   );
 }

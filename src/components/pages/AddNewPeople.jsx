@@ -159,7 +159,7 @@ export default function AddNewPeople() {
             </Typography>
           </Box>
           <Box sx={{ pt: 2, pb: 2, pl: 2, display: "flex" }}>
-            <TextField size="small" />
+            <TextField className="input-height" size="small" />
             <Button
               sx={{ ml: 2, height: 30 }}
               variant="contained"

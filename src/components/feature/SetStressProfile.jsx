@@ -83,99 +83,88 @@ export default function SetStressProfile() {
 
   return (
     <React.Fragment>
-      <Button onClick={handleOpen}>Set Stress Profile</Button>
-      <Modal
-        hideBackdrop
-        open={open}
-        onClose={handleClose}
-        aria-labelledby="child-modal-title"
-        aria-describedby="child-modal-description"
-      >
-        <Box sx={{ ...style, width: 400 }}>
-          <Box className="flex flex-row" sx={{ width: "420px" }}>
-            <h2 className="set">Set Stress Profile</h2>
-            <CloseIcon onClick={handleClose} sx={{ pb: "30px" }}></CloseIcon>
-          </Box>
-          <div>
-            <Typography sx={{ color: "#a9a9a9", pt: "15px" }}>
-              2 Team members
-            </Typography>
-            <Box
+      <Box sx={{ ...style, width: 400 }}>
+        <Box className="flex flex-row" sx={{ width: "420px" }}>
+          <h2 className="set">Set Stress Profile</h2>
+          <CloseIcon onClick={handleClose} sx={{ pb: "30px" }}></CloseIcon>
+        </Box>
+        <div>
+          <Typography sx={{ color: "#a9a9a9", pt: "15px" }}>
+            2 Team members
+          </Typography>
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: "row",
+            }}
+          >
+            <InfoIcon
               sx={{
-                display: "flex",
-                flexDirection: "row",
+                fontSize: "large",
+                color: "Gray",
+                mt: "13px",
+                ml: "12px",
+              }}
+            />
+            <Typography
+              sx={{
+                fontSize: "15px",
+                ml: "5px",
+                mt: "9px",
+                color: "wblack",
               }}
             >
-              <InfoIcon
-                sx={{
-                  fontSize: "large",
-                  color: "Gray",
-                  mt: "13px",
-                  ml: "12px",
-                }}
-              />
-              <Typography
-                sx={{
-                  fontSize: "15px",
-                  ml: "5px",
-                  mt: "9px",
-                  color: "wblack",
-                }}
-              >
-                Stress Profiles are scheduling rules such as minimum and maximum
-                hours. Use our templates below or
-              </Typography>
-            </Box>
-            <p className="own">Create your own.</p>
+              Stress Profiles are scheduling rules such as minimum and maximum
+              hours. Use our templates below or
+            </Typography>
+          </Box>
+          <p className="own">Create your own.</p>
 
-            <FormControl sx={{ m: 1, width: 220, mt: 3 }}>
-              <Typography sx={{ pb: "10px", fontWeight: "bold", ml: "5px" }}>
-                {" "}
-                Stress Profile{" "}
-              </Typography>
-              <Select
-                sx={{ borderRadius: "10px" }}
-                multiple
-                displayEmpty
-                value={personName}
-                onChange={handleChange}
-                input={<OutlinedInput />}
-                renderValue={(selected) => {
-                  if (selected.length === 0) {
-                    return <em>Select</em>;
-                  }
+          <FormControl sx={{ m: 1, width: 220, mt: 3 }}>
+            <Typography sx={{ pb: "10px", fontWeight: "bold", ml: "5px" }}>
+              Stress Profile{" "}
+            </Typography>
+            <Select
+              sx={{ borderRadius: "10px" }}
+              multiple
+              displayEmpty
+              value={personName}
+              onChange={handleChange}
+              input={<OutlinedInput />}
+              renderValue={(selected) => {
+                if (selected.length === 0) {
+                  return <em>Select</em>;
+                }
 
-                  return selected.join(", ");
-                }}
-                MenuProps={MenuProps}
-                inputProps={{ "aria-label": "Without label" }}
-              >
-                {names.map((name) => (
-                  <MenuItem
-                    key={name}
-                    value={name}
-                    style={getStyles(name, personName, theme)}
-                  >
-                    {name}
-                  </MenuItem>
-                ))}
-              </Select>
-            </FormControl>
-          </div>
-          <Button
-            className="Btn"
-            sx={{
-              borderRadius: "7px",
-              ml: 42,
-              width: 80,
-              textTransform: "none",
-            }}
-            onClick={handleClose}
-          >
-            Save
-          </Button>
-        </Box>
-      </Modal>
+                return selected.join(", ");
+              }}
+              MenuProps={MenuProps}
+              inputProps={{ "aria-label": "Without label" }}
+            >
+              {names.map((name) => (
+                <MenuItem
+                  key={name}
+                  value={name}
+                  style={getStyles(name, personName, theme)}
+                >
+                  {name}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+        </div>
+        <Button
+          className="Btn"
+          sx={{
+            borderRadius: "7px",
+            ml: 42,
+            width: 80,
+            textTransform: "none",
+          }}
+        >
+          Save
+        </Button>
+      </Box>
     </React.Fragment>
   );
 }

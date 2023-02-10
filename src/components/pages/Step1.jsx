@@ -57,6 +57,10 @@ export default function BasicModal() {
   const theme = useTheme();
   const [age, setAge] = React.useState("");
 
+  function CharacterDropDown() {
+    const [items, setItems] = React.useState([]);
+  }
+
   const businessValidation = () => {
     if (business == "") {
       setBusinessError("Please enter a business name");

@@ -74,84 +74,74 @@ export default function SetAccessLevel() {
 
   return (
     <React.Fragment>
-      <Button onClick={handleOpen}>Open Access Modal</Button>
-      <Modal
-        hideBackdrop
-        open={open}
-        onClose={handleClose}
-        aria-labelledby="child-modal-title"
-        aria-describedby="child-modal-description"
-      >
-        <Box sx={{ ...style, width: 350, height: 230 }}>
-          <CloseIcon onClick={handleClose} sx={{ float: "right" }}></CloseIcon>
-          <Typography
-            variant="h5"
-            sx={{ mt: 2, fontWeight: "bold", paddingBottom: 1 }}
-            id="child-modal-title"
-          >
-            Set Access level
+      <Box sx={{ ...style, width: 350, height: 230 }}>
+        <CloseIcon onClick={handleClose} sx={{ float: "right" }}></CloseIcon>
+        <Typography
+          variant="h5"
+          sx={{ mt: 2, fontWeight: "bold", paddingBottom: 1 }}
+          id="child-modal-title"
+        >
+          Set Access level
+        </Typography>
+
+        <div>
+          <p className="team">2 team members </p>
+          <Typography sx={{ fontWeight: "bold", ml: "8px" }}>
+            Access level
           </Typography>
-
-          <div>
-            <p className="team">2 team members </p>
-            <Typography sx={{ fontWeight: "bold", ml: "8px" }}>
-              Access level
-            </Typography>
-            <FormControl
-              sx={{
-                width: 200,
-                height: 5,
-                padding: "5px  ",
-              }}
-            >
-              <Select
-                size="small"
-                sx={{ borderRadius: "7px" }}
-                multiple
-                displayEmpty
-                value={personName}
-                onChange={handleChange}
-                input={<OutlinedInput />}
-                renderValue={(selected) => {
-                  if (selected.length === 0) {
-                    return <em>Select</em>;
-                  }
-
-                  return selected.join(", ");
-                }}
-                MenuProps={MenuProps}
-                inputProps={{ "aria-label": "Without label" }}
-              >
-                {names.map((name) => (
-                  <MenuItem
-                    key={name}
-                    value={name}
-                    style={getStyles(name, personName, theme)}
-                  >
-                    {name}
-                  </MenuItem>
-                ))}
-              </Select>
-            </FormControl>
-          </div>
-          <Button
-            variant="primary"
-            className="btn"
+          <FormControl
             sx={{
-              ml: 34,
-              borderRadius: "6px",
-              width: "22%",
-              bgcolor: "#38b492",
-              color: "white",
-              textTransform: "none",
-              mt: 6,
+              width: 200,
+              height: 5,
+              padding: "5px  ",
             }}
-            onClick={handleClose}
           >
-            Update
-          </Button>
-        </Box>
-      </Modal>
+            <Select
+              size="small"
+              sx={{ borderRadius: "7px" }}
+              multiple
+              displayEmpty
+              value={personName}
+              onChange={handleChange}
+              input={<OutlinedInput />}
+              renderValue={(selected) => {
+                if (selected.length === 0) {
+                  return <em>Select</em>;
+                }
+
+                return selected.join(", ");
+              }}
+              MenuProps={MenuProps}
+              inputProps={{ "aria-label": "Without label" }}
+            >
+              {names.map((name) => (
+                <MenuItem
+                  key={name}
+                  value={name}
+                  style={getStyles(name, personName, theme)}
+                >
+                  {name}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+        </div>
+        <Button
+          variant="primary"
+          className="btn"
+          sx={{
+            ml: 34,
+            borderRadius: "6px",
+            width: "22%",
+            bgcolor: "#38b492",
+            color: "white",
+            textTransform: "none",
+            mt: 6,
+          }}
+        >
+          Update
+        </Button>
+      </Box>
     </React.Fragment>
   );
 }

@@ -20,6 +20,12 @@ import Timesheets from "../feature/Timesheets";
 import { DataGrid } from "@mui/x-data-grid";
 import { fontWeight } from "@mui/system";
 import "../../style/People.css";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
+import Modal from "@mui/material/Modal";
+import AddTeammemberModalBody from "../feature/AddTeammember";
+import axios from "axios";
+
+const theme = createTheme();
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -104,13 +110,32 @@ const rows = [
 ];
 
 export default function People() {
+  const url = process.env.REACT_APP_BASE_URL + "/people/";
   const [people, setPeople] = React.useState("");
+  const [firstName, setFirstName] = React.useState("");
+  const [lastName, setLastName] = React.useState("");
+  const [location, setLocattion] = React.useState("");
+  const [otherLocation, setOtherLocattion] = React.useState("");
+
+  const [open, setOpen] = React.useState(false);
+  const handleOpen = () => {
+    setOpen(true);
+  };
+  const handleClose = () => setOpen(false);
 
   const handleChange = (event) => {
     setPeople(event.target.value);
   };
   return (
-    <>
+    <ThemeProvider theme={theme}>
+      <Modal
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <AddTeammemberModalBody />
+      </Modal>
       <Box sx={{ display: "flex" }}>
         <CssBaseline />
         <AppBar
@@ -204,6 +229,7 @@ export default function People() {
 
             <FormControl variant="filled" sx={{ m: 1, minWidth: 120 }}>
               <Button
+                onClick={handleOpen}
                 variant="contained"
                 className="btn-color"
                 sx={{
@@ -251,6 +277,6 @@ export default function People() {
           </Box>
         </Box>
       </Box>
-    </>
+    </ThemeProvider>
   );
 }

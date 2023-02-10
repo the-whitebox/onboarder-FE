@@ -70,80 +70,70 @@ export default function SetAccessLevel() {
 
   return (
     <React.Fragment>
-      <Button onClick={handleOpen}>Open Access Modal</Button>
-      <Modal
-        hideBackdrop
-        open={open}
-        onClose={handleClose}
-        aria-labelledby="child-modal-title"
-        aria-describedby="child-modal-description"
-      >
-        <Box sx={{ ...style, width: 450, height: 240 }}>
-          <Box className="flex flex-row" sx={{ width: "450px" }}>
-            <h2>Add location</h2>
-            <CloseIcon onClick={handleClose} sx={{ pb: "45px" }}></CloseIcon>
-          </Box>
-
-          <div>
-            <p className="team">2 team members </p>
-            <Typography sx={{ fontWeight: "bold", ml: "8px" }}>
-              Location
-            </Typography>
-            <FormControl
-              sx={{
-                width: 200,
-                height: 5,
-                padding: "5px  ",
-              }}
-            >
-              <Select
-                size="small"
-                sx={{ borderRadius: "7px" }}
-                multiple
-                displayEmpty
-                value={personName}
-                onChange={handleChange}
-                input={<OutlinedInput />}
-                renderValue={(selected) => {
-                  if (selected.length === 0) {
-                    return <em>Select</em>;
-                  }
-
-                  return selected.join(", ");
-                }}
-                MenuProps={MenuProps}
-                inputProps={{ "aria-label": "Without label" }}
-              >
-                {names.map((name) => (
-                  <MenuItem
-                    key={name}
-                    value={name}
-                    style={getStyles(name, personName, theme)}
-                  >
-                    {name}
-                  </MenuItem>
-                ))}
-              </Select>
-            </FormControl>
-          </div>
-          <Button
-            variant="primary"
-            sx={{
-              ml: 46,
-
-              borderRadius: "6px",
-              width: "18%",
-              bgcolor: "#38b492",
-              color: "white",
-              textTransform: "none",
-              mt: 6,
-            }}
-            onClick={handleClose}
-          >
-            Add
-          </Button>
+      <Box sx={{ ...style, width: 450, height: 240 }}>
+        <Box className="flex flex-row" sx={{ width: "450px" }}>
+          <h2>Add location</h2>
+          <CloseIcon onClick={handleClose} sx={{ pb: "45px" }}></CloseIcon>
         </Box>
-      </Modal>
+
+        <div>
+          <p className="team">2 team members </p>
+          <Typography sx={{ fontWeight: "bold", ml: "8px" }}>
+            Location
+          </Typography>
+          <FormControl
+            sx={{
+              width: 200,
+              height: 5,
+              padding: "5px  ",
+            }}
+          >
+            <Select
+              size="small"
+              sx={{ borderRadius: "7px" }}
+              multiple
+              displayEmpty
+              value={personName}
+              onChange={handleChange}
+              input={<OutlinedInput />}
+              renderValue={(selected) => {
+                if (selected.length === 0) {
+                  return <em>Select</em>;
+                }
+
+                return selected.join(", ");
+              }}
+              MenuProps={MenuProps}
+              inputProps={{ "aria-label": "Without label" }}
+            >
+              {names.map((name) => (
+                <MenuItem
+                  key={name}
+                  value={name}
+                  style={getStyles(name, personName, theme)}
+                >
+                  {name}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+        </div>
+        <Button
+          variant="primary"
+          sx={{
+            ml: 46,
+
+            borderRadius: "6px",
+            width: "18%",
+            bgcolor: "#38b492",
+            color: "white",
+            textTransform: "none",
+            mt: 6,
+          }}
+        >
+          Add
+        </Button>
+      </Box>
     </React.Fragment>
   );
 }

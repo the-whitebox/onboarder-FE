@@ -32,61 +32,51 @@ export default function SyncPayroll() {
 
   return (
     <React.Fragment>
-      <Button onClick={handleOpen}>Open Access Modal</Button>
-      <Modal
-        hideBackdrop
-        open={open}
-        onClose={handleClose}
-        aria-labelledby="child-modal-title"
-        aria-describedby="child-modal-description"
-      >
-        <Box sx={{ ...style, width: 490, height: 280 }}>
-          <Box className="flex flex-row" sx={{ width: "500px" }}>
-            <h2>Sync Team member with payroll</h2>
-            <CloseIcon onClick={handleClose} sx={{ pb: "45px" }}></CloseIcon>
-          </Box>
-
-          <div>
-            <Typography sx={{ color: "#b4b4b4", ml: 1 }}>
-              2 Team members
-            </Typography>
-            <Box
-              sx={{
-                display: "flex",
-                flexDirection: "row",
-              }}
-            >
-              <Checkbox
-                size=""
-                sx={{
-                  pr: "8px",
-                  pt: "14px",
-                  color: "rgba(95, 91, 81, 0.518)",
-                }}
-              />
-              <Typography sx={{ pt: "10px" }}>
-                Refresh the mapping of Team members between UROSTERS
-              </Typography>
-            </Box>
-            <Typography sx={{ pt: 2, pb: 2, ml: 4 }}>Asher Muneer</Typography>
-            <Typography sx={{ ml: 4 }}>sssss sss</Typography>
-          </div>
-
-          <Button
-            className="Btn"
-            sx={{
-              textTransform: "none",
-              ml: 42,
-              borderRadius: "8px",
-              mt: 3,
-              width: "170px",
-            }}
-            onClick={handleClose}
-          >
-            Sync Team member
-          </Button>
+      <Box sx={{ ...style, width: 490, height: 280 }}>
+        <Box className="flex flex-row" sx={{ width: "500px" }}>
+          <h2>Sync Team member with payroll</h2>
+          <CloseIcon onClick={handleClose} sx={{ pb: "45px" }}></CloseIcon>
         </Box>
-      </Modal>
+
+        <div>
+          <Typography sx={{ color: "#b4b4b4", ml: 1 }}>
+            2 Team members
+          </Typography>
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: "row",
+            }}
+          >
+            <Checkbox
+              size=""
+              sx={{
+                pr: "8px",
+                pt: "14px",
+                color: "rgba(95, 91, 81, 0.518)",
+              }}
+            />
+            <Typography sx={{ pt: "10px" }}>
+              Refresh the mapping of Team members between UROSTERS
+            </Typography>
+          </Box>
+          <Typography sx={{ pt: 2, pb: 2, ml: 4 }}>Asher Muneer</Typography>
+          <Typography sx={{ ml: 4 }}>sssss sss</Typography>
+        </div>
+
+        <Button
+          className="Btn"
+          sx={{
+            textTransform: "none",
+            ml: 42,
+            borderRadius: "8px",
+            mt: 3,
+            width: "170px",
+          }}
+        >
+          Sync Team member
+        </Button>
+      </Box>
     </React.Fragment>
   );
 }

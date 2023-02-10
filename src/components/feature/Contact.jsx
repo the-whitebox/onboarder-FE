@@ -36,11 +36,15 @@ export default function Contact() {
                   >
                     <li>Email</li>
                     <li>
-                      <Link color="#38b492">Add an email</Link>
+                      <Link href="/personal_details" color="#38b492">
+                        Add an email
+                      </Link>
                     </li>
                     <li>Emergency contact</li>
                     <li>
-                      <Link color="#38b492">Add an emergency contact</Link>
+                      <Link href="/personal" color="#38b492">
+                        Add an emergency contact
+                      </Link>
                     </li>
                   </Box>
                 </Item>
@@ -54,11 +58,15 @@ export default function Contact() {
                   >
                     <li>Mobile</li>
                     <li>
-                      <Link color="#38b492">Add a mobile</Link>
+                      <Link href="/personal" color="#38b492">
+                        Add a mobile
+                      </Link>
                     </li>
                     <li>Contact Details</li>
                     <li>
-                      <Link color="#38b492">Add contact details</Link>
+                      <Link href="/personal" color="#38b492">
+                        Add contact details
+                      </Link>
                     </li>
                   </Box>
                 </Item>
@@ -72,7 +80,9 @@ export default function Contact() {
                   >
                     <li>Address</li>
                     <li>
-                      <Link color="#38b492">Add an address</Link>
+                      <Link href="/personal" color="#38b492">
+                        Add an address
+                      </Link>
                     </li>
                     <li></li>
                   </Box>
