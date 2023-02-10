@@ -83,14 +83,6 @@ export default function SetStressProfile() {
 
   return (
     <React.Fragment>
-      {/* <Button onClick={handleOpen}>Set Stress Profile</Button>
-      <Modal
-        hideBackdrop
-        open={open}
-        onClose={handleClose}
-        aria-labelledby="child-modal-title"
-        aria-describedby="child-modal-description"
-      > */}
       <Box sx={{ ...style, width: 400 }}>
         <Box className="flex flex-row" sx={{ width: "420px" }}>
           <h2 className="set">Set Stress Profile</h2>
@@ -169,12 +161,10 @@ export default function SetStressProfile() {
             width: 80,
             textTransform: "none",
           }}
-          // onClick={handleClose}
         >
           Save
         </Button>
       </Box>
-      {/* </Modal> */}
     </React.Fragment>
   );
 }

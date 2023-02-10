@@ -32,14 +32,6 @@ export default function SyncPayroll() {
 
   return (
     <React.Fragment>
-      {/* <Button onClick={handleOpen}>Open Access Modal</Button> */}
-      {/* <Modal
-        hideBackdrop
-        open={open}
-        onClose={handleClose}
-        aria-labelledby="child-modal-title"
-        aria-describedby="child-modal-description"
-      > */}
       <Box sx={{ ...style, width: 490, height: 280 }}>
         <Box className="flex flex-row" sx={{ width: "500px" }}>
           <h2>Sync Team member with payroll</h2>
@@ -81,12 +73,10 @@ export default function SyncPayroll() {
             mt: 3,
             width: "170px",
           }}
-          // onClick={handleClose}
         >
           Sync Team member
         </Button>
       </Box>
-      {/* </Modal> */}
     </React.Fragment>
   );
 }

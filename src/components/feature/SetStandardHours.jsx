@@ -32,14 +32,6 @@ export default function SetStandardHours() {
 
   return (
     <React.Fragment>
-      {/* <Button onClick={handleOpen}>Set Standard Hours</Button>
-      <Modal
-        hideBackdrop
-        open={open}
-        onClose={handleClose}
-        aria-labelledby="child-modal-title"
-        aria-describedby="child-modal-description"
-      > */}
       <Box sx={{ ...style, width: 350, height: 350, mt: 0 }}>
         <Box className="flex flex-row" sx={{ width: "375px" }}>
           <h2>Set Standard Hours</h2>
@@ -90,12 +82,10 @@ export default function SetStandardHours() {
             width: "22%",
             textTransform: "none",
           }}
-          // onClick={handleClose}
         >
           Save
         </Button>
       </Box>
-      {/* </Modal> */}
     </React.Fragment>
   );
 }

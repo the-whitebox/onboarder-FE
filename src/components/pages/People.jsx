@@ -115,6 +115,7 @@ export default function People() {
   const [firstName, setFirstName] = React.useState("");
   const [lastName, setLastName] = React.useState("");
   const [location, setLocattion] = React.useState("");
+  const [otherLocation, setOtherLocattion] = React.useState("");
 
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => {

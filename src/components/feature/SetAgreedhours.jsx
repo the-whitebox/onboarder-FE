@@ -35,66 +35,58 @@ export default function SetAgreedhours() {
 
   return (
     <React.Fragment>
-      {/* <Button onClick={handleOpen}>Set Agreed Hours</Button>
-      <Modal
-        hideBackdrop
-        open={open}
-        onClose={handleClose}
-        aria-labelledby="child-modal-title"
-        aria-describedby="child-modal-description"
+      <Box
+        sx={{
+          ...style,
+          width: 450,
+          height: 600,
+          mt: 10,
+          overflowX: "scroll",
+        }}
       >
-        <Box
-          sx={{
-            ...style,
-            width: 450,
-            height: 600,
-            mt: 10,
-            overflowX: "scroll",
-          }}
-        >
-          <Box className="flex flex-row" sx={{ width: "450px" }}>
-            <h2 className="set">Set agreed hours</h2>
-            <CloseIcon onClick={handleClose} sx={{ pb: "25px" }}></CloseIcon>
-          </Box>
-          <div>
-            <Typography
-              sx={{
-                pt: "10px",
-                fontWeight: "bold",
-                color: "rgba(95, 91, 81, 0.518)",
-              }}
-            >
-              2 Team members
-            </Typography>
-            <Typography
-              sx={{
-                fontWeight: "bold",
-                mt: "20px",
-                pb: "20px",
-              }}
-            >
-              Work period
-            </Typography>
-            <Typography
-              variant="h6"
-              sx={{ fontWeight: "bold", ml: "20px", pb: "15px" }}
-            >
-              Create a new work period{" "}
-            </Typography>
-            <Typography sx={{ ml: "20px", pb: "30px" }}>
-              Saving this template will allow it to be used across any team
-              member profile.
-            </Typography>
-            <Typography
-              sx={{
-                fontWeight: "Bold",
-                fontSize: "large",
-                ml: "20px",
-                pb: "10px",
-              }}
-            >
-              Work period length
-            </Typography>
+        <Box className="flex flex-row" sx={{ width: "450px" }}>
+          <h2 className="set">Set agreed hours</h2>
+          <CloseIcon onClick={handleClose} sx={{ pb: "25px" }}></CloseIcon>
+        </Box>
+        <div>
+          <Typography
+            sx={{
+              pt: "10px",
+              fontWeight: "bold",
+              color: "rgba(95, 91, 81, 0.518)",
+            }}
+          >
+            2 Team members
+          </Typography>
+          <Typography
+            sx={{
+              fontWeight: "bold",
+              mt: "20px",
+              pb: "20px",
+            }}
+          >
+            Work period
+          </Typography>
+          <Typography
+            variant="h6"
+            sx={{ fontWeight: "bold", ml: "20px", pb: "15px" }}
+          >
+            Create a new work period{" "}
+          </Typography>
+          <Typography sx={{ ml: "20px", pb: "30px" }}>
+            Saving this template will allow it to be used across any team member
+            profile.
+          </Typography>
+          <Typography
+            sx={{
+              fontWeight: "Bold",
+              fontSize: "large",
+              ml: "20px",
+              pb: "10px",
+            }}
+          >
+            Work period length
+          </Typography>
 
           <FormControl>
             <RadioGroup
@@ -160,33 +152,31 @@ export default function SetAgreedhours() {
             </RadioGroup>
           </FormControl>
 
-            <Typography sx={{ fontWeight: "bold", pt: "15px", pb: "20px" }}>
-              {" "}
-              Hours per Work period{" "}
-            </Typography>
-            <TextField
-              sx={{ width: "140px" }}
-              size="small"
-              placeholder="0             hours"
-            >
-              {" "}
-            </TextField>
-          </div>
-          <Button
-            className="btn btn-primary"
-            sx={{
-              ml: 35,
-              borderRadius: "6px",
-              width: "20%",
-              textTransform: "none",
-              mb: 5,
-            }}
-            onClick={handleClose}
+          <Typography sx={{ fontWeight: "bold", pt: "15px", pb: "20px" }}>
+            {" "}
+            Hours per Work period{" "}
+          </Typography>
+          <TextField
+            sx={{ width: "140px" }}
+            size="small"
+            placeholder="0             hours"
           >
-            Save
-          </Button>
-        </Box>
-      </Modal>
+            {" "}
+          </TextField>
+        </div>
+        <Button
+          className="btn btn-primary"
+          sx={{
+            ml: 35,
+            borderRadius: "6px",
+            width: "20%",
+            textTransform: "none",
+            mb: 5,
+          }}
+        >
+          Save
+        </Button>
+      </Box>
     </React.Fragment>
   );
 }

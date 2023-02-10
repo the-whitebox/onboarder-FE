@@ -70,14 +70,6 @@ export default function SetAccessLevel() {
 
   return (
     <React.Fragment>
-      {/* <Button onClick={handleOpen}>Open Access Modal</Button>
-      <Modal
-        hideBackdrop
-        open={open}
-        onClose={handleClose}
-        aria-labelledby="child-modal-title"
-        aria-describedby="child-modal-description"
-      > */}
       <Box sx={{ ...style, width: 450, height: 240 }}>
         <Box className="flex flex-row" sx={{ width: "450px" }}>
           <h2>Add location</h2>
@@ -138,12 +130,10 @@ export default function SetAccessLevel() {
             textTransform: "none",
             mt: 6,
           }}
-          // onClick={handleClose}
         >
           Add
         </Button>
       </Box>
-      {/* </Modal> */}
     </React.Fragment>
   );
 }

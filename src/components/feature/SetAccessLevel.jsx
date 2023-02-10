@@ -74,14 +74,6 @@ export default function SetAccessLevel() {
 
   return (
     <React.Fragment>
-      {/* <Button onClick={handleOpen}>Open Access Modal</Button>
-      <Modal
-        hideBackdrop
-        open={open}
-        onClose={handleClose}
-        aria-labelledby="child-modal-title"
-        aria-describedby="child-modal-description"
-      > */}
       <Box sx={{ ...style, width: 350, height: 230 }}>
         <CloseIcon onClick={handleClose} sx={{ float: "right" }}></CloseIcon>
         <Typography
@@ -146,12 +138,10 @@ export default function SetAccessLevel() {
             textTransform: "none",
             mt: 6,
           }}
-          // onClick={handleClose}
         >
           Update
         </Button>
       </Box>
-      {/* </Modal> */}
     </React.Fragment>
   );
 }
