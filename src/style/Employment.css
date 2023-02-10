@@ -1,3 +1,8 @@
 ul {
   list-style-type: none !important;
 }
+
+.appbar-borders {
+  border: 0 !important;
+  border-bottom: 0 !important;
+}

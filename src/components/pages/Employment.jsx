@@ -7,6 +7,8 @@ import Box from "@mui/material/Box";
 // import ListItem from "@mui/material/ListItem";
 // import ListItemButton from "@mui/material/ListItemButton";
 // import ListItemText from "@mui/material/ListItemText";
+import AppBar from "@mui/material/AppBar";
+
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
@@ -32,7 +34,7 @@ const Item = styled("div")(({ theme }) => ({
   border: "none",
 }));
 
-// const drawerWidth = 240;
+const drawerWidth = 240;
 
 export default function Employment() {
   const [open, setOpen] = React.useState(false);
@@ -82,11 +84,89 @@ export default function Employment() {
         </Modal>
 
         <Box sx={{ display: "flex" }}>
+          <AppBar
+            style={{ background: "#ffffff", color: "black" }}
+            position="fixed"
+            sx={{
+              width: `calc(100% - ${drawerWidth}px)`,
+              ml: `${drawerWidth}px`,
+            }}
+            className="appbar-borders"
+          >
+            <Box
+              sx={{
+                border: "1px solid",
+                height: 80,
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              <Typography
+                sx={{
+                  mr: 2,
+                }}
+              >
+                Me
+              </Typography>
+              <Typography
+                sx={{
+                  mr: 2,
+                }}
+              >
+                News Feed
+              </Typography>
+              <Typography
+                sx={{
+                  mr: 2,
+                }}
+              >
+                Task
+              </Typography>
+              <Typography
+                sx={{
+                  mr: 2,
+                }}
+              >
+                Locations
+              </Typography>
+              <Button
+                variant="contained"
+                className="btn-color"
+                sx={{
+                  mr: 2,
+                }}
+              >
+                People
+              </Button>
+              <Typography
+                sx={{
+                  mr: 2,
+                }}
+              >
+                Schedule
+              </Typography>
+              <Typography
+                sx={{
+                  mr: 2,
+                }}
+              >
+                TimeSheets
+              </Typography>
+              <Typography
+                sx={{
+                  mr: 2,
+                }}
+              >
+                Reports
+              </Typography>
+            </Box>
+          </AppBar>
           <VerticalMenu indexToHL={indexToHL} />
 
           <Box
             component="main"
-            sx={{ flexGrow: 1, bgcolor: "#fcfcfc", p: 3, pt: 1 }}
+            sx={{ flexGrow: 1, bgcolor: "#fcfcfc", p: 3, pt: 1, mt: 6 }}
           >
             <Toolbar />
             <Box sx={{ display: "flex", justifyContent: "space-between" }}>

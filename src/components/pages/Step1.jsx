@@ -448,10 +448,19 @@ export default function BasicModal() {
             </Button>
           </Box>
         </Grid>
-        <Grid item xs={false} sm={4} md={5} sx={{ backgroundColor: "#FFFFFF" }}>
+        <Grid
+          item
+          xs={false}
+          sm={4}
+          md={5}
+          sx={{
+            backgroundColor: "#FFFFFF",
+          }}
+          // className="grid-background-image"
+        >
           <Avatar
             src={RightSideImage}
-            aria-label="UROOSTER"
+            aria-label="MaxPilot"
             sx={{
               height: "100vh",
               width: "100%",
