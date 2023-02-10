@@ -78,83 +78,84 @@ export default function Addleaveentitlement() {
 
   return (
     <React.Fragment>
-      {/* <Button onClick={handleOpen}>Add leave entitlement </Button> */}
-      {/*  <Modal
+      <Button onClick={handleOpen}>Add leave entitlement </Button>
+      <Modal
         hideBackdrop
         open={open}
         onClose={handleClose}
         aria-labelledby="child-modal-title"
         aria-describedby="child-modal-description"
-      >*/}
-      <Box sx={{ ...style, width: 430, height: 340 }}>
-        <CloseIcon sx={{ float: "right" }}></CloseIcon>
-        <Typography
-          variant="h5"
-          sx={{ mt: 2, fontWeight: "bold", paddingBottom: 1 }}
-          id="child-modal-title"
-        >
-          Add leave entitlement
-        </Typography>
-
-        <div>
-          <Typography sx={{ fontSize: "14px" }}>
-            Adding leave entitlement for 0 team members. 2 team members wil not
-            assigned the leave entitlement because they don't have a pay rate.
-          </Typography>
-          <p className="Access-level">Leave entitlement</p>
-          <FormControl
-            sx={{
-              width: 200,
-              borderRadius: "2px",
-              ml: "5px",
-            }}
+      >
+        <Box sx={{ ...style, width: 430, height: 380 }}>
+          <CloseIcon onClick={handleClose} sx={{ float: "right" }}></CloseIcon>
+          <Typography
+            variant="h5"
+            sx={{ mt: 2, fontWeight: "bold", paddingBottom: 1 }}
+            id="child-modal-title"
           >
-            <Select
-              sx={{ borderRadius: "7px" }}
-              size="small"
-              multiple
-              displayEmpty
-              value={personName}
-              onChange={handleChange}
-              input={<OutlinedInput />}
-              renderValue={(selected) => {
-                if (selected.length === 0) {
-                  return <em>Select</em>;
-                }
+            Add leave entitlement
+          </Typography>
 
-                return selected.join(", ");
+          <div>
+            <Typography sx={{ fontSize: "14px" }}>
+              Adding leave entitlement for 0 team members. 2 team members wil
+              not assigned the leave entitlement because they don't have a pay
+              rate.
+            </Typography>
+            <p className="Access-level">Leave entitlement</p>
+            <FormControl
+              sx={{
+                width: 200,
+                borderRadius: "2px",
+                ml: "5px",
               }}
-              MenuProps={MenuProps}
-              inputProps={{ "aria-label": "Without label" }}
             >
-              {names.map((name) => (
-                <MenuItem
-                  key={name}
-                  value={name}
-                  style={getStyles(name, personName, theme)}
-                >
-                  {name}
-                </MenuItem>
-              ))}
-            </Select>
-          </FormControl>
-        </div>
-        <Button
-          variant="primary"
-          className="btn btn-primary"
-          sx={{
-            ml: 44,
-            borderRadius: "5px",
-            width: "18%",
-            mt: "80px",
-            textTransform: "none",
-          }}
-          // onClick={handleClose}
-        >
-          Add
-        </Button>
-      </Box>
-      {/* </Modal> */}
+              <Select
+                sx={{ borderRadius: "7px" }}
+                size="small"
+                multiple
+                displayEmpty
+                value={personName}
+                onChange={handleChange}
+                input={<OutlinedInput />}
+                renderValue={(selected) => {
+                  if (selected.length === 0) {
+                    return <em>Select</em>;
+                  }
+
+                  return selected.join(", ");
+                }}
+                MenuProps={MenuProps}
+                inputProps={{ "aria-label": "Without label" }}
+              >
+                {names.map((name) => (
+                  <MenuItem
+                    key={name}
+                    value={name}
+                    style={getStyles(name, personName, theme)}
+                  >
+                    {name}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
+          </div>
+          <Button
+            variant="primary"
+            className="btn btn-primary"
+            sx={{
+              ml: 44,
+              borderRadius: "5px",
+              width: "18%",
+              mt: "120px",
+              textTransform: "none",
+            }}
+            onClick={handleClose}
+          >
+            Add
+          </Button>
+        </Box>
+      </Modal>
     </React.Fragment>
   );
 }

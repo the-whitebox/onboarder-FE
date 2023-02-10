@@ -44,7 +44,7 @@ export default function SyncPayroll() {
       <Box sx={{ ...style, width: 500, height: 360 }}>
         <Box className="flex flex-row" sx={{ width: "520px" }}>
           <h2>Archive Team members</h2>
-          <CloseIcon sx={{ pb: "45px" }}></CloseIcon>
+          <CloseIcon onClick={handleClose} sx={{ pb: "45px" }}></CloseIcon>
         </Box>
 
         <div>

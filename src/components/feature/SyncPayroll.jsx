@@ -6,7 +6,6 @@ import Typography from "@mui/material/Typography";
 import Checkbox from "@mui/material/Checkbox";
 import CloseIcon from "@mui/icons-material/Close";
 import "../../style/Syncpayroll.css";
-import { styled } from "@mui/material/styles";
 
 const style = {
   position: "absolute",
@@ -44,7 +43,7 @@ export default function SyncPayroll() {
       <Box sx={{ ...style, width: 490, height: 280 }}>
         <Box className="flex flex-row" sx={{ width: "500px" }}>
           <h2>Sync Team member with payroll</h2>
-          <CloseIcon sx={{ pb: "45px" }}></CloseIcon>
+          <CloseIcon onClick={handleClose} sx={{ pb: "45px" }}></CloseIcon>
         </Box>
 
         <div>

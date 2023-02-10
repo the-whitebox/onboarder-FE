@@ -29,7 +29,6 @@ const style = {
   left: "50%",
   transform: "translate(-50%, -50%)",
   bgcolor: "background.paper",
-
   boxShadow: 24,
   pt: 2,
   px: 4,
@@ -82,7 +81,7 @@ export default function SetAccessLevel() {
       <Box sx={{ ...style, width: 450, height: 240 }}>
         <Box className="flex flex-row" sx={{ width: "450px" }}>
           <h2>Add location</h2>
-          <CloseIcon sx={{ pb: "45px" }}></CloseIcon>
+          <CloseIcon onClick={handleClose} sx={{ pb: "45px" }}></CloseIcon>
         </Box>
 
         <div>

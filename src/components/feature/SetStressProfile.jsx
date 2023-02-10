@@ -11,15 +11,19 @@ import Typography from "@mui/material/Typography";
 import InfoIcon from "@mui/icons-material/Info";
 import CloseIcon from "@mui/icons-material/Close";
 import "../../style/SetStress.css";
-import { styled } from "@mui/material/styles";
 
-const ITEM_HEIGHT = 48;
+const ITEM_HEIGHT = 50;
 const ITEM_PADDING_TOP = 8;
 const MenuProps = {
+  sx: {
+    "&& .Mui-selected": {
+      color: "green",
+    },
+  },
   PaperProps: {
     style: {
       maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
-      width: 250,
+      width: 300,
     },
   },
 };
@@ -27,7 +31,7 @@ const MenuProps = {
 const names = [
   "2 days per week",
   "24/7",
-  "CA Overtime 40hrs per week, 8hrs per day, max 6 days per week",
+  "CA Overtime 40hrs per week",
   "Max 20 hours per week",
   "Normal 38 hours per week",
   "Standard 40 hours, 8 hours per day",
@@ -38,25 +42,12 @@ const style = {
   top: "50%",
   left: "50%",
   transform: "translate(-50%, -50%)",
-  width: 400,
   bgcolor: "background.paper",
   borderRadius: "10px",
   boxShadow: 24,
   pt: 2,
   px: 4,
   pb: 3,
-};
-
-const parentModal = {
-  position: "absolute",
-  // transform: "translate(-50%, -50%)",
-  width: "95%",
-  height: "95%",
-  bgcolor: "background.paper",
-
-  boxShadow: 24,
-  p: 2,
-  m: 4,
 };
 
 export default function SetStressProfile() {
@@ -103,7 +94,7 @@ export default function SetStressProfile() {
       <Box sx={{ ...style, width: 400 }}>
         <Box className="flex flex-row" sx={{ width: "420px" }}>
           <h2 className="set">Set Stress Profile</h2>
-          <CloseIcon sx={{ pb: "30px" }}></CloseIcon>
+          <CloseIcon onClick={handleClose} sx={{ pb: "30px" }}></CloseIcon>
         </Box>
         <div>
           <Typography sx={{ color: "#a9a9a9", pt: "15px" }}>

@@ -12,9 +12,9 @@ import CssBaseline from "@mui/material/CssBaseline";
 import Grid from "@mui/material/Grid";
 import Avatar from "@mui/material/Avatar";
 import MaxPilotLogo from "../../assets/images/maxpilot-logo-w.png";
-import Paper from "@mui/material/Paper";
+// import Paper from "@mui/material/Paper";
 import "../../style/AddNewPeople.css";
-import styled from "@mui/system/styled";
+// import styled from "@mui/system/styled";
 import { DataGrid } from "@mui/x-data-grid";
 import AttachFileOutlinedIcon from "@mui/icons-material/AttachFileOutlined";
 import TextField from "@mui/material/TextField";
@@ -39,9 +39,9 @@ const names = [
   "Advisor",
 ];
 
-const Item = styled("div")(({ theme }) => ({
-  border: "none",
-}));
+// const Item = styled("div")(({ theme }) => ({
+//   border: "none",
+// }));
 
 const columns = [
   { field: "name", headerName: "Name", width: 200, editable: true },

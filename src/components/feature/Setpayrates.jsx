@@ -5,10 +5,10 @@ import Modal from "@mui/material/Modal";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import InfoIcon from "@mui/icons-material/Info";
-import TextField from "@mui/material/TextField";
 import OutlinedInput from "@mui/material/OutlinedInput";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
+import InputAdornment from "@mui/material/InputAdornment";
 import Select from "@mui/material/Select";
 import { useTheme } from "@mui/material/styles";
 import CloseIcon from "@mui/icons-material/Close";
@@ -49,6 +49,11 @@ function getStyles(name, personName, theme) {
   };
 }
 
+const modalWrapper = {
+  overflow: "auto",
+  display: "flex",
+};
+
 export default function Setpayrates() {
   const theme = useTheme();
   const [personName, setPersonName] = React.useState([]);
@@ -77,14 +82,16 @@ export default function Setpayrates() {
       <Modal
         hideBackdrop
         open={open}
+        sx={modalWrapper}
         onClose={handleClose}
         aria-labelledby="child-modal-title"
         aria-describedby="child-modal-description"
       > */}
-      <Box sx={{ ...style, width: 400, height: 680 }}>
+      <Box sx={{ ...style, width: 400, height: 770, mt: 10 }}>
         <Box className="flex flex-row" sx={{ width: "420px" }}>
           <h2>Set Pay rates</h2>
-          <CloseIcon sx={{ pb: "45px" }}></CloseIcon>
+
+          <CloseIcon onClick={handleClose} sx={{ pb: "45px" }}></CloseIcon>
         </Box>
         <div>
           <Typography sx={{ pb: "5px" }}> 2 Team members </Typography>
@@ -131,135 +138,179 @@ export default function Setpayrates() {
                   return <em>Rates per Day</em>;
                 }
 
-                return selected.join(", ");
-              }}
-              MenuProps={MenuProps}
-              inputProps={{ "aria-label": "Without label" }}
-            >
-              <MenuItem disabled value="">
-                <em>Rates per Day</em>
-              </MenuItem>
-              {names.map((name) => (
-                <MenuItem
-                  key={name}
-                  value={name}
-                  style={getStyles(name, personName, theme)}
-                >
-                  {name}
+                  return selected.join(", ");
+                }}
+                MenuProps={MenuProps}
+                inputProps={{ "aria-label": "Without label" }}
+              >
+                <MenuItem disabled value="">
+                  <em>Rates per Day</em>
                 </MenuItem>
-              ))}
-            </Select>
-          </FormControl>
-          <Box sx={{ ml: "12px" }}>
-            <Typography
-              sx={{
-                ml: "7px",
-                fontWeight: "bold",
-                fontSize: "15px",
-                pt: "15px",
-              }}
-            >
-              Mondays
-            </Typography>
-            <TextField
-              size="small"
-              sx={{
-                width: 330,
-                ml: "8px",
-              }}
-              placeholder="0                                             Rs per hour"
-            ></TextField>
-            <Typography
-              sx={{
-                ml: "7px",
-                fontWeight: "bold",
-                fontSize: "15px",
-                pt: "10px",
-              }}
-            >
-              {" "}
-              Tuesdays
-            </Typography>
-            <TextField
-              placeholder="0                                             Rs per hour"
-              size="small"
-              sx={{
-                width: 330,
-                ml: "8px",
-              }}
-            ></TextField>
-            <Typography
-              sx={{
-                ml: "7px",
-                fontWeight: "bold",
-                fontSize: "15px",
-                pt: "10px",
-              }}
-            >
-              {" "}
-              Wednesdays
-            </Typography>
-            <TextField
-              placeholder="0                                             Rs per hour"
-              size="small"
-              sx={{ width: 330, ml: "8px" }}
-            >
-              {" "}
-            </TextField>
-            <Typography
-              sx={{
-                ml: "7px",
-                fontWeight: "bold",
-                fontSize: "15px",
-                pt: "10px",
-              }}
-            >
-              {" "}
-              Thursdays
-            </Typography>
-            <TextField
-              placeholder="0                                             Rs per hour"
-              size="small"
-              sx={{ width: 330, ml: "8px" }}
-            >
-              {" "}
-            </TextField>
-            <Typography
-              sx={{
-                ml: "7px",
-                fontWeight: "bold",
-                fontSize: "15px",
-                pt: "10px",
-              }}
-            >
-              {" "}
-              Fridays
-            </Typography>
-            <TextField
-              placeholder="0                                             Rs per hour"
-              size="small"
-              sx={{ width: 330, ml: "8px" }}
-            >
-              {" "}
-            </TextField>
-          </Box>
-        </div>
-        <Button
-          className="btn"
-          size="small"
-          sx={{
-            mt: "25px",
-            ml: 40,
-            borderRadius: "8px",
-            width: "10%",
-            textTransform: "none",
-          }}
-          // onClick={handleClose}
-        >
-          Save
-        </Button>
-      </Box>
-      {/* </Modal> */}
+                {names.map((name) => (
+                  <MenuItem
+                    key={name}
+                    value={name}
+                    style={getStyles(name, personName, theme)}
+                  >
+                    {name}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
+            <Box sx={{ ml: "12px" }}>
+              <Typography
+                sx={{
+                  ml: "7px",
+                  fontWeight: "bold",
+                  fontSize: "15px",
+                  pt: "12px",
+                  pb: 0,
+                }}
+              >
+                Mondays
+              </Typography>
+              <FormControl
+                size="small"
+                sx={{ m: 1, width: 370 }}
+                variant="outlined"
+              >
+                <OutlinedInput
+                  id="outlined-adornment-weight"
+                  endAdornment={
+                    <InputAdornment position="end">Rs per hour</InputAdornment>
+                  }
+                  aria-describedby="outlined-weight-helper-text"
+                  inputProps={{
+                    "aria-label": "weight",
+                  }}
+                />
+              </FormControl>
+              <Typography
+                sx={{
+                  ml: "7px",
+                  fontWeight: "bold",
+                  fontSize: "15px",
+                  pt: "10px",
+                }}
+              >
+                {" "}
+                Tuesdays
+              </Typography>
+              <FormControl
+                size="small"
+                sx={{ m: 1, width: 370 }}
+                variant="outlined"
+              >
+                <OutlinedInput
+                  id="outlined-adornment-weight"
+                  endAdornment={
+                    <InputAdornment position="end">Rs per hour</InputAdornment>
+                  }
+                  aria-describedby="outlined-weight-helper-text"
+                  inputProps={{
+                    "aria-label": "weight",
+                  }}
+                />
+              </FormControl>
+              <Typography
+                sx={{
+                  ml: "7px",
+                  fontWeight: "bold",
+                  fontSize: "15px",
+                  pt: "10px",
+                }}
+              >
+                {" "}
+                Wednesdays
+              </Typography>
+              <FormControl
+                size="small"
+                sx={{ m: 1, width: 370 }}
+                variant="outlined"
+              >
+                <OutlinedInput
+                  id="outlined-adornment-weight"
+                  endAdornment={
+                    <InputAdornment position="end">Rs per hour</InputAdornment>
+                  }
+                  aria-describedby="outlined-weight-helper-text"
+                  inputProps={{
+                    "aria-label": "weight",
+                  }}
+                />
+              </FormControl>
+              <Typography
+                sx={{
+                  ml: "7px",
+                  fontWeight: "bold",
+                  fontSize: "15px",
+                  pt: "10px",
+                }}
+              >
+                {" "}
+                Thursdays
+              </Typography>
+              <FormControl
+                size="small"
+                sx={{ m: 1, width: 370 }}
+                variant="outlined"
+              >
+                <OutlinedInput
+                  id="outlined-adornment-weight"
+                  endAdornment={
+                    <InputAdornment position="end">Rs per hour</InputAdornment>
+                  }
+                  aria-describedby="outlined-weight-helper-text"
+                  inputProps={{
+                    "aria-label": "weight",
+                  }}
+                />
+              </FormControl>
+              <Typography
+                sx={{
+                  ml: "7px",
+                  fontWeight: "bold",
+                  fontSize: "15px",
+                  pt: "10px",
+                }}
+              >
+                {" "}
+                Fridays
+              </Typography>
+              <FormControl
+                size="small"
+                sx={{ m: 1, width: 370 }}
+                variant="outlined"
+              >
+                <OutlinedInput
+                  id="outlined-adornment-weight"
+                  endAdornment={
+                    <InputAdornment position="end">Rs per hour</InputAdornment>
+                  }
+                  aria-describedby="outlined-weight-helper-text"
+                  inputProps={{
+                    "aria-label": "weight",
+                  }}
+                />
+              </FormControl>
+            </Box>
+          </div>
+          <Button
+            className="btn"
+            size="small"
+            sx={{
+              mt: "25px",
+              ml: 40,
+              borderRadius: "8px",
+              width: "10%",
+              textTransform: "none",
+            }}
+            onClick={handleClose}
+          >
+            Save
+          </Button>
+        </Box>
+      </Modal>
     </React.Fragment>
   );
 }
