@@ -15,6 +15,8 @@ import Grid from "@mui/material/Grid";
 import CloseIcon from "@mui/icons-material/Close";
 import Capture from "../../assets/images/Capture.png";
 import "../../style/Addteam.css";
+import axios from "axios";
+import { useForm } from "react-hook-form";
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -62,6 +64,134 @@ const modalWrapper = {
 };
 
 export default function Addteammember() {
+  const url = process.env.REACT_APP_BASE_URL + "/people/";
+  const [state, setState] = React.useState({ data: "" });
+  const [firstName, setFirstName] = React.useState("");
+  const [lastName, setLastName] = React.useState("");
+  // const [location, setLocattion] = React.useState("");
+  // const [otherLocation, setOtherLocattion] = React.useState("");
+  // const [mobile, setMobile] = React.useState("");
+  // const [email, setEmail] = React.useState("");
+  // // const [access, setAccess] = React.useState("");
+  const [error, setError] = React.useState(null);
+
+  const [firstNameError, setFirstNameError] = React.useState("");
+  const [lastNameError, setLastNameError] = React.useState("");
+  // const [locationError, setLocationError] = React.useState("");
+  // const [otherLocationError, setOtherLocationError] = React.useState("");
+  // const [mobileError, setMobileError] = React.useState("");
+  // const [emailError, setEmailError] = React.useState("");
+  // const [accessError, setAccessError] = React.useState("");
+
+  const firstNameValidation = () => {
+    if (firstName === "") {
+      setFirstNameError("What process you prefer?");
+    } else setFirstNameError("");
+  };
+
+  const lastNameValidation = () => {
+    if (lastName === "") {
+      setLastNameError("What process you prefer?");
+    } else setLastNameError("");
+  };
+
+  const handleOnChange = (e) => {
+    setFirstName(e.target.value);
+  };
+
+  const {
+    register,
+    formState: { errors },
+  } = useForm();
+
+  // const locationValidation = () => {
+  //   if (location === "") {
+  //     setLocationError("What process you prefer?");
+  //   } else setLocationError("");
+  // };
+
+  // const otherLocationValidation = () => {
+  //   if (otherLocation === "") {
+  //     setOtherLocationError("What process you prefer?");
+  //   } else setOtherLocationError("");
+  // };
+
+  // const mobileValidation = () => {
+  //   if (mobile === "") {
+  //     setMobileError("What process you prefer?");
+  //   } else setMobileError("");
+  // };
+
+  // const emailValidation = () => {
+  //   if (email === "") {
+  //     setEmailError("What process you prefer?");
+  //   } else setEmailError("");
+  // };
+
+  // const accessValidation = () => {
+  //   if (access === "") {
+  //     setAccessError("What process you prefer?");
+  //   } else setAccessError("");
+  // };
+
+  const createNewTeamMember = (e) => {
+    console.log("Inside createTeamMember");
+    // console.log(
+
+    //   firstName,
+    //   lastName,
+    //   location,
+    //   otherLocation,
+    //   mobile,
+    //   email,
+    //   access
+    // );
+    // if (
+    //   firstName !== "" &&
+    //   lastName !== "" &&
+    //   location !== "" &&
+    //   otherLocation !== "" &&
+    //   mobile !== "" &&
+    //   email !== "" &&
+    //   access !== ""
+    // ) {
+    //   console.log("Data Found");
+    //   setError(false);
+    //   console.log(
+    //     firstName,
+    //     lastName,
+    //     location,
+    //     otherLocation,
+    //     mobile,
+    //     email,
+    //     access
+    //   );
+    try {
+      console.log("Inside try statement");
+      axios
+        .post(url, {
+          first_name: firstName,
+          last_name: lastName,
+        })
+        .then((response) => {
+          console.log("People API was hit successfully");
+          console.log(response);
+          debugger;
+
+          // Navigate to Home Screen
+        });
+    } catch (error) {
+      console.log(error.response.data);
+    }
+
+    // console.log(firstName, lastName, email, access);
+    // alert(firstName + lastName + email, access);
+    // } else {
+    //   setError(true);
+    //   setState({ data: e.target.value });
+    // }
+  };
+
   const theme = useTheme();
   const [personName, setPersonName] = React.useState([]);
 
@@ -115,11 +245,9 @@ export default function Addteammember() {
                 pt: "20px",
               }}
             >
-              {" "}
-              Invite with a unique link{" "}
+              Invite with a unique link
             </Typography>
             <Typography sx={{ mt: "20px" }}>
-              {" "}
               Don't know your team's email addresses? Share the unique link
               below to get your team onto your uRoaster workplace faster. To
               keep things secured, you will need to approve each request.{" "}
@@ -174,7 +302,9 @@ export default function Addteammember() {
                   pt: "10px",
                   borderRadius: 20,
                 }}
-                placeholder="Please input "
+                placeholder="Please input"
+                {...register("Email", { required: true })}
+                onChange={handleOnChange}
               ></TextField>
             </Box>
 
@@ -417,6 +547,7 @@ export default function Addteammember() {
               borderRadius: 2,
             }}
             className="bttn"
+            onClick={createNewTeamMember()}
           >
             Add Team member
           </Button>
