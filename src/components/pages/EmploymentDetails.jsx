@@ -24,7 +24,8 @@ import { TbMessageCircle } from "react-icons/tb";
 import Link from "@mui/material/Link";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import Modal from "@mui/material/Modal";
-import AddleaveentitlementModalBody from "../feature/Addleaveentitlement";
+import AddLeaveEntitlementModalBody from "../feature/Addleaveentitlement";
+import AddLocationModalBody from "../feature/Addlocation";
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -53,6 +54,10 @@ export default function EmploymentDetails() {
   const handleClose = () => {
     setOpen(false);
   };
+
+  const [openLocation, setOpenLocation] = React.useState(false);
+  const handleOpenLocation = () => setOpenLocation(true);
+  const handleCloseLocation = () => setOpenLocation(false);
 
   function getStyles(name, personName, theme) {
     return {
@@ -90,7 +95,15 @@ export default function EmploymentDetails() {
           aria-labelledby="modal-modal-title"
           aria-describedby="modal-modal-description"
         >
-          <AddleaveentitlementModalBody />
+          <AddLeaveEntitlementModalBody />
+        </Modal>
+        <Modal
+          open={openLocation}
+          onClose={handleCloseLocation}
+          aria-labelledby="modal-modal-title"
+          aria-describedby="modal-modal-description"
+        >
+          <AddLocationModalBody />
         </Modal>
         <Grid sx={{ display: "flex" }}>
           <Grid
@@ -248,7 +261,10 @@ export default function EmploymentDetails() {
               <Typography paragraph sx={{ pr: 2 }}>
                 Locations where a team <br /> member can be scheduled.
               </Typography>
-              <Button sx={{ color: "#38b492", fontSize: 12 }}>
+              <Button
+                onClick={handleOpenLocation}
+                sx={{ color: "#38b492", fontSize: 12 }}
+              >
                 Add locations
               </Button>
             </Box>

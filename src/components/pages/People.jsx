@@ -23,6 +23,7 @@ import "../../style/People.css";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import Modal from "@mui/material/Modal";
 import AddTeammemberModalBody from "../feature/AddTeammember";
+import axios from "axios";
 
 const theme = createTheme();
 
@@ -109,7 +110,11 @@ const rows = [
 ];
 
 export default function People() {
+  const url = process.env.REACT_APP_BASE_URL + "/people/";
   const [people, setPeople] = React.useState("");
+  const [firstName, setFirstName] = React.useState("");
+  const [lastName, setLastName] = React.useState("");
+  const [location, setLocattion] = React.useState("");
 
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => {

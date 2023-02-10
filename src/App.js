@@ -61,7 +61,6 @@ function App() {
         <Route path="/setAgreed" element={<SetAgreedhours />}></Route>
         <Route path="/Archive" element={<ArchiveTeammembers />}></Route>
         <Route path="/sync" element={<SyncPayroll />}></Route>
-
         <Route path="/setpay" element={<Setpayrates />}></Route>
         <Route path="/profile" element={<Profile />} />
         <Route path="/contact" element={<Contact />} />

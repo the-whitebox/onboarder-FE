@@ -59,17 +59,6 @@ export default function BasicModal() {
 
   function CharacterDropDown() {
     const [items, setItems] = React.useState([]);
-
-    React.useEffect(() => {
-      async function getCharacters() {
-        const response = await fetch("https://swapi.co/api/people");
-        const body = await response.json();
-        setItems(
-          body.results.map(({ name }) => ({ label: name, value: name }))
-        );
-      }
-      getCharacters();
-    }, []);
   }
 
   const businessValidation = () => {

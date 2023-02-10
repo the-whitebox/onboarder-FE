@@ -23,8 +23,8 @@ import "../../style/Employment.css";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import Modal from "@mui/material/Modal";
 import SetpayratesModalBody from "../feature/Setpayrates";
-import SetStandardHoursModalBody from "../feature/SetStandardHours";
 import SyncPayrollModalBody from "../feature/SyncPayroll";
+import SetAccessLevelModalBody from "../feature/SetAccessLevel";
 
 const theme = createTheme();
 
@@ -43,18 +43,27 @@ export default function Employment() {
     setOpen(false);
   };
 
+  const [openAccess, setOpenAccess] = React.useState(false);
+  const handleOpenAccess = () => setOpenAccess(true);
+  const handleCloseAccess = () => setOpenAccess(false);
+
   const [openPayroll, setOpenPayroll] = React.useState(false);
   const handleOpenPayroll = () => setOpenPayroll(true);
   const handleClosePayroll = () => setOpenPayroll(false);
-
-  const [openHours, setOpenHours] = React.useState(false);
-  const handleCloseHours = () => setOpenHours(false);
 
   const indexToHL = 1;
 
   return (
     <>
       <ThemeProvider theme={theme}>
+        <Modal
+          open={openAccess}
+          onClose={handleCloseAccess}
+          aria-labelledby="modal-modal-title"
+          aria-describedby="modal-modal-description"
+        >
+          <SetAccessLevelModalBody />
+        </Modal>
         <Modal
           open={openPayroll}
           onClose={handleClosePayroll}
@@ -71,14 +80,7 @@ export default function Employment() {
         >
           <SetpayratesModalBody />
         </Modal>
-        <Modal
-          open={openHours}
-          onClose={handleCloseHours}
-          aria-labelledby="modal-modal-title"
-          aria-describedby="modal-modal-description"
-        >
-          <SetStandardHoursModalBody />
-        </Modal>
+
         <Box sx={{ display: "flex" }}>
           <VerticalMenu indexToHL={indexToHL} />
 
@@ -128,7 +130,11 @@ export default function Employment() {
                           aria-labelledby="category-a"
                           sx={{ pl: 2 }}
                         >
-                          <li>Deputy access level</li>
+                          <li>
+                            <Link onClick={handleOpenAccess} color="#38b492">
+                              Access level
+                            </Link>
+                          </li>
                           <li>Advisor</li>
                         </Box>
                       </Item>
