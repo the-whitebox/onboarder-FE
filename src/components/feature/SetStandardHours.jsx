@@ -43,7 +43,7 @@ export default function SetStandardHours() {
         <Box sx={{ ...style, width: 350, height: 350, mt: 0 }}>
           <Box className="flex flex-row" sx={{ width: "375px" }}>
             <h2>Set Standard Hours</h2>
-            <CloseIcon sx={{ pb: "48px" }}></CloseIcon>
+            <CloseIcon onClick={handleClose} sx={{ pb: "48px" }}></CloseIcon>
           </Box>
           <div>
             <Typography sx={{ mt: "2px", color: "darkgray", ml: "2px" }}>

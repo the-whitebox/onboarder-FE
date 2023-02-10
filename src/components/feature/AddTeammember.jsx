@@ -9,15 +9,12 @@ import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import Checkbox from "@mui/material/Checkbox";
-import Icon5 from "../../assets/images/Capture.png";
 import { useTheme } from "@mui/material/styles";
 import Avatar from "@mui/material/Avatar";
 import Grid from "@mui/material/Grid";
 import CloseIcon from "@mui/icons-material/Close";
 import Capture from "../../assets/images/Capture.png";
 import "../../style/Addteam.css";
-
-const label = { inputProps: { "aria-label": "Checkbox demo" } };
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -37,7 +34,15 @@ function getStyles(name, personName, theme) {
         : theme.typography.fontWeightMedium,
   };
 }
+
 const names = [];
+const access = [
+  "System Administrator",
+  "Supervisior ",
+  "Employee",
+  "Location Manage",
+  "Advisor",
+];
 const style = {
   position: "absolute",
   top: "50%",
@@ -49,6 +54,11 @@ const style = {
   pt: 2,
   px: 4,
   pb: 3,
+};
+
+const modalWrapper = {
+  overflow: "auto",
+  display: "flex",
 };
 
 export default function Addteammember() {
@@ -79,6 +89,7 @@ export default function Addteammember() {
       <Modal
         hideBackdrop
         open={open}
+        sx={modalWrapper}
         onClose={handleClose}
         aria-labelledby="child-modal-title"
         aria-describedby="child-modal-description"
@@ -86,15 +97,14 @@ export default function Addteammember() {
         <Box
           sx={{
             ...style,
-            mt: "20px",
+            mt: 10,
             width: 660,
-            height: 750,
-            overflowX: "scroll",
+            height: 830,
           }}
         >
           <Box className="flex flex-row" sx={{ width: "660px" }}>
             <h2 className="set">Add Team member</h2>
-            <CloseIcon sx={{ pb: "25px" }}></CloseIcon>
+            <CloseIcon onClick={handleClose} sx={{ pb: "25px" }}></CloseIcon>
           </Box>
           <Grid sx={{ display: "flex", flexDirection: "row", pt: "20px" }}>
             <Avatar
@@ -166,11 +176,10 @@ export default function Addteammember() {
                   First name
                 </Typography>
                 <TextField
-                  className="first"
                   size="small"
                   sx={{
                     width: 530,
-                    ml: "38px",
+                    ml: "44px",
                     pt: "10px",
                     borderRadius: 20,
                   }}
@@ -192,7 +201,7 @@ export default function Addteammember() {
                   size="small"
                   sx={{
                     width: 530,
-                    ml: "38px",
+                    ml: "44px",
                     pt: "30px",
                   }}
                   placeholder="Please input "
@@ -205,20 +214,20 @@ export default function Addteammember() {
                   m: 1,
                   mt: 3,
                   pt: "5px",
+                  gap: 3,
                   display: "flex",
-                  width: 630,
                   flexDirection: "row",
                 }}
               >
-                <Typography sx={{ width: "300px", pt: "10px" }}>
+                <Typography sx={{ width: "180px", pt: "10px" }}>
                   Main Location
                 </Typography>
                 <Select
                   sx={{
                     pb: "5px",
                     font: "inherit",
-                    width: 960,
-                    pr: 18,
+                    width: 850,
+                    ml: 1,
                     borderRadius: "7px",
                   }}
                   multiple
@@ -315,8 +324,8 @@ export default function Addteammember() {
                 <TextField
                   size="small"
                   sx={{
-                    width: 500,
-                    ml: "85px",
+                    width: 520,
+                    ml: "95px",
                     pt: "10px",
                   }}
                   placeholder="Please input "
@@ -336,7 +345,7 @@ export default function Addteammember() {
                   size="small"
                   sx={{
                     width: 530,
-                    ml: "92px",
+                    ml: "102px",
                     pt: "10px",
                   }}
                   placeholder="Please input "
@@ -356,8 +365,8 @@ export default function Addteammember() {
                     sx={{
                       pb: "5px",
                       font: "inherit",
-                      width: 500,
-                      mr: 95,
+                      width: 510,
+                      mr: 85,
                       borderRadius: "8px",
                     }}
                     multiple
@@ -375,10 +384,8 @@ export default function Addteammember() {
                     MenuProps={MenuProps}
                     inputProps={{ "aria-label": "Without label" }}
                   >
-                    <MenuItem disabled value="">
-                      <em>Employee</em>
-                    </MenuItem>
-                    {names.map((name) => (
+                    <MenuItem disabled value=""></MenuItem>
+                    {access.map((name) => (
                       <MenuItem
                         key={name}
                         value={name}
@@ -418,7 +425,7 @@ export default function Addteammember() {
                 mt: 4,
                 borderRadius: 2,
               }}
-              className="btn btn-primary"
+              className="bttn"
               onClick={handleClose}
             >
               Add Team member

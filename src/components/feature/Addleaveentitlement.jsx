@@ -86,8 +86,8 @@ export default function Addleaveentitlement() {
         aria-labelledby="child-modal-title"
         aria-describedby="child-modal-description"
       >
-        <Box sx={{ ...style, width: 430, height: 340 }}>
-          <CloseIcon sx={{ float: "right" }}></CloseIcon>
+        <Box sx={{ ...style, width: 430, height: 380 }}>
+          <CloseIcon onClick={handleClose} sx={{ float: "right" }}></CloseIcon>
           <Typography
             variant="h5"
             sx={{ mt: 2, fontWeight: "bold", paddingBottom: 1 }}
@@ -147,7 +147,7 @@ export default function Addleaveentitlement() {
               ml: 44,
               borderRadius: "5px",
               width: "18%",
-              mt: "80px",
+              mt: "120px",
               textTransform: "none",
             }}
             onClick={handleClose}
