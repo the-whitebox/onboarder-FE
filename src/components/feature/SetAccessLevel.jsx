@@ -69,10 +69,7 @@ export default function SetAccessLevel() {
     const {
       target: { value },
     } = event;
-    setPersonName(
-      // On autofill we get a stringified value.
-      typeof value === "string" ? value.split(",") : value
-    );
+    setPersonName(typeof value === "string" ? value.split(",") : value);
   };
 
   return (
@@ -86,7 +83,7 @@ export default function SetAccessLevel() {
         aria-describedby="child-modal-description"
       >
         <Box sx={{ ...style, width: 350, height: 230 }}>
-          <CloseIcon sx={{ float: "right" }}></CloseIcon>
+          <CloseIcon onClick={handleClose} sx={{ float: "right" }}></CloseIcon>
           <Typography
             variant="h5"
             sx={{ mt: 2, fontWeight: "bold", paddingBottom: 1 }}

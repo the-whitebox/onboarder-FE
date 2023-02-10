@@ -52,9 +52,9 @@ export default function SetAgreedhours() {
             overflowX: "scroll",
           }}
         >
-          <Box className="flex flex-row" sx={{ width: "400px" }}>
+          <Box className="flex flex-row" sx={{ width: "450px" }}>
             <h2 className="set">Set agreed hours</h2>
-            <CloseIcon sx={{ pb: "25px" }}></CloseIcon>
+            <CloseIcon onClick={handleClose} sx={{ pb: "25px" }}></CloseIcon>
           </Box>
           <div>
             <Typography
