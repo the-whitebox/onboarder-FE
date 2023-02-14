@@ -15,6 +15,8 @@ import Grid from "@mui/material/Grid";
 import CloseIcon from "@mui/icons-material/Close";
 import Capture from "../../assets/images/Capture.png";
 import "../../style/Addteam.css";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useForm } from "react-hook-form";
 
@@ -60,131 +62,127 @@ const style = {
 
 export default function Addteammember() {
   const url = process.env.REACT_APP_BASE_URL + "/people/";
-  const [state, setState] = React.useState({ data: "" });
-  const [firstName, setFirstName] = React.useState("");
-  const [lastName, setLastName] = React.useState("");
-  // const [location, setLocattion] = React.useState("");
-  // const [otherLocation, setOtherLocattion] = React.useState("");
-  // const [mobile, setMobile] = React.useState("");
-  // const [email, setEmail] = React.useState("");
-  // // const [access, setAccess] = React.useState("");
-  const [error, setError] = React.useState(null);
+  const [firstName, setFirstName] = useState("");
+  const [firstNameError, setFirstNameError] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [lastNameError, setLastNameError] = useState("");
+  // const [mainLocation, setMainLocation] = useState("");
+  // const [mainLocationError, setMainLocationError] = useState("");
+  // const [otherLocation, setOtherLocation] = useState("");
+  // const [otherLocationError, setOtherLocationError] = useState("");
+  const [mobile, setMobile] = React.useState("");
+  const [mobileError, setMobileError] = React.useState("");
+  const [email, setEmail] = useState("");
+  const [emailError, setEmailError] = useState("");
+  const [accessLevel, setAccessLevel] = useState("");
+  const [accessLevelError, setAccessLevelError] = useState("");
 
-  const [firstNameError, setFirstNameError] = React.useState("");
-  const [lastNameError, setLastNameError] = React.useState("");
-  // const [locationError, setLocationError] = React.useState("");
-  // const [otherLocationError, setOtherLocationError] = React.useState("");
-  // const [mobileError, setMobileError] = React.useState("");
-  // const [emailError, setEmailError] = React.useState("");
-  // const [accessError, setAccessError] = React.useState("");
+  const navigate = useNavigate();
 
   const firstNameValidation = () => {
-    if (firstName === "") {
-      setFirstNameError("What process you prefer?");
+    if (firstName == "") {
+      setFirstNameError("Please enter first name");
     } else setFirstNameError("");
   };
 
   const lastNameValidation = () => {
-    if (lastName === "") {
-      setLastNameError("What process you prefer?");
+    if (lastName == "") {
+      setLastNameError("Please enter last name");
     } else setLastNameError("");
+  };
+
+  // const mainLocationValidation = () => {
+  //   if (mainLocation == "") {
+  //     setMainLocationError("Please enter the location");
+  //   } else setMainLocationError("");
+  // };
+
+  // const otherLocationValidation = () => {
+  //   if (otherLocation == "") {
+  //     setOtherLocationError("Please enter the location");
+  //   } else setOtherLocationError("");
+  // };
+
+  const mobileValidation = () => {
+    if (mobile == "") {
+      setMobileError("Please enter your mobile number");
+    } else setMobileError("");
+  };
+
+  // const emailValidation = () => {
+  //   const regEx = /^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[A-Za-z]+$/;
+  //   if (regEx.test(email)) {
+  //     setEmailError("");
+  //   } else if (email === "") {
+  //     setEmailError("Email should not be empty");
+  //   } else if (!regEx.test(email)) {
+  //     setEmailError("Email is not valid");
+  //   }
+  // };
+
+  const accessLevelValidation = () => {
+    if (accessLevel == "") {
+      setAccessLevelError("Access level required");
+    } else setAccessLevelError("");
   };
 
   const handleOnChange = (e) => {
     setFirstName(e.target.value);
+    setLastName(e.target.value);
+    // setMainLocation(e.target.value);
+    // setOtherLocation(e.target.value);
+    setMobile(e.target.value);
+    setEmail(e.target.value);
+    setAccessLevel(e.target.value);
+    console.log(firstName);
   };
 
-  const {
-    register,
-    formState: { errors },
-  } = useForm();
+  const handleSubmit = (event) => {
+    console.log("Submit");
 
-  // const locationValidation = () => {
-  //   if (location === "") {
-  //     setLocationError("What process you prefer?");
-  //   } else setLocationError("");
-  // };
+    event.preventDefault();
+    console.log("Inside submit");
+    firstNameValidation();
+    console.log("First Name Validation checked");
+    lastNameValidation();
+    console.log("Last Name Validation checked");
+    // mainLocationValidation();
+    // otherLocationValidation();
+    mobileValidation();
+    console.log("Mobile Validation checked");
 
-  // const otherLocationValidation = () => {
-  //   if (otherLocation === "") {
-  //     setOtherLocationError("What process you prefer?");
-  //   } else setOtherLocationError("");
-  // };
+    // emailValidation();
+    // console.log("Email Validation checked");
 
-  // const mobileValidation = () => {
-  //   if (mobile === "") {
-  //     setMobileError("What process you prefer?");
-  //   } else setMobileError("");
-  // };
+    accessLevelValidation();
+    console.log("Access Validation checked");
 
-  // const emailValidation = () => {
-  //   if (email === "") {
-  //     setEmailError("What process you prefer?");
-  //   } else setEmailError("");
-  // };
-
-  // const accessValidation = () => {
-  //   if (access === "") {
-  //     setAccessError("What process you prefer?");
-  //   } else setAccessError("");
-  // };
-
-  const createNewTeamMember = (e) => {
-    console.log("Inside createTeamMember");
-    // console.log(
-
-    //   firstName,
-    //   lastName,
-    //   location,
-    //   otherLocation,
-    //   mobile,
-    //   email,
-    //   access
-    // );
-    // if (
-    //   firstName !== "" &&
-    //   lastName !== "" &&
-    //   location !== "" &&
-    //   otherLocation !== "" &&
-    //   mobile !== "" &&
-    //   email !== "" &&
-    //   access !== ""
-    // ) {
-    //   console.log("Data Found");
-    //   setError(false);
-    //   console.log(
-    //     firstName,
-    //     lastName,
-    //     location,
-    //     otherLocation,
-    //     mobile,
-    //     email,
-    //     access
-    //   );
-    try {
-      console.log("Inside try statement");
-      axios
-        .post(url, {
-          first_name: firstName,
-          last_name: lastName,
-        })
-        .then((response) => {
-          console.log("People API was hit successfully");
-          console.log(response);
-          debugger;
-
-          // Navigate to Home Screen
-        });
-    } catch (error) {
-      console.log(error.response.data);
+    if (
+      firstNameError === "" &&
+      lastNameError === "" &&
+      // mainLocationError === "" &&
+      // otherLocationError === "" &&
+      mobileError === "" &&
+      // emailError === "" &&
+      accessLevelError === ""
+    ) {
+      try {
+        const resp = axios
+          .post(url, {
+            first_name: firstName,
+            last_name: lastName,
+            mobile: mobile,
+            email: email,
+            accessLevel: accessLevel,
+          })
+          .then((response) => {
+            console.log("People API was hit successfully");
+            navigate("/people");
+          });
+      } catch (error) {
+        console.log(error.response);
+      }
     }
-
-    // console.log(firstName, lastName, email, access);
-    // alert(firstName + lastName + email, access);
-    // } else {
-    //   setError(true);
-    //   setState({ data: e.target.value });
-    // }
   };
 
   const theme = useTheme();
@@ -208,6 +206,11 @@ export default function Addteammember() {
     setOpen(false);
   };
 
+  const {
+    register,
+    formState: { errors },
+  } = useForm();
+
   return (
     <React.Fragment>
       <Box
@@ -215,7 +218,7 @@ export default function Addteammember() {
           ...style,
           mt: 20,
           width: 660,
-          height: 930,
+          height: "auto",
         }}
       >
         <Box className="flex flex-row" sx={{ width: "620px" }}>
@@ -242,9 +245,11 @@ export default function Addteammember() {
                 pt: "20px",
               }}
             >
-              Invite with a unique link
+              {" "}
+              Invite with a unique link{" "}
             </Typography>
             <Typography sx={{ mt: "20px" }}>
+              {" "}
               Don't know your team's email addresses? Share the unique link
               below to get your team onto your uRoaster workplace faster. To
               keep things secured, you will need to approve each request.{" "}
@@ -300,7 +305,23 @@ export default function Addteammember() {
                   borderRadius: 20,
                 }}
                 placeholder="Please input"
+                {...register("First Name", { required: true })}
+                onChange={handleOnChange}
               ></TextField>
+            </Box>
+            <Box sx={{ ml: 17, mt: 1 }}>
+              {errors.FirstName?.type === "required" && "Firstname Required"}
+              <small>
+                {firstNameError && (
+                  <div
+                    style={{
+                      color: "red",
+                    }}
+                  >
+                    {firstNameError}
+                  </div>
+                )}
+              </small>
             </Box>
 
             <Box sx={{ display: "flex", flexDirection: "row" }}>
@@ -321,12 +342,28 @@ export default function Addteammember() {
                   pt: "30px",
                 }}
                 placeholder="Please input "
+                {...register("Last Name", { required: true })}
+                onChange={handleOnChange}
               ></TextField>
+            </Box>
+            <Box sx={{ ml: 17, mt: 1 }}>
+              {errors.FirstName?.type === "required" && "Firstname Required"}
+              <small>
+                {lastNameError && (
+                  <div
+                    style={{
+                      color: "red",
+                    }}
+                  >
+                    {lastNameError}
+                  </div>
+                )}
+              </small>
             </Box>
 
             <Box sx={{ display: "flex", flexDirection: "row" }}>
               <Typography sx={{ mt: "40px", width: "350px", ml: 1 }}>
-                Main Location{" "}
+                Main Location
               </Typography>
               <FormControl
                 size="small"
@@ -345,7 +382,8 @@ export default function Addteammember() {
                   multiple
                   displayEmpty
                   value={personName}
-                  onChange={handleChange}
+                  // {...register("Main Location", { required: true })}
+                  // onChange={handleOnChange}
                   input={<OutlinedInput />}
                   renderValue={(selected) => {
                     if (selected.length === 0) {
@@ -369,60 +407,90 @@ export default function Addteammember() {
                     </MenuItem>
                   ))}
                 </Select>
-              </FormControl>{" "}
+              </FormControl>
             </Box>
-
-            <FormControl
-              size="small"
-              sx={{
-                m: 1,
-                mt: 3,
-                pt: "5px",
-                display: "flex",
-                flexDirection: "row",
-              }}
-            >
-              <Typography sx={{ width: "400px", mt: "10px" }}>
-                {" "}
-                Other Location{" "}
-              </Typography>
-              <Select
-                sx={{
-                  mr: 32,
-                  mb: "5px",
-                  font: "inherit",
-                  width: "620px",
-                }}
-                multiple
-                displayEmpty
-                value={personName}
-                onChange={handleChange}
-                input={<OutlinedInput />}
-                renderValue={(selected) => {
-                  if (selected.length === 0) {
-                    return <em>Select </em>;
-                  }
-
-                  return selected.join(", ");
-                }}
-                MenuProps={MenuProps}
-                inputProps={{ "aria-label": "Without label" }}
-              >
-                <MenuItem disabled value="">
-                  <em>Select </em>
-                </MenuItem>
-                {names.map((name) => (
-                  <MenuItem
-                    key={name}
-                    value={name}
-                    style={getStyles(name, personName, theme)}
+            {/* <Box sx={{ ml: 17, mt: 1 }}>
+              {errors.MainLocation?.type === "required" &&
+                "Main Location Required"}
+              <small>
+                {mainLocationError && (
+                  <div
+                    style={{
+                      color: "red",
+                    }}
                   >
-                    {name}
-                  </MenuItem>
-                ))}
-              </Select>
-            </FormControl>
+                    {mainLocationError}
+                  </div>
+                )}
+              </small>
+            </Box> */}
+            <Box>
+              <FormControl
+                size="small"
+                sx={{
+                  m: 1,
+                  mt: 3,
+                  pt: "5px",
+                  display: "flex",
+                  flexDirection: "row",
+                }}
+              >
+                <Typography sx={{ width: "400px", mt: "10px" }}>
+                  Other Location
+                </Typography>
+                <Select
+                  sx={{
+                    mr: 32,
+                    mb: "5px",
+                    font: "inherit",
+                    width: "620px",
+                  }}
+                  multiple
+                  displayEmpty
+                  value={personName}
+                  // {...register("Other Location", { required: true })}
+                  // onChange={handleOnChange}
+                  input={<OutlinedInput />}
+                  renderValue={(selected) => {
+                    if (selected.length === 0) {
+                      return <em>Select </em>;
+                    }
 
+                    return selected.join(", ");
+                  }}
+                  MenuProps={MenuProps}
+                  inputProps={{ "aria-label": "Without label" }}
+                >
+                  <MenuItem disabled value="">
+                    <em>Select </em>
+                  </MenuItem>
+                  {names.map((name) => (
+                    <MenuItem
+                      key={name}
+                      value={name}
+                      style={getStyles(name, personName, theme)}
+                    >
+                      {name}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
+            </Box>
+            {/* <Box sx={{ ml: 17, mt: 1 }}>
+              {errors.OtherLocation?.type === "required" &&
+                "Other Location Required"}
+              <small>
+                {otherLocationError && (
+                  <div
+                    style={{
+                      color: "red",
+                    }}
+                  >
+                    {otherLocationError}
+                  </div>
+                )}
+              </small>
+            </Box> */}
             <Box sx={{ display: "flex", flexDirection: "row", mt: "25px" }}>
               <Typography
                 sx={{
@@ -441,7 +509,23 @@ export default function Addteammember() {
                   pt: "10px",
                 }}
                 placeholder="Please input "
+                {...register("Mobile", { required: true })}
+                on
               ></TextField>
+            </Box>
+            <Box sx={{ ml: 17 }}>
+              {errors.Mobile?.type === "required" && "Mobile Number Required"}
+              <small>
+                {mobileError && (
+                  <div
+                    style={{
+                      color: "red",
+                    }}
+                  >
+                    {mobileError}
+                  </div>
+                )}
+              </small>
             </Box>
 
             <Box sx={{ display: "flex", flexDirection: "row" }}>
@@ -461,7 +545,23 @@ export default function Addteammember() {
                   pt: "10px",
                 }}
                 placeholder="Please input "
+                // {...register("Email", { required: true })}
+                // onChange={handleOnChange}
               ></TextField>
+            </Box>
+            <Box sx={{ ml: 17, mt: 1 }}>
+              {errors.Email?.type === "required" && "Email Required"}
+              <small>
+                {emailError && (
+                  <div
+                    style={{
+                      color: "red",
+                    }}
+                  >
+                    {emailError}
+                  </div>
+                )}
+              </small>
             </Box>
             <Box sx={{ display: "flex", flexDirection: "row" }}>
               <Typography sx={{ mt: "40px", width: "350px" }}>
@@ -484,7 +584,8 @@ export default function Addteammember() {
                   multiple
                   displayEmpty
                   value={personName}
-                  onChange={handleChange}
+                  {...register("Access Level", { required: true })}
+                  onChange={handleOnChange}
                   input={<OutlinedInput />}
                   renderValue={(selected) => {
                     if (selected.length === 0) {
@@ -509,6 +610,21 @@ export default function Addteammember() {
                 </Select>
               </FormControl>
             </Box>
+            <Box sx={{ ml: 17, mt: 1 }}>
+              {errors.AccessLevel?.type === "required" &&
+                "Access Level Required"}
+              <small>
+                {accessLevelError && (
+                  <div
+                    style={{
+                      color: "red",
+                    }}
+                  >
+                    {accessLevelError}
+                  </div>
+                )}
+              </small>
+            </Box>
           </Box>
         </div>
         <Box
@@ -526,8 +642,7 @@ export default function Addteammember() {
           <Typography
             sx={{ width: 400, mt: 4, color: "rgba(95, 91, 81, 0.518)" }}
           >
-            {" "}
-            Invite to use Maxpilot{" "}
+            Invite to use Maxpilot
           </Typography>
           <Button
             sx={{
@@ -537,7 +652,8 @@ export default function Addteammember() {
               mt: 4,
               borderRadius: 2,
             }}
-            className="bttn"
+            // className="bttn"
+            onClick={handleSubmit}
           >
             Add Team member
           </Button>
