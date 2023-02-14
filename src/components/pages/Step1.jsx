@@ -393,23 +393,13 @@ export default function BasicModal() {
             >
               Select your industry
             </Typography>
-            <FormControl
-              fullWidth
-              sx={{
-                mt: 2,
-              }}
-              className="input-border-radius"
-            >
-              <InputLabel id="demo-simple-select-label">Select</InputLabel>
+            <FormControl sx={{ width: "30%", mt: 2 }}>
+              <InputLabel id="demo-simple-select-label">Industry</InputLabel>
               <Select
                 labelId="demo-simple-select-label"
                 id="demo-simple-select"
-                value={age}
-                label="Age"
-                sx={{
-                  width: "50%",
-                }}
-                // onChange={handleSelectChange}
+                value={industry}
+                label="Industry"
                 {...register("Industry", { required: true })}
                 onChange={(e) => setIndustry(e.target.value)}
               >
