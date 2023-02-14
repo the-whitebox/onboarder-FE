@@ -70,8 +70,9 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 const drawerWidth = 240;
 
 const columns = [
+  { field: "Active", headerName: "Active", width: 200 },
   { field: "name", headerName: "Name", width: 200 },
-  { field: "connected", headerName: "Connected to", width: 200 },
+  // { field: "connected", headerName: "Connected to", width: 200 },
   { field: "access", headerName: "Access", width: 200 },
   { field: "location", headerName: "Main Location", width: 200 },
   { field: "status", headerName: "Status", width: 200 },
@@ -279,6 +280,11 @@ export default function People() {
               columns={columns}
               pageSize={5}
               rowsPerPageOptions={[5]}
+              checkboxSelection
+              disableSelectionOnClick
+              onSelectionModelChange={(ids) => {
+                console.log(ids);
+              }}
             />
           </Box>
         </Box>

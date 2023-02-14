@@ -1,12 +1,8 @@
 .btn {
   color: white !important;
-  background-color: #38b492 !important;
+  background-color: green !important;
   min-height: 1em !important ;
 }
 .btn:hover {
-  background-color: #38b492 !important;
-}
-
-.textfieldborder {
-  border-radius: 20px !important;
+  background-color: green !important;
 }
