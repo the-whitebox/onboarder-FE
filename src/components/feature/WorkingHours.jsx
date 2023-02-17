@@ -63,9 +63,7 @@ export default function WorkingHours() {
           <SetStressProfileModalBody />
         </Modal>
         <Box sx={{ pt: 3, pb: 2 }}>
-          <Typography variant="h6" fontWeight="Bold">
-            Working Hours
-          </Typography>
+          <Typography variant="h6">Working Hours</Typography>
         </Box>
         <Box
           sx={{
@@ -107,12 +105,12 @@ export default function WorkingHours() {
             <Grid xs={6} lg={3}>
               <Item>
                 <Box component="ul" aria-labelledby="category-c" sx={{ pl: 2 }}>
+                  <li>Stress Profile</li>
                   <li>
                     <Link onClick={handleOpenStress} color="#38b492">
-                      Stress Profile
+                      24/7
                     </Link>
                   </li>
-                  <li>24/7</li>
                 </Box>
               </Item>
             </Grid>

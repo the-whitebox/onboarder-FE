@@ -38,9 +38,7 @@ export default function LeaveEntitlement() {
               justifyContent: "space-between",
             }}
           >
-            <Typography variant="h6" fontWeight="Bold">
-              Leave Entitlements
-            </Typography>
+            <Typography variant="h6">Leave Entitlements</Typography>
           </Box>
           <Box
             sx={{

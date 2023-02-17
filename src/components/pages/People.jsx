@@ -17,13 +17,15 @@ import Filters from "../feature/Filters";
 import Display from "../feature/Display";
 import BulkActions from "../feature/BulkActions";
 import Timesheets from "../feature/Timesheets";
-import { DataGrid } from "@mui/x-data-grid";
+import { DataGrid, GridApi } from "@mui/x-data-grid";
 import { fontWeight } from "@mui/system";
 import "../../style/People.css";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import Modal from "@mui/material/Modal";
 import AddTeammemberModalBody from "../feature/AddTeammember";
+import MoreVertIcon from "@mui/icons-material/MoreVert";
 import axios from "axios";
+import Avatar from "@mui/material/Avatar";
 
 const theme = createTheme();
 
@@ -70,14 +72,29 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 const drawerWidth = 240;
 
 const columns = [
-  { field: "Active", headerName: "Active", width: 200 },
-  { field: "name", headerName: "Name", width: 200 },
-  // { field: "connected", headerName: "Connected to", width: 200 },
+  { field: "name", headerName: "Name", width: 150 },
   { field: "access", headerName: "Access", width: 200 },
-  { field: "location", headerName: "Main Location", width: 200 },
-  { field: "status", headerName: "Status", width: 200 },
-  { field: "email", headerName: "Email", width: 200 },
-  { field: "mobile", headerName: "Mobile", width: 200 },
+  { field: "location", headerName: "Main Location", width: 250 },
+  { field: "status", headerName: "Status", width: 150 },
+  { field: "email", headerName: "Email", width: 220 },
+  { field: "mobile", headerName: "Mobile", width: 150 },
+  {
+    field: "action",
+    headerName: "Action",
+    width: 120,
+    renderCell: (params) => {
+      // const onClick = (e) => {
+      //   e.stopPropagation();
+
+      // };
+
+      return (
+        <Avatar sx={{ backgroundColor: "#38B492", color: "#ffffff" }}>
+          <MoreVertIcon />
+        </Avatar>
+      );
+    },
+  },
 ];
 
 const rows = [
@@ -223,6 +240,7 @@ export default function People() {
           </Box>
         </AppBar>
         <VerticalMenu />
+
         <Box
           component="main"
           sx={{ flexGrow: 1, bgcolor: "background.default", p: 3 }}
