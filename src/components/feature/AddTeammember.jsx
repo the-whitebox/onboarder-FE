@@ -77,6 +77,8 @@ export default function Addteammember() {
   const [accessLevel, setAccessLevel] = useState("");
   const [accessLevelError, setAccessLevelError] = useState("");
 
+  // const [state, setState] = React.useState({ data: "" });
+
   const navigate = useNavigate();
 
   const firstNameValidation = () => {
@@ -120,11 +122,13 @@ export default function Addteammember() {
   //   }
   // };
 
-  const accessLevelValidation = () => {
-    if (accessLevel == "") {
-      setAccessLevelError("Access level required");
-    } else setAccessLevelError("");
-  };
+  // const accessLevelValidation = () => {
+  //   if (accessLevel == "") {
+  //     setAccessLevelError("Access level required");
+  //   } else setAccessLevelError("");
+  // };
+
+  const token = localStorage.getItem("token");
 
   const handleOnChange = (e) => {
     setFirstName(e.target.value);
@@ -132,12 +136,12 @@ export default function Addteammember() {
     // setMainLocation(e.target.value);
     // setOtherLocation(e.target.value);
     setMobile(e.target.value);
-    setEmail(e.target.value);
-    setAccessLevel(e.target.value);
+    // setEmail(e.target.value);
+    // setAccessLevel(e.target.value);
     console.log(firstName);
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     console.log("Submit");
 
     event.preventDefault();
@@ -154,29 +158,37 @@ export default function Addteammember() {
     // emailValidation();
     // console.log("Email Validation checked");
 
-    accessLevelValidation();
-    console.log("Access Validation checked");
+    // accessLevelValidation();
+    // console.log("Access Validation checked");
 
     if (
       firstNameError === "" &&
       lastNameError === "" &&
       // mainLocationError === "" &&
       // otherLocationError === "" &&
-      mobileError === "" &&
+      mobileError === ""
       // emailError === "" &&
-      accessLevelError === ""
+      // accessLevelError === ""
     ) {
       try {
-        const resp = axios
-          .post(url, {
-            first_name: firstName,
-            last_name: lastName,
-            mobile: mobile,
-            email: email,
-            accessLevel: accessLevel,
-          })
+        const resp = await axios
+          // const instance = axios.create(
+          .post(
+            url,
+            {
+              first_name: firstName,
+              last_name: lastName,
+              mobile: mobile,
+              // email: email,
+              // accessLevel: accessLevel,
+            },
+            { headers: { Authorization: `Bearer ${token}` } }
+          )
+
           .then((response) => {
             console.log("People API was hit successfully");
+            // localStorage.setItem("auth", response.data.authenticated);
+
             navigate("/people");
           });
       } catch (error) {
@@ -611,7 +623,7 @@ export default function Addteammember() {
               </FormControl>
             </Box>
             <Box sx={{ ml: 17, mt: 1 }}>
-              {errors.AccessLevel?.type === "required" &&
+              {/* {errors.AccessLevel?.type === "required" &&
                 "Access Level Required"}
               <small>
                 {accessLevelError && (
@@ -623,7 +635,7 @@ export default function Addteammember() {
                     {accessLevelError}
                   </div>
                 )}
-              </small>
+              </small> */}
             </Box>
           </Box>
         </div>
