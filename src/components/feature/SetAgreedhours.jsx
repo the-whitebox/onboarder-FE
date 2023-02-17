@@ -7,9 +7,10 @@ import Radio from "@mui/material/Radio";
 import RadioGroup from "@mui/material/RadioGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import FormControl from "@mui/material/FormControl";
-import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 import CloseIcon from "@mui/icons-material/Close";
+import OutlinedInput from "@mui/material/OutlinedInput";
+import InputAdornment from "@mui/material/InputAdornment";
 
 const style = {
   position: "absolute",
@@ -27,10 +28,10 @@ const style = {
 export default function SetAgreedhours() {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => {
-    setOpen(true);
+    setOpen(false);
   };
   const handleClose = () => {
-    setOpen(false);
+    setOpen(true);
   };
 
   return (
@@ -38,12 +39,11 @@ export default function SetAgreedhours() {
       <Box
         sx={{
           ...style,
-          width: 450,
-          height: 660,
-          mt: 10,
+          width: 490,
+          height: "auto",
         }}
       >
-        <Box className="flex flex-row" sx={{ width: "450px" }}>
+        <Box className="flex flex-row" sx={{ width: "100%" }}>
           <h2 className="set">Set agreed hours</h2>
           <CloseIcon onClick={handleClose} sx={{ pb: "25px" }}></CloseIcon>
         </Box>
@@ -158,13 +158,23 @@ export default function SetAgreedhours() {
             {" "}
             Hours per Work period{" "}
           </Typography>
-          <TextField
-            sx={{ width: "140px", ml: 3 }}
+          <FormControl
             size="small"
-            placeholder="0             hours"
+            sx={{ m: 1, width: 150 }}
+            variant="outlined"
           >
-            {" "}
-          </TextField>
+            <OutlinedInput
+              id="outlined-adornment-weight"
+              endAdornment={
+                <InputAdornment position="end"> hours</InputAdornment>
+              }
+              aria-describedby="outlined-weight-helper-text"
+              inputProps={{
+                "aria-label": "weight",
+              }}
+              placeholder="0"
+            />
+          </FormControl>
         </div>
         <Button
           className="btn btn-primary"

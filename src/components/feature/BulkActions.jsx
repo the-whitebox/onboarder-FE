@@ -41,6 +41,7 @@ export default function BulkActions() {
       <Modal
         open={openAccess}
         onClose={handleCloseAccess}
+        onClick={handleClose}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >

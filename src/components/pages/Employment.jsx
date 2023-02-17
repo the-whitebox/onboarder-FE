@@ -24,7 +24,10 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import Modal from "@mui/material/Modal";
 import SetpayratesModalBody from "../feature/Setpayrates";
 import SyncPayrollModalBody from "../feature/SyncPayroll";
-import SetAccessLevelModalBody from "../feature/SetAccessLevel";
+import SetAdvisorModalBody from "../feature/SetAccessLevel";
+import Breadcrumbs from "@mui/material/Breadcrumbs";
+
+import useState from "react";
 
 const theme = createTheme();
 
@@ -67,8 +70,9 @@ export default function Employment() {
           aria-labelledby="modal-modal-title"
           aria-describedby="modal-modal-description"
         >
-          <SetAccessLevelModalBody />
+          <SetAdvisorModalBody />
         </Modal>
+
         <Modal
           open={openPayroll}
           onClose={handleClosePayroll}
@@ -95,10 +99,16 @@ export default function Employment() {
             sx={{ flexGrow: 1, bgcolor: "#fcfcfc", p: 3, pt: 1 }}
           >
             <Toolbar />
+            <Box>
+              <Breadcrumbs aria-label="breadcrumb">
+                <Link underline="hover" color="black" href="/People">
+                  Home
+                </Link>
+                <Typography color="text.primary">Employment</Typography>
+              </Breadcrumbs>
+            </Box>
             <Box sx={{ display: "flex", justifyContent: "space-between" }}>
-              <Typography variant="h4" sx={{ fontWeight: "Bold" }}>
-                Employment Details
-              </Typography>
+              <Typography variant="h4">Employment</Typography>
               <Button
                 variant="contained"
                 sx={{
@@ -111,9 +121,7 @@ export default function Employment() {
             </Box>
 
             <Box sx={{ pt: 3, pb: 2 }}>
-              <Typography variant="h6" fontWeight="Bold">
-                Work Details
-              </Typography>
+              <Typography variant="h6">Work Details</Typography>
             </Box>
             <Box
               sx={{
@@ -136,12 +144,12 @@ export default function Employment() {
                           aria-labelledby="category-a"
                           sx={{ pl: 2 }}
                         >
+                          <li>Access level</li>
                           <li>
                             <Link onClick={handleOpenAccess} color="#38b492">
-                              Access level
+                              Advisor
                             </Link>
                           </li>
-                          <li>Advisor</li>
                         </Box>
                       </Item>
                     </Grid>

@@ -21,6 +21,7 @@ import "../../style/General.css";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import Modal from "@mui/material/Modal";
 import ArchiveTeamMemberModalBody from "../feature/ArchiveTeammembers";
+import Breadcrumbs from "@mui/material/Breadcrumbs";
 import { useTheme } from "@mui/material/styles";
 
 const Item = styled("div")(({ theme }) => ({
@@ -67,7 +68,14 @@ export default function Profile() {
           >
             <Toolbar />
             <Box sx={{ display: "flex", justifyContent: "space-between" }}>
-              <Typography variant="h5">Personal</Typography>
+              <Box m={1}>
+                <Breadcrumbs aria-label="breadcrumb">
+                  <Link underline="hover" color="black" href="/People">
+                    Home
+                  </Link>
+                  <Typography color="text.primary">Personal</Typography>
+                </Breadcrumbs>
+              </Box>
               <Button
                 variant="contained"
                 sx={{

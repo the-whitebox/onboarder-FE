@@ -7,9 +7,11 @@ import OutlinedInput from "@mui/material/OutlinedInput";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
-import CloseIcon from "@mui/icons-material/Close";
+import CloseButton from "@mui/icons-material/Close";
 import Typography from "@mui/material/Typography";
 import "../../style/SetAccesslevel.css";
+import { useState } from "react";
+
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
 const MenuProps = {
@@ -45,14 +47,6 @@ const style = {
 };
 
 export default function SetAccessLevel() {
-  const [open, setOpen] = React.useState(false);
-  const handleOpen = () => {
-    setOpen(true);
-  };
-  const handleClose = () => {
-    setOpen(false);
-  };
-
   function getStyles(name, personName, theme) {
     return {
       fontWeight:
@@ -71,11 +65,27 @@ export default function SetAccessLevel() {
     } = event;
     setPersonName(typeof value === "string" ? value.split(",") : value);
   };
+  const [open, setOpen] = React.useState(false);
+  const handleOpen = () => {
+    setOpen(true);
+  };
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  const [isOpen, setIsOpen] = useState(true);
+  const toggleDropdown = () => {
+    setIsOpen(!isOpen);
+  };
 
   return (
     <React.Fragment>
-      <Box sx={{ ...style, width: 350, height: 230 }}>
-        <CloseIcon onClick={handleClose} sx={{ float: "right" }}></CloseIcon>
+      <Box sx={{ ...style, width: 370, height: 270 }}>
+        <CloseButton
+          id="child-modal-title"
+          onClick={toggleDropdown}
+          sx={{ float: "right" }}
+        ></CloseButton>
         <Typography
           variant="h5"
           sx={{ mt: 2, fontWeight: "bold", paddingBottom: 1 }}
