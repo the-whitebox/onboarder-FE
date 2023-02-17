@@ -10,6 +10,9 @@ import FormControl from "@mui/material/FormControl";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 import CloseIcon from "@mui/icons-material/Close";
+import { useNavigate } from "react-router-dom";
+import { useState } from "react";
+import { useForm } from "react-hook-form";
 
 const style = {
   position: "absolute",
@@ -25,6 +28,60 @@ const style = {
 };
 
 export default function SetAgreedhours() {
+  const [state, setState] = React.useState({ data: "" });
+  const [workPeriod, setWorkPeriod] = React.useState("");
+  const [netWorkPeriod, setNetWorkPeriod] = React.useState("");
+  const [hours, setHours] = React.useState("");
+
+  const [error, setError] = React.useState(null);
+  const [workPeriodError, setWorkPeriodError] = useState("");
+  const [netWorkPeriodError, setNetWorkPeriodError] = useState("");
+  const [hoursError, setHoursError] = useState("");
+
+  const workPeriodValidation = () => {
+    if (workPeriod == "") {
+      setWorkPeriodError("Please enter a business name");
+    } else setWorkPeriodError("");
+  };
+
+  const netWorkPeriodValidation = () => {
+    if (netWorkPeriod == "") {
+      setNetWorkPeriodError("Please enter your mobile number");
+    } else setNetWorkPeriodError("");
+  };
+
+  const hoursValidation = () => {
+    if (hours == "") {
+      setHoursError("Please describe your business type");
+    } else setHoursError("");
+  };
+
+  const {
+    register,
+    formState: { errors },
+  } = useForm();
+
+  const navigate = useNavigate();
+
+  const toPeople = (e) => {
+    if (workPeriod !== "" && netWorkPeriod !== "" && hours !== "") {
+      console.log("Data Found");
+      setError(false);
+      console.log(workPeriod, netWorkPeriod, hours);
+
+      navigate("/people", {
+        state: {
+          workPeriod: workPeriod,
+          netWorkPeriod: netWorkPeriod,
+          hours: hours,
+        },
+      });
+    } else {
+      setError(true);
+      setState({ data: e.target.value });
+    }
+  };
+
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => {
     setOpen(true);
@@ -98,6 +155,8 @@ export default function SetAgreedhours() {
               aria-labelledby="demo-radio-buttons-group-label"
               defaultValue=""
               name="radio-buttons-group"
+              {...register("Work Period", { required: true })}
+              onChange={(e) => setWorkPeriod(e.target.value)}
             >
               <FormControlLabel
                 value="Weekly"
@@ -116,7 +175,18 @@ export default function SetAgreedhours() {
               />
             </RadioGroup>
           </FormControl>
-
+          {errors.workPeriod?.type === "required" && "Work Period Required"}
+          <small>
+            {workPeriodError && (
+              <div
+                style={{
+                  color: "red",
+                }}
+              >
+                {workPeriodError}
+              </div>
+            )}
+          </small>
           <Typography
             sx={{
               ml: "20px",
@@ -141,6 +211,8 @@ export default function SetAgreedhours() {
               aria-labelledby="demo-radio-buttons-group-label"
               defaultValue=""
               name="radio-buttons-group"
+              {...register("Work Period", { required: true })}
+              onChange={(e) => setNetWorkPeriod(e.target.value)}
             >
               <FormControlLabel value="Mon" control={<Radio />} label="Mon" />
               <FormControlLabel value="Tue" control={<Radio />} label="Tue" />
@@ -151,21 +223,44 @@ export default function SetAgreedhours() {
               <FormControlLabel value="Sun" control={<Radio />} label="Sun" />
             </RadioGroup>
           </FormControl>
+          {errors.netWorkPeriod?.type === "required" && "Work Period Required"}
+          <small>
+            {netWorkPeriodError && (
+              <div
+                style={{
+                  color: "red",
+                }}
+              >
+                {netWorkPeriodError}
+              </div>
+            )}
+          </small>
 
           <Typography
             sx={{ fontWeight: "bold", pt: "15px", pb: "20px", ml: 3 }}
           >
-            {" "}
-            Hours per Work period{" "}
+            Hours per Work period
           </Typography>
           <TextField
             sx={{ width: "140px", ml: 3 }}
             size="small"
             placeholder="0             hours"
-          >
-            {" "}
-          </TextField>
+            {...register("Work Period", { required: true })}
+            onChange={(e) => setHours(e.target.value)}
+          ></TextField>
         </div>
+        {errors.hours?.type === "required" && "Work Period Required"}
+        <small>
+          {hoursError && (
+            <div
+              style={{
+                color: "red",
+              }}
+            >
+              {hoursError}
+            </div>
+          )}
+        </small>
         <Button
           className="btn btn-primary"
           sx={{
@@ -174,6 +269,12 @@ export default function SetAgreedhours() {
             width: "16%",
             textTransform: "none",
             mt: 3,
+          }}
+          onClick={() => {
+            workPeriodValidation();
+            netWorkPeriodValidation();
+            hoursValidation();
+            toPeople();
           }}
         >
           Save

@@ -10,8 +10,156 @@ import Grid from "@mui/material/Grid";
 import CssBaseline from "@mui/material/CssBaseline";
 import MaxPilotLogo from "../../assets/images/maxpilot-logo-w.png";
 import "../../style/General.css";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import { useForm } from "react-hook-form";
 
 export default function Personal() {
+  const url = process.env.REACT_APP_BASE_URL + "/people";
+  const [state, setState] = React.useState({ data: "" });
+  const [email, setEmail] = useState("");
+  const [mobile, setMobile] = React.useState("");
+  const [address, setAddress] = React.useState("");
+  const [postcode, setPostcode] = React.useState("");
+  const [city, setCity] = React.useState("");
+  const [cityState, setCityState] = React.useState("");
+  const [country, setCountry] = React.useState("");
+  const [contactName, setContactName] = React.useState("");
+  const [contactNumber, setContactNumber] = React.useState("");
+
+  const [error, setError] = React.useState(null);
+
+  const [emailError, setEmailError] = useState("");
+  const [mobileError, setMobileError] = React.useState("");
+  const [addressError, setAddressError] = React.useState("");
+  const [postcodeError, setPostcodeError] = React.useState("");
+  const [cityError, setCityError] = React.useState("");
+  const [cityStateError, setCityStateError] = React.useState("");
+  const [countryError, setCountryError] = React.useState("");
+  const [contactNameError, setContactNameError] = React.useState("");
+  const [contactNumberError, setContactNumberError] = React.useState("");
+
+  const navigate = useNavigate();
+
+  const emailValidation = () => {
+    const regEx = /^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[A-Za-z]+$/;
+    if (regEx.test(email)) {
+      setEmailError("");
+    } else if (email == "") {
+      setEmailError("Email should not be empty");
+    } else if (!regEx.test(email)) {
+      setEmailError("Email is not valid");
+    }
+  };
+
+  const mobileValidation = () => {
+    if (mobile == "") {
+      setMobileError("Please enter your mobile number");
+    } else setMobileError("");
+  };
+
+  const addressValidation = () => {
+    if (address == "") {
+      setAddressError("Please enter your address");
+    } else setAddressError("");
+  };
+
+  const postcodeValidation = () => {
+    if (postcode == "") {
+      setPostcodeError("Please enter your postcode");
+    } else setPostcodeError("");
+  };
+
+  const cityValidation = () => {
+    if (city == "") {
+      setCityError("Please enter your city");
+    } else setCityError("");
+  };
+
+  const cityStateValidation = () => {
+    if (cityState == "") {
+      setCityStateError("Please enter your state");
+    } else setCityStateError("");
+  };
+
+  const countryValidation = () => {
+    if (country == "") {
+      setCountryError("Please enter your country");
+    } else setCountryError("");
+  };
+
+  const contactNameValidation = () => {
+    if (contactName == "") {
+      setContactNameError("Please enter emergency contact name");
+    } else setContactNameError("");
+  };
+
+  const contactNumberValidation = () => {
+    if (contactNumber == "") {
+      setContactNumberError("Please enter emergency contact number");
+    } else setContactNumberError("");
+  };
+
+  const {
+    register,
+    formState: { errors },
+  } = useForm();
+
+  const personalDetails = (e) => {
+    console.log("Inside Personal Details");
+    console.log(email, mobile, address);
+    if (
+      email !== "" &&
+      mobile !== "" &&
+      address !== "" &&
+      postcode !== "" &&
+      city !== "" &&
+      cityState !== "" &&
+      country !== "" &&
+      contactName !== "" &&
+      contactNumber !== ""
+    ) {
+      console.log("Data Found");
+      setError(false);
+      console.log(
+        email,
+        mobile,
+        address,
+        postcode,
+        city,
+        cityState,
+        country,
+        contactName,
+        contactNumber
+      );
+      try {
+        axios
+          .post(url, {
+            email: email,
+            mobile_number: mobile,
+            address: address,
+            postcode: postcode,
+            city: city,
+            state: cityState,
+            country: country,
+            contact_name: contactName,
+            contact_number: contactNumber,
+          })
+          .then((response) => {
+            console.log("Personal API was hit successfully");
+            console.log(response);
+          });
+      } catch (error) {
+        console.log(error.response.data);
+      }
+      console.log(email, mobile);
+    } else {
+      setError(true);
+      setState({ data: e.target.value });
+    }
+  };
+
   return (
     <>
       <Grid sx={{ display: "flex" }}>

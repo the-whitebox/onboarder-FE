@@ -10,6 +10,10 @@ import Select from "@mui/material/Select";
 import CloseIcon from "@mui/icons-material/Close";
 import Typography from "@mui/material/Typography";
 import "../../style/SetAccesslevel.css";
+import { useNavigate } from "react-router-dom";
+import { useState } from "react";
+import { useForm } from "react-hook-form";
+
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
 const MenuProps = {
@@ -45,6 +49,42 @@ const style = {
 };
 
 export default function SetAccessLevel() {
+  const [state, setState] = React.useState({ data: "" });
+  const [access, setAccess] = React.useState("");
+
+  const [error, setError] = React.useState(null);
+  const [accessError, setAccessError] = useState("");
+
+  const accessValidation = () => {
+    if (access == "") {
+      setAccessError("Please enter a business name");
+    } else setAccessError("");
+  };
+
+  const {
+    register,
+    formState: { errors },
+  } = useForm();
+
+  const navigate = useNavigate();
+
+  const toPeople = (e) => {
+    if (access !== "") {
+      console.log("Data Found");
+      setError(false);
+      console.log(access);
+
+      navigate("/people", {
+        state: {
+          access: access,
+        },
+      });
+    } else {
+      setError(true);
+      setState({ data: e.target.value });
+    }
+  };
+
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => {
     setOpen(true);
@@ -65,12 +105,12 @@ export default function SetAccessLevel() {
   const theme = useTheme();
   const [personName, setPersonName] = React.useState([]);
 
-  const handleChange = (event) => {
-    const {
-      target: { value },
-    } = event;
-    setPersonName(typeof value === "string" ? value.split(",") : value);
-  };
+  // const handleChange = (event) => {
+  //   const {
+  //     target: { value },
+  //   } = event;
+  //   setPersonName(typeof value === "string" ? value.split(",") : value);
+  // };
 
   return (
     <React.Fragment>
@@ -102,7 +142,7 @@ export default function SetAccessLevel() {
               multiple
               displayEmpty
               value={personName}
-              onChange={handleChange}
+              // onChange={handleChange}
               input={<OutlinedInput />}
               renderValue={(selected) => {
                 if (selected.length === 0) {
@@ -113,6 +153,8 @@ export default function SetAccessLevel() {
               }}
               MenuProps={MenuProps}
               inputProps={{ "aria-label": "Without label" }}
+              {...register("Work Period", { required: true })}
+              onChange={(e) => setAccess(e.target.value)}
             >
               {names.map((name) => (
                 <MenuItem
@@ -137,6 +179,10 @@ export default function SetAccessLevel() {
             color: "white",
             textTransform: "none",
             mt: 6,
+          }}
+          onClick={() => {
+            accessValidation();
+            toPeople();
           }}
         >
           Update
