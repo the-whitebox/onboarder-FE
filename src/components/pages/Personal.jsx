@@ -46,7 +46,7 @@ export default function Personal() {
     const regEx = /^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[A-Za-z]+$/;
     if (regEx.test(email)) {
       setEmailError("");
-    } else if (email == "") {
+    } else if (email === "") {
       setEmailError("Email should not be empty");
     } else if (!regEx.test(email)) {
       setEmailError("Email is not valid");
@@ -54,49 +54,49 @@ export default function Personal() {
   };
 
   const mobileValidation = () => {
-    if (mobile == "") {
+    if (mobile === "") {
       setMobileError("Please enter your mobile number");
     } else setMobileError("");
   };
 
   const addressValidation = () => {
-    if (address == "") {
+    if (address === "") {
       setAddressError("Please enter your address");
     } else setAddressError("");
   };
 
   const postcodeValidation = () => {
-    if (postcode == "") {
+    if (postcode === "") {
       setPostcodeError("Please enter your postcode");
     } else setPostcodeError("");
   };
 
   const cityValidation = () => {
-    if (city == "") {
+    if (city === "") {
       setCityError("Please enter your city");
     } else setCityError("");
   };
 
   const cityStateValidation = () => {
-    if (cityState == "") {
+    if (cityState === "") {
       setCityStateError("Please enter your state");
     } else setCityStateError("");
   };
 
   const countryValidation = () => {
-    if (country == "") {
+    if (country === "") {
       setCountryError("Please enter your country");
     } else setCountryError("");
   };
 
   const contactNameValidation = () => {
-    if (contactName == "") {
+    if (contactName === "") {
       setContactNameError("Please enter emergency contact name");
     } else setContactNameError("");
   };
 
   const contactNumberValidation = () => {
-    if (contactNumber == "") {
+    if (contactNumber === "") {
       setContactNumberError("Please enter emergency contact number");
     } else setContactNumberError("");
   };
@@ -225,6 +225,18 @@ export default function Personal() {
                 bgcolor: "#38b492",
                 color: "#ffffff",
               }}
+              onClick={(e) => {
+                emailValidation();
+                mobileValidation();
+                addressValidation();
+                postcodeValidation();
+                cityValidation();
+                cityStateValidation();
+                countryValidation();
+                contactNameValidation();
+                contactNumberValidation();
+                personalDetails(e);
+              }}
             >
               Save
             </Button>
@@ -297,6 +309,8 @@ export default function Personal() {
                   width: "300px",
                   mr: 60,
                 }}
+                {...register("Email", { required: true })}
+                onChange={(e) => setEmail(e.target.value)}
               />
             </Box>
 
@@ -321,6 +335,8 @@ export default function Personal() {
                   width: "300px",
                   mr: 60,
                 }}
+                {...register("Mobile", { required: true })}
+                onChange={(e) => setMobile(e.target.value)}
               />
             </Box>
             <br />
@@ -344,6 +360,8 @@ export default function Personal() {
                   width: "300px",
                   mr: 60,
                 }}
+                {...register("Address", { required: true })}
+                onChange={(e) => setAddress(e.target.value)}
               />
             </Box>
             <br />
@@ -367,6 +385,8 @@ export default function Personal() {
                   width: "300px",
                   mr: 60,
                 }}
+                {...register("Postcode", { required: true })}
+                onChange={(e) => setPostcode(e.target.value)}
               />
             </Box>
             <br />
@@ -390,6 +410,8 @@ export default function Personal() {
                   width: "300px",
                   mr: 60,
                 }}
+                {...register("City", { required: true })}
+                onChange={(e) => setCity(e.target.value)}
               />
             </Box>
             <br />
@@ -413,6 +435,8 @@ export default function Personal() {
                   width: "300px",
                   mr: 60,
                 }}
+                {...register("State", { required: true })}
+                onChange={(e) => setCityState(e.target.value)}
               />
             </Box>
             <br />
@@ -437,6 +461,8 @@ export default function Personal() {
                   width: "300px",
                   mr: 60,
                 }}
+                {...register("Country", { required: true })}
+                onChange={(e) => setCountry(e.target.value)}
               />
             </Box>
             <br />
@@ -461,6 +487,8 @@ export default function Personal() {
                   width: "300px",
                   mr: 60,
                 }}
+                {...register("Emergency Contact Name", { required: true })}
+                onChange={(e) => setContactName(e.target.value)}
               />
             </Box>
             <br />
@@ -486,6 +514,8 @@ export default function Personal() {
                     width: "300px",
                     mr: 60,
                   }}
+                  {...register("Emergency Contact Number", { required: true })}
+                  onChange={(e) => setContactNumber(e.target.value)}
                 />
               </Box>
               <Grid
