@@ -14,6 +14,7 @@ import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import axios from "axios";
+import  FormHelperText  from "@mui/material/FormHelperText";
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -50,20 +51,21 @@ const style = {
 };
 
 export default function SetAccessLevel() {
-  const url = process.env.REACT_APP_BASE_URL + "/enums"
+  // const url = process.env.REACT_APP_BASE_URL + "/enums"
   const [state, setState] = React.useState({ data: "" });
-  const [access, setAccess] = React.useState("");
-  const [accessList, setAccessList] = React.useState([{"name": "", "id":""}]);
+  // const [access, setAccess] = React.useState("");
+  // const [accessList, setAccessList] = React.useState([{"name": "", "id":""}]);
 
 
   const [error, setError] = React.useState(null);
-  const [accessError, setAccessError] = useState("");
+  // const [accessError, setAccessError] = useState("");
+  const [selectedValue, setSelectedValue] = useState("");
 
-  const accessValidation = () => {
-    if (access == "") {
-      setAccessError("Please enter access level");
-    } else setAccessError("");
-  };
+  // const accessValidation = () => {
+  //   if (access == "") {
+  //     setAccessError("Please enter access level");
+  //   } else setAccessError("");
+  // };
 
 
 
@@ -73,31 +75,31 @@ export default function SetAccessLevel() {
   } = useForm();
 
   const navigate = useNavigate();
-  const token = localStorage.getItem("token");
+  // const token = localStorage.getItem("token");
 
-  let data = null;
+  // let data = null;
 
-  useEffect(()=> {
-    const fetchData = async () =>{
-      const {data} = await axios.get(url, { headers: { Authorization: `Bearer + ${token}` } });
-      console.log(data.data);
-      debugger
-      setAccessList(JSON.parse(JSON.stringify(data.data)));
-    }; 
-    fetchData();
-    data = accessList;
-  }, [])
-  Object.values(accessList).map((i) => console.log(i.name));
+  // useEffect(()=> {
+  //   const fetchData = async () =>{
+  //     const {data} = await axios.get(url, { headers: { Authorization: `Bearer + ${token}` } });
+  //     console.log(data.data);
+  //     debugger
+  //     setAccessList(JSON.parse(JSON.stringify(data.data)));
+  //   }; 
+  //   fetchData();
+  //   data = accessList;
+  // }, [])
+  // Object.values(accessList).map((i) => console.log(i.name));
 
   const toAccess = (e) => {
-    if (access !== "") {
+    if (selectedValue !== "") {
       console.log("Data Found");
       setError(false);
-      console.log(access);
+      console.log(selectedValue);
 
       navigate("/employment", {
         state: {
-          access: access,
+          selectedValue: selectedValue,
         },
       });
     } else {
@@ -126,7 +128,7 @@ export default function SetAccessLevel() {
   }
 
   const theme = useTheme();
-  const [personName, setPersonName] = React.useState([]);
+  // const [personName, setPersonName] = React.useState([]);
 
   // const handleChange = (event) => {
   //   const {
@@ -153,19 +155,33 @@ export default function SetAccessLevel() {
             Access level
           </Typography>
           <FormControl
+            error={error}
             sx={{
               width: 200,
               height: 5,
               padding: "5px  ",
             }}
           >
-            <Select
+            <Select 
               size="small"
               sx={{ borderRadius: "7px" }}
-              multiple
+              displayEmpty
+              value={selectedValue}
+              onChange={(e) => setSelectedValue(e.target.value)}
+              >
+              <MenuItem value={"System Administrator"}>System Administrator</MenuItem>
+              <MenuItem value={"Supervisor"}>Supervisior</MenuItem>
+              <MenuItem value={"Employee"}>Employee</MenuItem>
+              <MenuItem value={"Location Manager"}>Location Manager</MenuItem>
+              <MenuItem value={"Advisor"}>Advisor</MenuItem>
+            </Select>
+            {error && <FormHelperText>Select a value</FormHelperText>}
+            {/* <Select
+              size="small"
+              sx={{ borderRadius: "7px" }}
               displayEmpty
               value={personName}
-              // onChange={handleChange}
+              onChange={handleChange}
               input={<OutlinedInput />}
               renderValue={(selected) => {
                 if (selected.length === 0) {
@@ -176,21 +192,21 @@ export default function SetAccessLevel() {
               }}
               MenuProps={MenuProps}
               inputProps={{ "aria-label": "Without label" }}
-              {...register("Work Period", { required: true })}
-              onChange={(e) => setAccess(e.target.value)}
+              // {...register("Access Level", { required: true })}
+              // onClick={(e) => setAccess(e.target.value)}
             >
               {names.map((name) => (
                 <MenuItem
                   key={name}
                   value={name}
-                  style={getStyles(name, personName, theme)}
+                  style={getStyles(name, access, theme)}
                 >
                   {name}
                 </MenuItem>
               ))}
-            </Select>
+            </Select> */}
           </FormControl>
-          <Box sx={{ ml: 1, mt: 4 }}>
+          {/* <Box sx={{ ml: 1, mt: 4 }}>
         {errors.Access?.type === "required" && "Access Level Required"}
         <small>
           {accessError && (
@@ -203,7 +219,7 @@ export default function SetAccessLevel() {
             </div>
           )}
         </small>
-        </Box>
+        </Box> */}
         </div>
         <Button
           variant="primary"
@@ -218,8 +234,9 @@ export default function SetAccessLevel() {
             mt: 6,
           }}
           onClick={() => {
-            accessValidation();
+            // accessValidation();
             toAccess();
+            // setError(!selectedValue)
           }}
         >
           Update

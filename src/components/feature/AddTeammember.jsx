@@ -64,7 +64,7 @@ const style = {
 
 export default function Addteammember() {
   // const { user, getAccessTokenSilently } = useAuth0();
-  const url = process.env.REACT_APP_BASE_URL + "/people/";
+  const url = process.env.REACT_APP_BASE_URL + "/people";
   const [firstName, setFirstName] = useState("");
   const [firstNameError, setFirstNameError] = useState("");
   const [lastName, setLastName] = useState("");
@@ -175,11 +175,12 @@ export default function Addteammember() {
     ) {
       try {
         console.log("Token is",token);
-        debugger;
+        
         const resp = await axios
           // const instance = axios.create(
           .post(
-            url,
+            url, JSON.stringify(resp),
+            { headers: { "Content-Type": "application/json", Authorization: `Bearer + ${token}` } },
             {
               first_name: firstName,
               last_name: lastName,
@@ -187,11 +188,12 @@ export default function Addteammember() {
               // email: email,
               // accessLevel: accessLevel,
             },
-            { headers: { Authorization: `Bearer + ${token}` } }
+            
           )
 
           .then((response) => {
             console.log("People API was hit successfully");
+            console.log(response.data);
             // localStorage.setItem("auth", response.data.authenticated);
 
             navigate("/people");
