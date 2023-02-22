@@ -11,8 +11,9 @@ import CloseIcon from "@mui/icons-material/Close";
 import Typography from "@mui/material/Typography";
 import "../../style/SetAccesslevel.css";
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
+import axios from "axios";
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -49,17 +50,22 @@ const style = {
 };
 
 export default function SetAccessLevel() {
+  const url = process.env.REACT_APP_BASE_URL + "/enums"
   const [state, setState] = React.useState({ data: "" });
   const [access, setAccess] = React.useState("");
+  const [accessList, setAccessList] = React.useState([{"name": "", "id":""}]);
+
 
   const [error, setError] = React.useState(null);
   const [accessError, setAccessError] = useState("");
 
   const accessValidation = () => {
     if (access == "") {
-      setAccessError("Please enter a business name");
+      setAccessError("Please enter access level");
     } else setAccessError("");
   };
+
+
 
   const {
     register,
@@ -67,14 +73,29 @@ export default function SetAccessLevel() {
   } = useForm();
 
   const navigate = useNavigate();
+  const token = localStorage.getItem("token");
 
-  const toPeople = (e) => {
+  let data = null;
+
+  useEffect(()=> {
+    const fetchData = async () =>{
+      const {data} = await axios.get(url, { headers: { Authorization: `Bearer + ${token}` } });
+      console.log(data.data);
+      debugger
+      setAccessList(JSON.parse(JSON.stringify(data.data)));
+    }; 
+    fetchData();
+    data = accessList;
+  }, [])
+  Object.values(accessList).map((i) => console.log(i.name));
+
+  const toAccess = (e) => {
     if (access !== "") {
       console.log("Data Found");
       setError(false);
       console.log(access);
 
-      navigate("/people", {
+      navigate("/employment", {
         state: {
           access: access,
         },
@@ -84,6 +105,8 @@ export default function SetAccessLevel() {
       setState({ data: e.target.value });
     }
   };
+  
+
 
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => {
@@ -114,7 +137,7 @@ export default function SetAccessLevel() {
 
   return (
     <React.Fragment>
-      <Box sx={{ ...style, width: 350, height: 230 }}>
+      <Box sx={{ ...style, width: 350, height: 280 }}>
         <CloseIcon onClick={handleClose} sx={{ float: "right" }}></CloseIcon>
         <Typography
           variant="h5"
@@ -167,6 +190,20 @@ export default function SetAccessLevel() {
               ))}
             </Select>
           </FormControl>
+          <Box sx={{ ml: 1, mt: 4 }}>
+        {errors.Access?.type === "required" && "Access Level Required"}
+        <small>
+          {accessError && (
+            <div
+              style={{
+                color: "red",
+              }}
+            >
+              {accessError}
+            </div>
+          )}
+        </small>
+        </Box>
         </div>
         <Button
           variant="primary"
@@ -182,7 +219,7 @@ export default function SetAccessLevel() {
           }}
           onClick={() => {
             accessValidation();
-            toPeople();
+            toAccess();
           }}
         >
           Update

@@ -40,19 +40,19 @@ export default function SetAgreedhours() {
 
   const workPeriodValidation = () => {
     if (workPeriod == "") {
-      setWorkPeriodError("Please enter a business name");
+      setWorkPeriodError("Please enter work period length");
     } else setWorkPeriodError("");
   };
 
   const netWorkPeriodValidation = () => {
     if (netWorkPeriod == "") {
-      setNetWorkPeriodError("Please enter your mobile number");
+      setNetWorkPeriodError("Please enter start day");
     } else setNetWorkPeriodError("");
   };
 
   const hoursValidation = () => {
     if (hours == "") {
-      setHoursError("Please describe your business type");
+      setHoursError("Please enter hours per work period");
     } else setHoursError("");
   };
 
@@ -96,8 +96,8 @@ export default function SetAgreedhours() {
         sx={{
           ...style,
           width: 450,
-          height: 660,
-          mt: 10,
+          height: 730,
+          mt: 12,
         }}
       >
         <Box className="flex flex-row" sx={{ width: "450px" }}>
@@ -175,6 +175,7 @@ export default function SetAgreedhours() {
               />
             </RadioGroup>
           </FormControl>
+          <Box sx={{ ml: 3, mt: 1, mb: 1 }}>
           {errors.workPeriod?.type === "required" && "Work Period Required"}
           <small>
             {workPeriodError && (
@@ -187,6 +188,7 @@ export default function SetAgreedhours() {
               </div>
             )}
           </small>
+          </Box>
           <Typography
             sx={{
               ml: "20px",
@@ -223,6 +225,7 @@ export default function SetAgreedhours() {
               <FormControlLabel value="Sun" control={<Radio />} label="Sun" />
             </RadioGroup>
           </FormControl>
+          <Box sx={{ ml: 3, mt: 1 }}>
           {errors.netWorkPeriod?.type === "required" && "Work Period Required"}
           <small>
             {netWorkPeriodError && (
@@ -235,7 +238,7 @@ export default function SetAgreedhours() {
               </div>
             )}
           </small>
-
+          </Box>
           <Typography
             sx={{ fontWeight: "bold", pt: "15px", pb: "20px", ml: 3 }}
           >
@@ -249,6 +252,7 @@ export default function SetAgreedhours() {
             onChange={(e) => setHours(e.target.value)}
           ></TextField>
         </div>
+        <Box sx={{ ml: 3, mt: 1 }}>
         {errors.hours?.type === "required" && "Work Period Required"}
         <small>
           {hoursError && (
@@ -261,6 +265,7 @@ export default function SetAgreedhours() {
             </div>
           )}
         </small>
+        </Box>
         <Button
           className="btn btn-primary"
           sx={{

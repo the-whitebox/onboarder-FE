@@ -9,6 +9,9 @@ import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import Typography from "@mui/material/Typography";
 import CloseIcon from "@mui/icons-material/Close";
+import { useNavigate } from "react-router-dom";
+import { useState } from "react";
+import { useForm } from "react-hook-form";
 
 const ITEM_HEIGHT = 40;
 const ITEM_PADDING_TOP = 45;
@@ -46,6 +49,12 @@ const style = {
 };
 
 export default function Addleaveentitlement() {
+  const [state, setState] = React.useState({ data: "" });
+  const [leave, setLeave] = React.useState("");
+
+  const [error, setError] = React.useState(null);
+  const [leaveError, setLeaveError] = useState("");
+
   function getStyles(name, personName, theme) {
     return {
       fontWeight:
@@ -67,6 +76,37 @@ export default function Addleaveentitlement() {
       typeof value === "string" ? value.split(",") : value
     );
   };
+
+  const leaveValidation = () => {
+    if (leave == "") {
+      setLeaveError("Please enter leave entitlement");
+    } else setLeaveError("");
+  };
+
+  const {
+    register,
+    formState: { errors },
+  } = useForm();
+
+  const navigate = useNavigate();
+
+  const toEmployment = (e) => {
+    if (leave !== "") {
+      console.log("Data Found");
+      setError(false);
+      console.log(leave);
+
+      navigate("/employment", {
+        state: {
+          leave: leave,
+        },
+      });
+    } else {
+      setError(true);
+      setState({ data: e.target.value });
+    }
+  };
+
 
   return (
     <React.Fragment>
@@ -96,12 +136,13 @@ export default function Addleaveentitlement() {
             }}
           >
             <Select
+            {...register("Leave Entitlement", { required: true })}
+            onChange={(e) => setLeave(e.target.value)}
               sx={{ borderRadius: "7px" }}
               size="small"
               multiple
               displayEmpty
               value={personName}
-              onChange={handleChange}
               input={<OutlinedInput />}
               renderValue={(selected) => {
                 if (selected.length === 0) {
@@ -124,6 +165,20 @@ export default function Addleaveentitlement() {
               ))}
             </Select>
           </FormControl>
+          <Box sx={{ ml: 1, mt: 1 }}>
+        {errors.LeaveEntitlement?.type === "required" && "Leave Entitlement Required"}
+        <small>
+          {leaveError && (
+            <div
+              style={{
+                color: "red",
+              }}
+            >
+              {leaveError}
+            </div>
+          )}
+        </small>
+        </Box>
         </div>
         <Button
           variant="primary"
@@ -134,6 +189,11 @@ export default function Addleaveentitlement() {
             width: "18%",
             mt: "90px",
             textTransform: "none",
+          }}
+          onClick={() => {
+           
+            leaveValidation();
+            toEmployment();
           }}
         >
           Add

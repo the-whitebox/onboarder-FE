@@ -7,6 +7,9 @@ import Typography from "@mui/material/Typography";
 import InfoIcon from "@mui/icons-material/Info";
 import TextField from "@mui/material/TextField";
 import CloseIcon from "@mui/icons-material/Close";
+import { useNavigate } from "react-router-dom";
+import { useState } from "react";
+import { useForm } from "react-hook-form";
 
 const style = {
   position: "absolute",
@@ -22,12 +25,50 @@ const style = {
 };
 
 export default function SetStandardHours() {
+  const [state, setState] = React.useState({ data: "" });
+  const [hours, setHours] = React.useState("");
   const [open, setOpen] = React.useState(false);
+
+  const [error, setError] = React.useState(null);
+  const [hoursError, setHoursError] = useState("");
+
+  const hoursValidation = () => {
+    if (hours == "") {
+      setHoursError("Please enter hours per work period");
+    } else setHoursError("");
+  };
+
+  const {
+    register,
+    formState: { errors },
+  } = useForm();
+
+  const navigate = useNavigate();
+
+
+
   const handleOpen = () => {
     setOpen(true);
   };
   const handleClose = () => {
     setOpen(false);
+  };
+
+  const toEmployment = (e) => {
+    if (hours !== "") {
+      console.log("Data Found");
+      setError(false);
+      console.log(hours);
+
+      navigate("/employment", {
+        state: {
+          hours: hours,
+        },
+      });
+    } else {
+      setError(true);
+      setState({ data: e.target.value });
+    }
   };
 
   return (
@@ -66,7 +107,23 @@ export default function SetStandardHours() {
             size="small"
             color="warning"
             sx={{ width: 300, ml: "8px" }}
+            {...register("Work Period", { required: true })}
+            onChange={(e) => setHours(e.target.value)}
           ></TextField>
+          <Box sx={{ ml: 1, mt: 1 }}>
+        {errors.hours?.type === "required" && "Work Period Required"}
+        <small>
+          {hoursError && (
+            <div
+              style={{
+                color: "red",
+              }}
+            >
+              {hoursError}
+            </div>
+          )}
+        </small>
+        </Box>
 
           <Typography sx={{ fontSize: "12px", ml: "10px", mt: "10px" }}>
             Not applicable to 2 Team members selected as they do not a pay rate
@@ -81,6 +138,11 @@ export default function SetStandardHours() {
             borderRadius: "6px",
             width: "22%",
             textTransform: "none",
+          }}
+          onClick={() => {
+           
+            hoursValidation();
+            toEmployment();
           }}
         >
           Save

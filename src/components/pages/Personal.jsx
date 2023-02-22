@@ -312,8 +312,22 @@ export default function Personal() {
                 {...register("Email", { required: true })}
                 onChange={(e) => setEmail(e.target.value)}
               />
+            
             </Box>
-
+            <Box sx={{ ml: 24, mt: 1 }}>
+            {errors.Email?.type === "required" && "Email Required"}
+              <small>
+                {emailError && (
+                  <div
+                    style={{
+                      color: "red",
+                    }}
+                  >
+                    {emailError}
+                  </div>
+                )}
+              </small>
+              </Box>
             <br />
             <Box className="flex flex-row ">
               <Typography
@@ -339,6 +353,20 @@ export default function Personal() {
                 onChange={(e) => setMobile(e.target.value)}
               />
             </Box>
+            <Box sx={{ ml: 24, mt: 1 }}>
+            {errors.Mobile?.type === "required" && "Mobile Required"}
+              <small>
+                {mobileError && (
+                  <div
+                    style={{
+                      color: "red",
+                    }}
+                  >
+                    {mobileError}
+                  </div>
+                )}
+              </small>
+              </Box>
             <br />
             <Box className="flex flex-row ">
               <Typography
@@ -364,6 +392,20 @@ export default function Personal() {
                 onChange={(e) => setAddress(e.target.value)}
               />
             </Box>
+            <Box sx={{ ml: 24, mt: 1 }}>
+            {errors.Address?.type === "required" && "Address Required"}
+              <small>
+                {addressError && (
+                  <div
+                    style={{
+                      color: "red",
+                    }}
+                  >
+                    {addressError}
+                  </div>
+                )}
+              </small>
+              </Box>
             <br />
             <Box className="flex flex-row ">
               <Typography
@@ -389,6 +431,20 @@ export default function Personal() {
                 onChange={(e) => setPostcode(e.target.value)}
               />
             </Box>
+            <Box sx={{ ml: 24, mt: 1 }}>
+            {errors.Postcode?.type === "required" && "Postcode Required"}
+              <small>
+                {postcodeError && (
+                  <div
+                    style={{
+                      color: "red",
+                    }}
+                  >
+                    {postcodeError}
+                  </div>
+                )}
+              </small>
+              </Box>
             <br />
             <Box className="flex flex-row ">
               <Typography
@@ -414,6 +470,20 @@ export default function Personal() {
                 onChange={(e) => setCity(e.target.value)}
               />
             </Box>
+            <Box sx={{ ml: 24, mt: 1 }}>
+            {errors.City?.type === "required" && "City Required"}
+              <small>
+                {cityError && (
+                  <div
+                    style={{
+                      color: "red",
+                    }}
+                  >
+                    {cityError}
+                  </div>
+                )}
+              </small>
+              </Box>
             <br />
             <Box className="flex flex-row ">
               <Typography
@@ -439,6 +509,20 @@ export default function Personal() {
                 onChange={(e) => setCityState(e.target.value)}
               />
             </Box>
+            <Box sx={{ ml: 24, mt: 1 }}>
+            {errors.CityState?.type === "required" && "Email Required"}
+              <small>
+                {cityStateError && (
+                  <div
+                    style={{
+                      color: "red",
+                    }}
+                  >
+                    {cityStateError}
+                  </div>
+                )}
+              </small>
+              </Box>
             <br />
             <Box className="flex flex-row ">
               <Typography
@@ -465,6 +549,20 @@ export default function Personal() {
                 onChange={(e) => setCountry(e.target.value)}
               />
             </Box>
+            <Box sx={{ ml: 24, mt: 1 }}>
+            {errors.Country?.type === "required" && "Email Required"}
+              <small>
+                {countryError && (
+                  <div
+                    style={{
+                      color: "red",
+                    }}
+                  >
+                    {countryError}
+                  </div>
+                )}
+              </small>
+              </Box>
             <br />
             <Box className="flex flex-row ">
               <Typography
@@ -491,6 +589,20 @@ export default function Personal() {
                 onChange={(e) => setContactName(e.target.value)}
               />
             </Box>
+            <Box sx={{ ml: 24, mt: 1 }}>
+            {errors.EmergencyContact?.type === "required" && "Emergency Contact Name Required"}
+              <small>
+                {contactNameError && (
+                  <div
+                    style={{
+                      color: "red",
+                    }}
+                  >
+                    {contactNameError}
+                  </div>
+                )}
+              </small>
+              </Box>
             <br />
             <Box className="flex flex-row">
               <Typography
@@ -518,6 +630,9 @@ export default function Personal() {
                   onChange={(e) => setContactNumber(e.target.value)}
                 />
               </Box>
+              <br />
+              
+              
               <Grid
                 container
                 sx={{
@@ -535,6 +650,20 @@ export default function Personal() {
                 </Avatar>
               </Grid>
             </Box>
+            <Box sx={{ ml: 25, mt: 0 }}>
+                {errors.EmergencyContactNumber?.type === "required" && "Emergency Contact Number Required"}
+              <small>
+                {contactNumberError && (
+                  <div
+                    style={{
+                      color: "red",
+                    }}
+                  >
+                    {contactNumberError}
+                  </div>
+                )}
+              </small>
+              </Box>
           </Box>
         </Grid>
       </Grid>

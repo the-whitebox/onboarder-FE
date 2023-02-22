@@ -13,6 +13,10 @@ import Select from "@mui/material/Select";
 import { useTheme } from "@mui/material/styles";
 import CloseIcon from "@mui/icons-material/Close";
 import "../../style/Setpayrates.css";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import { useForm } from "react-hook-form";
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -50,8 +54,70 @@ function getStyles(name, personName, theme) {
 }
 
 export default function Setpayrates() {
+
   const theme = useTheme();
   const [personName, setPersonName] = React.useState([]);
+  const url = process.env.REACT_APP_BASE_URL + "/people";
+  const [state, setState] = React.useState({ data: "" });
+  const [payRates, setPayRates] = useState("");
+  const [mondays, setMondays] = useState("");
+  const [tuesdays, setTuesdays] = useState("");
+  const [wednesdays, setWednesdays] = useState("");
+  const [thursdays, setThursdays] = useState("");
+  const [fridays, setFridays] = useState("");
+
+  const [error, setError] = React.useState(null);
+  const [payRatesError, setPayRatesError] = useState("");
+  const [mondaysError, setMondaysError] = useState("");
+  const [tuesdaysError, setTuesdaysError] = useState("");
+  const [wednesdaysError, setWednesdaysError] = useState("");
+  const [thursdaysError, setThursdaysError] = useState("");
+  const [fridaysError, setFridaysError] = useState("");
+
+  const navigate = useNavigate();
+
+  const payRatesValidation = () => {
+    if (payRates == "") {
+      setPayRatesError("Please enter pay rates");
+    } else setPayRatesError("");
+  };
+
+  const mondaysValidation = () => {
+    if (mondays == "") {
+      setMondaysError("Please enter mondays rates");
+    } else setMondaysError("");
+  };
+
+  const tuesdaysValidation = () => {
+    if (tuesdays == "") {
+      setTuesdaysError("Please enter tuesdays rates");
+    } else setTuesdaysError("");
+  };
+
+  const wednesdaysValidation = () => {
+    if (wednesdays == "") {
+      setWednesdaysError("Please enter wednesdays rates");
+    } else setWednesdaysError("");
+  };
+
+  const thursdaysValidation = () => {
+    if (thursdays == "") {
+      setThursdaysError("Please enter thursdays rates");
+    } else setThursdaysError("");
+  };
+
+  const fridaysValidation = () => {
+    if (fridays == "") {
+      setFridaysError("Please enter fridays rates");
+    } else setFridaysError("");
+  };
+
+  const {
+    register,
+    formState: { errors },
+  } = useForm();
+
+
 
   const handleChange = (event) => {
     const {
@@ -71,9 +137,52 @@ export default function Setpayrates() {
     setOpen(false);
   };
 
+  const payRatesDetails = (e) => {
+    console.log("Inside Pay Rates");
+    console.log(payRates, mondays, tuesdays, wednesdays, thursdays, fridays); ;
+    if (
+      payRates !== "" &&
+      mondays !== "" &&
+      tuesdays !== "" &&
+      wednesdays!== "" &&
+      thursdays!== "" &&
+      fridays!== ""
+      
+    ) {
+      console.log("Data Found");
+      setError(false);
+      console.log(
+        payRates, mondays, tuesdays, wednesdays, thursdays, fridays
+      );
+      try {
+        axios
+          .post(url, {
+            pay_rates: payRates,
+            mondays: mondays,
+            tuesdays: tuesdays,
+            wednesdays: wednesdays,
+            thursdays: thursdays,
+            fridays: fridays,
+            
+            
+          })
+          .then((response) => {
+            console.log("Pay Rates API was hit successfully");
+            console.log(response);
+          });
+      } catch (error) {
+        console.log(error.response.data);
+      }
+      console.log(payRates, mondays, tuesdays);
+    } else {
+      setError(true);
+      setState({ data: e.target.value });
+    }
+  };
+
   return (
     <React.Fragment>
-      <Box sx={{ ...style, width: 400, height: 770, mt: 10 }}>
+      <Box sx={{ ...style, width: 400, height: 930, mt: 25 }}>
         <Box className="flex flex-row" sx={{ width: "420px" }}>
           <h2>Set Pay rates</h2>
 
@@ -143,6 +252,20 @@ export default function Setpayrates() {
               ))}
             </Select>
           </FormControl>
+          <Box sx={{ ml: 2, mt: 1 }}>
+            {errors.PayRates?.type === "required" && "Pay Rates Required"}
+              <small>
+                {payRatesError && (
+                  <div
+                    style={{
+                      color: "red",
+                    }}
+                  >
+                    {payRatesError}
+                  </div>
+                )}
+              </small>
+              </Box>
           <Box sx={{ ml: "12px" }}>
             <Typography
               sx={{
@@ -171,6 +294,20 @@ export default function Setpayrates() {
                 }}
               />
             </FormControl>
+            <Box sx={{ ml: 1, mt: 1 }}>
+            {errors.Mondays?.type === "required" && "Mondays Rates Required"}
+              <small>
+                {mondaysError && (
+                  <div
+                    style={{
+                      color: "red",
+                    }}
+                  >
+                    {mondaysError}
+                  </div>
+                )}
+              </small>
+              </Box>
             <Typography
               sx={{
                 ml: "7px",
@@ -198,6 +335,20 @@ export default function Setpayrates() {
                 }}
               />
             </FormControl>
+            <Box sx={{ ml: 1, mt: 1 }}>
+            {errors.Tuesdays?.type === "required" && "Mondays Rates Required"}
+              <small>
+                {tuesdaysError && (
+                  <div
+                    style={{
+                      color: "red",
+                    }}
+                  >
+                    {tuesdaysError}
+                  </div>
+                )}
+              </small>
+              </Box>
             <Typography
               sx={{
                 ml: "7px",
@@ -225,6 +376,20 @@ export default function Setpayrates() {
                 }}
               />
             </FormControl>
+            <Box sx={{ ml: 1, mt: 1 }}>
+            {errors.Wednesdays?.type === "required" && "Wednesdays Rates Required"}
+              <small>
+                {wednesdaysError && (
+                  <div
+                    style={{
+                      color: "red",
+                    }}
+                  >
+                    {wednesdaysError}
+                  </div>
+                )}
+              </small>
+              </Box>
             <Typography
               sx={{
                 ml: "7px",
@@ -252,6 +417,20 @@ export default function Setpayrates() {
                 }}
               />
             </FormControl>
+            <Box sx={{ ml: 1, mt: 1 }}>
+            {errors.Thursdays?.type === "required" && "Thursdays Rates Required"}
+              <small>
+                {thursdaysError && (
+                  <div
+                    style={{
+                      color: "red",
+                    }}
+                  >
+                    {thursdaysError}
+                  </div>
+                )}
+              </small>
+              </Box>
             <Typography
               sx={{
                 ml: "7px",
@@ -279,6 +458,20 @@ export default function Setpayrates() {
                 }}
               />
             </FormControl>
+            <Box sx={{ ml: 1, mt: 1 }}>
+            {errors.Fridays?.type === "required" && "Fridays Rates Required"}
+              <small>
+                {fridaysError && (
+                  <div
+                    style={{
+                      color: "red",
+                    }}
+                  >
+                    {fridaysError}
+                  </div>
+                )}
+              </small>
+              </Box>
           </Box>
         </div>
         <Button
@@ -290,6 +483,16 @@ export default function Setpayrates() {
             borderRadius: "8px",
             width: "10%",
             textTransform: "none",
+          }}
+          onClick={(e) => {
+            payRatesValidation();
+            mondaysValidation();
+            tuesdaysValidation();
+            wednesdaysValidation();
+            thursdaysValidation();
+            fridaysValidation();
+            payRatesDetails(e);
+            
           }}
         >
           Save

@@ -95,6 +95,8 @@ export default function SignInSide() {
           )
           .then((response) => {
             console.log("Login API was hit successfully");
+            console.log(response.data);
+            localStorage.setItem("token", response.data.access_token);
             navigate("/people");
             // Navigate to Home Screen
           });

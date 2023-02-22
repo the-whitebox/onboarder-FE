@@ -11,6 +11,10 @@ import Typography from "@mui/material/Typography";
 import InfoIcon from "@mui/icons-material/Info";
 import CloseIcon from "@mui/icons-material/Close";
 import "../../style/SetStress.css";
+import { useNavigate } from "react-router-dom";
+import { useState } from "react";
+import { useForm } from "react-hook-form";
+
 
 const ITEM_HEIGHT = 50;
 const ITEM_PADDING_TOP = 8;
@@ -51,7 +55,26 @@ const style = {
 };
 
 export default function SetStressProfile() {
+  const [state, setState] = React.useState({ data: "" });
+  const [stress, setStress] = React.useState("");
   const [open, setOpen] = React.useState(false);
+
+  const [error, setError] = React.useState(null);
+  const [stressError, setStressError] = React.useState("");
+
+  const stressValidation = () => {
+    if (stress == "") {
+      setStressError("Please enter stress profile");
+    } else setStressError("");
+  };
+
+  const {
+    register,
+    formState: { errors },
+  } = useForm();
+
+  const navigate = useNavigate();
+
   const handleOpen = () => {
     setOpen(true);
   };
@@ -79,6 +102,23 @@ export default function SetStressProfile() {
       // On autofill we get a stringified value.
       typeof value === "string" ? value.split(",") : value
     );
+  };
+
+  const toEmployment = (e) => {
+    if (stress !== "") {
+      console.log("Data Found");
+      setError(false);
+      console.log(stress);
+
+      navigate("/employment", {
+        state: {
+          stress: stress
+        },
+      });
+    } else {
+      setError(true);
+      setState({ data: e.target.value });
+    }
   };
 
   return (
@@ -125,11 +165,12 @@ export default function SetStressProfile() {
               Stress Profile{" "}
             </Typography>
             <Select
+             {...register("Stress Profile", { required: true })}
+             onChange={(e) => setStress(e.target.value)}
               sx={{ borderRadius: "10px" }}
               multiple
               displayEmpty
               value={personName}
-              onChange={handleChange}
               input={<OutlinedInput />}
               renderValue={(selected) => {
                 if (selected.length === 0) {
@@ -150,8 +191,23 @@ export default function SetStressProfile() {
                   {name}
                 </MenuItem>
               ))}
+             
             </Select>
           </FormControl>
+          <Box sx={{ ml: 1, mt: 1 }}>
+        {errors.Stress?.type === "required" && "Stress Profile Required"}
+        <small>
+          {stressError && (
+            <div
+              style={{
+                color: "red",
+              }}
+            >
+              {stressError}
+            </div>
+          )}
+        </small>
+        </Box>
         </div>
         <Button
           className="Btn"
@@ -160,6 +216,11 @@ export default function SetStressProfile() {
             ml: 42,
             width: 80,
             textTransform: "none",
+          }}
+          onClick={() => {
+           
+            stressValidation();
+            toEmployment();
           }}
         >
           Save

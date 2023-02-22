@@ -19,6 +19,8 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useForm } from "react-hook-form";
+// import { useEffect } from "react";
+// import { useAuth0, withAuthenticationRequired } from "@auth0/auth0-react"
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -61,6 +63,7 @@ const style = {
 };
 
 export default function Addteammember() {
+  // const { user, getAccessTokenSilently } = useAuth0();
   const url = process.env.REACT_APP_BASE_URL + "/people/";
   const [firstName, setFirstName] = useState("");
   const [firstNameError, setFirstNameError] = useState("");
@@ -171,6 +174,8 @@ export default function Addteammember() {
       // accessLevelError === ""
     ) {
       try {
+        console.log("Token is",token);
+        debugger;
         const resp = await axios
           // const instance = axios.create(
           .post(
@@ -182,7 +187,7 @@ export default function Addteammember() {
               // email: email,
               // accessLevel: accessLevel,
             },
-            { headers: { Authorization: `Bearer ${token}` } }
+            { headers: { Authorization: `Bearer + ${token}` } }
           )
 
           .then((response) => {
@@ -196,6 +201,25 @@ export default function Addteammember() {
       }
     }
   };
+  
+  // useEffect(() => {
+  //   const resp = async () => {
+  //     try {
+  //       const accessToken = await getAccessTokenSilently();
+  //       const data = await axios.post(url, {
+  //         headers: {
+  //           Authorization: `bearer ${accessToken}`
+  //         }
+  //       });
+  //       resp(data);
+  //     } catch (e) {
+  //       console.log(e.message);
+  //     }
+  //   };
+  
+  //   resp();
+  // }, []);
+  // }
 
   const theme = useTheme();
   const [personName, setPersonName] = React.useState([]);

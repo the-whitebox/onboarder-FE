@@ -26,6 +26,9 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import Modal from "@mui/material/Modal";
 import AddLeaveEntitlementModalBody from "../feature/Addleaveentitlement";
 import AddLocationModalBody from "../feature/Addlocation";
+import { useNavigate } from "react-router-dom";
+import { useState } from "react";
+import { useForm } from "react-hook-form";
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -47,7 +50,36 @@ const names = [
 ];
 
 export default function EmploymentDetails() {
+  const [state, setState] = React.useState({ data: "" });
+  const [access, setAccess] = React.useState("");
+  const [employment, setEmployment] = React.useState("");
+  const [payRate, setPayRate] = useState("");
+
   const [open, setOpen] = React.useState(false);
+
+  const [error, setError] = React.useState(null);
+  const [accessError, setAccessError] = useState("");
+  const [payRateError, setPayRateError] = useState("");
+  const [employmentError, setEmploymentError] = React.useState("");
+
+  const accessValidation = () => {
+    if (access == "") {
+      setAccessError("Please enter access level");
+    } else setAccessError("");
+  };
+
+  const payRateValidation = () => {
+    if (payRate == "") {
+      setPayRateError("Please enter pay rates");
+    } else setPayRateError("");
+  };
+
+  const employmentValidation = () => {
+    if (employment == "") {
+      setEmploymentError("Please enter access level");
+    } else setEmploymentError("");
+  };
+
   const handleOpen = () => {
     setOpen(true);
   };
@@ -84,6 +116,32 @@ export default function EmploymentDetails() {
 
   const handleOnChange = (newValue) => {
     setDate(newValue);
+  };
+
+  const {
+    register,
+    formState: { errors },
+  } = useForm();
+
+  const navigate = useNavigate();
+
+  const toEmployment = (e) => {
+    if (access !== "" && employment !== "" && payRate !== "") {
+      console.log("Data Found");
+      setError(false);
+      console.log(access, employment, payRate);
+
+      navigate("/employment_details", {
+        state: {
+          access: access,
+          employment: employment,
+          payRate: payRate,
+        },
+      });
+    } else {
+      setError(true);
+      setState({ data: e.target.value });
+    }
   };
 
   return (
@@ -168,6 +226,11 @@ export default function EmploymentDetails() {
                   color: "#ffffff",
                   ml: 80,
                 }}
+                onClick={() => {
+                  accessValidation();
+                  payRateValidation();
+                  toEmployment();
+                }}
               >
                 Save
               </Button>
@@ -214,11 +277,12 @@ export default function EmploymentDetails() {
               </Typography>
               <FormControl sx={{ pl: 4, m: 1, width: 300, mt: 3 }}>
                 <Select
+                {...register("Access Level", { required: true })}
+                onChange={(e) => setAccess(e.target.value)}
                   multiple
                   size="small"
                   displayEmpty
                   value={personName}
-                  onChange={handleChange}
                   input={<OutlinedInput />}
                   renderValue={(selected) => {
                     if (selected.length === 0) {
@@ -242,6 +306,20 @@ export default function EmploymentDetails() {
                 </Select>
               </FormControl>
             </Box>
+            <Box sx={{ ml: 24, mt: 1 }}>
+        {errors.Access?.type === "required" && "Access Level Required"}
+        <small>
+          {accessError && (
+            <div
+              style={{
+                color: "red",
+              }}
+            >
+              {accessError}
+            </div>
+          )}
+        </small>
+        </Box>
             <Box sx={{ pt: 2, pb: 2, pl: 2 }}>
               <Typography paragraph>
                 A set of permissions that control <br /> what a team member can
@@ -316,6 +394,7 @@ export default function EmploymentDetails() {
               }}
             >
               <PayRate />
+             
               <Grid
                 container
                 sx={{
