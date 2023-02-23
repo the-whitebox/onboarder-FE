@@ -14,39 +14,37 @@ import "../../style/General.css";
 export default function Personal() {
   return (
     <>
-      <Grid sx={{ display: "flex" }}>
+      <Grid
+        sx={{
+          display: "flex",
+        }}
+      >
+        <CssBaseline />
         <Grid
-          container
-          component="main"
-          sx={{ height: "100vh", width: "240px" }}
+          className="max-width"
+          // item
+          // xs={false}
+          // sm={4}
+          // md={6}
+          sx={{
+            minHeight: "100vh",
+            backgroundColor: "#38b492",
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "start",
+            alignItems: "center",
+          }}
         >
-          <CssBaseline />
-          <Grid
-            className="max-width"
-            item
-            xs={false}
-            sm={4}
-            md={6}
+          <Avatar
+            src={MaxPilotLogo}
+            aria-label="Busy Man"
             sx={{
-              backgroundColor: "#38b492",
-              display: "flex",
-              flexDirection: "column",
-              justifyContent: "start",
-              alignItems: "center",
+              height: "10vh",
+              width: "200px",
             }}
-          >
-            <Grid>
-              <Avatar
-                src={MaxPilotLogo}
-                aria-label="Busy Man"
-                sx={{
-                  height: "16vh",
-                  width: "230px",
-                }}
-              />
-            </Grid>
-          </Grid>
+          />
         </Grid>
+
         <Grid>
           <Box
             sx={{
@@ -328,35 +326,28 @@ export default function Personal() {
               >
                 Emergency phone number
               </Typography>
-              <Box sx={{ width: 50, pl: 1 }}>
-                <TextField
-                  id="outlined-basic"
-                  label=""
-                  variant="outlined"
-                  size="small"
-                  sx={{
-                    width: "300px",
-                    mr: 60,
-                  }}
-                />
-              </Box>
-              <Grid
-                container
+
+              <TextField
+                id="outlined-basic"
+                label=""
+                variant="outlined"
+                size="small"
                 sx={{
-                  pl: 10,
-                  display: "flex",
-                  alignItems: "end",
-                  justifyContent: "end",
+                  width: "300px",
+                  mr: 60,
                 }}
-              >
-                <Avatar
-                  className="messageCircle"
-                  sx={{ backgroundColor: "#38b492" }}
-                >
-                  <TbMessageCircle />
-                </Avatar>
-              </Grid>
+              />
             </Box>
+
+            <Avatar
+              className="messageCircle"
+              sx={{
+                backgroundColor: "#38b492",
+                ml: "90%",
+              }}
+            >
+              <TbMessageCircle />
+            </Avatar>
           </Box>
         </Grid>
       </Grid>

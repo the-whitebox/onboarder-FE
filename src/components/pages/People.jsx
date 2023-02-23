@@ -6,7 +6,8 @@ import Typography from "@mui/material/Typography";
 import MenuItem from "@mui/material/MenuItem";
 import CssBaseline from "@mui/material/CssBaseline";
 import { styled, alpha } from "@mui/material/styles";
-import VerticalMenu from "../feature/VerticalMenu";
+import MaxPilotLogo from "../../assets/images/maxpilot-logo-w.png";
+import Grid from "@mui/material/Grid";
 import InputLabel from "@mui/material/InputLabel";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
@@ -26,6 +27,7 @@ import AddTeammemberModalBody from "../feature/AddTeammember";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import axios from "axios";
 import Avatar from "@mui/material/Avatar";
+import { MoreVert } from "../feature/MoreVert";
 
 const theme = createTheme();
 
@@ -72,12 +74,12 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 const drawerWidth = 240;
 
 const columns = [
-  { field: "name", headerName: "Name", width: 150 },
-  { field: "access", headerName: "Access", width: 200 },
-  { field: "location", headerName: "Main Location", width: 250 },
-  { field: "status", headerName: "Status", width: 150 },
-  { field: "email", headerName: "Email", width: 220 },
-  { field: "mobile", headerName: "Mobile", width: 150 },
+  { field: "name", headerName: "Name", minWidth: 100, flex: 1 },
+  { field: "access", headerName: "Access", minWidth: 100, flex: 1 },
+  { field: "location", headerName: "Main Location", minWidth: 100, flex: 1 },
+  { field: "status", headerName: "Status", minWidth: 100, flex: 1 },
+  { field: "email", headerName: "Email", minWidth: 100, flex: 1 },
+  { field: "mobile", headerName: "Mobile", minWidth: 100, flex: 1 },
   {
     field: "action",
     headerName: "Action",
@@ -90,7 +92,9 @@ const columns = [
 
       return (
         <Avatar sx={{ backgroundColor: "#38B492", color: "#ffffff" }}>
-          <MoreVertIcon />
+          <MoreVertIcon>
+            <MoreVert />
+          </MoreVertIcon>
         </Avatar>
       );
     },
@@ -160,7 +164,18 @@ export default function People() {
       >
         <AddTeammemberModalBody />
       </Modal>
-      <Box sx={{ display: "flex" }}>
+      <Box
+        sx={{
+          display: "flex",
+          // width: {
+          //   xs: 100,
+          //   sm: 600,
+          //   md: 900,
+          //   lg: 900,
+          //   xl: 1500,
+          // },
+        }}
+      >
         <CssBaseline />
         <AppBar
           style={{ background: "#ffffff", color: "black" }}
@@ -172,7 +187,6 @@ export default function People() {
         >
           <Box
             sx={{
-              border: "1px solid",
               height: 80,
               display: "flex",
               justifyContent: "center",
@@ -239,7 +253,23 @@ export default function People() {
             </Typography>
           </Box>
         </AppBar>
-        <VerticalMenu />
+        <Grid
+          sx={{
+            backgroundColor: "#38b492",
+            height: "100vh",
+          }}
+        >
+          <Avatar
+            src={MaxPilotLogo}
+            aria-label="Busy Man"
+            sx={{
+              height: "10vh",
+
+              width: "230px",
+            }}
+            variant="square"
+          />
+        </Grid>
 
         <Box
           component="main"
@@ -286,11 +316,13 @@ export default function People() {
           </Box>
           <Box
             sx={{
-              height: 400,
+              height: 350,
               width: "100%",
               ml: 2,
               mr: 40,
               pt: 0.5,
+              display: "flex",
+              flexGrow: 1,
             }}
           >
             <DataGrid
