@@ -1,6 +1,6 @@
 import * as React from "react";
 import Box from "@mui/material/Box";
-import Modal from "@mui/material/Modal";
+
 import Button from "@mui/material/Button";
 import { useTheme } from "@mui/material/styles";
 import OutlinedInput from "@mui/material/OutlinedInput";
@@ -8,7 +8,6 @@ import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import Typography from "@mui/material/Typography";
-import CloseIcon from "@mui/icons-material/Close";
 
 const ITEM_HEIGHT = 40;
 const ITEM_PADDING_TOP = 45;
@@ -71,7 +70,6 @@ export default function Addleaveentitlement() {
   return (
     <React.Fragment>
       <Box sx={{ ...style, width: 430, height: 380 }}>
-        <CloseIcon sx={{ float: "right" }}></CloseIcon>
         <Typography
           variant="h5"
           sx={{ fontWeight: "bold", paddingBottom: 1 }}

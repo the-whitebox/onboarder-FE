@@ -116,9 +116,8 @@ export default function EmploymentDetails() {
               className="max-width"
               item
               xs={false}
-              sm={4}
-              md={6}
               sx={{
+                minHeight: "100vh",
                 backgroundColor: "#38b492",
                 display: "flex",
                 flexDirection: "column",
@@ -208,7 +207,7 @@ export default function EmploymentDetails() {
                 Work Details
               </Typography>
             </Box>
-            <Box sx={{ display: "flex", pl: 2 }}>
+            <Box sx={{ display: "flex", flexDirection: "row", pl: 2 }}>
               <Typography variant="h6" fontWeight="Bold">
                 Access Level
               </Typography>

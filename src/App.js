@@ -58,7 +58,6 @@ function App() {
         <Route path="/employment_details" element={<EmploymentDetails />} />
         <Route path="/personal" element={<Personal />} />
         <Route path="/personal_details" element={<PersonalDetails />} />
-
         <Route path="/add" element={<AddNewPeople />} />
         <Route path="/new" element={<AddNewPeople />} />
 

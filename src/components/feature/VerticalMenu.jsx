@@ -57,7 +57,7 @@ export default function VerticalMenu(props) {
         width: "100%",
         maxWidth: 240,
         bgcolor: "#38B492",
-        height: "130vh",
+        minHeight: "100vh",
         color: "#ffffff",
       }}
     >
