@@ -114,7 +114,7 @@ export default function Addleaveentitlement() {
         <CloseIcon sx={{ float: "right" }}></CloseIcon>
         <Typography
           variant="h5"
-          sx={{ mt: 2, fontWeight: "bold", paddingBottom: 1 }}
+          sx={{ fontWeight: "bold", paddingBottom: 1 }}
           id="child-modal-title"
         >
           Add leave entitlement
