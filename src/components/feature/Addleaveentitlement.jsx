@@ -1,6 +1,6 @@
 import * as React from "react";
 import Box from "@mui/material/Box";
-import Modal from "@mui/material/Modal";
+
 import Button from "@mui/material/Button";
 import { useTheme } from "@mui/material/styles";
 import OutlinedInput from "@mui/material/OutlinedInput";
@@ -111,7 +111,6 @@ export default function Addleaveentitlement() {
   return (
     <React.Fragment>
       <Box sx={{ ...style, width: 430, height: 380 }}>
-        <CloseIcon sx={{ float: "right" }}></CloseIcon>
         <Typography
           variant="h5"
           sx={{ fontWeight: "bold", paddingBottom: 1 }}
