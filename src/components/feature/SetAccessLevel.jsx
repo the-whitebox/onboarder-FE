@@ -11,6 +11,7 @@ import CloseButton from "@mui/icons-material/Close";
 import Typography from "@mui/material/Typography";
 import "../../style/SetAccesslevel.css";
 import { useState } from "react";
+import { FormHelperText } from "@mui/material";
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -47,6 +48,11 @@ const style = {
 };
 
 export default function SetAccessLevel() {
+  const [state, setState] = React.useState({ data: "" });
+  const [access, setAccess] = React.useState("");
+  const [selectedValue, setSelectedValue] = useState("");
+  const [error, setError] = React.useState(null);
+
   function getStyles(name, personName, theme) {
     return {
       fontWeight:
@@ -57,7 +63,7 @@ export default function SetAccessLevel() {
   }
 
   const theme = useTheme();
-  // const [personName, setPersonName] = React.useState([]);
+  const [personName, setPersonName] = React.useState([]);
 
   const handleChange = (event) => {
     const {
@@ -76,6 +82,18 @@ export default function SetAccessLevel() {
   const [isOpen, setIsOpen] = useState(true);
   const toggleDropdown = () => {
     setIsOpen(!isOpen);
+  };
+
+  const toAccess = (e) => {
+    if (selectedValue !== "") {
+      console.log("Data Found");
+      setError(false);
+      console.log(selectedValue);
+    } 
+    else {
+      setError(true);
+      setState({ data: e.target.value });
+    }
   };
 
   return (

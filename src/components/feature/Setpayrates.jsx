@@ -226,7 +226,7 @@ export default function Setpayrates() {
               multiple
               displayEmpty
               value={personName}
-              onChange={handleChange}
+              // onChange={handleChange}
               input={<OutlinedInput />}
               renderValue={(selected) => {
                 if (selected.length === 0) {
@@ -237,6 +237,8 @@ export default function Setpayrates() {
               }}
               MenuProps={MenuProps}
               inputProps={{ "aria-label": "Without label" }}
+              {...register("Pay Rates", { required: true })}
+                onChange={(e) => setPayRates(e.target.value)}
             >
               <MenuItem disabled value="">
                 <em>Rates per Day</em>
@@ -292,6 +294,8 @@ export default function Setpayrates() {
                 inputProps={{
                   "aria-label": "weight",
                 }}
+                {...register("Mondays", { required: true })}
+                onChange={(e) => setMondays(e.target.value)}
               />
             </FormControl>
             <Box sx={{ ml: 1, mt: 1 }}>
@@ -333,10 +337,12 @@ export default function Setpayrates() {
                 inputProps={{
                   "aria-label": "weight",
                 }}
+                {...register("Tuesdays", { required: true })}
+                onChange={(e) => setTuesdays(e.target.value)}
               />
             </FormControl>
             <Box sx={{ ml: 1, mt: 1 }}>
-            {errors.Tuesdays?.type === "required" && "Mondays Rates Required"}
+            {errors.Tuesdays?.type === "required" && "Tuesdays Rates Required"}
               <small>
                 {tuesdaysError && (
                   <div
@@ -374,6 +380,8 @@ export default function Setpayrates() {
                 inputProps={{
                   "aria-label": "weight",
                 }}
+                {...register("Wednesdays", { required: true })}
+                onChange={(e) => setWednesdays(e.target.value)}
               />
             </FormControl>
             <Box sx={{ ml: 1, mt: 1 }}>
@@ -398,7 +406,7 @@ export default function Setpayrates() {
                 pt: "10px",
               }}
             >
-              {" "}
+              
               Thursdays
             </Typography>
             <FormControl
@@ -415,6 +423,8 @@ export default function Setpayrates() {
                 inputProps={{
                   "aria-label": "weight",
                 }}
+                {...register("Thursdays", { required: true })}
+                onChange={(e) => setThursdays(e.target.value)}
               />
             </FormControl>
             <Box sx={{ ml: 1, mt: 1 }}>
@@ -456,6 +466,8 @@ export default function Setpayrates() {
                 inputProps={{
                   "aria-label": "weight",
                 }}
+                {...register("Fridays", { required: true })}
+                onChange={(e) => setFridays(e.target.value)}
               />
             </FormControl>
             <Box sx={{ ml: 1, mt: 1 }}>
