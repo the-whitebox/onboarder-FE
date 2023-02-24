@@ -72,13 +72,6 @@ export default function SetAgreedhours() {
       setError(false);
       console.log(workPeriod, netWorkPeriod, hours);
 
-      navigate("/people", {
-        state: {
-          workPeriod: workPeriod,
-          netWorkPeriod: netWorkPeriod,
-          hours: hours,
-        },
-      });
     } else {
       setError(true);
       setState({ data: e.target.value });
@@ -261,6 +254,8 @@ export default function SetAgreedhours() {
                 "aria-label": "weight",
               }}
               placeholder="0"
+              {...register("Hours", { required: true })}
+              onChange={(e) => setHours(e.target.value)}
             />
           </FormControl>
         </div>

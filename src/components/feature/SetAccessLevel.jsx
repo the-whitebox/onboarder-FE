@@ -49,7 +49,6 @@ const style = {
 
 export default function SetAccessLevel() {
   const [state, setState] = React.useState({ data: "" });
-  const [access, setAccess] = React.useState("");
   const [selectedValue, setSelectedValue] = useState("");
   const [error, setError] = React.useState(null);
 

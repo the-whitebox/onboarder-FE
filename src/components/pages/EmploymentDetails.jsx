@@ -29,6 +29,8 @@ import AddLocationModalBody from "../feature/Addlocation";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
+import { FormHelperText } from "@mui/material";
+
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -51,34 +53,37 @@ const names = [
 
 export default function EmploymentDetails() {
   const [state, setState] = React.useState({ data: "" });
+  const [selectedValue, setSelectedValue] = useState('');
   const [access, setAccess] = React.useState("");
-  const [employment, setEmployment] = React.useState("");
-  const [payRate, setPayRate] = useState("");
+  // const [payRate, setPayRate] = useState("");
 
+  function handleEmploymentData(employment) {
+    // handle employment data here
+
+    console.log("Employment from employment details: ",employment);
+  }
+
+  
   const [open, setOpen] = React.useState(false);
 
   const [error, setError] = React.useState(null);
-  const [accessError, setAccessError] = useState("");
-  const [payRateError, setPayRateError] = useState("");
-  const [employmentError, setEmploymentError] = React.useState("");
+  // const [accessError, setAccessError] = useState("");
+  // const [payRateError, setPayRateError] = useState("");
+ 
 
-  const accessValidation = () => {
-    if (access == "") {
-      setAccessError("Please enter access level");
-    } else setAccessError("");
-  };
+  // const accessValidation = () => {
+  //   if (access == "") {
+  //     setAccessError("Please enter access level");
+  //   } else setAccessError("");
+  // };
 
-  const payRateValidation = () => {
-    if (payRate == "") {
-      setPayRateError("Please enter pay rates");
-    } else setPayRateError("");
-  };
+  // const payRateValidation = () => {
+  //   if (payRate == "") {
+  //     setPayRateError("Please enter pay rates");
+  //   } else setPayRateError("");
+  // };
 
-  const employmentValidation = () => {
-    if (employment == "") {
-      setEmploymentError("Please enter access level");
-    } else setEmploymentError("");
-  };
+  
 
   const handleOpen = () => {
     setOpen(true);
@@ -118,26 +123,30 @@ export default function EmploymentDetails() {
     setDate(newValue);
   };
 
-  const {
-    register,
-    formState: { errors },
-  } = useForm();
+  // const {
+  //   register,
+  //   formState: { errors },
+  // } = useForm();
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    console.log(selectedValue); // do something with the selected value
+  }
 
   const navigate = useNavigate();
 
   const toEmployment = (e) => {
-    if (access !== "" && employment !== "" && payRate !== "") {
+    if (access !== "" && handleEmploymentData !== ""  ) {
       console.log("Data Found");
       setError(false);
-      console.log(access, employment, payRate);
+      console.log(access);
 
-      navigate("/employment_details", {
-        state: {
-          access: access,
-          employment: employment,
-          payRate: payRate,
-        },
-      });
+      // navigate("/employment_details", {
+      //   state: {
+      //     access: access,
+      //     payRate: payRate,
+      //   },
+      // });
     } else {
       setError(true);
       setState({ data: e.target.value });
@@ -226,9 +235,9 @@ export default function EmploymentDetails() {
                   ml: 80,
                 }}
                 onClick={() => {
-                  accessValidation();
-                  payRateValidation();
-                  toEmployment();
+                  // handleSubmit();
+                  // accessValidation();
+                  toEmployment();          
                 }}
               >
                 Save
@@ -274,22 +283,36 @@ export default function EmploymentDetails() {
               <Typography variant="h6" fontWeight="Bold">
                 Access Level
               </Typography>
-              <FormControl sx={{ pl: 4, m: 1, width: 300, mt: 3 }}>
-                <Select
-                {...register("Access Level", { required: true })}
-                onChange={(e) => setAccess(e.target.value)}
-                  multiple
+              <FormControl sx={{ pl: 4, m: 1, width: 300, mt: 3 }}
+              error={error}>
+              <Select 
+              size="small"
+              sx={{ borderRadius: "7px" }}
+              displayEmpty
+              value={access}
+              onChange={(e) => setAccess(e.target.value)}
+              >
+              <MenuItem value={"System Administrator"}>System Administrator</MenuItem>
+              <MenuItem value={"Supervisor"}>Supervisior</MenuItem>
+              <MenuItem value={"Employee"}>Employee</MenuItem>
+              <MenuItem value={"Location Manager"}>Location Manager</MenuItem>
+              <MenuItem value={"Advisor"}>Advisor</MenuItem>
+            </Select>
+            {error && <FormHelperText>Select a value</FormHelperText>}
+                {/* <Select
                   size="small"
                   displayEmpty
                   value={personName}
-                  input={<OutlinedInput />}
-                  renderValue={(selected) => {
-                    if (selected.length === 0) {
-                      return <em>Select</em>;
-                    }
+                  onChange={(e) => setAccess(e.target.value)}
+                  // onChange={handleChange}
+                  // input={<OutlinedInput />}
+                  // renderValue={(selected) => {
+                  //   if (selected.length === 0) {
+                  //     return <em>Select</em>;
+                  //   }
 
-                    return selected.join(", ");
-                  }}
+                  //   return selected.join(", ");
+                  // }}
                   MenuProps={MenuProps}
                   inputProps={{ "aria-label": "Without label" }}
                 >
@@ -302,10 +325,10 @@ export default function EmploymentDetails() {
                       {name}
                     </MenuItem>
                   ))}
-                </Select>
+                </Select> */}
               </FormControl>
             </Box>
-            <Box sx={{ ml: 24, mt: 1 }}>
+            {/* <Box sx={{ ml: 24, mt: 1 }}>
         {errors.Access?.type === "required" && "Access Level Required"}
         <small>
           {accessError && (
@@ -318,7 +341,7 @@ export default function EmploymentDetails() {
             </div>
           )}
         </small>
-        </Box>
+        </Box> */}
             <Box sx={{ pt: 2, pb: 2, pl: 2 }}>
               <Typography paragraph>
                 A set of permissions that control <br /> what a team member can
@@ -383,7 +406,7 @@ export default function EmploymentDetails() {
               <Typography inline variant="h6" fontWeight="Bold">
                 Pay Details
               </Typography>
-              <EmploymentType />
+              <EmploymentType employmentData={handleEmploymentData} value={selectedValue} onChange={setSelectedValue}/>
             </Box>
             <Box
               sx={{

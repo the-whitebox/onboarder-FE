@@ -64,7 +64,7 @@ const style = {
 
 export default function Addteammember() {
   // const { user, getAccessTokenSilently } = useAuth0();
-  const url = process.env.REACT_APP_BASE_URL + "/people";
+  const url = process.env.REACT_APP_BASE_URL + "/people/";
   const [firstName, setFirstName] = useState("");
   const [firstNameError, setFirstNameError] = useState("");
   const [lastName, setLastName] = useState("");
@@ -199,6 +199,7 @@ export default function Addteammember() {
             navigate("/people");
           });
       } catch (error) {
+        console.log("People API was hit unsuccessfully");
         console.log(error.response);
       }
     }

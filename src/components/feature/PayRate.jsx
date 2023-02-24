@@ -6,6 +6,9 @@ import Select from "@mui/material/Select";
 import { useTheme } from "@mui/material/styles";
 import OutlinedInput from "@mui/material/OutlinedInput";
 import MenuItem from "@mui/material/MenuItem";
+import FormHelperText from "@mui/material/FormHelperText";
+import { useState } from "react";
+
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -27,6 +30,8 @@ const names = [
 ];
 
 export default function PayRate() {
+  // const [error, setError] = React.useState(null);
+
   function getStyles(name, personName, theme) {
     return {
       fontWeight:
@@ -55,20 +60,21 @@ export default function PayRate() {
           Pay Rate
         </Typography>
         <FormControl sx={{ pl: 13.2, m: 1, width: 370, mt: 3 }}>
-          <Select
-            multiple
+          {/* <Select
             size="small"
             displayEmpty
-            value={personName}
-            onChange={handleChange}
-            input={<OutlinedInput />}
-            renderValue={(selected) => {
-              if (selected.length === 0) {
-                return <em>Select</em>;
-              }
+            value={PayRate}
+            // value={personName}
+            // onChange={handleChange}
+            // onChange={(e) => setPayRate(e.target.value)}
+            // input={<OutlinedInput />}
+            // renderValue={(selected) => {
+            //   if (selected.length === 0) {
+            //     return <em>Select</em>;
+            //   }
 
-              return selected.join(", ");
-            }}
+            //   return selected.join(", ");
+            // }}
             MenuProps={MenuProps}
             inputProps={{ "aria-label": "Without label" }}
           >
@@ -81,7 +87,8 @@ export default function PayRate() {
                 {name}
               </MenuItem>
             ))}
-          </Select>
+          </Select> */}
+          {/* {error && <FormHelperText>Select a value</FormHelperText>} */}
         </FormControl>
       </Box>
     </>
