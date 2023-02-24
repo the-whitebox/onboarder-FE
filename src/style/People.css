@@ -7,3 +7,11 @@
   border-left: 0;
   border-right: 0;
 } */
+
+.css-1j9kmqg-MuiDataGrid-toolbarContainer > button {
+  color: rgba(0, 0, 0, 0.87);
+  padding-left: 25px;
+}
+.tableBox {
+  min-height: 70vh !important;
+}

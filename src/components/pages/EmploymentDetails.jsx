@@ -106,37 +106,32 @@ export default function EmploymentDetails() {
           <AddLocationModalBody />
         </Modal>
         <Grid sx={{ display: "flex" }}>
+          <CssBaseline />
           <Grid
-            container
-            component="main"
-            sx={{ height: "100vh", width: "240px" }}
+            className="max-width"
+            item
+            xs={false}
+            sx={{
+              minHeight: "100vh",
+              backgroundColor: "#38b492",
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "start",
+              alignItems: "center",
+            }}
           >
-            <CssBaseline />
-            <Grid
-              className="max-width"
-              item
-              xs={false}
-              sx={{
-                minHeight: "100vh",
-                backgroundColor: "#38b492",
-                display: "flex",
-                flexDirection: "column",
-                justifyContent: "start",
-                alignItems: "center",
-              }}
-            >
-              <Grid>
-                <Avatar
-                  src={MaxPilotLogo}
-                  aria-label="Busy Man"
-                  sx={{
-                    height: "16vh",
-                    width: "230px",
-                  }}
-                />
-              </Grid>
+            <Grid>
+              <Avatar
+                src={MaxPilotLogo}
+                aria-label="Busy Man"
+                sx={{
+                  height: "16vh",
+                  width: "230px",
+                }}
+              />
             </Grid>
           </Grid>
+
           <Grid>
             <Box
               sx={{
@@ -157,8 +152,8 @@ export default function EmploymentDetails() {
                 justifyContent: "space-between",
               }}
             >
-              <Typography variant="h4" sx={{ fontWeight: "Bold" }}>
-                Personal
+              <Typography variant="h5" sx={{ fontWeight: "Bold" }}>
+                Employment details
               </Typography>
               <Button
                 variant="contained"
@@ -176,7 +171,7 @@ export default function EmploymentDetails() {
                 Asher Muneer
               </Typography>
             </Box>
-            <Box sx={{ pb: 2 }}>
+            <Box>
               <Button
                 className="btn-font-padding"
                 variant="outlined"
@@ -202,16 +197,24 @@ export default function EmploymentDetails() {
                 Leave Entitlements
               </Button>
             </Box>
+            <hr className="line" />
             <Box sx={{ pt: 2, pb: 2, pl: 2 }}>
               <Typography variant="h6" fontWeight="Bold">
                 Work Details
               </Typography>
             </Box>
             <Box sx={{ display: "flex", flexDirection: "row", pl: 2 }}>
-              <Typography variant="h6" fontWeight="Bold">
+              <Typography sx={{ ml: 0 }} variant="h6" fontWeight="Bold">
                 Access Level
               </Typography>
-              <FormControl sx={{ pl: 4, m: 1, width: 300, mt: 3 }}>
+              <FormControl
+                sx={{
+                  pl: 8,
+                  m: 1,
+                  width: 300,
+                  mt: 0,
+                }}
+              >
                 <Select
                   multiple
                   size="small"
