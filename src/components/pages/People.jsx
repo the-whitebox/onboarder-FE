@@ -18,7 +18,7 @@ import Filters from "../feature/Filters";
 import Display from "../feature/Display";
 import BulkActions from "../feature/BulkActions";
 import Timesheets from "../feature/Timesheets";
-import { DataGrid, GridApi } from "@mui/x-data-grid";
+import { DataGrid, GridApi, GridToolbar } from "@mui/x-data-grid";
 import { fontWeight } from "@mui/system";
 import "../../style/People.css";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
@@ -71,10 +71,16 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   },
 }));
 
-const drawerWidth = 240;
+const drawerWidth = 230;
 
 const columns = [
-  { field: "name", headerName: "Name", minWidth: 100, flex: 1 },
+  {
+    field: "name",
+    headerName: "Name",
+    minWidth: 100,
+    flex: 1,
+    hideable: false,
+  },
   { field: "access", headerName: "Access", minWidth: 100, flex: 1 },
   { field: "location", headerName: "Main Location", minWidth: 100, flex: 1 },
   { field: "status", headerName: "Status", minWidth: 100, flex: 1 },
@@ -251,7 +257,7 @@ export default function People() {
         <Grid
           sx={{
             backgroundColor: "#38b492",
-            height: "100vh",
+            minHeight: "100vh",
           }}
         >
           <Avatar
@@ -290,8 +296,8 @@ export default function People() {
               </Button>
             </FormControl>
           </Box>
-          <Box display="flex" alignItems="center">
-            <Search>
+          <Box display="flex" alignItems="center" className="pl-2">
+            {/* <Search>
               <SearchIconWrapper>
                 <SearchIcon />
               </SearchIconWrapper>
@@ -301,7 +307,7 @@ export default function People() {
               />
             </Search>
             <Filters />
-            <Display />
+            <Display /> */}
             <BulkActions />
           </Box>
           <Box sx={{ pt: 3, pb: 2 }}>
@@ -311,7 +317,7 @@ export default function People() {
           </Box>
           <Box
             sx={{
-              height: 350,
+              height: "70%",
               width: "100%",
               ml: 2,
               mr: 40,
@@ -329,6 +335,9 @@ export default function People() {
               disableSelectionOnClick
               onSelectionModelChange={(ids) => {
                 console.log(ids);
+              }}
+              components={{
+                Toolbar: GridToolbar,
               }}
             />
           </Box>
