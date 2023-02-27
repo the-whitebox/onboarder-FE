@@ -1,14 +1,42 @@
 import * as React from "react";
 import FormControl from "@mui/material/FormControl";
-import Select from "@mui/material/Select";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
+import ListItemText from "@mui/material/ListItemText";
+import Select from "@mui/material/Select";
+import Checkbox from "@mui/material/Checkbox";
 
 export default function Display() {
-  const [people, setPeople] = React.useState("");
+  const ITEM_HEIGHT = 48;
+  const ITEM_PADDING_TOP = 8;
+  const MenuProps = {
+    PaperProps: {
+      style: {
+        maxHeight: ITEM_HEIGHT * 8.5 + ITEM_PADDING_TOP,
+        width: 200,
+      },
+    },
+  };
+
+  const names = [
+    "Name",
+    "Access",
+    "Main Location",
+    "Status",
+    "Email",
+    "Mobile ",
+  ];
+
+  const [personName, setPersonName] = React.useState([]);
 
   const handleChange = (event) => {
-    setPeople(event.target.value);
+    const {
+      target: { value },
+    } = event;
+    setPersonName(
+      // On autofill we get a stringified value.
+      typeof value === "string" ? value.split(",") : value
+    );
   };
 
   return (
@@ -17,16 +45,18 @@ export default function Display() {
       <Select
         labelId="demo-simple-select-standard-label"
         id="demo-simple-select-standard"
-        value={people}
+        multiple
+        value={personName}
         onChange={handleChange}
-        label="Age"
+        renderValue={(selected) => selected.join(", ")}
+        MenuProps={MenuProps}
       >
-        <MenuItem value="">
-          <em>None</em>
-        </MenuItem>
-        <MenuItem value={10}>Ten</MenuItem>
-        <MenuItem value={20}>Twenty</MenuItem>
-        <MenuItem value={30}>Thirty</MenuItem>
+        {names.map((name) => (
+          <MenuItem key={name} value={name}>
+            <Checkbox checked={personName.indexOf(name) > -1} />
+            <ListItemText primary={name} />
+          </MenuItem>
+        ))}
       </Select>
     </FormControl>
   );
