@@ -10,10 +10,15 @@ import Grid from "@mui/material/Grid";
 import CssBaseline from "@mui/material/CssBaseline";
 import MaxPilotLogo from "../../assets/images/maxpilot-logo-w.png";
 import "../../style/General.css";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useForm } from "react-hook-form";
+import Select from "@mui/material/Select";
+import MenuItem from "@mui/material/MenuItem";
+import FormControl from "@mui/material/FormControl";
+
+
 
 export default function Personal() {
   const url = process.env.REACT_APP_BASE_URL + "/people";
@@ -27,7 +32,11 @@ export default function Personal() {
   const [country, setCountry] = React.useState("");
   const [contactName, setContactName] = React.useState("");
   const [contactNumber, setContactNumber] = React.useState("");
-
+  const [locations, setLocations] = useState([]);
+  const [selectedCountry, setSelectedCountry] = useState('');
+  const [states, setStates] = useState([]);
+  const [selectedState, setSelectedState] = useState('');
+  
   const [error, setError] = React.useState(null);
 
   const [emailError, setEmailError] = useState("");
@@ -39,6 +48,39 @@ export default function Personal() {
   const [countryError, setCountryError] = React.useState("");
   const [contactNameError, setContactNameError] = React.useState("");
   const [contactNumberError, setContactNumberError] = React.useState("");
+
+  useEffect(() => {
+    fetch('https://api.countrystatecity.in/v1/countries', {
+      headers: {
+        'X-CSCAPI-KEY': 'your-api-key-here'
+      }
+    })
+    .then(response => response.json())
+    .then(data => setLocations(data))
+    .catch(error => console.error(error));
+}, []);
+
+  useEffect(() => {
+    if (selectedCountry) {
+      fetch(`https://api.countrystatecity.in/v1/countries/${selectedCountry}/states`, {
+        headers: {
+          'X-CSCAPI-KEY': 'your-api-key-here'
+        }
+      })
+        .then(response => response.json())
+        .then(data => setStates(data))
+        .catch(error => console.error(error));
+    }
+  }, [selectedCountry]);
+
+  const handleCountryChange = event => {
+    setSelectedCountry(event.target.value);
+    setSelectedState('');
+  };
+
+  const handleStateChange = event => {
+    setSelectedState(event.target.value);
+  };
 
   const navigate = useNavigate();
 
@@ -83,11 +125,11 @@ export default function Personal() {
     } else setCityStateError("");
   };
 
-  const countryValidation = () => {
-    if (country === "") {
-      setCountryError("Please enter your country");
-    } else setCountryError("");
-  };
+  // const countryValidation = () => {
+  //   if (country === "") {
+  //     setCountryError("Please enter your country");
+  //   } else setCountryError("");
+  // };
 
   const contactNameValidation = () => {
     if (contactName === "") {
@@ -116,7 +158,7 @@ export default function Personal() {
       postcode !== "" &&
       city !== "" &&
       cityState !== "" &&
-      country !== "" &&
+      // country !== "" &&
       contactName !== "" &&
       contactNumber !== ""
     ) {
@@ -129,7 +171,7 @@ export default function Personal() {
         postcode,
         city,
         cityState,
-        country,
+        // country,
         contactName,
         contactNumber
       );
@@ -142,7 +184,7 @@ export default function Personal() {
             postcode: postcode,
             city: city,
             state: cityState,
-            country: country,
+            // country: country,
             contact_name: contactName,
             contact_number: contactNumber,
           })
@@ -230,7 +272,7 @@ export default function Personal() {
                 postcodeValidation();
                 cityValidation();
                 cityStateValidation();
-                countryValidation();
+                // countryValidation();
                 contactNameValidation();
                 contactNumberValidation();
                 personalDetails(e);
@@ -494,18 +536,16 @@ export default function Personal() {
               >
                 State
               </Typography>
-              <TextField
-                id="outlined-basic"
-                label=""
-                variant="outlined"
-                size="small"
-                sx={{
-                  width: "300px",
-                  mr: 60,
-                }}
-                {...register("State", { required: true })}
-                onChange={(e) => setCityState(e.target.value)}
-              />
+              {selectedCountry && (
+              <FormControl>
+                <Select value={selectedState} onChange={handleStateChange}>
+                <MenuItem value="">Select a state</MenuItem>
+            {states.map(state => (
+              <MenuItem key={state.id} value={state.id}>{state.name}</MenuItem>
+            ))}
+                </Select>
+              </FormControl>
+              )}
             </Box>
             <Box sx={{ ml: 24, mt: 1 }}>
             {errors.CityState?.type === "required" && "Email Required"}
@@ -534,7 +574,7 @@ export default function Personal() {
               >
                 Country
               </Typography>
-              <TextField
+              {/* <TextField
                 id="outlined-basic"
                 label=""
                 variant="outlined"
@@ -545,7 +585,15 @@ export default function Personal() {
                 }}
                 {...register("Country", { required: true })}
                 onChange={(e) => setCountry(e.target.value)}
-              />
+              /> */}
+               <FormControl sx={{ pl: 5, m: 1, width: 300, mt: 3 }}>
+              <Select value={selectedCountry} onChange={handleCountryChange}>
+              <MenuItem value="">Select a country</MenuItem>
+          {locations.map(location => (
+            <MenuItem key={location.isoCode} value={location.isoCode}>{location.name}</MenuItem>
+          ))}
+              </Select>
+              </FormControl>
             </Box>
             <Box sx={{ ml: 24, mt: 1 }}>
             {errors.Country?.type === "required" && "Email Required"}
