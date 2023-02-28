@@ -35,12 +35,12 @@ function getStyles(name, personName, theme) {
   };
 }
 
-const names = [];
+const names = ["Location 1", "Location 2"];
 const access = [
   "System Administrator",
-  "Supervisior ",
+  "Supervisor ",
   "Employee",
-  "Location Manage",
+  "Location Manager",
   "Advisor",
 ];
 const style = {
@@ -59,15 +59,28 @@ const style = {
 export default function Addteammember() {
   const theme = useTheme();
   const [personName, setPersonName] = React.useState([]);
+  const [mainLocation, setMainLocation] = React.useState([]);
+  const [otherLocation, setOtherLocation] = React.useState([]);
+  const [employeeType, setEmployeeType] = React.useState([]);
+  const [inputs, setInputs] = React.useState([]);
 
-  const handleChange = (event) => {
+  const handleMainLocation = (event) => {
     const {
       target: { value },
     } = event;
-    setPersonName(
-      // On autofill we get a stringified value.
-      typeof value === "string" ? value.split(",") : value
-    );
+    setMainLocation(value);
+  };
+  const handleOtherLocation = (event) => {
+    const {
+      target: { value },
+    } = event;
+    setOtherLocation(value);
+  };
+  const handleEmployeeType = (event) => {
+    const {
+      target: { value },
+    } = event;
+    setEmployeeType(value);
   };
 
   const [open, setOpen] = React.useState(false);
@@ -76,6 +89,16 @@ export default function Addteammember() {
   };
   const handleClose = () => {
     setOpen(false);
+  };
+  const handleChange = (event) => {
+    const name = event.target.name;
+    const value = event.target.value;
+    setInputs((values) => ({ ...values, [name]: value }));
+  };
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    console.log({ inputs }, mainLocation, otherLocation, employeeType);
   };
 
   return (
@@ -90,10 +113,6 @@ export default function Addteammember() {
       >
         <Box className="flex flex-row" sx={{ width: "620px" }}>
           <h2 className="set">Add Team member</h2>
-          <CloseIcon
-            onClick={handleClose}
-            sx={{ ml: "10px", mb: 4 }}
-          ></CloseIcon>
         </Box>
         <Grid sx={{ display: "flex", flexDirection: "row", pt: "20px" }}>
           <Avatar
@@ -102,6 +121,7 @@ export default function Addteammember() {
               height: "150px",
               width: "150px",
             }}
+            variant="rounded"
           />
           <Box>
             <Typography
@@ -164,6 +184,7 @@ export default function Addteammember() {
                 First name
               </Typography>
               <TextField
+                name="firstname"
                 size="small"
                 sx={{
                   width: 530,
@@ -172,6 +193,7 @@ export default function Addteammember() {
                   borderRadius: 20,
                 }}
                 placeholder="Please input"
+                onChange={handleChange}
               ></TextField>
             </Box>
 
@@ -186,6 +208,7 @@ export default function Addteammember() {
                 Last name
               </Typography>
               <TextField
+                name="lastname"
                 size="small"
                 sx={{
                   width: 530,
@@ -193,6 +216,7 @@ export default function Addteammember() {
                   pt: "30px",
                 }}
                 placeholder="Please input "
+                onChange={handleChange}
               ></TextField>
             </Box>
 
@@ -207,6 +231,7 @@ export default function Addteammember() {
                 }}
               >
                 <Select
+                  id="mainLocation"
                   sx={{
                     mb: "5px",
                     font: "inherit",
@@ -214,23 +239,22 @@ export default function Addteammember() {
                     mr: 98,
                     borderRadius: "8px",
                   }}
-                  multiple
                   displayEmpty
-                  value={personName}
-                  onChange={handleChange}
+                  value={mainLocation}
+                  onChange={handleMainLocation}
                   input={<OutlinedInput />}
                   renderValue={(selected) => {
                     if (selected.length === 0) {
-                      return <em>Location</em>;
+                      return <span>Location</span>;
                     }
 
-                    return selected.join(", ");
+                    return selected;
                   }}
                   MenuProps={MenuProps}
                   inputProps={{ "aria-label": "Without label" }}
                 >
                   <MenuItem disabled value=""></MenuItem>
-                  <em>location </em>
+                  <span>Location</span>
                   {names.map((name) => (
                     <MenuItem
                       key={name}
@@ -265,23 +289,22 @@ export default function Addteammember() {
                   font: "inherit",
                   width: "620px",
                 }}
-                multiple
                 displayEmpty
-                value={personName}
-                onChange={handleChange}
+                value={otherLocation}
+                onChange={handleOtherLocation}
                 input={<OutlinedInput />}
                 renderValue={(selected) => {
                   if (selected.length === 0) {
-                    return <em>Select </em>;
+                    return <span>Select </span>;
                   }
 
-                  return selected.join(", ");
+                  return selected;
                 }}
                 MenuProps={MenuProps}
                 inputProps={{ "aria-label": "Without label" }}
               >
                 <MenuItem disabled value="">
-                  <em>Select </em>
+                  <span>Select</span>
                 </MenuItem>
                 {names.map((name) => (
                   <MenuItem
@@ -306,6 +329,7 @@ export default function Addteammember() {
                 Mobile
               </Typography>
               <TextField
+                name="mobile"
                 size="small"
                 sx={{
                   width: 520,
@@ -313,6 +337,7 @@ export default function Addteammember() {
                   pt: "10px",
                 }}
                 placeholder="Please input "
+                onChange={handleChange}
               ></TextField>
             </Box>
 
@@ -326,6 +351,7 @@ export default function Addteammember() {
                 Email
               </Typography>
               <TextField
+                name="email"
                 size="small"
                 sx={{
                   width: 530,
@@ -333,6 +359,7 @@ export default function Addteammember() {
                   pt: "10px",
                 }}
                 placeholder="Please input "
+                onChange={handleChange}
               ></TextField>
             </Box>
             <Box sx={{ display: "flex", flexDirection: "row" }}>
@@ -353,17 +380,17 @@ export default function Addteammember() {
                     mr: 88,
                     borderRadius: "8px",
                   }}
-                  multiple
                   displayEmpty
-                  value={personName}
-                  onChange={handleChange}
+                  value={employeeType}
+                  onChange={handleEmployeeType}
+                  // onChange={handleChange}
                   input={<OutlinedInput />}
                   renderValue={(selected) => {
                     if (selected.length === 0) {
-                      return <em>Employee</em>;
+                      return <span>Employee</span>;
                     }
 
-                    return selected.join(", ");
+                    return selected;
                   }}
                   MenuProps={MenuProps}
                   inputProps={{ "aria-label": "Without label" }}
@@ -392,8 +419,10 @@ export default function Addteammember() {
           }}
         >
           <Checkbox
+            name="inviteCheckbox"
             size="small"
             sx={{ mt: "23px", pr: "5px", color: "rgba(95, 91, 81, 0.518)" }}
+            onChange={handleChange}
           />
           <Typography
             sx={{ width: 400, mt: 4, color: "rgba(95, 91, 81, 0.518)" }}
@@ -410,7 +439,7 @@ export default function Addteammember() {
               borderRadius: 2,
             }}
             className="bttn"
-            onClick={handleClose}
+            onClick={handleSubmit}
           >
             Add Team member
           </Button>
