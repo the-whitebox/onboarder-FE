@@ -45,13 +45,13 @@ const access = [
 ];
 const style = {
   position: "absolute",
-  top: "50%",
+  top: "38%",
   left: "50%",
   transform: "translate(-50%, -50%)",
   bgcolor: "background.paper",
   borderRadius: "8px ",
   boxShadow: 24,
-  pt: 2,
+  pt: 0,
   px: 4,
   pb: 3,
 };
@@ -98,7 +98,12 @@ export default function Addteammember() {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    console.log({ inputs }, mainLocation, otherLocation, employeeType);
+    console.log(
+      { inputs },
+      { mainLocation },
+      { otherLocation },
+      { employeeType }
+    );
   };
 
   return (
@@ -231,7 +236,7 @@ export default function Addteammember() {
                 }}
               >
                 <Select
-                  id="mainLocation"
+                  name="mainLocation"
                   sx={{
                     mb: "5px",
                     font: "inherit",
@@ -254,7 +259,7 @@ export default function Addteammember() {
                   inputProps={{ "aria-label": "Without label" }}
                 >
                   <MenuItem disabled value=""></MenuItem>
-                  <span>Location</span>
+
                   {names.map((name) => (
                     <MenuItem
                       key={name}
@@ -283,6 +288,7 @@ export default function Addteammember() {
                 Other Location{" "}
               </Typography>
               <Select
+                name="otherLocation"
                 sx={{
                   mr: 32,
                   mb: "5px",
@@ -303,9 +309,6 @@ export default function Addteammember() {
                 MenuProps={MenuProps}
                 inputProps={{ "aria-label": "Without label" }}
               >
-                <MenuItem disabled value="">
-                  <span>Select</span>
-                </MenuItem>
                 {names.map((name) => (
                   <MenuItem
                     key={name}
@@ -373,6 +376,7 @@ export default function Addteammember() {
                 }}
               >
                 <Select
+                  name="accessLevel"
                   sx={{
                     pb: "5px",
                     font: "inherit",
