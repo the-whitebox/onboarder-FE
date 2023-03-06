@@ -29,6 +29,7 @@ import axios from "axios";
 import Avatar from "@mui/material/Avatar";
 import { MoreVert } from "../feature/MoreVert";
 
+
 const theme = createTheme();
 
 const Search = styled("div")(({ theme }) => ({
@@ -137,7 +138,7 @@ const rows = [
   },
 ];
 
-export default function People() {
+  const  People = () => {
   const [people, setPeople] = React.useState("");
 
   const [open, setOpen] = React.useState(false);
@@ -346,3 +347,4 @@ export default function People() {
     </ThemeProvider>
   );
 }
+export default People
