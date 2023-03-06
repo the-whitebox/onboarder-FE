@@ -41,23 +41,23 @@ function getStyles(name, personName, theme) {
   };
 }
 
-const names = [];
+const names = ["Location 1", "Location 2"];
 const access = [
   "System Administrator",
-  "Supervisior ",
+  "Supervisor ",
   "Employee",
-  "Location Manage",
+  "Location Manager",
   "Advisor",
 ];
 const style = {
   position: "absolute",
-  top: "50%",
+  top: "38%",
   left: "50%",
   transform: "translate(-50%, -50%)",
   bgcolor: "background.paper",
   borderRadius: "8px ",
   boxShadow: 24,
-  pt: 2,
+  pt: 0,
   px: 4,
   pb: 3,
 };
@@ -226,15 +226,28 @@ export default function Addteammember() {
 
   const theme = useTheme();
   const [personName, setPersonName] = React.useState([]);
+  const [mainLocation, setMainLocation] = React.useState([]);
+  const [otherLocation, setOtherLocation] = React.useState([]);
+  const [employeeType, setEmployeeType] = React.useState([]);
+  const [inputs, setInputs] = React.useState([]);
 
-  const handleChange = (event) => {
+  const handleMainLocation = (event) => {
     const {
       target: { value },
     } = event;
-    setPersonName(
-      // On autofill we get a stringified value.
-      typeof value === "string" ? value.split(",") : value
-    );
+    setMainLocation(value);
+  };
+  const handleOtherLocation = (event) => {
+    const {
+      target: { value },
+    } = event;
+    setOtherLocation(value);
+  };
+  const handleEmployeeType = (event) => {
+    const {
+      target: { value },
+    } = event;
+    setEmployeeType(value);
   };
 
   const [open, setOpen] = React.useState(false);
@@ -244,6 +257,21 @@ export default function Addteammember() {
   const handleClose = () => {
     setOpen(false);
   };
+  const handleChange = (event) => {
+    const name = event.target.name;
+    const value = event.target.value;
+    setInputs((values) => ({ ...values, [name]: value }));
+  };
+
+  // const handleSubmit = (event) => {
+  //   event.preventDefault();
+  //   console.log(
+  //     { inputs },
+  //     { mainLocation },
+  //     { otherLocation },
+  //     { employeeType }
+  //   );
+  // };
 
   const {
     register,
@@ -262,10 +290,6 @@ export default function Addteammember() {
       >
         <Box className="flex flex-row" sx={{ width: "620px" }}>
           <h2 className="set">Add Team member</h2>
-          <CloseIcon
-            onClick={handleClose}
-            sx={{ ml: "10px", mb: 4 }}
-          ></CloseIcon>
         </Box>
         <Grid sx={{ display: "flex", flexDirection: "row", pt: "20px" }}>
           <Avatar
@@ -274,6 +298,7 @@ export default function Addteammember() {
               height: "150px",
               width: "150px",
             }}
+            variant="rounded"
           />
           <Box>
             <Typography
@@ -336,6 +361,7 @@ export default function Addteammember() {
                 First name
               </Typography>
               <TextField
+                name="firstname"
                 size="small"
                 sx={{
                   width: 530,
@@ -374,6 +400,7 @@ export default function Addteammember() {
                 Last name
               </Typography>
               <TextField
+                name="lastname"
                 size="small"
                 sx={{
                   width: 530,
@@ -411,6 +438,7 @@ export default function Addteammember() {
                 }}
               >
                 <Select
+                  name="mainLocation"
                   sx={{
                     mb: "5px",
                     font: "inherit",
@@ -418,24 +446,22 @@ export default function Addteammember() {
                     mr: 98,
                     borderRadius: "8px",
                   }}
-                  multiple
                   displayEmpty
-                  value={personName}
-                  // {...register("Main Location", { required: true })}
-                  // onChange={handleOnChange}
+                  value={mainLocation}
+                  onChange={handleMainLocation}
                   input={<OutlinedInput />}
                   renderValue={(selected) => {
                     if (selected.length === 0) {
-                      return <em>Location</em>;
+                      return <span>Location</span>;
                     }
 
-                    return selected.join(", ");
+                    return selected;
                   }}
                   MenuProps={MenuProps}
                   inputProps={{ "aria-label": "Without label" }}
                 >
                   <MenuItem disabled value=""></MenuItem>
-                  <em>location </em>
+
                   {names.map((name) => (
                     <MenuItem
                       key={name}
@@ -541,6 +567,7 @@ export default function Addteammember() {
                 Mobile
               </Typography>
               <TextField
+                name="mobile"
                 size="small"
                 sx={{
                   width: 520,
@@ -549,7 +576,7 @@ export default function Addteammember() {
                 }}
                 placeholder="Please input "
                 {...register("Mobile", { required: true })}
-                on
+                onChange={handleChange}
               ></TextField>
             </Box>
             <Box sx={{ ml: 17 }}>
@@ -577,6 +604,7 @@ export default function Addteammember() {
                 Email
               </Typography>
               <TextField
+                name="email"
                 size="small"
                 sx={{
                   width: 530,
@@ -586,6 +614,7 @@ export default function Addteammember() {
                 placeholder="Please input "
                 // {...register("Email", { required: true })}
                 // onChange={handleOnChange}
+                onChange={handleChange}
               ></TextField>
             </Box>
             <Box sx={{ ml: 17, mt: 1 }}>
@@ -613,6 +642,7 @@ export default function Addteammember() {
                 }}
               >
                 <Select
+                  name="accessLevel"
                   sx={{
                     pb: "5px",
                     font: "inherit",
@@ -620,18 +650,17 @@ export default function Addteammember() {
                     mr: 88,
                     borderRadius: "8px",
                   }}
-                  multiple
                   displayEmpty
-                  value={personName}
-                  {...register("Access Level", { required: true })}
-                  onChange={handleOnChange}
+                  value={employeeType}
+                  onChange={handleEmployeeType}
+                  // onChange={handleChange}
                   input={<OutlinedInput />}
                   renderValue={(selected) => {
                     if (selected.length === 0) {
-                      return <em>Employee</em>;
+                      return <span>Employee</span>;
                     }
 
-                    return selected.join(", ");
+                    return selected;
                   }}
                   MenuProps={MenuProps}
                   inputProps={{ "aria-label": "Without label" }}
@@ -675,8 +704,10 @@ export default function Addteammember() {
           }}
         >
           <Checkbox
+            name="inviteCheckbox"
             size="small"
             sx={{ mt: "23px", pr: "5px", color: "rgba(95, 91, 81, 0.518)" }}
+            onChange={handleChange}
           />
           <Typography
             sx={{ width: 400, mt: 4, color: "rgba(95, 91, 81, 0.518)" }}
@@ -691,7 +722,7 @@ export default function Addteammember() {
               mt: 4,
               borderRadius: 2,
             }}
-            // className="bttn"
+            className="bttn"
             onClick={handleSubmit}
           >
             Add Team member
