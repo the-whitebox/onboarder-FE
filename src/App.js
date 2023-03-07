@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route, } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate, } from "react-router-dom";
 import Login from "./components/pages/Login";
 import Signup from "./components/pages/Signup";
 import "./App.css";
@@ -21,7 +21,7 @@ import SetAgreedhours from "./components/feature/SetAgreedhours";
 import ArchiveTeammembers from "./components/feature/ArchiveTeammembers";
 import Addlocation from "./components/feature/Addlocation";
 import WebFont from "webfontloader";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import Profile from "./components/pages/Profile";
 import Contact from "./components/feature/Contact";
 import Employment from "./components/pages/Employment";
@@ -29,9 +29,11 @@ import EmploymentDetails from "./components/pages/EmploymentDetails";
 import Personal from "./components/pages/Personal";
 import PersonalDetails from "./components/pages/PersonalDetails";
 import AddNewPeople from "./components/pages/AddNewPeople";
+import ProtectedRoutes from "./utils/ProtectedRoutes";
 
 
 function App() {
+  const [user, setUser] = useState(null);
  
   useEffect(() => {
     WebFont.load({
@@ -43,8 +45,8 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Login />} />
-        <Route path="/home" element={<Login />} />
+        <Route path="/" element={<Login authenticate={()=> setUser(true)}/>} />
+        <Route path="/home" element={<Login authenticate={()=> setUser(true)}/>} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/forgotpassword" element={<ForgotPassword />} />
         <Route path="/resetpassword" element={<ResetPassword />} />
@@ -62,7 +64,8 @@ function App() {
         <Route path="/add" element={<AddNewPeople />} />
         <Route path="/new" element={<AddNewPeople />} />
         <Route path="/setAccess" element={<SetAccessLevel />} />
-        <Route path="people" element={<People/>}/>
+        {user && (<Route path="/people" element={<People authenticate={()=> setUser(true)}/>}/>)}
+        <Route path="*" element={<Navigate to={user ? "/people" : "/"}/>}/>
       </Routes>
     </BrowserRouter>
   );

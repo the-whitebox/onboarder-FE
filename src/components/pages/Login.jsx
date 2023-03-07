@@ -33,11 +33,11 @@ import { useState } from "react";
 
 const theme = createTheme();
 
-export default function SignInSide() {
+export default function SignInSide({authenticate}) {
   const [email, setEmail] = useState("");
-  // const [emailError, setEmailError] = useState("");
+  const [emailError, setEmailError] = useState("");
   const [password, setPassword] = useState("");
-  // const [passwordError, setPasswordError] = useState("");
+  const [passwordError, setPasswordError] = useState("");
   const url = process.env.REACT_APP_BASE_URL + "/auth/login/";
 
   const navigate = useNavigate();
@@ -46,104 +46,108 @@ export default function SignInSide() {
   
   
 
-  // const emailValidation = () => {
-  //   const regEx = /^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[A-Za-z]+$/;
-  //   if (regEx.test(email)) {
-  //     setEmailError("");
-  //   } else if (email == "") {
-  //     setEmailError("Email should not be empty");
-  //   } else if (!regEx.test(email)) {
-  //     setEmailError("Email is not valid");
-  //   }
-  // };
+  const emailValidation = () => {
+    const regEx = /^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[A-Za-z]+$/;
+    if (regEx.test(email)) {
+      setEmailError("");
+    } else if (email == "") {
+      setEmailError("Email should not be empty");
+    } else if (!regEx.test(email)) {
+      setEmailError("Email is not valid");
+    }
+  };
 
-  // const passwordValidation = () => {
-  //   const regExp = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/;
+  const passwordValidation = () => {
+    const regExp = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/;
 
-  //   if (regExp.test(password)) {
-  //     setPasswordError("");
-  //   } else if (password == "") {
-  //     setPasswordError("Password should not be empty");
-  //   } else if (!regExp.test(password)) {
-  //     setPasswordError("Password is not valid");
-  //   }
-  // };
+    if (regExp.test(password)) {
+      setPasswordError("");
+    } else if (password == "") {
+      setPasswordError("Password should not be empty");
+    } else if (!regExp.test(password)) {
+      setPasswordError("Password is not valid");
+    }
+  };
 
-  // const handleOnEmailChange = (e) => {
-  //   setEmail(e.target.value);
-  // };
+  const handleOnEmailChange = (e) => {
+    setEmail(e.target.value);
+  };
 
-  // const handleOnChange = (e) => {
-  //   setPassword(e.target.value);
-  //   // console.log(password);
-  // };
+  const handleOnChange = (e) => {
+    setPassword(e.target.value);
+    // console.log(password);
+  };
 
-  // const {
-  //   register,
-  //   formState: { errors },
-  // } = useForm();
+  const {
+    register,
+    formState: { errors },
+  } = useForm();
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    // emailValidation();
-    // passwordValidation();
+    // localStorage.setItem("token", true);
+    // window.location.href = "/people"
+    emailValidation();
+    passwordValidation();
+    // authenticate();
     // const payload = {
     //   username: event.target.email.value,
     //   password: event.target.password.value,
     // }
     // // console.log(payload)
     // await login(payload);
-    try {
-      // Call your login API
-      const response = await fetch(url, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ email, password }),
-      });
+  //   try {
+  //     // Call your login API
+  //     const response = await fetch(url, {
+  //       method: 'POST',
+  //       headers: {
+  //         'Content-Type': 'application/json',
+  //       },
+  //       body: JSON.stringify({ email, password }),
+  //     });
 
-      if (response.ok) {
-        // Login successful
-        const data = await response.json();
-        localStorage.setItem('token', data.token);
-        navigate('/people')
-        console.log(data);
-        console.log(data.token);
-      } else {
-        // Login failed
-        const error = await response.json();
-        console.log(error);
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  //     if (response.ok) {
+  //       // Login successful
+  //       const data = await response.json();
+  //       localStorage.setItem('token', data.token);
+  //       navigate('/people')
+  //       console.log(data);
+  //       console.log(data.token);
+  //     } else {
+  //       // Login failed
+  //       const error = await response.json();
+  //       console.log(error);
+  //     }
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
+  // }
 
   
 
-  //   console.log("Password and Email Validation checked");
+    console.log("Password and Email Validation checked");
 
-  //   if (passwordError === "" && emailError === "") {
-  //     try {
-  //       const resp = await axios
-  //         .post(
-  //           url,
-  //           { username: email, password: password }
-  //           // { auth: email, password }
-  //         )
-  //         .then((response) => {
-  //           console.log("Login API was hit successfully");
-  //           console.log(response.data);
-  //           localStorage.setItem("token", response.data.access_token);
-  //           navigate("/people");
-  //           // Navigate to Home Screen
-  //         });
-  //     } catch (error) {
-  //       console.log(error.response);
-  //     }
-  //   }
-  // };
+    if (passwordError === "" && emailError === "") {
+      try {
+        const resp = await axios
+          .post(
+            url,
+            { username: email, password: password }
+            // { auth: email, password }
+          )
+          .then((response) => {
+            console.log("Login API was hit successfully");
+            console.log(response.data);
+            localStorage.setItem("token", response.data.access_token);
+            navigate("/people");
+            // Navigate to Home Screen
+          });
+      } catch (error) {
+        console.log(error.response);
+      }
+    }
+  };
 
   
   const [open, setOpen] = React.useState(false);
@@ -268,15 +272,15 @@ export default function SignInSide() {
                 type="email"
                 id="email"
                 autoComplete="email"
-                // className={`input-email ${emailError ? "emailError" : ""}`}
-                // error={emailError}
+                className={`input-email ${emailError ? "emailError" : ""}`}
+                error={emailError}
                 autoFocus
                 iconEnd={<AlternateEmailOutlinedIcon />}
-                // value={email}
-                // {...register("Email", { required: true })}
-                // onChange={handleOnEmailChange}
+                value={email}
+                {...register("Email", { required: true })}
+                onChange={handleOnEmailChange}
               />
-              {/* {errors.Email?.type === "required" && "Email Required"}
+              {errors.Email?.type === "required" && "Email Required"}
               <small>
                 {emailError && (
                   <div
@@ -287,7 +291,7 @@ export default function SignInSide() {
                     {emailError}
                   </div>
                 )}
-              </small> */}
+              </small>
               <IconTextField
                 label="Password"
                 margin="normal"
@@ -296,13 +300,13 @@ export default function SignInSide() {
                 type="password"
                 id="password"
                 className="input-password"
-                // error={passwordError}
+                error={passwordError}
                 iconEnd={<LockOutlinedIcon />}
-                // value={password}
-                // {...register("Confirmpassword", { required: true })}
-                // onChange={handleOnChange}
+                value={password}
+                {...register("Confirmpassword", { required: true })}
+                onChange={handleOnChange}
               />
-              {/* {errors.Confirmpassword?.type === "required" &&
+              {errors.Confirmpassword?.type === "required" &&
                 "confirmpassword Required"}
               <small>
                 {passwordError && (
@@ -314,7 +318,7 @@ export default function SignInSide() {
                     {passwordError}
                   </div>
                 )}
-              </small> */}
+              </small>
               <Grid
                 item
                 xs
