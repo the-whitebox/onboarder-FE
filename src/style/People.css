@@ -15,3 +15,15 @@
 .tableBox {
   min-height: 70vh !important;
 }
+
+/* .header {
+  background-color: #38b49270;
+} */
+.MuiDataGrid-columnHeaders {
+  background-color: #38b49270;
+}
+
+.MuiDataGrid-toolbarContainer {
+  display: flex !important;
+  justify-content: flex-end !important;
+}
