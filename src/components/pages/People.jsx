@@ -8,6 +8,7 @@ import CssBaseline from "@mui/material/CssBaseline";
 import { styled, alpha } from "@mui/material/styles";
 import MaxPilotLogo from "../../assets/images/maxpilot-logo-w.png";
 import Grid from "@mui/material/Grid";
+import { Paper } from "@mui/material";
 import InputLabel from "@mui/material/InputLabel";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
@@ -108,38 +109,80 @@ const columns = [
   },
 ];
 
-const rows = [
-  {
-    id: 1,
-    name: "Asher",
-    access: "Advisor",
-    location: "Talha's Professonal Service",
-    status: "Employed",
-    email: "Someemail@some.com",
-    mobile: 1234,
-  },
-  {
-    id: 2,
-    name: "Cersei",
-    access: "Supervisor",
-    location: "Talha's Professonal Service",
-    status: "Employed",
-    email: "Someemail@some.com",
-    mobile: 1234,
-  },
-  {
-    id: 3,
-    name: "Talha",
-    access: "System Administrator",
-    location: "Talha's Professonal Service",
-    status: "Employed",
-    email: "Someemail@some.com",
-    mobile: 1234,
-  },
-];
+// const rows = [
+//   {
+//     id: 1,
+//     name: "Asher",
+//     access: "Advisor",
+//     location: "Talha's Professonal Service",
+//     status: "Employed",
+//     email: "Someemail@some.com",
+//     mobile: 1234,
+//   },
+//   {
+//     id: 2,
+//     name: "Cersei",
+//     access: "Supervisor",
+//     location: "Talha's Professonal Service",
+//     status: "Employed",
+//     email: "Someemail@some.com",
+//     mobile: 1234,
+//   },
+//   {
+//     id: 3,
+//     name: "Talha",
+//     access: "System Administrator",
+//     location: "Talha's Professonal Service",
+//     status: "Employed",
+//     email: "Someemail@some.com",
+//     mobile: 1234,
+//   },
+// ];
 
-  const  People = () => {
+export default function People() {
+  const token = process.env.REACT_APP_TEMP_TOKEN;
+  const url = process.env.REACT_APP_BASE_URL;
   const [people, setPeople] = React.useState("");
+  const [firstName, setFirstName] = React.useState("");
+  const [lastName, setLastName] = React.useState("");
+  const [location, setLocattion] = React.useState("");
+  const [otherLocation, setOtherLocattion] = React.useState("");
+  const [businessId, setBusinessId] = React.useState("");
+  const [listOfTeamMembers, setListOfTeamMembers] = React.useState([]);
+
+  React.useEffect(() => {
+    axios
+      .get(url + "/business/", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+      })
+      .then((response) => {
+        response = response.data;
+        const ids = response.map((obj) => obj.id);
+
+        setBusinessId(ids[0]);
+        // console.log(businessId);
+      });
+
+    axios
+      .get(url + `/people/?business_id=${businessId}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+      })
+      .then((response) => {
+        response = response.data;
+        // setListOfTeamMembers(response);
+        setListOfTeamMembers(response);
+      });
+  }, []);
+
+  console.log("The rows", listOfTeamMembers);
+  const rows = [listOfTeamMembers];
+  console.log("The array of Objects: ", rows);
 
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => {
@@ -164,7 +207,7 @@ const rows = [
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
-        <AddTeammemberModalBody />
+        <AddTeammemberModalBody businessId={businessId} />
       </Modal>
       <Box
         sx={{
@@ -256,11 +299,17 @@ const rows = [
           </Box>
         </AppBar>
         <Grid
+          direction="column"
+          alignItems="center"
           sx={{
             backgroundColor: "#38b492",
             minHeight: "100vh",
           }}
         >
+          {/* <Paper elevation={3} style={{ transform: "rotate(270deg)" }}>
+            <img src={MaxPilotLogo} alt="my image" />
+          </Paper> */}
+          {/* <img src={MaxPilotLogo} alt="my image" /> */}
           <Avatar
             src={MaxPilotLogo}
             aria-label="Busy Man"
@@ -347,4 +396,3 @@ const rows = [
     </ThemeProvider>
   );
 }
-export default People

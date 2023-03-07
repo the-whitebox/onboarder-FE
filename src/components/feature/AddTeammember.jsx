@@ -15,12 +15,7 @@ import Grid from "@mui/material/Grid";
 import CloseIcon from "@mui/icons-material/Close";
 import Capture from "../../assets/images/Capture.png";
 import "../../style/Addteam.css";
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import { useForm } from "react-hook-form";
-// import { useEffect } from "react";
-// import { useAuth0, withAuthenticationRequired } from "@auth0/auth0-react"
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -62,192 +57,41 @@ const style = {
   pb: 3,
 };
 
-export default function Addteammember() {
-  // const { user, getAccessTokenSilently } = useAuth0();
-  const url = process.env.REACT_APP_BASE_URL + "/people/";
-  const [firstName, setFirstName] = useState("");
-  const [firstNameError, setFirstNameError] = useState("");
-  const [lastName, setLastName] = useState("");
-  const [lastNameError, setLastNameError] = useState("");
-  // const [mainLocation, setMainLocation] = useState("");
-  // const [mainLocationError, setMainLocationError] = useState("");
-  // const [otherLocation, setOtherLocation] = useState("");
-  // const [otherLocationError, setOtherLocationError] = useState("");
-  const [mobile, setMobile] = React.useState("");
-  const [mobileError, setMobileError] = React.useState("");
-  const [email, setEmail] = useState("");
-  const [emailError, setEmailError] = useState("");
-  const [accessLevel, setAccessLevel] = useState("");
-  const [accessLevelError, setAccessLevelError] = useState("");
-
-  // const [state, setState] = React.useState({ data: "" });
-
-  const navigate = useNavigate();
-
-  const firstNameValidation = () => {
-    if (firstName == "") {
-      setFirstNameError("Please enter first name");
-    } else setFirstNameError("");
-  };
-
-  const lastNameValidation = () => {
-    if (lastName == "") {
-      setLastNameError("Please enter last name");
-    } else setLastNameError("");
-  };
-
-  // const mainLocationValidation = () => {
-  //   if (mainLocation == "") {
-  //     setMainLocationError("Please enter the location");
-  //   } else setMainLocationError("");
-  // };
-
-  // const otherLocationValidation = () => {
-  //   if (otherLocation == "") {
-  //     setOtherLocationError("Please enter the location");
-  //   } else setOtherLocationError("");
-  // };
-
-  const mobileValidation = () => {
-    if (mobile == "") {
-      setMobileError("Please enter your mobile number");
-    } else setMobileError("");
-  };
-
-  // const emailValidation = () => {
-  //   const regEx = /^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[A-Za-z]+$/;
-  //   if (regEx.test(email)) {
-  //     setEmailError("");
-  //   } else if (email === "") {
-  //     setEmailError("Email should not be empty");
-  //   } else if (!regEx.test(email)) {
-  //     setEmailError("Email is not valid");
-  //   }
-  // };
-
-  // const accessLevelValidation = () => {
-  //   if (accessLevel == "") {
-  //     setAccessLevelError("Access level required");
-  //   } else setAccessLevelError("");
-  // };
-
-  const token = localStorage.getItem("token");
-
-  const handleOnChange = (e) => {
-    setFirstName(e.target.value);
-    setLastName(e.target.value);
-    // setMainLocation(e.target.value);
-    // setOtherLocation(e.target.value);
-    setMobile(e.target.value);
-    // setEmail(e.target.value);
-    // setAccessLevel(e.target.value);
-    console.log(firstName);
-  };
-
-  const handleSubmit = async (event) => {
-    console.log("Submit");
-
-    event.preventDefault();
-    console.log("Inside submit");
-    firstNameValidation();
-    console.log("First Name Validation checked");
-    lastNameValidation();
-    console.log("Last Name Validation checked");
-    // mainLocationValidation();
-    // otherLocationValidation();
-    mobileValidation();
-    console.log("Mobile Validation checked");
-
-    // emailValidation();
-    // console.log("Email Validation checked");
-
-    // accessLevelValidation();
-    // console.log("Access Validation checked");
-
-    if (
-      firstNameError === "" &&
-      lastNameError === "" &&
-      // mainLocationError === "" &&
-      // otherLocationError === "" &&
-      mobileError === ""
-      // emailError === "" &&
-      // accessLevelError === ""
-    ) {
-      try {
-        console.log("Token is",token);
-        
-        const resp = await axios
-          // const instance = axios.create(
-          .post(
-            url, JSON.stringify(resp),
-            { headers: { "Content-Type": "application/json", Authorization: `Bearer + ${token}` } },
-            {
-              first_name: firstName,
-              last_name: lastName,
-              mobile: mobile,
-              // email: email,
-              // accessLevel: accessLevel,
-            },
-            
-          )
-
-          .then((response) => {
-            console.log("People API was hit successfully");
-            console.log(response.data);
-            // localStorage.setItem("auth", response.data.authenticated);
-
-            navigate("/people");
-          });
-      } catch (error) {
-        console.log("People API was hit unsuccessfully");
-        console.log(error.response);
-      }
-    }
-  };
-  
-  // useEffect(() => {
-  //   const resp = async () => {
-  //     try {
-  //       const accessToken = await getAccessTokenSilently();
-  //       const data = await axios.post(url, {
-  //         headers: {
-  //           Authorization: `bearer ${accessToken}`
-  //         }
-  //       });
-  //       resp(data);
-  //     } catch (e) {
-  //       console.log(e.message);
-  //     }
-  //   };
-  
-  //   resp();
-  // }, []);
-  // }
-
+export default function Addteammember(props) {
   const theme = useTheme();
   const [personName, setPersonName] = React.useState([]);
   const [mainLocation, setMainLocation] = React.useState([]);
   const [otherLocation, setOtherLocation] = React.useState([]);
   const [employeeType, setEmployeeType] = React.useState([]);
   const [inputs, setInputs] = React.useState([]);
+  const [inviteLink, setInviteLink] = React.useState("");
+  const token = process.env.REACT_APP_TEMP_TOKEN;
+  const url = process.env.REACT_APP_BASE_URL;
+
+  console.log(props);
+  axios
+    .get(url + "/invitation_link/", {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+    })
+    .then((response) => {
+      // console.log(response.data.invitation_link);
+      setInviteLink(response.data.invitation_link);
+    })
+    .catch((error) => {
+      console.error(error);
+    });
 
   const handleMainLocation = (event) => {
-    const {
-      target: { value },
-    } = event;
-    setMainLocation(value);
+    setMainLocation(event.target.value);
   };
   const handleOtherLocation = (event) => {
-    const {
-      target: { value },
-    } = event;
-    setOtherLocation(value);
+    setOtherLocation(event.target.value);
   };
   const handleEmployeeType = (event) => {
-    const {
-      target: { value },
-    } = event;
-    setEmployeeType(value);
+    setEmployeeType(event.target.value);
   };
 
   const [open, setOpen] = React.useState(false);
@@ -263,20 +107,41 @@ export default function Addteammember() {
     setInputs((values) => ({ ...values, [name]: value }));
   };
 
-  // const handleSubmit = (event) => {
-  //   event.preventDefault();
-  //   console.log(
-  //     { inputs },
-  //     { mainLocation },
-  //     { otherLocation },
-  //     { employeeType }
-  //   );
-  // };
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    console.log(
+      { inputs },
+      { mainLocation },
+      { otherLocation },
+      { employeeType }
+    );
 
-  const {
-    register,
-    formState: { errors },
-  } = useForm();
+    axios
+      .post(
+        url + "/people/",
+        {
+          first_name: inputs.firstname,
+          last_name: inputs.lastname,
+          is_superuser: false,
+          email: inputs.email,
+          role: 2,
+          business: props.businessId,
+          profile: {},
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        }
+      )
+      .then((response) => {
+        console.log(response);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  };
 
   return (
     <React.Fragment>
@@ -285,7 +150,7 @@ export default function Addteammember() {
           ...style,
           mt: 20,
           width: 660,
-          height: "auto",
+          height: 930,
         }}
       >
         <Box className="flex flex-row" sx={{ width: "620px" }}>
@@ -325,12 +190,16 @@ export default function Addteammember() {
           <Box sx={{ display: "flex", flexDirection: "row" }}>
             <TextField
               size="small"
+              disabled
               sx={{
                 mt: "10px",
                 width: 350,
                 ml: 18,
               }}
-            ></TextField>
+              value={inviteLink}
+            >
+              {inviteLink}
+            </TextField>
             <Button
               className="btn btn-primary"
               size="small"
@@ -370,23 +239,8 @@ export default function Addteammember() {
                   borderRadius: 20,
                 }}
                 placeholder="Please input"
-                {...register("First Name", { required: true })}
-                onChange={handleOnChange}
+                onChange={handleChange}
               ></TextField>
-            </Box>
-            <Box sx={{ ml: 17, mt: 1 }}>
-              {errors.FirstName?.type === "required" && "Firstname Required"}
-              <small>
-                {firstNameError && (
-                  <div
-                    style={{
-                      color: "red",
-                    }}
-                  >
-                    {firstNameError}
-                  </div>
-                )}
-              </small>
             </Box>
 
             <Box sx={{ display: "flex", flexDirection: "row" }}>
@@ -408,28 +262,13 @@ export default function Addteammember() {
                   pt: "30px",
                 }}
                 placeholder="Please input "
-                {...register("Last Name", { required: true })}
-                onChange={handleOnChange}
+                onChange={handleChange}
               ></TextField>
-            </Box>
-            <Box sx={{ ml: 17, mt: 1 }}>
-              {errors.FirstName?.type === "required" && "Firstname Required"}
-              <small>
-                {lastNameError && (
-                  <div
-                    style={{
-                      color: "red",
-                    }}
-                  >
-                    {lastNameError}
-                  </div>
-                )}
-              </small>
             </Box>
 
             <Box sx={{ display: "flex", flexDirection: "row" }}>
               <Typography sx={{ mt: "40px", width: "350px", ml: 1 }}>
-                Main Location
+                Main Location{" "}
               </Typography>
               <FormControl
                 size="small"
@@ -447,115 +286,75 @@ export default function Addteammember() {
                     borderRadius: "8px",
                   }}
                   displayEmpty
+                  label="Location"
                   value={mainLocation}
                   onChange={handleMainLocation}
                   input={<OutlinedInput />}
-                  renderValue={(selected) => {
-                    if (selected.length === 0) {
-                      return <span>Location</span>;
-                    }
-
-                    return selected;
-                  }}
                   MenuProps={MenuProps}
                   inputProps={{ "aria-label": "Without label" }}
                 >
                   <MenuItem disabled value=""></MenuItem>
-
-                  {names.map((name) => (
-                    <MenuItem
-                      key={name}
-                      value={name}
-                      style={getStyles(name, personName, theme)}
-                    >
-                      {name}
-                    </MenuItem>
-                  ))}
-                </Select>
-              </FormControl>
-            </Box>
-            {/* <Box sx={{ ml: 17, mt: 1 }}>
-              {errors.MainLocation?.type === "required" &&
-                "Main Location Required"}
-              <small>
-                {mainLocationError && (
-                  <div
-                    style={{
-                      color: "red",
-                    }}
-                  >
-                    {mainLocationError}
-                  </div>
-                )}
-              </small>
-            </Box> */}
-            <Box>
-              <FormControl
-                size="small"
-                sx={{
-                  m: 1,
-                  mt: 3,
-                  pt: "5px",
-                  display: "flex",
-                  flexDirection: "row",
-                }}
-              >
-                <Typography sx={{ width: "400px", mt: "10px" }}>
-                  Other Location
-                </Typography>
-                <Select
-                  sx={{
-                    mr: 32,
-                    mb: "5px",
-                    font: "inherit",
-                    width: "620px",
-                  }}
-                  multiple
-                  displayEmpty
-                  value={personName}
-                  // {...register("Other Location", { required: true })}
-                  // onChange={handleOnChange}
-                  input={<OutlinedInput />}
-                  renderValue={(selected) => {
-                    if (selected.length === 0) {
-                      return <em>Select </em>;
-                    }
-
-                    return selected.join(", ");
-                  }}
-                  MenuProps={MenuProps}
-                  inputProps={{ "aria-label": "Without label" }}
-                >
-                  <MenuItem disabled value="">
-                    <em>Select </em>
+                  <MenuItem value="">
+                    <em>None</em>
                   </MenuItem>
-                  {names.map((name) => (
+                  {names.map((name, idx) => (
                     <MenuItem
                       key={name}
-                      value={name}
+                      value={idx}
                       style={getStyles(name, personName, theme)}
                     >
                       {name}
                     </MenuItem>
                   ))}
                 </Select>
-              </FormControl>
+              </FormControl>{" "}
             </Box>
-            {/* <Box sx={{ ml: 17, mt: 1 }}>
-              {errors.OtherLocation?.type === "required" &&
-                "Other Location Required"}
-              <small>
-                {otherLocationError && (
-                  <div
-                    style={{
-                      color: "red",
-                    }}
+
+            <FormControl
+              size="small"
+              sx={{
+                m: 1,
+                mt: 3,
+                pt: "5px",
+                display: "flex",
+                flexDirection: "row",
+              }}
+            >
+              <Typography sx={{ width: "400px", mt: "10px" }}>
+                {" "}
+                Other Location{" "}
+              </Typography>
+              <Select
+                name="otherLocation"
+                sx={{
+                  mr: 32,
+                  mb: "5px",
+                  font: "inherit",
+                  width: "620px",
+                }}
+                displayEmpty
+                value={otherLocation}
+                onChange={handleOtherLocation}
+                label="Other Location"
+                input={<OutlinedInput />}
+                MenuProps={MenuProps}
+                inputProps={{ "aria-label": "Without label" }}
+              >
+                <MenuItem value="">
+                  <em>None</em>
+                </MenuItem>
+                {names.map((name, idx) => (
+                  <MenuItem
+                    key={name}
+                    value={idx}
+                    style={getStyles(name, personName, theme)}
                   >
-                    {otherLocationError}
-                  </div>
-                )}
-              </small>
-            </Box> */}
+                    {name}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
+
             <Box sx={{ display: "flex", flexDirection: "row", mt: "25px" }}>
               <Typography
                 sx={{
@@ -575,23 +374,8 @@ export default function Addteammember() {
                   pt: "10px",
                 }}
                 placeholder="Please input "
-                {...register("Mobile", { required: true })}
                 onChange={handleChange}
               ></TextField>
-            </Box>
-            <Box sx={{ ml: 17 }}>
-              {errors.Mobile?.type === "required" && "Mobile Number Required"}
-              <small>
-                {mobileError && (
-                  <div
-                    style={{
-                      color: "red",
-                    }}
-                  >
-                    {mobileError}
-                  </div>
-                )}
-              </small>
             </Box>
 
             <Box sx={{ display: "flex", flexDirection: "row" }}>
@@ -612,24 +396,8 @@ export default function Addteammember() {
                   pt: "10px",
                 }}
                 placeholder="Please input "
-                // {...register("Email", { required: true })}
-                // onChange={handleOnChange}
                 onChange={handleChange}
               ></TextField>
-            </Box>
-            <Box sx={{ ml: 17, mt: 1 }}>
-              {errors.Email?.type === "required" && "Email Required"}
-              <small>
-                {emailError && (
-                  <div
-                    style={{
-                      color: "red",
-                    }}
-                  >
-                    {emailError}
-                  </div>
-                )}
-              </small>
             </Box>
             <Box sx={{ display: "flex", flexDirection: "row" }}>
               <Typography sx={{ mt: "40px", width: "350px" }}>
@@ -653,23 +421,19 @@ export default function Addteammember() {
                   displayEmpty
                   value={employeeType}
                   onChange={handleEmployeeType}
-                  // onChange={handleChange}
                   input={<OutlinedInput />}
-                  renderValue={(selected) => {
-                    if (selected.length === 0) {
-                      return <span>Employee</span>;
-                    }
-
-                    return selected;
-                  }}
+                  label="Employee type"
                   MenuProps={MenuProps}
                   inputProps={{ "aria-label": "Without label" }}
                 >
                   <MenuItem disabled value=""></MenuItem>
-                  {access.map((name) => (
+                  <MenuItem value="">
+                    <em>None</em>
+                  </MenuItem>
+                  {access.map((name, idx) => (
                     <MenuItem
                       key={name}
-                      value={name}
+                      value={idx}
                       style={getStyles(name, personName, theme)}
                     >
                       {name}
@@ -677,21 +441,6 @@ export default function Addteammember() {
                   ))}
                 </Select>
               </FormControl>
-            </Box>
-            <Box sx={{ ml: 17, mt: 1 }}>
-              {/* {errors.AccessLevel?.type === "required" &&
-                "Access Level Required"}
-              <small>
-                {accessLevelError && (
-                  <div
-                    style={{
-                      color: "red",
-                    }}
-                  >
-                    {accessLevelError}
-                  </div>
-                )}
-              </small> */}
             </Box>
           </Box>
         </div>
@@ -712,7 +461,8 @@ export default function Addteammember() {
           <Typography
             sx={{ width: 400, mt: 4, color: "rgba(95, 91, 81, 0.518)" }}
           >
-            Invite to use Maxpilot
+            {" "}
+            Invite to use Maxpilot{" "}
           </Typography>
           <Button
             sx={{
