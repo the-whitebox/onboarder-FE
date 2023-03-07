@@ -15,6 +15,7 @@ import Grid from "@mui/material/Grid";
 import CloseIcon from "@mui/icons-material/Close";
 import Capture from "../../assets/images/Capture.png";
 import "../../style/Addteam.css";
+import axios from "axios";
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -56,31 +57,41 @@ const style = {
   pb: 3,
 };
 
-export default function Addteammember() {
+export default function Addteammember(props) {
   const theme = useTheme();
   const [personName, setPersonName] = React.useState([]);
   const [mainLocation, setMainLocation] = React.useState([]);
   const [otherLocation, setOtherLocation] = React.useState([]);
   const [employeeType, setEmployeeType] = React.useState([]);
   const [inputs, setInputs] = React.useState([]);
+  const [inviteLink, setInviteLink] = React.useState("");
+  const token = process.env.REACT_APP_TEMP_TOKEN;
+  const url = process.env.REACT_APP_BASE_URL;
+
+  console.log(props);
+  axios
+    .get(url + "/invitation_link/", {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+    })
+    .then((response) => {
+      // console.log(response.data.invitation_link);
+      setInviteLink(response.data.invitation_link);
+    })
+    .catch((error) => {
+      console.error(error);
+    });
 
   const handleMainLocation = (event) => {
-    const {
-      target: { value },
-    } = event;
-    setMainLocation(value);
+    setMainLocation(event.target.value);
   };
   const handleOtherLocation = (event) => {
-    const {
-      target: { value },
-    } = event;
-    setOtherLocation(value);
+    setOtherLocation(event.target.value);
   };
   const handleEmployeeType = (event) => {
-    const {
-      target: { value },
-    } = event;
-    setEmployeeType(value);
+    setEmployeeType(event.target.value);
   };
 
   const [open, setOpen] = React.useState(false);
@@ -104,6 +115,32 @@ export default function Addteammember() {
       { otherLocation },
       { employeeType }
     );
+
+    axios
+      .post(
+        url + "/people/",
+        {
+          first_name: inputs.firstname,
+          last_name: inputs.lastname,
+          is_superuser: false,
+          email: inputs.email,
+          role: 2,
+          business: props.businessId,
+          profile: {},
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        }
+      )
+      .then((response) => {
+        console.log(response);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
   };
 
   return (
@@ -153,12 +190,16 @@ export default function Addteammember() {
           <Box sx={{ display: "flex", flexDirection: "row" }}>
             <TextField
               size="small"
+              disabled
               sx={{
                 mt: "10px",
                 width: 350,
                 ml: 18,
               }}
-            ></TextField>
+              value={inviteLink}
+            >
+              {inviteLink}
+            </TextField>
             <Button
               className="btn btn-primary"
               size="small"
@@ -245,25 +286,21 @@ export default function Addteammember() {
                     borderRadius: "8px",
                   }}
                   displayEmpty
+                  label="Location"
                   value={mainLocation}
                   onChange={handleMainLocation}
                   input={<OutlinedInput />}
-                  renderValue={(selected) => {
-                    if (selected.length === 0) {
-                      return <span>Location</span>;
-                    }
-
-                    return selected;
-                  }}
                   MenuProps={MenuProps}
                   inputProps={{ "aria-label": "Without label" }}
                 >
                   <MenuItem disabled value=""></MenuItem>
-
-                  {names.map((name) => (
+                  <MenuItem value="">
+                    <em>None</em>
+                  </MenuItem>
+                  {names.map((name, idx) => (
                     <MenuItem
                       key={name}
-                      value={name}
+                      value={idx}
                       style={getStyles(name, personName, theme)}
                     >
                       {name}
@@ -298,21 +335,18 @@ export default function Addteammember() {
                 displayEmpty
                 value={otherLocation}
                 onChange={handleOtherLocation}
+                label="Other Location"
                 input={<OutlinedInput />}
-                renderValue={(selected) => {
-                  if (selected.length === 0) {
-                    return <span>Select </span>;
-                  }
-
-                  return selected;
-                }}
                 MenuProps={MenuProps}
                 inputProps={{ "aria-label": "Without label" }}
               >
-                {names.map((name) => (
+                <MenuItem value="">
+                  <em>None</em>
+                </MenuItem>
+                {names.map((name, idx) => (
                   <MenuItem
                     key={name}
-                    value={name}
+                    value={idx}
                     style={getStyles(name, personName, theme)}
                   >
                     {name}
@@ -387,23 +421,19 @@ export default function Addteammember() {
                   displayEmpty
                   value={employeeType}
                   onChange={handleEmployeeType}
-                  // onChange={handleChange}
                   input={<OutlinedInput />}
-                  renderValue={(selected) => {
-                    if (selected.length === 0) {
-                      return <span>Employee</span>;
-                    }
-
-                    return selected;
-                  }}
+                  label="Employee type"
                   MenuProps={MenuProps}
                   inputProps={{ "aria-label": "Without label" }}
                 >
                   <MenuItem disabled value=""></MenuItem>
-                  {access.map((name) => (
+                  <MenuItem value="">
+                    <em>None</em>
+                  </MenuItem>
+                  {access.map((name, idx) => (
                     <MenuItem
                       key={name}
-                      value={name}
+                      value={idx}
                       style={getStyles(name, personName, theme)}
                     >
                       {name}
