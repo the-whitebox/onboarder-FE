@@ -33,7 +33,7 @@ import { useState } from "react";
 
 const theme = createTheme();
 
-export default function SignInSide({authenticate}) {
+export default function SignInSide() {
   const [email, setEmail] = useState("");
   const [emailError, setEmailError] = useState("");
   const [password, setPassword] = useState("");
@@ -140,7 +140,7 @@ export default function SignInSide({authenticate}) {
             console.log("Login API was hit successfully");
             console.log(response.data);
             localStorage.setItem("token", response.data.access_token);
-            navigate("/people");
+            navigate("/");
             // Navigate to Home Screen
           });
       } catch (error) {

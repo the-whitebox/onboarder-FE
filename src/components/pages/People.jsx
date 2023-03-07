@@ -377,6 +377,7 @@ export default function People() {
             }}
           >
             <DataGrid
+              
               rows={rows}
               columns={columns}
               pageSize={5}

@@ -29,11 +29,9 @@ import EmploymentDetails from "./components/pages/EmploymentDetails";
 import Personal from "./components/pages/Personal";
 import PersonalDetails from "./components/pages/PersonalDetails";
 import AddNewPeople from "./components/pages/AddNewPeople";
-import ProtectedRoutes from "./utils/ProtectedRoutes";
 
 
 function App() {
-  const [user, setUser] = useState(null);
  
   useEffect(() => {
     WebFont.load({
@@ -45,8 +43,8 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Login authenticate={()=> setUser(true)}/>} />
-        <Route path="/home" element={<Login authenticate={()=> setUser(true)}/>} />
+        <Route path="/" element={<Login />} />
+        <Route path="/home" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/forgotpassword" element={<ForgotPassword />} />
         <Route path="/resetpassword" element={<ResetPassword />} />
@@ -64,8 +62,7 @@ function App() {
         <Route path="/add" element={<AddNewPeople />} />
         <Route path="/new" element={<AddNewPeople />} />
         <Route path="/setAccess" element={<SetAccessLevel />} />
-        {user && (<Route path="/people" element={<People authenticate={()=> setUser(true)}/>}/>)}
-        <Route path="*" element={<Navigate to={user ? "/people" : "/"}/>}/>
+        <Route path="/people" element={<People/>}/>
       </Routes>
     </BrowserRouter>
   );
