@@ -73,17 +73,11 @@ export default function SetAccessLevel() {
     setOpen(false);
   };
 
-  const [isOpen, setIsOpen] = useState(true);
-  const toggleDropdown = () => {
-    setIsOpen(!isOpen);
-  };
-
   return (
     <React.Fragment>
       <Box sx={{ ...style, width: 370, height: 270 }}>
         <CloseButton
           id="child-modal-title"
-          onClick={toggleDropdown}
           sx={{ float: "right" }}
         ></CloseButton>
         <Typography

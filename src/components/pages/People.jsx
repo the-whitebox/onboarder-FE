@@ -24,10 +24,13 @@ import "../../style/People.css";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import Modal from "@mui/material/Modal";
 import AddTeammemberModalBody from "../feature/AddTeammember";
-import MoreVertIcon from "@mui/icons-material/MoreVert";
+import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import axios from "axios";
 import Avatar from "@mui/material/Avatar";
 import { MoreVert } from "../feature/MoreVert";
+import SideBar from "../feature/SideBar";
+
+import ReactDOM from "react-dom";
 
 const theme = createTheme();
 
@@ -71,7 +74,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   },
 }));
 
-const drawerWidth = 230;
+// const drawerWidth = 230;
 
 const columns = [
   {
@@ -81,15 +84,41 @@ const columns = [
     flex: 1,
     hideable: false,
   },
-  { field: "access", headerName: "Access", minWidth: 100, flex: 1 },
-  { field: "location", headerName: "Main Location", minWidth: 100, flex: 1 },
-  { field: "status", headerName: "Status", minWidth: 100, flex: 1 },
-  { field: "email", headerName: "Email", minWidth: 100, flex: 1 },
-  { field: "mobile", headerName: "Mobile", minWidth: 100, flex: 1 },
+  {
+    field: "access",
+    headerName: "Access",
+    minWidth: 100,
+    flex: 1,
+  },
+  {
+    field: "location",
+    headerName: "Main Location",
+    minWidth: 100,
+    flex: 1,
+  },
+  {
+    field: "status",
+    headerName: "Status",
+    minWidth: 100,
+    flex: 1,
+  },
+  {
+    field: "email",
+    headerName: "Email",
+    minWidth: 100,
+    flex: 1,
+  },
+  {
+    field: "mobile",
+    headerName: "Mobile",
+    minWidth: 100,
+    flex: 1,
+  },
   {
     field: "action",
     headerName: "Action",
-    width: 120,
+    width: 100,
+
     renderCell: (params) => {
       // const onClick = (e) => {
       //   e.stopPropagation();
@@ -97,10 +126,15 @@ const columns = [
       // };
 
       return (
-        <Avatar sx={{ backgroundColor: "#38B492", color: "#ffffff" }}>
-          <MoreVertIcon>
+        <Avatar
+          sx={{
+            backgroundColor: "#38B492",
+            color: "#ffffff",
+          }}
+        >
+          <MoreHorizIcon>
             <MoreVert />
-          </MoreVertIcon>
+          </MoreHorizIcon>
         </Avatar>
       );
     },
@@ -173,16 +207,9 @@ export default function People() {
       <Box
         sx={{
           display: "flex",
-          // width: {
-          //   xs: 100,
-          //   sm: 600,
-          //   md: 900,
-          //   lg: 900,
-          //   xl: 1500,
-          // },
         }}
       >
-        <CssBaseline />
+        {/* <CssBaseline />
         <AppBar
           style={{ background: "#ffffff", color: "black" }}
           position="fixed"
@@ -258,7 +285,8 @@ export default function People() {
               Reports
             </Typography>
           </Box>
-        </AppBar>
+        </AppBar> */}
+
         <Grid
           sx={{
             backgroundColor: "#38b492",
@@ -269,17 +297,20 @@ export default function People() {
             src={MaxPilotLogo}
             aria-label="Busy Man"
             sx={{
+              mt: 55,
               height: "10vh",
-
               width: "230px",
+              transform: "rotate(270deg)",
             }}
             variant="square"
           />
         </Grid>
 
+        <SideBar />
+
         <Box
           component="main"
-          sx={{ flexGrow: 1, bgcolor: "background.default", p: 3 }}
+          sx={{ flexGrow: 1, bgcolor: "background.default" }}
         >
           <Toolbar />
 
@@ -328,6 +359,7 @@ export default function People() {
               mr: 40,
               pt: 0.5,
               display: "flex",
+
               flexGrow: 1,
             }}
           >
