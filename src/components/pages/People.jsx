@@ -8,6 +8,7 @@ import CssBaseline from "@mui/material/CssBaseline";
 import { styled, alpha } from "@mui/material/styles";
 import MaxPilotLogo from "../../assets/images/maxpilot-logo-w.png";
 import Grid from "@mui/material/Grid";
+import { Paper } from "@mui/material";
 import InputLabel from "@mui/material/InputLabel";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
@@ -28,9 +29,13 @@ import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import axios from "axios";
 import Avatar from "@mui/material/Avatar";
 import { MoreVert } from "../feature/MoreVert";
+
 import SideBar from "../feature/SideBar";
 
 import ReactDOM from "react-dom";
+
+import { useEffect, useState } from "react";
+
 
 const theme = createTheme();
 
@@ -78,41 +83,34 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 
 const columns = [
   {
-    field: "name",
+    field: "first_name",
     headerName: "Name",
     minWidth: 100,
     flex: 1,
     hideable: false,
   },
   {
-    field: "access",
+    field: "role",
     headerName: "Access",
     minWidth: 100,
     flex: 1,
+    valueGetter: (params) => params.row.role.role,
   },
   {
-    field: "location",
+    field: "last_name",
     headerName: "Main Location",
     minWidth: 100,
     flex: 1,
+    // valueGetter: (params) => params.row.,
   },
+  { field: "user_status", headerName: "Status", minWidth: 100, flex: 1 },
+  { field: "email", headerName: "Email", minWidth: 100, flex: 1 },
   {
-    field: "status",
-    headerName: "Status",
-    minWidth: 100,
-    flex: 1,
-  },
-  {
-    field: "email",
-    headerName: "Email",
-    minWidth: 100,
-    flex: 1,
-  },
-  {
-    field: "mobile",
+    field: "profile",
     headerName: "Mobile",
     minWidth: 100,
     flex: 1,
+    valueGetter: (params) => params.row.profile.phone_number,
   },
   {
     field: "action",
@@ -141,43 +139,102 @@ const columns = [
   },
 ];
 
-const rows = [
-  {
-    id: 1,
-    name: "Asher",
-    access: "Advisor",
-    location: "Talha's Professonal Service",
-    status: "Employed",
-    email: "Someemail@some.com",
-    mobile: 1234,
-  },
-  {
-    id: 2,
-    name: "Cersei",
-    access: "Supervisor",
-    location: "Talha's Professonal Service",
-    status: "Employed",
-    email: "Someemail@some.com",
-    mobile: 1234,
-  },
-  {
-    id: 3,
-    name: "Talha",
-    access: "System Administrator",
-    location: "Talha's Professonal Service",
-    status: "Employed",
-    email: "Someemail@some.com",
-    mobile: 1234,
-  },
-];
+// const rows = [
+//   {
+//     id: 1,
+//     name: "Asher",
+//     access: "Advisor",
+//     location: "Talha's Professonal Service",
+//     status: "Employed",
+//     email: "Someemail@some.com",
+//     mobile: 1234,
+//   },
+//   {
+//     id: 2,
+//     name: "Cersei",
+//     access: "Supervisor",
+//     location: "Talha's Professonal Service",
+//     status: "Employed",
+//     email: "Someemail@some.com",
+//     mobile: 1234,
+//   },
+//   {
+//     id: 3,
+//     name: "Talha",
+//     access: "System Administrator",
+//     location: "Talha's Professonal Service",
+//     status: "Employed",
+//     email: "Someemail@some.com",
+//     mobile: 1234,
+//   },
+// ];
 
 export default function People() {
-  const url = process.env.REACT_APP_BASE_URL + "/people/";
-  const [people, setPeople] = React.useState("");
-  const [firstName, setFirstName] = React.useState("");
-  const [lastName, setLastName] = React.useState("");
-  const [location, setLocattion] = React.useState("");
-  const [otherLocation, setOtherLocattion] = React.useState("");
+  const token = process.env.REACT_APP_TEMP_TOKEN;
+  const url = process.env.REACT_APP_BASE_URL;
+  const [people, setPeople] = useState("");
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [location, setLocattion] = useState("");
+  const [otherLocation, setOtherLocattion] = useState("");
+  const [businessId, setBusinessId] = useState("");
+
+  // console.log({ token, url });
+
+  const [listOfTeamMembers, setListOfTeamMembers] = React.useState([]);
+
+  let b_id = "";
+  let team_array = [];
+  const getBusiness = async () => {
+    try {
+      const response = await axios
+        .get(url + "/business/", {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        })
+        .then((response) => {
+          console.log(response.data);
+          const ids = response.data.map((obj) => obj.id);
+          const firstId = ids[0];
+          setBusinessId(firstId);
+          b_id = firstId;
+          // console.log("First Id: ", firstId);
+        });
+
+      // console.log({ businessId });
+
+      const teamResponse = await axios.get(
+        url + `/people/?business_id=${b_id}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      const teamMembers = teamResponse.data;
+      // console.log({ teamMembers });
+      team_array = teamMembers;
+      setListOfTeamMembers(teamMembers);
+
+      // console.log({ listOfTeamMembers });
+    } catch (error) {
+      console.log("Error", error);
+    }
+  };
+
+  useEffect(() => {
+    getBusiness();
+  }, []);
+
+  // getBusiness();
+
+  console.log("The rows", listOfTeamMembers);
+  const rows = team_array;
+  // console.log("The array of Objects: ", rows);
 
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => {
@@ -202,7 +259,7 @@ export default function People() {
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
-        <AddTeammemberModalBody />
+        <AddTeammemberModalBody businessId={businessId} />
       </Modal>
       <Box
         sx={{
@@ -288,11 +345,17 @@ export default function People() {
         </AppBar> */}
 
         <Grid
+          direction="column"
+          alignItems="center"
           sx={{
             backgroundColor: "#38b492",
             minHeight: "100vh",
           }}
         >
+          {/* <Paper elevation={3} style={{ transform: "rotate(270deg)" }}>
+            <img src={MaxPilotLogo} alt="my image" />
+          </Paper> */}
+          {/* <img src={MaxPilotLogo} alt="my image" /> */}
           <Avatar
             src={MaxPilotLogo}
             aria-label="Busy Man"
@@ -364,7 +427,7 @@ export default function People() {
             }}
           >
             <DataGrid
-              rows={rows}
+              rows={listOfTeamMembers}
               columns={columns}
               pageSize={5}
               rowsPerPageOptions={[5]}
