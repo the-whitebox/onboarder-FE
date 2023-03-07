@@ -29,6 +29,7 @@ import MoreVertIcon from "@mui/icons-material/MoreVert";
 import axios from "axios";
 import Avatar from "@mui/material/Avatar";
 import { MoreVert } from "../feature/MoreVert";
+import { useEffect, useState } from "react";
 
 const theme = createTheme();
 
@@ -76,17 +77,35 @@ const drawerWidth = 230;
 
 const columns = [
   {
-    field: "name",
+    field: "first_name",
     headerName: "Name",
     minWidth: 100,
     flex: 1,
     hideable: false,
   },
-  { field: "access", headerName: "Access", minWidth: 100, flex: 1 },
-  { field: "location", headerName: "Main Location", minWidth: 100, flex: 1 },
-  { field: "status", headerName: "Status", minWidth: 100, flex: 1 },
+  {
+    field: "role",
+    headerName: "Access",
+    minWidth: 100,
+    flex: 1,
+    valueGetter: (params) => params.row.role.role,
+  },
+  {
+    field: "last_name",
+    headerName: "Main Location",
+    minWidth: 100,
+    flex: 1,
+    // valueGetter: (params) => params.row.,
+  },
+  { field: "user_status", headerName: "Status", minWidth: 100, flex: 1 },
   { field: "email", headerName: "Email", minWidth: 100, flex: 1 },
-  { field: "mobile", headerName: "Mobile", minWidth: 100, flex: 1 },
+  {
+    field: "profile",
+    headerName: "Mobile",
+    minWidth: 100,
+    flex: 1,
+    valueGetter: (params) => params.row.profile.phone_number,
+  },
   {
     field: "action",
     headerName: "Action",
@@ -141,47 +160,69 @@ const columns = [
 export default function People() {
   const token = process.env.REACT_APP_TEMP_TOKEN;
   const url = process.env.REACT_APP_BASE_URL;
-  const [people, setPeople] = React.useState("");
-  const [firstName, setFirstName] = React.useState("");
-  const [lastName, setLastName] = React.useState("");
-  const [location, setLocattion] = React.useState("");
-  const [otherLocation, setOtherLocattion] = React.useState("");
-  const [businessId, setBusinessId] = React.useState("");
+  const [people, setPeople] = useState("");
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [location, setLocattion] = useState("");
+  const [otherLocation, setOtherLocattion] = useState("");
+  const [businessId, setBusinessId] = useState("");
+
+  // console.log({ token, url });
+
   const [listOfTeamMembers, setListOfTeamMembers] = React.useState([]);
 
-  React.useEffect(() => {
-    axios
-      .get(url + "/business/", {
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "application/json",
-        },
-      })
-      .then((response) => {
-        response = response.data;
-        const ids = response.map((obj) => obj.id);
+  let b_id = "";
+  let team_array = [];
+  const getBusiness = async () => {
+    try {
+      const response = await axios
+        .get(url + "/business/", {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        })
+        .then((response) => {
+          console.log(response.data);
+          const ids = response.data.map((obj) => obj.id);
+          const firstId = ids[0];
+          setBusinessId(firstId);
+          b_id = firstId;
+          // console.log("First Id: ", firstId);
+        });
 
-        setBusinessId(ids[0]);
-        // console.log(businessId);
-      });
+      // console.log({ businessId });
 
-    axios
-      .get(url + `/people/?business_id=${businessId}`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "application/json",
-        },
-      })
-      .then((response) => {
-        response = response.data;
-        // setListOfTeamMembers(response);
-        setListOfTeamMembers(response);
-      });
+      const teamResponse = await axios.get(
+        url + `/people/?business_id=${b_id}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      const teamMembers = teamResponse.data;
+      // console.log({ teamMembers });
+      team_array = teamMembers;
+      setListOfTeamMembers(teamMembers);
+
+      // console.log({ listOfTeamMembers });
+    } catch (error) {
+      console.log("Error", error);
+    }
+  };
+
+  useEffect(() => {
+    getBusiness();
   }, []);
 
+  // getBusiness();
+
   console.log("The rows", listOfTeamMembers);
-  const rows = [listOfTeamMembers];
-  console.log("The array of Objects: ", rows);
+  const rows = team_array;
+  // console.log("The array of Objects: ", rows);
 
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => {
@@ -376,7 +417,7 @@ export default function People() {
             }}
           >
             <DataGrid
-              rows={rows}
+              rows={listOfTeamMembers}
               columns={columns}
               pageSize={5}
               rowsPerPageOptions={[5]}
