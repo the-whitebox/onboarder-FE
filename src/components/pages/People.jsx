@@ -29,13 +29,13 @@ import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import axios from "axios";
 import Avatar from "@mui/material/Avatar";
 import { MoreVert } from "../feature/MoreVert";
+import IconButton from "@mui/material/IconButton";
 
 import SideBar from "../feature/SideBar";
 
 import ReactDOM from "react-dom";
 
 import { useEffect, useState } from "react";
-
 
 const theme = createTheme();
 
@@ -78,6 +78,10 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
     },
   },
 }));
+
+const handleClick = () => {
+  // Your code here
+};
 
 // const drawerWidth = 230;
 
@@ -127,12 +131,14 @@ const columns = [
         <Avatar
           sx={{
             backgroundColor: "#38B492",
-            color: "#ffffff",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
           }}
         >
-          <MoreHorizIcon>
-            <MoreVert />
-          </MoreHorizIcon>
+          <Button onClick={handleClick}>
+            <MoreVert sx={{ color: "white" }} />
+          </Button>
         </Avatar>
       );
     },
@@ -263,6 +269,7 @@ export default function People() {
       </Modal>
       <Box
         sx={{
+          minHeight: "100vh",
           display: "flex",
         }}
       >
@@ -418,8 +425,6 @@ export default function People() {
             sx={{
               height: "70%",
               width: "100%",
-              ml: 2,
-              mr: 40,
               pt: 0.5,
               display: "flex",
 
