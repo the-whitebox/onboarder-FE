@@ -84,55 +84,11 @@ export default function SetAccessLevel(props) {
     setOpen(false);
   };
 
-  const [isOpen, setIsOpen] = useState(true);
-  const toggleDropdown = () => {
-    setIsOpen(!isOpen);
-  };
-
-  const toAccess = (e) => {
-  //   if (selectedValue !== "") {
-  //     console.log("Data Found");
-  //     setError(false);
-  //     console.log(selectedValue);
-  //   } 
-  //   else {
-  //     setError(true);
-  //     setState({ data: e.target.value });
-  //   }
-  // };
-
-
-  console.log(
-    { selectedValue }
-  );
-
-  axios
-    .post(
-      url + "/people/",
-      {
-        role: 2,
-      },
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "application/json",
-        },
-      }
-    )
-    .then((response) => {
-      console.log(response);
-    })
-    .catch((error) => {
-      console.error(error);
-    });
-};
-
   return (
     <React.Fragment>
       <Box sx={{ ...style, width: 370, height: 270 }}>
         <CloseButton
           id="child-modal-title"
-          onClick={toggleDropdown}
           sx={{ float: "right" }}
         ></CloseButton>
         <Typography

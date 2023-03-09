@@ -14,7 +14,12 @@ const Item = styled("div")(({ theme }) => ({
 export default function LoginInfo() {
   return (
     <>
-      <Box sx={{ pt: 2, pb: 2 }}>
+      <Box
+        sx={{
+          pt: 2,
+          pb: 2,
+        }}
+      >
         <Typography variant="h5">Login Information</Typography>
       </Box>
       <Box

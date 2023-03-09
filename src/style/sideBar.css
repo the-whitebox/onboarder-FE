@@ -1,0 +1,48 @@
+Change color on hover .bm-item:hover {
+  color: white;
+}
+
+/* The rest copied directly from react-burger-menu docs */
+
+/* Position and sizing of burger button */
+.bm-burger-button {
+  position: absolute;
+  width: 36px;
+  height: 30px;
+  margin-left: 5px;
+  top: 22px;
+}
+
+/* Color/shape of burger icon bars */
+.bm-burger-bars {
+  background: #38b492;
+}
+
+.bm-cross-button {
+  height: 24px;
+  width: 24px;
+}
+
+.bm-cross {
+  background: #bdc3c7;
+}
+
+/* General sidebar styles */
+.list {
+  /* background: #4d4e4ecc; */
+  padding: 2.5em 1.5em 0;
+  font-size: 1.15em;
+}
+.sidebar-links {
+  /* background-color: #38b492; */
+  color: black !important;
+  height: 45px;
+  display: flex !important;
+  flex-wrap: wrap;
+  align-content: center;
+  padding-left: 15px;
+}
+.sidebar-links:hover {
+  background-color: #a8decf;
+  color: black;
+}

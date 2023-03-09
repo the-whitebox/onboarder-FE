@@ -194,7 +194,20 @@ export default function SignInSide() {
       >
         <WelcomeModalBody />
       </Modal>
-      <Grid container component="main" sx={{ height: "100vh" }}>
+      <Grid
+        container
+        component="main"
+        sx={{
+          height: "100vh",
+          width: {
+            xs: 600,
+            sm: 700,
+            md: 900,
+            lg: 1400,
+            xl: 1900,
+          },
+        }}
+      >
         <CssBaseline />
         <Grid
           item
