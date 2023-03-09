@@ -48,7 +48,7 @@ const style = {
 export default function BasicModal() {
   const url = process.env.REACT_APP_BASE_URL + "/business";
   const [state, setState] = React.useState({ data: "" });
-  const [process, setProcess] = React.useState("");
+  const [payProcess, setPayProcess] = React.useState("");
   const [hear, setHear] = React.useState("");
   const [error, setError] = React.useState(null);
   const [processError, setProcessError] = useState("");
@@ -59,7 +59,7 @@ export default function BasicModal() {
   const location = useLocation();
 
   const processValidation = () => {
-    if (process === "") {
+    if (payProcess === "") {
       setProcessError("What process you prefer?");
     } else setProcessError("");
   };
@@ -77,11 +77,11 @@ export default function BasicModal() {
 
   const createBusiness = (e) => {
     console.log("Inside createBusiness");
-    console.log(location.state, process, hear);
-    if (process !== "" && hear !== "") {
+    console.log(location.state, payProcess, hear);
+    if (payProcess !== "" && hear !== "") {
       console.log("Data Found");
       setError(false);
-      console.log(process, hear);
+      console.log(payProcess, hear);
       try {
         axios
           .post(url, {
@@ -92,7 +92,7 @@ export default function BasicModal() {
             employess_range: null,
             joining_purpose: location.state.purpose,
             payroll_type: location.state.payroll,
-            pay_proces_improvement_duration: process,
+            pay_proces_improvement_duration: payProcess,
             how_you_hear: hear,
           })
           .then((response) => {
@@ -106,8 +106,8 @@ export default function BasicModal() {
         console.log(error.response.data);
       }
 
-      console.log(process, hear);
-      // alert(process + hear);
+      console.log(payProcess, hear);
+      // alert(payProcess + hear);
 
       // navigate("/about", {
       //   state: {
@@ -117,7 +117,7 @@ export default function BasicModal() {
       //     industry: location.state.industry,
       //     purpose: location.state.purpose,
       //     payroll: location.state.payroll,
-      //     process: process,
+      //     payProcess: payProcess,
       //     hear: hear,
       //   },
       // });
@@ -247,7 +247,7 @@ export default function BasicModal() {
                     size="lg"
                     sx={{ flexDirection: "row", gap: 1.5, mt: 2 }}
                     {...register("Process", { required: true })}
-                    onChange={(e) => setProcess(e.target.value)}
+                    onChange={(e) => setPayProcess(e.target.value)}
                   >
                     {[
                       "As soon as possible",
@@ -302,7 +302,7 @@ export default function BasicModal() {
                     ))}
                   </RadioGroup>
                 </Grid>
-                {errors.process?.type === "required" && "Process Required"}
+                {errors.payProcess?.type === "required" && "Process Required"}
                 <small>
                   {processError && (
                     <div
@@ -468,10 +468,16 @@ export default function BasicModal() {
             </Link>
           </Box>
         </Grid>
-        <Grid item xs={false} sm={4} md={5} sx={{ backgroundColor: "#FFFFFF" }}>
+        <Grid
+          item
+          xs={false}
+          sm={4}
+          md={5}
+          sx={{ backgroundColor: "#FFFFFF", minHeight: "100vh" }}
+        >
           <Avatar
             src={RightSideImage}
-            aria-label="UROOSTER"
+            aria-label="MaxPilot"
             sx={{
               height: "100vh",
               width: "100%",
