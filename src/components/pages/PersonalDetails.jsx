@@ -24,7 +24,8 @@ import { useForm } from "react-hook-form";
 
 
 export default function PersonalDetails() {
-  const url = process.env.REACT_APP_BASE_URL + "/people";
+  const url = process.env.REACT_APP_BASE_URL;
+  const token = process.env.REACT_APP_TEMP_TOKEN;
   const [state, setState] = React.useState({ data: "" });
   const [email, setEmail] = useState("");
   const [firstName, setFirstName] = useState("");
@@ -57,25 +58,25 @@ export default function PersonalDetails() {
   };
 
   const firstNameValidation = () => {
-    if (firstName == "") {
+    if (firstName === "") {
       setFirstNameError("Please enter first name");
     } else setFirstNameError("");
   };
 
   const lastNameValidation = () => {
-    if (lastName == "") {
+    if (lastName === "") {
       setLastNameError("Please enter last name");
     } else setLastNameError("");
   };
 
   const fullNameValidation = () => {
-    if (fullName == "") {
+    if (fullName === "") {
       setFullNameError("Please enter full name");
     } else setFullNameError("");
   };
 
   const pronounsValidation = () => {
-    if (pronouns == "") {
+    if (pronouns === "") {
       setPronounsError("Please enter first name");
     } else setPronounsError("");
   };
@@ -92,51 +93,89 @@ export default function PersonalDetails() {
 
   const personalDetails = (e) => {
     console.log("Inside Personal Details");
-    console.log(email, firstName, lastName);
-    if (
-      email !== "" &&
-      firstName !== "" &&
-      lastName !== "" &&
-      fullName !== "" &&
-      pronouns !== "" &&
-      birthday !== ""
-      
-    ) {
-      console.log("Data Found");
-      setError(false);
-      console.log(
-        email,
-        firstName,
-        lastName,
-        fullName,
-        pronouns,
-        birthday
-    
-      );
-      try {
-        axios
-          .post(url, {
-            email: email,
-            first_name: firstName,
-            last_name: lastName,
-            full_name: fullName,
+    console.log({email}, {firstName}, {lastName});
+
+    axios
+      .post(
+        url + "/people/",
+        {
+          first_name: firstName,
+          last_name: lastName,
+          email: email,
+          is_superuser: false,
+          // pronouns: pronouns,
+          // birthday: birthday,
+          // full_name: fullName,
+          role: 3,
+          business: 1,
+          profile: {
+            date_of_birth: birthday,
             pronouns: pronouns,
-            birthday: birthday,
-            
-          })
-          .then((response) => {
-            console.log("Personal API was hit successfully");
-            console.log(response);
-          });
-      } catch (error) {
-        console.log(error.response.data);
-      }
-      console.log(email, firstName, lastName);
-    } else {
-      setError(true);
-      setState({ data: e.target.value });
-    }
+            full_name: fullName
+          },
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        }
+      )
+      .then((response) => {
+        console.log(response);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
   };
+    // if (
+    //   email !== "" &&
+    //   firstName !== "" &&
+    //   lastName !== "" &&
+    //   fullName !== "" &&
+    //   pronouns !== "" &&
+    //   birthday !== ""
+      
+    // ) {
+    //   console.log("Data Found");
+    //   setError(false);
+    //   console.log(
+    //     email,
+    //     firstName,
+    //     lastName,
+    //     fullName,
+    //     pronouns,
+    //     birthday
+    
+    //   );
+      
+  //     try {
+  //       axios
+  //         .post(url, {
+  //           email: email,
+  //           first_name: firstName,
+  //           last_name: lastName,
+  //           full_name: fullName,
+  //           profile: {},
+            
+  //         }, {
+  //           headers: {
+  //             Authorization: `Bearer ${token}`,
+  //             "Content-Type": "application/json",
+  //           }})
+  //         .then((response) => {
+  //           console.log("Personal API was hit successfully");
+  //           console.log(response);
+  //         });
+  //     } catch (error) {
+  //       console.log(error.response.data);
+  //     }
+  //     console.log(email, firstName, lastName);
+  //   } else {
+  //     setError(true);
+  //     setState({ data: e.target.value });
+  //   }
+  // };
 
   return (
     <>
@@ -322,7 +361,7 @@ export default function PersonalDetails() {
                   mr: 60,
                 }}
                 {...register("First Name", { required: true })}
-                onChange={handleOnChange}
+                onChange={(e) => setFirstName(e.target.value)}
               />
             </Box>
             <Box sx={{ ml: 30, mt: 1 }}>
@@ -361,7 +400,7 @@ export default function PersonalDetails() {
                   mr: 60,
                 }}
                 {...register("Last Name", { required: true })}
-                onChange={handleOnChange}
+                onChange={(e) => setLastName(e.target.value)}
               />
             </Box>
             <Box sx={{ ml: 30, mt: 1 }}>
@@ -401,7 +440,7 @@ export default function PersonalDetails() {
                   mr: 60,
                 }}
                 {...register("Full Name", { required: true })}
-                onChange={handleOnChange}
+                onChange={(e) => setFullName(e.target.value)}
               />
             </Box>
             <Box sx={{ ml: 30, mt: 1 }}>
@@ -440,7 +479,7 @@ export default function PersonalDetails() {
                   mr: 60,
                 }}
                 {...register("Pronouns", { required: true })}
-                onChange={handleOnChange}
+                onChange={(e) => setPronouns(e.target.value)}
               />
             </Box>
             <Box sx={{ ml: 30, mt: 1 }}>

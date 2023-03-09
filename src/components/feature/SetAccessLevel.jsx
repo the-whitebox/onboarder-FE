@@ -12,6 +12,8 @@ import Typography from "@mui/material/Typography";
 import "../../style/SetAccesslevel.css";
 import { useState } from "react";
 import { FormHelperText } from "@mui/material";
+import axios from "axios";
+
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -47,10 +49,14 @@ const style = {
   padding: "20px",
 };
 
-export default function SetAccessLevel() {
+export default function SetAccessLevel(props) {
   const [state, setState] = React.useState({ data: "" });
   const [selectedValue, setSelectedValue] = useState("");
   const [error, setError] = React.useState(null);
+  const token = process.env.REACT_APP_TEMP_TOKEN;
+  const url = process.env.REACT_APP_BASE_URL;
+
+  
 
   function getStyles(name, personName, theme) {
     return {
@@ -84,16 +90,42 @@ export default function SetAccessLevel() {
   };
 
   const toAccess = (e) => {
-    if (selectedValue !== "") {
-      console.log("Data Found");
-      setError(false);
-      console.log(selectedValue);
-    } 
-    else {
-      setError(true);
-      setState({ data: e.target.value });
-    }
-  };
+  //   if (selectedValue !== "") {
+  //     console.log("Data Found");
+  //     setError(false);
+  //     console.log(selectedValue);
+  //   } 
+  //   else {
+  //     setError(true);
+  //     setState({ data: e.target.value });
+  //   }
+  // };
+
+
+  console.log(
+    { selectedValue }
+  );
+
+  axios
+    .post(
+      url + "/people/",
+      {
+        role: 2,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+      }
+    )
+    .then((response) => {
+      console.log(response);
+    })
+    .catch((error) => {
+      console.error(error);
+    });
+};
 
   return (
     <React.Fragment>
@@ -131,6 +163,8 @@ export default function SetAccessLevel() {
               value={selectedValue}
               onChange={(e) => setSelectedValue(e.target.value)}
               >
+              <MenuItem disabled value=""></MenuItem>
+              <MenuItem value=""><em>None</em></MenuItem>
               <MenuItem value={"System Administrator"}>System Administrator</MenuItem>
               <MenuItem value={"Supervisor"}>Supervisior</MenuItem>
               <MenuItem value={"Employee"}>Employee</MenuItem>
