@@ -36,7 +36,6 @@ import ReactDOM from "react-dom";
 
 import { useEffect, useState } from "react";
 
-
 const theme = createTheme();
 
 const Search = styled("div")(({ theme }) => ({
@@ -373,13 +372,17 @@ export default function People() {
 
         <Box
           component="main"
-          sx={{ flexGrow: 1, bgcolor: "background.default" }}
+          sx={{
+            flexGrow: 1,
+            bgcolor: "background.default",
+            marginLeft: "-30px",
+          }}
         >
           <Toolbar />
 
           <Box sx={{ display: "flex", justifyContent: "space-between", mt: 4 }}>
             <Typography variant="h4" sx={{ fontWeight: "Bold" }}>
-              Personal
+              Team
             </Typography>
 
             <FormControl variant="filled" sx={{ m: 1, minWidth: 120 }}>
@@ -411,14 +414,14 @@ export default function People() {
           </Box>
           <Box sx={{ pt: 3, pb: 2 }}>
             <Typography variant="h6" fontWeight="Bold">
-              Personal Details
+              Team Details
             </Typography>
           </Box>
           <Box
             sx={{
               height: "70%",
               width: "100%",
-              ml: 2,
+
               mr: 40,
               pt: 0.5,
               display: "flex",
