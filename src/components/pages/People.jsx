@@ -269,7 +269,6 @@ export default function People() {
       </Modal>
       <Box
         sx={{
-          minHeight: "100vh",
           display: "flex",
         }}
       >
@@ -427,7 +426,6 @@ export default function People() {
               width: "100%",
               pt: 0.5,
               display: "flex",
-
               flexGrow: 1,
             }}
           >

@@ -35,7 +35,7 @@ Change color on hover .bm-item:hover {
 }
 .sidebar-links {
   /* background-color: #38b492; */
-  color: #38b492 !important;
+  color: black !important;
   height: 45px;
   display: flex !important;
   flex-wrap: wrap;
@@ -43,6 +43,6 @@ Change color on hover .bm-item:hover {
   padding-left: 15px;
 }
 .sidebar-links:hover {
-  background-color: black;
-  color: #38b492;
+  background-color: #a8decf;
+  color: black;
 }
