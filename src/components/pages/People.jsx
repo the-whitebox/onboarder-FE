@@ -379,7 +379,7 @@ export default function People() {
 
         <Box
           component="main"
-          sx={{ flexGrow: 1, bgcolor: "background.default" }}
+          sx={{ flexGrow: 1, bgcolor: "background.default", ml: "-30px" }}
         >
           <Toolbar />
 
@@ -422,7 +422,7 @@ export default function People() {
           </Box>
           <Box
             sx={{
-              height: "70%",
+              height: "50%",
               width: "100%",
               pt: 0.5,
               display: "flex",

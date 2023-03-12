@@ -30,7 +30,7 @@ export default function PersonalDetails() {
         <Grid
           container
           component="main"
-          sx={{ height: "100vh", width: "240px" }}
+          sx={{ minHeight: "100vh", width: "240px" }}
         >
           <CssBaseline />
           <Grid
@@ -283,7 +283,7 @@ export default function PersonalDetails() {
                 >
                   <Stack spacing={3}>
                     <DesktopDatePicker
-                      inputFormat="MM/DD/YYYY"
+                      inputFormat="DD/MM/YYYY"
                       value={date}
                       onChange={handleOnChange}
                       renderInput={(params) => <TextField {...params} />}
