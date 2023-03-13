@@ -10,7 +10,7 @@ import Grid from "@mui/material/Grid";
 import CssBaseline from "@mui/material/CssBaseline";
 import MaxPilotLogo from "../../assets/images/maxpilot-logo-w.png";
 import "../../style/General.css";
-import dayjs from "dayjs";
+// import dayjs from "dayjs";
 import Stack from "@mui/material/Stack";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
@@ -42,7 +42,8 @@ export default function PersonalDetails() {
   const [fullNameError, setFullNameError] = useState("");
   const [pronounsError , setPronounsError] = useState("");
   const [birthdayError, setBirthdayError] = useState("");
-  const [date, setDate] = React.useState(dayjs("2014-08-18T21:11:54"));
+  const [date, setDate] = React.useState<Date | null>(null);
+  console.log(date);
 
   const navigate = useNavigate();
 
@@ -524,7 +525,7 @@ export default function PersonalDetails() {
                 >
                   <Stack spacing={3}>
                     <DesktopDatePicker
-                      inputFormat="MM/DD/YYYY"
+                      inputFormat="DD/MM/YYYY"
                       value={date}
                       onChange={handleOnChange}
                       renderInput={(params) => <TextField {...params} />}
