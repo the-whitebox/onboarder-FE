@@ -20,6 +20,10 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useForm } from "react-hook-form";
+// import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
+// import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+
+
 
 
 
@@ -518,7 +522,7 @@ export default function PersonalDetails() {
               >
                 Date of Birth
               </Typography>
-              <Box sx={{ width: 600, pl: 4 }}>
+              {/* <Box sx={{ width: 600, pl: 4 }}>
                 <LocalizationProvider
                   dateAdapter={AdapterDayjs}
                   sx={{ height: 0.1, pt: 5 }}
@@ -532,7 +536,17 @@ export default function PersonalDetails() {
                     />
                   </Stack>
                 </LocalizationProvider>
-              </Box>
+              </Box> */}
+              {/* <Box>
+              <LocalizationProvider dateAdapter={AdapterDayjs}>
+              <DemoContainer components={['DatePicker']}>
+              <DatePicker label="Basic date picker" />
+              </DemoContainer>
+              </LocalizationProvider>
+
+
+                
+              </Box> */}
               <Grid
                 container
                 sx={{

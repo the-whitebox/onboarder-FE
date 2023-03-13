@@ -54,6 +54,22 @@ export default function BasicModal() {
   const [businessTypeError, setBusinessTypeError] = useState("");
   const [industryError, setIndustryError] = useState("");
 
+  const businesses = [
+  "Healthcare",
+  "Retail & Hospitality",
+  "Services",
+  "Charity",
+  "Other",]
+
+  const industries = {
+    "Healthcare": ['f', 'g', 'l'],
+    "Retail & Hospitality": ['a', 'b'],
+    "Services": ['tr', 'trt', 'rtt'],
+    "Charity": ['abc', 'def'],
+    "Other": ['aik', 'bot'],
+
+  }
+
   const theme = useTheme();
   const [age, setAge] = React.useState("");
 
@@ -122,6 +138,12 @@ export default function BasicModal() {
 
   //   setBusiness
   // };
+
+  const businessTypeChange= (e) => {
+    setBusinesstype(e.target.value)
+
+    console.log(e.target.value)
+  }
 
   const icons = [Icon1, Icon2, Icon3, Icon4, Icon5];
 
@@ -331,7 +353,7 @@ export default function BasicModal() {
                   },
                 }}
                 {...register("Business Type", { required: true })}
-                onChange={(e) => setBusinesstype(e.target.id)}
+                onChange={businessTypeChange}
               >
                 {[
                   "Healthcare",
@@ -395,6 +417,7 @@ export default function BasicModal() {
             </Typography>
             <FormControl sx={{ width: "30%", mt: 2 }}>
               <InputLabel id="demo-simple-select-label">Industry</InputLabel>
+              
               <Select
                 labelId="demo-simple-select-label"
                 id="demo-simple-select"
@@ -403,9 +426,19 @@ export default function BasicModal() {
                 {...register("Industry", { required: true })}
                 onChange={(e) => setIndustry(e.target.value)}
               >
-                <MenuItem value={10}>Ten</MenuItem>
-                <MenuItem value={20}>Twenty</MenuItem>
-                <MenuItem value={30}>Thirty</MenuItem>
+                  
+                
+                {
+                businesstype &&
+               
+                
+              industries[businesstype].map(industry => {
+                debugger;
+                <MenuItem value={industry}>{industry}</MenuItem>
+})
+}              
+
+                
               </Select>
             </FormControl>
             {errors.industry?.type === "required" && "Industry Required"}
