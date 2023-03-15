@@ -29,7 +29,7 @@ const MenuProps = {
   },
 };
 
-const names = [];
+const names = ["2","3"];
 
 const style = {
   position: "absolute",
@@ -57,7 +57,9 @@ export default function Setpayrates() {
 
   const theme = useTheme();
   const [personName, setPersonName] = React.useState([]);
-  const url = process.env.REACT_APP_BASE_URL + "/people";
+  const url = process.env.REACT_APP_BASE_URL + "/people/";
+  const token = process.env.REACT_APP_TEMP_TOKEN;
+
   const [state, setState] = React.useState({ data: "" });
   const [payRates, setPayRates] = useState("");
   const [mondays, setMondays] = useState("");
@@ -127,6 +129,7 @@ export default function Setpayrates() {
       // On autofill we get a stringified value.
       typeof value === "string" ? value.split(",") : value
     );
+    setPayRates(event.target.value)
   };
 
   const [open, setOpen] = React.useState(false);
@@ -157,14 +160,19 @@ export default function Setpayrates() {
       try {
         axios
           .post(url, {
+            role: 2,
             pay_rates: payRates,
             mondays: mondays,
             tuesdays: tuesdays,
             wednesdays: wednesdays,
             thursdays: thursdays,
             fridays: fridays,
-            
-            
+          },
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+              "Content-Type": "application/json",
+            },
           })
           .then((response) => {
             console.log("Pay Rates API was hit successfully");
@@ -238,7 +246,7 @@ export default function Setpayrates() {
               MenuProps={MenuProps}
               inputProps={{ "aria-label": "Without label" }}
               {...register("Pay Rates", { required: true })}
-                onChange={(e) => setPayRates(e.target.value)}
+                onChange={handleChange}
             >
               <MenuItem disabled value="">
                 <em>Rates per Day</em>

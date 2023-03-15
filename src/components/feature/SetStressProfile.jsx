@@ -14,6 +14,8 @@ import "../../style/SetStress.css";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
+import axios from "axios";
+
 
 
 const ITEM_HEIGHT = 50;
@@ -61,6 +63,8 @@ export default function SetStressProfile() {
 
   const [error, setError] = React.useState(null);
   const [stressError, setStressError] = React.useState("");
+  const token = process.env.REACT_APP_TEMP_TOKEN;
+  const url = process.env.REACT_APP_BASE_URL;
 
   const stressValidation = () => {
     if (stress == "") {
@@ -102,24 +106,46 @@ export default function SetStressProfile() {
       // On autofill we get a stringified value.
       typeof value === "string" ? value.split(",") : value
     );
+    setStress(event.target.value);
   };
 
   const toEmployment = (e) => {
-    if (stress !== "") {
-      console.log("Data Found");
-      setError(false);
-      console.log(stress);
+  //   if (stress !== "") {
+  //     console.log("Data Found");
+  //     setError(false);
+  //     console.log(stress);
 
-      navigate("/employment", {
-        state: {
-          stress: stress
+  //     navigate("/employment", {
+  //       state: {
+  //         stress: stress
+  //       },
+  //     });
+  //   } else {
+  //     setError(true);
+  //     setState({ data: e.target.value });
+  //   }
+  // };
+
+  axios
+    .post(
+      url + "/people/",
+      {
+        role: 2,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
         },
-      });
-    } else {
-      setError(true);
-      setState({ data: e.target.value });
-    }
-  };
+      }
+    )
+    .then((response) => {
+      console.log(response);
+    })
+    .catch((error) => {
+      console.error(error);
+    });
+};
 
   return (
     <React.Fragment>
@@ -166,16 +192,16 @@ export default function SetStressProfile() {
             </Typography>
             <Select
              {...register("Stress Profile", { required: true })}
-             onChange={(e) => setStress(e.target.value)}
+             onChange={handleChange}
               sx={{ borderRadius: "10px" }}
-              multiple
               displayEmpty
               value={personName}
               input={<OutlinedInput />}
               renderValue={(selected) => {
                 if (selected.length === 0) {
+                  console.log("Selected values:", selected)
                   return <em>Select</em>;
-                }
+                } else
 
                 return selected.join(", ");
               }}

@@ -12,6 +12,7 @@ import CloseIcon from "@mui/icons-material/Close";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
+import axios from "axios";
 
 const ITEM_HEIGHT = 40;
 const ITEM_PADDING_TOP = 45;
@@ -54,6 +55,8 @@ export default function Addleaveentitlement() {
 
   const [error, setError] = React.useState(null);
   const [leaveError, setLeaveError] = useState("");
+  const token = process.env.REACT_APP_TEMP_TOKEN;
+  const url = process.env.REACT_APP_BASE_URL;
 
   function getStyles(name, personName, theme) {
     return {
@@ -75,6 +78,7 @@ export default function Addleaveentitlement() {
       // On autofill we get a stringified value.
       typeof value === "string" ? value.split(",") : value
     );
+    setLeave(event.target.value)
   };
 
   const leaveValidation = () => {
@@ -91,21 +95,45 @@ export default function Addleaveentitlement() {
   const navigate = useNavigate();
 
   const toEmployment = (e) => {
-    if (leave !== "") {
-      console.log("Data Found");
-      setError(false);
-      console.log(leave);
+  //   if (leave !== "") {
+  //     console.log("Data Found");
+  //     setError(false);
+  //     console.log(leave);
 
-      navigate("/employment", {
-        state: {
-          leave: leave,
+  //     navigate("/employment", {
+  //       state: {
+  //         leave: leave,
+  //       },
+  //     });
+  //   } else {
+  //     setError(true);
+  //     setState({ data: e.target.value });
+  //   }
+  // };
+  console.log(
+    { leave }
+  );
+
+  axios
+    .post(
+      url + "/people/",
+      {
+        role: 2,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
         },
-      });
-    } else {
-      setError(true);
-      setState({ data: e.target.value });
-    }
-  };
+      }
+    )
+    .then((response) => {
+      console.log(response);
+    })
+    .catch((error) => {
+      console.error(error);
+    });
+};
 
 
   return (
@@ -136,10 +164,9 @@ export default function Addleaveentitlement() {
           >
             <Select
             {...register("Leave Entitlement", { required: true })}
-            onChange={(e) => setLeave(e.target.value)}
+            onChange={handleChange}
               sx={{ borderRadius: "7px" }}
               size="small"
-              multiple
               displayEmpty
               value={personName}
               input={<OutlinedInput />}

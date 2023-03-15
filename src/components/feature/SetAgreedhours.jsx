@@ -40,6 +40,9 @@ export default function SetAgreedhours() {
   const [workPeriodError, setWorkPeriodError] = useState("");
   const [netWorkPeriodError, setNetWorkPeriodError] = useState("");
   const [hoursError, setHoursError] = useState("");
+  const token = process.env.REACT_APP_TEMP_TOKEN;
+  const url = process.env.REACT_APP_BASE_URL;
+
 
   const workPeriodValidation = () => {
     if (workPeriod == "") {
@@ -67,16 +70,37 @@ export default function SetAgreedhours() {
   const navigate = useNavigate();
 
   const toPeople = (e) => {
-    if (workPeriod !== "" && netWorkPeriod !== "" && hours !== "") {
-      console.log("Data Found");
-      setError(false);
-      console.log(workPeriod, netWorkPeriod, hours);
+  //   if (workPeriod !== "" && netWorkPeriod !== "" && hours !== "") {
+  //     console.log("Data Found");
+  //     setError(false);
+  //     console.log(workPeriod, netWorkPeriod, hours);
 
-    } else {
-      setError(true);
-      setState({ data: e.target.value });
-    }
-  };
+  //   } else {
+  //     setError(true);
+  //     setState({ data: e.target.value });
+  //   }
+  // };
+
+  axios
+    .post(
+      url + "/people/",
+      {
+        role: 2,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+      }
+    )
+    .then((response) => {
+      console.log(response);
+    })
+    .catch((error) => {
+      console.error(error);
+    });
+};
 
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => {

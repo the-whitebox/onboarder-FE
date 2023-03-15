@@ -27,8 +27,9 @@ import Icon3 from "../../assets/icons/services-icon.png";
 import Icon4 from "../../assets/icons/charity-icon.png";
 import Icon5 from "../../assets/icons/others-icon.png";
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
+import axios from "axios";
 
 const style = {
   position: "absolute",
@@ -48,11 +49,15 @@ export default function BasicModal() {
   const [mobile, setMobile] = React.useState("");
   const [businesstype, setBusinesstype] = React.useState("");
   const [industry, setIndustry] = React.useState("");
+  const [industryData, setIndustryData] = useState([])
   const [error, setError] = React.useState(null);
   const [businessError, setBusinessError] = useState("");
   const [mobileError, setMobileError] = useState("");
   const [businessTypeError, setBusinessTypeError] = useState("");
   const [industryError, setIndustryError] = useState("");
+  const token = process.env.REACT_APP_TEMP_TOKEN;
+  const url = process.env.REACT_APP_BASE_URL;
+  let subIndustries = '';
 
   const businesses = [
   "Healthcare",
@@ -69,6 +74,27 @@ export default function BasicModal() {
     "Other": ['aik', 'bot'],
 
   }
+   
+  const getIndustries = async () => {
+    try {
+      await axios
+        .get(url + "/enums/", {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        })
+        .then(res => {
+          console.log("getting from api", res.data)
+          setIndustryData(res.data);
+          subIndustries = res.data;
+          // console.log("Sub Industries data", subIndustries)
+        })
+    .catch(err => console.log(err))
+}  catch (error) {
+  console.log("Error", error);
+}}
+
 
   const theme = useTheme();
   const [age, setAge] = React.useState("");
@@ -139,10 +165,16 @@ export default function BasicModal() {
   //   setBusiness
   // };
 
+  useEffect(()=>{
+    getIndustries();
+  }, [businesstype]);
+
   const businessTypeChange= (e) => {
     setBusinesstype(e.target.value)
+    
 
-    console.log(e.target.value)
+    console.log({industryData})
+    // console.log(e.target.value)
   }
 
   const icons = [Icon1, Icon2, Icon3, Icon4, Icon5];
@@ -432,10 +464,10 @@ export default function BasicModal() {
                 businesstype &&
                
                 
-              industries[businesstype].map(industry => {
-                debugger;
-                <MenuItem value={industry}>{industry}</MenuItem>
-})
+              industryData.map(industry => (
+                
+                <MenuItem value={industry["name"]}>{industry["name"]}</MenuItem>
+              ))
 }              
 
                 

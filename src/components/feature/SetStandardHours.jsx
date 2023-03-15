@@ -10,6 +10,7 @@ import CloseIcon from "@mui/icons-material/Close";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
+import axios from "axios";
 
 const style = {
   position: "absolute",
@@ -31,6 +32,8 @@ export default function SetStandardHours() {
 
   const [error, setError] = React.useState(null);
   const [hoursError, setHoursError] = useState("");
+  const token = process.env.REACT_APP_TEMP_TOKEN;
+  const url = process.env.REACT_APP_BASE_URL;
 
   const hoursValidation = () => {
     if (hours == "") {
@@ -55,21 +58,46 @@ export default function SetStandardHours() {
   };
 
   const toEmployment = (e) => {
-    if (hours !== "") {
-      console.log("Data Found");
-      setError(false);
-      console.log(hours);
+  //   if (hours !== "") {
+  //     console.log("Data Found");
+  //     setError(false);
+  //     console.log(hours);
 
-      navigate("/employment", {
-        state: {
-          hours: hours,
+  //     navigate("/employment", {
+  //       state: {
+  //         hours: hours,
+  //       },
+  //     });
+  //   } else {
+  //     setError(true);
+  //     setState({ data: e.target.value });
+  //   }
+  // };
+  console.log(
+    { hours }
+  );
+
+  axios
+    .post(
+      url + "/people/",
+      {
+        role: 2,
+        hours: hours,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
         },
-      });
-    } else {
-      setError(true);
-      setState({ data: e.target.value });
-    }
-  };
+      }
+    )
+    .then((response) => {
+      console.log(response);
+    })
+    .catch((error) => {
+      console.error(error);
+    });
+};
 
   return (
     <React.Fragment>
