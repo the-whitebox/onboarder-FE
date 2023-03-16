@@ -10,19 +10,177 @@ import Grid from "@mui/material/Grid";
 import CssBaseline from "@mui/material/CssBaseline";
 import MaxPilotLogo from "../../assets/images/maxpilot-logo-w.png";
 import "../../style/General.css";
-import dayjs from "dayjs";
+// import dayjs from "dayjs";
 import Stack from "@mui/material/Stack";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { DesktopDatePicker } from "@mui/x-date-pickers/DesktopDatePicker";
 import "../../style/PersonalDetails.css";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import { useForm } from "react-hook-form";
+// import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
+// import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+
+
+
+
 
 export default function PersonalDetails() {
-  const [date, setDate] = React.useState(dayjs("2014-08-18T21:11:54"));
+  const url = process.env.REACT_APP_BASE_URL;
+  const token = process.env.REACT_APP_TEMP_TOKEN;
+  const [state, setState] = React.useState({ data: "" });
+  const [email, setEmail] = useState("");
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [fullName, setFullName] = useState("");
+  const [pronouns, setPronouns] = useState("");
+  const [birthday, setBirthday] = useState("");
+
+  const [error, setError] = React.useState(null);
+
+  const [emailError, setEmailError] = useState("");
+  const [firstNameError, setFirstNameError] = useState("");
+  const [lastNameError, setLastNameError] = useState("");
+  const [fullNameError, setFullNameError] = useState("");
+  const [pronounsError , setPronounsError] = useState("");
+  const [birthdayError, setBirthdayError] = useState("");
+  const [date, setDate] = React.useState<Date | null>(null);
+  console.log(date);
+
+  const navigate = useNavigate();
+
+  const emailValidation = () => {
+    const regEx = /^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[A-Za-z]+$/;
+    if (regEx.test(email)) {
+      setEmailError("");
+    } else if (email === "") {
+      setEmailError("Email should not be empty");
+    } else if (!regEx.test(email)) {
+      setEmailError("Email is not valid");
+    }
+  };
+
+  const firstNameValidation = () => {
+    if (firstName === "") {
+      setFirstNameError("Please enter first name");
+    } else setFirstNameError("");
+  };
+
+  const lastNameValidation = () => {
+    if (lastName === "") {
+      setLastNameError("Please enter last name");
+    } else setLastNameError("");
+  };
+
+  const fullNameValidation = () => {
+    if (fullName === "") {
+      setFullNameError("Please enter full name");
+    } else setFullNameError("");
+  };
+
+  const pronounsValidation = () => {
+    if (pronouns === "") {
+      setPronounsError("Please enter first name");
+    } else setPronounsError("");
+  };
+
+  const {
+    register,
+    formState: { errors },
+  } = useForm();
+
 
   const handleOnChange = (newValue) => {
     setDate(newValue);
   };
+
+  const personalDetails = (e) => {
+    console.log("Inside Personal Details");
+    console.log({email}, {firstName}, {lastName});
+
+    axios
+      .post(
+        url + "/people/",
+        {
+          first_name: firstName,
+          last_name: lastName,
+          email: email,
+          is_superuser: false,
+          // pronouns: pronouns,
+          // birthday: birthday,
+          // full_name: fullName,
+          role: 3,
+          business: 1,
+          profile: {
+            date_of_birth: birthday,
+            pronouns: pronouns,
+            full_name: fullName
+          },
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        }
+      )
+      .then((response) => {
+        console.log(response);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  };
+    // if (
+    //   email !== "" &&
+    //   firstName !== "" &&
+    //   lastName !== "" &&
+    //   fullName !== "" &&
+    //   pronouns !== "" &&
+    //   birthday !== ""
+      
+    // ) {
+    //   console.log("Data Found");
+    //   setError(false);
+    //   console.log(
+    //     email,
+    //     firstName,
+    //     lastName,
+    //     fullName,
+    //     pronouns,
+    //     birthday
+    
+    //   );
+      
+  //     try {
+  //       axios
+  //         .post(url, {
+  //           email: email,
+  //           first_name: firstName,
+  //           last_name: lastName,
+  //           full_name: fullName,
+  //           profile: {},
+            
+  //         }, {
+  //           headers: {
+  //             Authorization: `Bearer ${token}`,
+  //             "Content-Type": "application/json",
+  //           }})
+  //         .then((response) => {
+  //           console.log("Personal API was hit successfully");
+  //           console.log(response);
+  //         });
+  //     } catch (error) {
+  //       console.log(error.response.data);
+  //     }
+  //     console.log(email, firstName, lastName);
+  //   } else {
+  //     setError(true);
+  //     setState({ data: e.target.value });
+  //   }
+  // };
 
   return (
     <>
@@ -88,6 +246,14 @@ export default function PersonalDetails() {
               sx={{
                 bgcolor: "#38b492",
                 color: "#ffffff",
+              }}
+              onClick={(e) => {
+                emailValidation();
+                firstNameValidation();
+                lastNameValidation();
+                fullNameValidation();
+                pronounsValidation();
+                personalDetails(e);
               }}
             >
               Save
@@ -159,8 +325,24 @@ export default function PersonalDetails() {
                   width: "300px",
                   mr: 60,
                 }}
+                {...register("Email", { required: true })}
+                onChange={(e) => setEmail(e.target.value)}
               />
             </Box>
+            <Box sx={{ ml: 30, mt: 1 }}>
+            {errors.Email?.type === "required" && "Email Required"}
+              <small>
+                {emailError && (
+                  <div
+                    style={{
+                      color: "red",
+                    }}
+                  >
+                    {emailError}
+                  </div>
+                )}
+              </small>
+              </Box>
 
             <br />
             <Box className="flex flex-row ">
@@ -183,7 +365,23 @@ export default function PersonalDetails() {
                   width: "300px",
                   mr: 60,
                 }}
+                {...register("First Name", { required: true })}
+                onChange={(e) => setFirstName(e.target.value)}
               />
+            </Box>
+            <Box sx={{ ml: 30, mt: 1 }}>
+              {errors.FirstName?.type === "required" && "Firstname Required"}
+              <small>
+                {firstNameError && (
+                  <div
+                    style={{
+                      color: "red",
+                    }}
+                  >
+                    {firstNameError}
+                  </div>
+                )}
+              </small>
             </Box>
             <br />
             <Box className="flex flex-row ">
@@ -206,7 +404,23 @@ export default function PersonalDetails() {
                   width: "300px",
                   mr: 60,
                 }}
+                {...register("Last Name", { required: true })}
+                onChange={(e) => setLastName(e.target.value)}
               />
+            </Box>
+            <Box sx={{ ml: 30, mt: 1 }}>
+              {errors.LastName?.type === "required" && "Lastname Required"}
+              <small>
+                {lastNameError && (
+                  <div
+                    style={{
+                      color: "red",
+                    }}
+                  >
+                    {lastNameError}
+                  </div>
+                )}
+              </small>
             </Box>
             <br />
             <Box className="flex flex-row ">
@@ -230,7 +444,23 @@ export default function PersonalDetails() {
                   width: "300px",
                   mr: 60,
                 }}
+                {...register("Full Name", { required: true })}
+                onChange={(e) => setFullName(e.target.value)}
               />
+            </Box>
+            <Box sx={{ ml: 30, mt: 1 }}>
+              {errors.FullName?.type === "required" && "Fullname Required"}
+              <small>
+                {fullNameError && (
+                  <div
+                    style={{
+                      color: "red",
+                    }}
+                  >
+                    {fullNameError}
+                  </div>
+                )}
+              </small>
             </Box>
             <br />
             <Box className="flex flex-row ">
@@ -253,7 +483,23 @@ export default function PersonalDetails() {
                   width: "300px",
                   mr: 60,
                 }}
+                {...register("Pronouns", { required: true })}
+                onChange={(e) => setPronouns(e.target.value)}
               />
+            </Box>
+            <Box sx={{ ml: 30, mt: 1 }}>
+              {errors.Pronouns?.type === "required" && "Pronouns Required"}
+              <small>
+                {pronounsError && (
+                  <div
+                    style={{
+                      color: "red",
+                    }}
+                  >
+                    {pronounsError}
+                  </div>
+                )}
+              </small>
             </Box>
             <br />
             <Box
@@ -276,7 +522,7 @@ export default function PersonalDetails() {
               >
                 Date of Birth
               </Typography>
-              <Box sx={{ width: 600, pl: 4 }}>
+              {/* <Box sx={{ width: 600, pl: 4 }}>
                 <LocalizationProvider
                   dateAdapter={AdapterDayjs}
                   sx={{ height: 0.1, pt: 5 }}
@@ -290,7 +536,17 @@ export default function PersonalDetails() {
                     />
                   </Stack>
                 </LocalizationProvider>
-              </Box>
+              </Box> */}
+              {/* <Box>
+              <LocalizationProvider dateAdapter={AdapterDayjs}>
+              <DemoContainer components={['DatePicker']}>
+              <DatePicker label="Basic date picker" />
+              </DemoContainer>
+              </LocalizationProvider>
+
+
+                
+              </Box> */}
               <Grid
                 container
                 sx={{

@@ -34,12 +34,17 @@ import { useState } from "react";
 const theme = createTheme();
 
 export default function SignInSide() {
-  const url = process.env.REACT_APP_BASE_URL + "/auth/login/";
   const [email, setEmail] = useState("");
   const [emailError, setEmailError] = useState("");
   const [password, setPassword] = useState("");
   const [passwordError, setPasswordError] = useState("");
+  const url = process.env.REACT_APP_BASE_URL + "/auth/login/";
+
   const navigate = useNavigate();
+
+
+  
+  
 
   const emailValidation = () => {
     const regEx = /^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[A-Za-z]+$/;
@@ -80,8 +85,46 @@ export default function SignInSide() {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+    // localStorage.setItem("token", true);
+    // window.location.href = "/people"
     emailValidation();
     passwordValidation();
+    // authenticate();
+    // const payload = {
+    //   username: event.target.email.value,
+    //   password: event.target.password.value,
+    // }
+    // // console.log(payload)
+    // await login(payload);
+  //   try {
+  //     // Call your login API
+  //     const response = await fetch(url, {
+  //       method: 'POST',
+  //       headers: {
+  //         'Content-Type': 'application/json',
+  //       },
+  //       body: JSON.stringify({ email, password }),
+  //     });
+
+  //     if (response.ok) {
+  //       // Login successful
+  //       const data = await response.json();
+  //       localStorage.setItem('token', data.token);
+  //       navigate('/people')
+  //       console.log(data);
+  //       console.log(data.token);
+  //     } else {
+  //       // Login failed
+  //       const error = await response.json();
+  //       console.log(error);
+  //     }
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
+  // }
+
+  
 
     console.log("Password and Email Validation checked");
 
@@ -95,7 +138,9 @@ export default function SignInSide() {
           )
           .then((response) => {
             console.log("Login API was hit successfully");
-            navigate("/people");
+            console.log(response.data);
+            localStorage.setItem("token", response.data.access_token);
+            navigate("/");
             // Navigate to Home Screen
           });
       } catch (error) {
@@ -103,6 +148,8 @@ export default function SignInSide() {
       }
     }
   };
+
+  
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -238,7 +285,7 @@ export default function SignInSide() {
                 type="email"
                 id="email"
                 autoComplete="email"
-                // className={`input-email ${emailError ? "emailError" : ""}`}
+                className={`input-email ${emailError ? "emailError" : ""}`}
                 error={emailError}
                 autoFocus
                 iconEnd={<AlternateEmailOutlinedIcon />}
@@ -269,7 +316,7 @@ export default function SignInSide() {
                 error={passwordError}
                 iconEnd={<LockOutlinedIcon />}
                 value={password}
-                // {...register("Confirmpassword", { required: true })}
+                {...register("Confirmpassword", { required: true })}
                 onChange={handleOnChange}
               />
               {errors.Confirmpassword?.type === "required" &&

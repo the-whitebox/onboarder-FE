@@ -11,6 +11,11 @@ import Typography from "@mui/material/Typography";
 import CloseIcon from "@mui/icons-material/Close";
 import OutlinedInput from "@mui/material/OutlinedInput";
 import InputAdornment from "@mui/material/InputAdornment";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import { useForm } from "react-hook-form";
+
 
 const style = {
   position: "absolute",
@@ -26,6 +31,77 @@ const style = {
 };
 
 export default function SetAgreedhours() {
+  const [state, setState] = React.useState({ data: "" });
+  const [workPeriod, setWorkPeriod] = React.useState("");
+  const [netWorkPeriod, setNetWorkPeriod] = React.useState("");
+  const [hours, setHours] = React.useState("");
+
+  const [error, setError] = React.useState(null);
+  const [workPeriodError, setWorkPeriodError] = useState("");
+  const [netWorkPeriodError, setNetWorkPeriodError] = useState("");
+  const [hoursError, setHoursError] = useState("");
+  const token = process.env.REACT_APP_TEMP_TOKEN;
+  const url = process.env.REACT_APP_BASE_URL;
+
+
+  const workPeriodValidation = () => {
+    if (workPeriod == "") {
+      setWorkPeriodError("Please enter work period length");
+    } else setWorkPeriodError("");
+  };
+
+  const netWorkPeriodValidation = () => {
+    if (netWorkPeriod == "") {
+      setNetWorkPeriodError("Please enter start day");
+    } else setNetWorkPeriodError("");
+  };
+
+  const hoursValidation = () => {
+    if (hours == "") {
+      setHoursError("Please enter hours per work period");
+    } else setHoursError("");
+  };
+
+  const {
+    register,
+    formState: { errors },
+  } = useForm();
+
+  const navigate = useNavigate();
+
+  const toPeople = (e) => {
+  //   if (workPeriod !== "" && netWorkPeriod !== "" && hours !== "") {
+  //     console.log("Data Found");
+  //     setError(false);
+  //     console.log(workPeriod, netWorkPeriod, hours);
+
+  //   } else {
+  //     setError(true);
+  //     setState({ data: e.target.value });
+  //   }
+  // };
+
+  axios
+    .post(
+      url + "/people/",
+      {
+        role: 2,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+      }
+    )
+    .then((response) => {
+      console.log(response);
+    })
+    .catch((error) => {
+      console.error(error);
+    });
+};
+
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => {
     setOpen(false);
@@ -98,6 +174,8 @@ export default function SetAgreedhours() {
               aria-labelledby="demo-radio-buttons-group-label"
               defaultValue=""
               name="radio-buttons-group"
+              {...register("Work Period", { required: true })}
+              onChange={(e) => setWorkPeriod(e.target.value)}
             >
               <FormControlLabel
                 value="Weekly"
@@ -116,7 +194,20 @@ export default function SetAgreedhours() {
               />
             </RadioGroup>
           </FormControl>
-
+          <Box sx={{ ml: 3, mt: 1, mb: 1 }}>
+          {errors.workPeriod?.type === "required" && "Work Period Required"}
+          <small>
+            {workPeriodError && (
+              <div
+                style={{
+                  color: "red",
+                }}
+              >
+                {workPeriodError}
+              </div>
+            )}
+          </small>
+          </Box>
           <Typography
             sx={{
               ml: "20px",
@@ -141,6 +232,8 @@ export default function SetAgreedhours() {
               aria-labelledby="demo-radio-buttons-group-label"
               defaultValue=""
               name="radio-buttons-group"
+              {...register("Work Period", { required: true })}
+              onChange={(e) => setNetWorkPeriod(e.target.value)}
             >
               <FormControlLabel value="Mon" control={<Radio />} label="Mon" />
               <FormControlLabel value="Tue" control={<Radio />} label="Tue" />
@@ -151,12 +244,24 @@ export default function SetAgreedhours() {
               <FormControlLabel value="Sun" control={<Radio />} label="Sun" />
             </RadioGroup>
           </FormControl>
-
+          <Box sx={{ ml: 3, mt: 1 }}>
+          {errors.netWorkPeriod?.type === "required" && "Work Period Required"}
+          <small>
+            {netWorkPeriodError && (
+              <div
+                style={{
+                  color: "red",
+                }}
+              >
+                {netWorkPeriodError}
+              </div>
+            )}
+          </small>
+          </Box>
           <Typography
             sx={{ fontWeight: "bold", pt: "15px", pb: "20px", ml: 3 }}
           >
-            {" "}
-            Hours per Work period{" "}
+            Hours per Work period
           </Typography>
           <FormControl
             size="small"
@@ -173,9 +278,25 @@ export default function SetAgreedhours() {
                 "aria-label": "weight",
               }}
               placeholder="0"
+              {...register("Hours", { required: true })}
+              onChange={(e) => setHours(e.target.value)}
             />
           </FormControl>
         </div>
+        <Box sx={{ ml: 3, mt: 1 }}>
+        {errors.hours?.type === "required" && "Work Period Required"}
+        <small>
+          {hoursError && (
+            <div
+              style={{
+                color: "red",
+              }}
+            >
+              {hoursError}
+            </div>
+          )}
+        </small>
+        </Box>
         <Button
           className="btn btn-primary"
           sx={{
@@ -184,6 +305,12 @@ export default function SetAgreedhours() {
             width: "16%",
             textTransform: "none",
             mt: 3,
+          }}
+          onClick={() => {
+            workPeriodValidation();
+            netWorkPeriodValidation();
+            hoursValidation();
+            toPeople();
           }}
         >
           Save

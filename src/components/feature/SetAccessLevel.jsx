@@ -11,6 +11,9 @@ import CloseButton from "@mui/icons-material/Close";
 import Typography from "@mui/material/Typography";
 import "../../style/SetAccesslevel.css";
 import { useState } from "react";
+import { FormHelperText } from "@mui/material";
+import axios from "axios";
+
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -46,7 +49,15 @@ const style = {
   padding: "20px",
 };
 
-export default function SetAccessLevel() {
+export default function SetAccessLevel(props) {
+  const [state, setState] = React.useState({ data: "" });
+  const [selectedValue, setSelectedValue] = useState("");
+  const [error, setError] = React.useState(null);
+  const token = process.env.REACT_APP_TEMP_TOKEN;
+  const url = process.env.REACT_APP_BASE_URL;
+
+  
+
   function getStyles(name, personName, theme) {
     return {
       fontWeight:
@@ -73,6 +84,49 @@ export default function SetAccessLevel() {
     setOpen(false);
   };
 
+  const [isOpen, setIsOpen] = useState(true);
+  const toggleDropdown = () => {
+    setIsOpen(!isOpen);
+  };
+
+  const toAccess = (e) => {
+  //   if (selectedValue !== "") {
+  //     console.log("Data Found");
+  //     setError(false);
+  //     console.log(selectedValue);
+  //   } 
+  //   else {
+  //     setError(true);
+  //     setState({ data: e.target.value });
+  //   }
+  // };
+
+
+  console.log(
+    { selectedValue }
+  );
+
+  axios
+    .post(
+      url + "/people/",
+      {
+        role: 2,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+      }
+    )
+    .then((response) => {
+      console.log(response);
+    })
+    .catch((error) => {
+      console.error(error);
+    });
+};
+
   return (
     <React.Fragment>
       <Box sx={{ ...style, width: 370, height: 270 }}>
@@ -94,16 +148,32 @@ export default function SetAccessLevel() {
             Access level
           </Typography>
           <FormControl
+            error={error}
             sx={{
               width: 200,
               height: 5,
               padding: "5px  ",
             }}
           >
-            <Select
+            <Select 
               size="small"
               sx={{ borderRadius: "7px" }}
-              multiple
+              displayEmpty
+              value={selectedValue}
+              onChange={(e) => setSelectedValue(e.target.value)}
+              >
+              <MenuItem disabled value=""></MenuItem>
+              <MenuItem value=""><em>None</em></MenuItem>
+              <MenuItem value={"System Administrator"}>System Administrator</MenuItem>
+              <MenuItem value={"Supervisor"}>Supervisior</MenuItem>
+              <MenuItem value={"Employee"}>Employee</MenuItem>
+              <MenuItem value={"Location Manager"}>Location Manager</MenuItem>
+              <MenuItem value={"Advisor"}>Advisor</MenuItem>
+            </Select>
+            {error && <FormHelperText>Select a value</FormHelperText>}
+            {/* <Select
+              size="small"
+              sx={{ borderRadius: "7px" }}
               displayEmpty
               value={personName}
               onChange={handleChange}
@@ -117,18 +187,34 @@ export default function SetAccessLevel() {
               }}
               MenuProps={MenuProps}
               inputProps={{ "aria-label": "Without label" }}
+              // {...register("Access Level", { required: true })}
+              // onClick={(e) => setAccess(e.target.value)}
             >
               {names.map((name) => (
                 <MenuItem
                   key={name}
                   value={name}
-                  style={getStyles(name, personName, theme)}
+                  style={getStyles(name, access, theme)}
                 >
                   {name}
                 </MenuItem>
               ))}
-            </Select>
+            </Select> */}
           </FormControl>
+          {/* <Box sx={{ ml: 1, mt: 4 }}>
+        {errors.Access?.type === "required" && "Access Level Required"}
+        <small>
+          {accessError && (
+            <div
+              style={{
+                color: "red",
+              }}
+            >
+              {accessError}
+            </div>
+          )}
+        </small>
+        </Box> */}
         </div>
         <Button
           variant="primary"
@@ -141,6 +227,11 @@ export default function SetAccessLevel() {
             color: "white",
             textTransform: "none",
             mt: 6,
+          }}
+          onClick={() => {
+            // accessValidation();
+            toAccess();                  
+            // setError(!selectedValue)
           }}
         >
           Update
