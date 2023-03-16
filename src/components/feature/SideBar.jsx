@@ -86,6 +86,7 @@ import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import Link from "@mui/material/Link";
 import "../../style/sideBar.css";
+import zIndex from "@mui/material/styles/zIndex";
 
 const drawerWidth = 240;
 
@@ -125,7 +126,7 @@ export default function PersistentDrawerLeft() {
   return (
     <Box sx={{ display: "flex" }}>
       <CssBaseline />
-      <Box sx={{ flexGrow: 1 }}>
+      <Box sx={{ flexGrow: 1, height: "40px", zIndex: "100" }}>
         <IconButton
           sx={{ ml: 0 }}
           color="default"
