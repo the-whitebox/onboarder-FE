@@ -6,6 +6,9 @@ import Select from "@mui/material/Select";
 import { useTheme } from "@mui/material/styles";
 import OutlinedInput from "@mui/material/OutlinedInput";
 import MenuItem from "@mui/material/MenuItem";
+import { FormHelperText } from "@mui/material";
+// import EmploymentDetails from "../pages/EmploymentDetails";
+
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -18,36 +21,29 @@ const MenuProps = {
   },
 };
 
-const names = [
-  "System Administrator",
-  "Supervisor",
-  "Employee",
-  "Location Manager",
-  "Advisor",
-];
-
-export default function EmploymentType() {
-  function getStyles(name, personName, theme) {
-    return {
-      fontWeight:
-        personName.indexOf(name) === -1
-          ? theme.typography.fontWeightRegular
-          : theme.typography.fontWeightMedium,
-    };
-  }
-
+export default function EmploymentType(props) {
   const theme = useTheme();
-  const [personName, setPersonName] = React.useState([]);
+  const [employment, setEmployment] = React.useState("");
+  const [error, setError] = React.useState("");
+
+  React.useEffect(() => {
+    console.log("Employment: ", employment);
+
+    props.employmentData(employment);
+  }, [employment]);
+
 
   const handleChange = (event) => {
-    const {
-      target: { value },
-    } = event;
-    setPersonName(
-      // On autofill we get a stringified value.
-      typeof value === "string" ? value.split(",") : value
-    );
+    event.preventDefault();
+    setEmployment(event.target.value);
+    console.log("Event value: ", event.target.value);
   };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    props.emplomentData(employment);
+  };
+
   return (
     <>
       <Box sx={{ pt: 2, display: "flex" }}>
@@ -56,32 +52,21 @@ export default function EmploymentType() {
         </Typography>
         <FormControl sx={{ pl: 5, m: 1, width: 300, mt: 3 }}>
           <Select
-            multiple
             size="small"
+            sx={{ borderRadius: "7px" }}
             displayEmpty
-            value={personName}
+            value={employment}
             onChange={handleChange}
-            input={<OutlinedInput />}
-            renderValue={(selected) => {
-              if (selected.length === 0) {
-                return <em>Select</em>;
-              }
-
-              return selected.join(", ");
-            }}
-            MenuProps={MenuProps}
-            inputProps={{ "aria-label": "Without label" }}
           >
-            {names.map((name) => (
-              <MenuItem
-                key={name}
-                value={name}
-                style={getStyles(name, personName, theme)}
-              >
-                {name}
-              </MenuItem>
-            ))}
+            <MenuItem value={"System Administrator"}>
+              System Administrator
+            </MenuItem>
+            <MenuItem value={"Supervisor"}>Supervisior</MenuItem>
+            <MenuItem value={"Employee"}>Employee</MenuItem>
+            <MenuItem value={"Location Manager"}>Location Manager</MenuItem>
+            <MenuItem value={"Advisor"}>Advisor</MenuItem>
           </Select>
+          {error && <FormHelperText>Select a value</FormHelperText>}
         </FormControl>
       </Box>
     </>

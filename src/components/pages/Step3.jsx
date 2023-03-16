@@ -98,7 +98,6 @@ export default function BasicModal() {
           .then((response) => {
             console.log("Signup API was hit successfully");
             console.log(response);
-            debugger;
 
             // Navigate to Home Screen
           });

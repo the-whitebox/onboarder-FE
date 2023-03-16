@@ -36,6 +36,7 @@ import ReactDOM from "react-dom";
 
 import { useEffect, useState } from "react";
 
+
 const theme = createTheme();
 
 const Search = styled("div")(({ theme }) => ({
