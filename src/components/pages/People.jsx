@@ -6,7 +6,7 @@ import Typography from "@mui/material/Typography";
 import MenuItem from "@mui/material/MenuItem";
 import CssBaseline from "@mui/material/CssBaseline";
 import { styled, alpha } from "@mui/material/styles";
-import MaxPilotLogo from "../../assets/images/maxpilot-logo-w.png";
+import MaxPilotLogo from "../../assets/images/maxpilot-logo.png";
 import Grid from "@mui/material/Grid";
 import { Paper } from "@mui/material";
 import InputLabel from "@mui/material/InputLabel";
@@ -30,12 +30,13 @@ import axios from "axios";
 import Avatar from "@mui/material/Avatar";
 import { MoreVert } from "../feature/MoreVert";
 import IconButton from "@mui/material/IconButton";
-
+import NotificationsOutlinedIcon from "@mui/icons-material/NotificationsOutlined";
+import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import SideBar from "../feature/SideBar";
-
 import ReactDOM from "react-dom";
-
 import { useEffect, useState } from "react";
+import { SmallDashOutlined } from "@ant-design/icons";
+import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
 
 const theme = createTheme();
 
@@ -83,7 +84,7 @@ const handleClick = () => {
   // Your code here
 };
 
-// const drawerWidth = 230;
+const drawerWidth = 2;
 
 const columns = [
   {
@@ -137,7 +138,7 @@ const columns = [
           }}
         >
           <Button onClick={handleClick}>
-            <MoreVert sx={{ color: "white" }} />
+            <MoreVert />
           </Button>
         </Avatar>
       );
@@ -272,7 +273,7 @@ export default function People() {
           display: "flex",
         }}
       >
-        {/* <CssBaseline />
+        <CssBaseline />
         <AppBar
           style={{ background: "#ffffff", color: "black" }}
           position="fixed"
@@ -289,80 +290,151 @@ export default function People() {
               alignItems: "center",
             }}
           >
+            <Avatar
+              sx={{ width: "140px", height: "70px", ml: 5 }}
+              variant="square"
+              src={MaxPilotLogo}
+            ></Avatar>
+            <Box
+              sx={{
+                display: "flex",
+                flexDirection: "row",
+                justifyContent: "center",
+                alignItems: "center",
+                mr: 30,
+                flexGrow: 1,
+              }}
+            >
+              <Button
+                sx={{
+                  textTransform: "none",
+                  borderRadius: "20px",
+                  mr: 2,
+                  color: "white",
+                  bgcolor: "#f26a60",
+                  fontSize: "0.8rem",
+                }}
+              >
+                Me
+              </Button>
+              <Typography
+                sx={{
+                  mr: 2,
+                  fontSize: "0.8rem",
+                }}
+              >
+                News Feed
+              </Typography>
+              <Typography
+                sx={{
+                  mr: 2,
+                  fontSize: "0.8rem",
+                }}
+              >
+                Task
+              </Typography>
+              <Typography
+                sx={{
+                  mr: 2,
+                  fontSize: "0.8rem",
+                }}
+              >
+                Locations
+              </Typography>
+              <Typography
+                sx={{
+                  mr: 2,
+                  fontSize: "0.8rem",
+                }}
+              >
+                people
+              </Typography>
+              <Typography
+                sx={{
+                  mr: 2,
+                  fontSize: "0.8rem",
+                }}
+              >
+                Schedule
+              </Typography>
+              <Typography
+                sx={{
+                  mr: 2,
+                  fontSize: "0.8rem",
+                }}
+              >
+                TimeSheets
+              </Typography>
+              <Typography
+                sx={{
+                  mr: 2,
+                  fontSize: "0.8rem",
+                }}
+              >
+                Reports
+              </Typography>
+              <Typography
+                sx={{
+                  mr: 2,
+                  fontSize: "0.8rem",
+                }}
+              >
+                Enterprise
+              </Typography>
+            </Box>
+            <Box sx={{ display: "flex", flexDirection: "column " }}>
+              <Typography sx={{ fontSize: "0.9rem", mr: 1 }}>
+                {" "}
+                Danish Fareed{" "}
+              </Typography>
+              <Typography sx={{ ml: 5, fontSize: "0.8rem" }}>
+                {" "}
+                @Danish{" "}
+              </Typography>
+            </Box>
+            <Avatar alt="Remy Sharp" />
             <Typography
-              sx={{
-                mr: 2,
-              }}
+              sx={{ ml: 2, bgcolor: "black", width: 2, height: 25 }}
+            ></Typography>
+            <IconButton
+              size="medium"
+              aria-label="show 17 new notifications"
+              color="white"
             >
-              Me
-            </Typography>
-            <Typography
-              sx={{
-                mr: 2,
-              }}
+              <SettingsOutlinedIcon />
+            </IconButton>
+
+            <IconButton
+              size="medium"
+              aria-label="show 17 new notifications"
+              color="white"
             >
-              News Feed
-            </Typography>
-            <Typography
-              sx={{
-                mr: 2,
-              }}
+              <FavoriteBorderIcon />
+            </IconButton>
+
+            <IconButton
+              size="medium"
+              aria-label="show 17 new notifications"
+              color="white"
             >
-              Task
-            </Typography>
-            <Typography
-              sx={{
-                mr: 2,
-              }}
-            >
-              Locations
-            </Typography>
-            <Button
-              variant="contained"
-              className="btn-color"
-              sx={{
-                mr: 2,
-              }}
-            >
-              People
-            </Button>
-            <Typography
-              sx={{
-                mr: 2,
-              }}
-            >
-              Schedule
-            </Typography>
-            <Typography
-              sx={{
-                mr: 2,
-              }}
-            >
-              TimeSheets
-            </Typography>
-            <Typography
-              sx={{
-                mr: 2,
-              }}
-            >
-              Reports
-            </Typography>
+              <NotificationsOutlinedIcon />
+            </IconButton>
           </Box>
-        </AppBar> */}
+        </AppBar>
 
         <Grid
           direction="column"
           alignItems="center"
           sx={{
-            backgroundColor: "#38b492",
             minHeight: "100vh",
+            border: "1px solid black",
           }}
         >
           {/* <Paper elevation={3} style={{ transform: "rotate(270deg)" }}>
             <img src={MaxPilotLogo} alt="my image" />
           </Paper> */}
           {/* <img src={MaxPilotLogo} alt="my image" /> */}
-          <Avatar
+          {/* <Avatar
             src={MaxPilotLogo}
             aria-label="Busy Man"
             sx={{
@@ -372,18 +444,22 @@ export default function People() {
               transform: "rotate(270deg)",
             }}
             variant="square"
-          />
+          /> */}
         </Grid>
-
-        <SideBar />
 
         <Box
           component="main"
-          sx={{ flexGrow: 1, bgcolor: "background.default", ml: "-30px" }}
+          sx={{ flexGrow: 1, bgcolor: "background.default", pl: 2, pr: 2 }}
         >
           <Toolbar />
 
-          <Box sx={{ display: "flex", justifyContent: "space-between", mt: 4 }}>
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "space-between",
+              mt: 4,
+            }}
+          >
             <Typography variant="h4" sx={{ fontWeight: "Bold" }}>
               Personal
             </Typography>

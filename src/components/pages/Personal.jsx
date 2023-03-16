@@ -10,8 +10,19 @@ import Grid from "@mui/material/Grid";
 import CssBaseline from "@mui/material/CssBaseline";
 import MaxPilotLogo from "../../assets/images/maxpilot-logo-w.png";
 import "../../style/General.css";
+import axios from "axios";
 
 export default function Personal() {
+  // const response = await axios
+  // .get (url + "/people/" ,{
+  //   headers:{
+  //     Authorization: `Bearer ${token}`,
+  //     "content-Type": "application/json",
+  //   }
+  // })
+  // .then((response) => {
+  //   console.log(response.data)
+  // })
   return (
     <>
       <Grid
