@@ -38,7 +38,6 @@ import { useEffect, useState } from "react";
 import { SmallDashOutlined } from "@ant-design/icons";
 import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
 
-
 const theme = createTheme();
 
 const Search = styled("div")(({ theme }) => ({
@@ -87,66 +86,6 @@ const handleClick = () => {
 
 const drawerWidth = 2;
 
-const columns = [
-  {
-    field: "first_name",
-    headerName: "Name",
-    minWidth: 100,
-    flex: 1,
-    hideable: false,
-  },
-  {
-    field: "role",
-    headerName: "Access",
-    minWidth: 100,
-    flex: 1,
-    valueGetter: (params) => params.row.role.role,
-  },
-  {
-    field: "last_name",
-    headerName: "Main Location",
-    minWidth: 100,
-    flex: 1,
-    // valueGetter: (params) => params.row.,
-  },
-  { field: "user_status", headerName: "Status", minWidth: 100, flex: 1 },
-  { field: "email", headerName: "Email", minWidth: 100, flex: 1 },
-  {
-    field: "profile",
-    headerName: "Mobile",
-    minWidth: 100,
-    flex: 1,
-    valueGetter: (params) => params.row.profile.phone_number,
-  },
-  {
-    field: "action",
-    headerName: "Action",
-    width: 100,
-
-    renderCell: (params) => {
-      // const onClick = (e) => {
-      //   e.stopPropagation();
-
-      // };
-
-      return (
-        <Avatar
-          sx={{
-            backgroundColor: "#38B492",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-          }}
-        >
-          <Button onClick={handleClick}>
-            <MoreVert />
-          </Button>
-        </Avatar>
-      );
-    },
-  },
-];
-
 // const rows = [
 //   {
 //     id: 1,
@@ -186,8 +125,82 @@ export default function People() {
   const [location, setLocattion] = useState("");
   const [otherLocation, setOtherLocattion] = useState("");
   const [businessId, setBusinessId] = useState("");
+  const [Icon, setAge] = React.useState("");
 
+  const columns = [
+    {
+      field: "first_name",
+      headerName: "Name",
+      minWidth: 100,
+      flex: 1,
+      hideable: false,
+    },
+    {
+      field: "role",
+      headerName: "Access",
+      minWidth: 100,
+      flex: 1,
+      valueGetter: (params) => params.row.role.role,
+    },
+    {
+      field: "last_name",
+      headerName: "Main Location",
+      minWidth: 100,
+      flex: 1,
+      // valueGetter: (params) => params.row.,
+    },
+    { field: "user_status", headerName: "Status", minWidth: 100, flex: 1 },
+    { field: "email", headerName: "Email", minWidth: 100, flex: 1 },
+    {
+      field: "profile",
+      headerName: "Mobile",
+      minWidth: 100,
+      flex: 1,
+      valueGetter: (params) => params.row.profile.phone_number,
+    },
+    {
+      field: "action",
+      headerName: "Action",
+      width: 100,
+
+      renderCell: (params) => {
+        // const onClick = (e) => {
+        //   e.stopPropagation();
+
+        // };
+
+        return (
+          <Avatar
+            sx={{
+              backgroundColor: "#38B492",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
+            <Button onClick={handleClick}>
+              <Select
+                labelId="demo-simple-select-label"
+                id="demo-simple-select"
+                value={Icon}
+                label="Icon"
+                onChange={handleActionChange}
+              >
+                <MenuItem value={10}>Agreed hours</MenuItem>
+                <MenuItem value={20}>Access level</MenuItem>
+                <MenuItem value={30}>Archive team</MenuItem>
+              </Select>
+            </Button>
+          </Avatar>
+        );
+      },
+    },
+  ];
   // console.log({ token, url });
+
+  const handleActionChange = (event) => {
+    setAge(event.target.value);
+  };
 
   const [listOfTeamMembers, setListOfTeamMembers] = React.useState([]);
 
@@ -307,6 +320,7 @@ export default function People() {
               }}
             >
               <Button
+                className="header-button"
                 sx={{
                   textTransform: "none",
                   borderRadius: "20px",
@@ -318,70 +332,102 @@ export default function People() {
               >
                 Me
               </Button>
-              <Typography
+              <Button
+                className="header-button"
                 sx={{
-                  mr: 2,
+                  mr: 1,
                   fontSize: "0.8rem",
+                  textDecoration: "none",
+                  color: "black",
+                  textTransform: "none",
                 }}
               >
                 News Feed
-              </Typography>
-              <Typography
+              </Button>
+              <Button
+                className="header-button"
                 sx={{
-                  mr: 2,
+                  mr: 1,
                   fontSize: "0.8rem",
+                  textDecoration: "none",
+                  color: "black",
+                  textTransform: "none",
                 }}
               >
                 Task
-              </Typography>
-              <Typography
+              </Button>
+              <Button
+                className="header-button"
                 sx={{
-                  mr: 2,
+                  mr: 1,
                   fontSize: "0.8rem",
+                  textDecoration: "none",
+                  color: "black",
+                  textTransform: "none",
                 }}
               >
-                Locations
-              </Typography>
-              <Typography
+                Location
+              </Button>
+              <Button
+                className="header-button"
                 sx={{
-                  mr: 2,
+                  mr: 1,
                   fontSize: "0.8rem",
+                  textDecoration: "none",
+                  color: "black",
+                  textTransform: "none",
                 }}
               >
-                people
-              </Typography>
-              <Typography
+                People
+              </Button>
+              <Button
+                className="header-button"
                 sx={{
-                  mr: 2,
+                  mr: 1,
                   fontSize: "0.8rem",
+                  textDecoration: "none",
+                  color: "black",
+                  textTransform: "none",
                 }}
               >
                 Schedule
-              </Typography>
-              <Typography
+              </Button>
+              <Button
+                className="header-button"
                 sx={{
-                  mr: 2,
+                  mr: 1,
                   fontSize: "0.8rem",
+                  textDecoration: "none",
+                  color: "black",
+                  textTransform: "none",
                 }}
               >
                 TimeSheets
-              </Typography>
-              <Typography
+              </Button>
+              <Button
+                className="header-button"
                 sx={{
-                  mr: 2,
+                  mr: 1,
                   fontSize: "0.8rem",
+                  textDecoration: "none",
+                  color: "black",
+                  textTransform: "none",
                 }}
               >
                 Reports
-              </Typography>
-              <Typography
+              </Button>
+              <Button
+                className="header-button"
                 sx={{
-                  mr: 2,
+                  mr: 1,
                   fontSize: "0.8rem",
+                  textDecoration: "none",
+                  color: "black",
+                  textTransform: "none",
                 }}
               >
                 Enterprise
-              </Typography>
+              </Button>
             </Box>
             <Box sx={{ display: "flex", flexDirection: "column " }}>
               <Typography sx={{ fontSize: "0.9rem", mr: 1 }}>
@@ -450,7 +496,7 @@ export default function People() {
 
         <Box
           component="main"
-          sx={{ flexGrow: 1, bgcolor: "background.default", pl: 2, pr: 2 }}
+          sx={{ flexGrow: 1, bgcolor: "background.default", ml: 5, mr: 5 }}
         >
           <Toolbar />
 

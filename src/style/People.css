@@ -26,3 +26,8 @@
 .MuiDataGrid-toolbarContainer {
   float: right;
 }
+
+.header-button:hover {
+  text-decoration: none !important;
+  background-color: rgb(153, 121, 127) !important;
+}

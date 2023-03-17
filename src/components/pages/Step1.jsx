@@ -49,32 +49,33 @@ export default function BasicModal() {
   const [mobile, setMobile] = React.useState("");
   const [businesstype, setBusinesstype] = React.useState("");
   const [industry, setIndustry] = React.useState("");
-  const [industryData, setIndustryData] = useState([])
+  const [industryData, setIndustryData] = useState([]);
   const [error, setError] = React.useState(null);
   const [businessError, setBusinessError] = useState("");
   const [mobileError, setMobileError] = useState("");
   const [businessTypeError, setBusinessTypeError] = useState("");
   const [industryError, setIndustryError] = useState("");
+
   const token = process.env.REACT_APP_TEMP_TOKEN;
   const url = process.env.REACT_APP_BASE_URL;
-  let subIndustries = '';
+  let subIndustries = "";
 
   const businesses = [
-  "Healthcare",
-  "Retail & Hospitality",
-  "Services",
-  "Charity",
-  "Other",]
+    "Healthcare",
+    "Retail & Hospitality",
+    "Services",
+    "Charity",
+    "Other",
+  ];
 
   const industries = {
-    "Healthcare": ['f', 'g', 'l'],
-    "Retail & Hospitality": ['a', 'b'],
-    "Services": ['tr', 'trt', 'rtt'],
-    "Charity": ['abc', 'def'],
-    "Other": ['aik', 'bot'],
+    Healthcare: ["f", "g", "l"],
+    "Retail & Hospitality": ["a", "b"],
+    Services: ["tr", "trt", "rtt"],
+    Charity: ["abc", "def"],
+    Other: ["aik", "bot"],
+  };
 
-  }
-   
   const getIndustries = async () => {
     try {
       await axios
@@ -84,17 +85,17 @@ export default function BasicModal() {
             "Content-Type": "application/json",
           },
         })
-        .then(res => {
-          console.log("getting from api", res.data)
+        .then((res) => {
+          console.log("getting from api", res.data);
           setIndustryData(res.data);
           subIndustries = res.data;
           // console.log("Sub Industries data", subIndustries)
         })
-    .catch(err => console.log(err))
-}  catch (error) {
-  console.log("Error", error);
-}}
-
+        .catch((err) => console.log(err));
+    } catch (error) {
+      console.log("Error", error);
+    }
+  };
 
   const theme = useTheme();
   const [age, setAge] = React.useState("");
@@ -165,17 +166,16 @@ export default function BasicModal() {
   //   setBusiness
   // };
 
-  useEffect(()=>{
+  useEffect(() => {
     getIndustries();
   }, [businesstype]);
 
-  const businessTypeChange= (e) => {
-    setBusinesstype(e.target.value)
-    
+  const businessTypeChange = (e) => {
+    setBusinesstype(e.target.value);
 
-    console.log({industryData})
+    console.log({ industryData });
     // console.log(e.target.value)
-  }
+  };
 
   const icons = [Icon1, Icon2, Icon3, Icon4, Icon5];
 
@@ -449,7 +449,7 @@ export default function BasicModal() {
             </Typography>
             <FormControl sx={{ width: "30%", mt: 2 }}>
               <InputLabel id="demo-simple-select-label">Industry</InputLabel>
-              
+
               <Select
                 labelId="demo-simple-select-label"
                 id="demo-simple-select"
@@ -458,19 +458,12 @@ export default function BasicModal() {
                 {...register("Industry", { required: true })}
                 onChange={(e) => setIndustry(e.target.value)}
               >
-                  
-                
-                {
-                businesstype &&
-               
-                
-              industryData.map(industry => (
-                
-                <MenuItem value={industry["name"]}>{industry["name"]}</MenuItem>
-              ))
-}              
-
-                
+                {businesstype &&
+                  industryData.map((industry) => (
+                    <MenuItem value={industry["name"]}>
+                      {industry["name"]}
+                    </MenuItem>
+                  ))}
               </Select>
             </FormControl>
             {errors.industry?.type === "required" && "Industry Required"}
