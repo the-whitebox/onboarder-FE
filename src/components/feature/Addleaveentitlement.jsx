@@ -118,7 +118,9 @@ export default function Addleaveentitlement() {
     .post(
       url + "/people/",
       {
+        leave_entitlements: [leave],
         role: 2,
+        profile: {}
       },
       {
         headers: {
