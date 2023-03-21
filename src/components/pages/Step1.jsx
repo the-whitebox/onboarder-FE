@@ -48,8 +48,10 @@ export default function BasicModal() {
   const [business, setBusiness] = React.useState("");
   const [mobile, setMobile] = React.useState("");
   const [businesstype, setBusinesstype] = React.useState("");
+  const [businessId, setBusinesstypeID] = React.useState("");
   const [industry, setIndustry] = React.useState("");
-  const [industryData, setIndustryData] = useState([]);
+  const [industryId, setIndustryID] = React.useState("");
+  const [industryData, setIndustryData] = useState([]);  
   const [error, setError] = React.useState(null);
   const [businessError, setBusinessError] = useState("");
   const [mobileError, setMobileError] = useState("");
@@ -78,8 +80,13 @@ export default function BasicModal() {
 
   const getIndustries = async () => {
     try {
+      // debugger
+      if(businesstype === "Retail & Hospitality")
+      {
+        setBusinesstype(encodeURIComponent(businesstype));
+      }
       await axios
-        .get(url + "/enums/", {
+        .get(url + `/EnumsReturn/?group=${businesstype}`, {
           headers: {
             Authorization: `Bearer ${token}`,
             "Content-Type": "application/json",
@@ -87,6 +94,7 @@ export default function BasicModal() {
         })
         .then((res) => {
           console.log("getting from api", res.data);
+          
           setIndustryData(res.data);
           subIndustries = res.data;
           // console.log("Sub Industries data", subIndustries)
@@ -140,15 +148,15 @@ export default function BasicModal() {
     ) {
       console.log("Data Found");
       setError(false);
-      console.log(mobile, business, businesstype, industry);
+      console.log(mobile, business, businessId, industryId);
       // alert(mobile + business + businesstype + industry);
 
       navigate("/step2", {
         state: {
           business: business,
           mobile: mobile,
-          businesstype: businesstype,
-          industry: industry,
+          businesstype: businessId,
+          industry: industryId,
         },
       });
     } else {
@@ -171,10 +179,17 @@ export default function BasicModal() {
   }, [businesstype]);
 
   const businessTypeChange = (e) => {
+    const tempid=parseInt(e.target.id)+1;
     setBusinesstype(e.target.value);
+    setBusinesstypeID(tempid);
+    // console.log(tempid);
 
-    console.log({ industryData });
+    // console.log({ industryData });
     // console.log(e.target.value)
+  };
+  const changeIndustry = (e) => {
+    setIndustry(e.target.value);
+    setIndustryID(parseInt(e.target.value)+1);
   };
 
   const icons = [Icon1, Icon2, Icon3, Icon4, Icon5];
@@ -388,7 +403,7 @@ export default function BasicModal() {
                 onChange={businessTypeChange}
               >
                 {[
-                  "Healthcare",
+                  "Health Care",
                   "Retail & Hospitality",
                   "Services",
                   "Charity",
@@ -456,11 +471,11 @@ export default function BasicModal() {
                 value={industry}
                 label="Industry"
                 {...register("Industry", { required: true })}
-                onChange={(e) => setIndustry(e.target.value)}
+                onChange={changeIndustry}
               >
                 {businesstype &&
-                  industryData.map((industry) => (
-                    <MenuItem value={industry["name"]}>
+                  industryData.map((industry, idx) => (
+                    <MenuItem value={idx}>
                       {industry["name"]}
                     </MenuItem>
                   ))}

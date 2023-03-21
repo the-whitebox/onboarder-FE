@@ -140,7 +140,7 @@ export default function SignInSide() {
             console.log("Login API was hit successfully");
             console.log(response.data);
             localStorage.setItem("token", response.data.access_token);
-            navigate("/");
+            navigate("/people");
             // Navigate to Home Screen
           });
       } catch (error) {
