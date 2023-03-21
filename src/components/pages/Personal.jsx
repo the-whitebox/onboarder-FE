@@ -20,7 +20,8 @@ import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 
 export default function Personal() {
-  const url = process.env.REACT_APP_BASE_URL + "/people";
+  const url = process.env.REACT_APP_BASE_URL + "/people/";
+  const token = process.env.REACT_APP_TEMP_TOKEN;
   const [state, setState] = React.useState({ data: "" });
   const [email, setEmail] = useState("");
   const [mobile, setMobile] = React.useState("");
@@ -31,10 +32,10 @@ export default function Personal() {
   const [country, setCountry] = React.useState("");
   const [contactName, setContactName] = React.useState("");
   const [contactNumber, setContactNumber] = React.useState("");
-  const [locations, setLocations] = useState([]);
-  const [selectedCountry, setSelectedCountry] = useState("");
-  const [states, setStates] = useState([]);
-  const [selectedState, setSelectedState] = useState("");
+  // const [locations, setLocations] = useState([]);
+  // const [selectedCountry, setSelectedCountry] = useState("");
+  // const [states, setStates] = useState([]);
+  // const [selectedState, setSelectedState] = useState("");
 
   const [error, setError] = React.useState(null);
 
@@ -48,41 +49,41 @@ export default function Personal() {
   const [contactNameError, setContactNameError] = React.useState("");
   const [contactNumberError, setContactNumberError] = React.useState("");
 
-  useEffect(() => {
-    fetch("https://api.countrystatecity.in/v1/countries", {
-      headers: {
-        "X-CSCAPI-KEY": "your-api-key-here",
-      },
-    })
-      .then((response) => response.json())
-      .then((data) => setLocations(data))
-      .catch((error) => console.error(error));
-  }, []);
+  // useEffect(() => {
+  //   fetch("https://api.countrystatecity.in/v1/countries", {
+  //     headers: {
+  //       "X-CSCAPI-KEY": "your-api-key-here",
+  //     },
+  //   })
+  //     .then((response) => response.json())
+  //     .then((data) => setLocations(data))
+  //     .catch((error) => console.error(error));
+  // }, []);
 
-  useEffect(() => {
-    if (selectedCountry) {
-      fetch(
-        `https://api.countrystatecity.in/v1/countries/${selectedCountry}/states`,
-        {
-          headers: {
-            "X-CSCAPI-KEY": "your-api-key-here",
-          },
-        }
-      )
-        .then((response) => response.json())
-        .then((data) => setStates(data))
-        .catch((error) => console.error(error));
-    }
-  }, [selectedCountry]);
+  // useEffect(() => {
+  //   if (selectedCountry) {
+  //     fetch(
+  //       `https://api.countrystatecity.in/v1/countries/${selectedCountry}/states`,
+  //       {
+  //         headers: {
+  //           "X-CSCAPI-KEY": "your-api-key-here",
+  //         },
+  //       }
+  //     )
+  //       .then((response) => response.json())
+  //       .then((data) => setStates(data))
+  //       .catch((error) => console.error(error));
+  //   }
+  // }, [selectedCountry]);
 
-  const handleCountryChange = (event) => {
-    setSelectedCountry(event.target.value);
-    setSelectedState("");
-  };
+  // const handleCountryChange = (event) => {
+  //   setSelectedCountry(event.target.value);
+  //   setSelectedState("");
+  // };
 
-  const handleStateChange = (event) => {
-    setSelectedState(event.target.value);
-  };
+  // const handleStateChange = (event) => {
+  //   setSelectedState(event.target.value);
+  // };
 
   const navigate = useNavigate();
 
@@ -127,11 +128,11 @@ export default function Personal() {
     } else setCityStateError("");
   };
 
-  // const countryValidation = () => {
-  //   if (country === "") {
-  //     setCountryError("Please enter your country");
-  //   } else setCountryError("");
-  // };
+  const countryValidation = () => {
+    if (country === "") {
+      setCountryError("Please enter your country");
+    } else setCountryError("");
+  };
 
   const contactNameValidation = () => {
     if (contactName === "") {
@@ -160,7 +161,7 @@ export default function Personal() {
       postcode !== "" &&
       city !== "" &&
       cityState !== "" &&
-      // country !== "" &&
+      country !== "" &&
       contactName !== "" &&
       contactNumber !== ""
     ) {
@@ -173,23 +174,35 @@ export default function Personal() {
         postcode,
         city,
         cityState,
-        // country,
+        country,
         contactName,
         contactNumber
       );
       try {
         axios
-          .post(url, {
-            email: email,
-            mobile_number: mobile,
-            address: address,
-            postcode: postcode,
-            city: city,
-            state: cityState,
-            // country: country,
-            contact_name: contactName,
-            contact_number: contactNumber,
-          })
+          .post(
+            url,
+            {
+              email: email,
+              mobile_number: mobile,
+              address: address,
+              postcode: postcode,
+              city: city,
+              state: cityState,
+              country: country,
+              emergency_contact_name: contactName,
+              emergency_phone_number: contactNumber,
+              role: 2,
+              is_superuser: false,
+              profile: {},
+            },
+            {
+              headers: {
+                Authorization: `Bearer ${token}`,
+                "Content-Type": "application/json",
+              },
+            }
+          )
           .then((response) => {
             console.log("Personal API was hit successfully");
             console.log(response);
@@ -274,7 +287,7 @@ export default function Personal() {
                 postcodeValidation();
                 cityValidation();
                 cityStateValidation();
-                // countryValidation();
+                countryValidation();
                 contactNameValidation();
                 contactNumberValidation();
                 personalDetails(e);
@@ -546,8 +559,10 @@ export default function Personal() {
                   width: "300px",
                   mr: 60,
                 }}
+                {...register("State", { required: true })}
+                onChange={(e) => setCityState(e.target.value)}
               />
-              {selectedCountry && (
+              {/* {selectedCountry && (
                 <FormControl>
                   <Select value={selectedState} onChange={handleStateChange}>
                     <MenuItem value="">Select a state</MenuItem>
@@ -558,7 +573,7 @@ export default function Personal() {
                     ))}
                   </Select>
                 </FormControl>
-              )}
+              )} */}
             </Box>
             <Box sx={{ ml: 24, mt: 1 }}>
               {errors.CityState?.type === "required" && "Email Required"}
@@ -574,8 +589,8 @@ export default function Personal() {
                 )}
               </small>
             </Box>
-
-            <Box sx={{ display: "flex", flexDirection: "row" }}>
+            <br />
+            <Box className="flex flex-row ">
               <Typography
                 className="text-align"
                 id="modal-modal-description"
@@ -587,18 +602,7 @@ export default function Personal() {
               >
                 Country
               </Typography>
-
-              <FormControl sx={{ pl: 24, m: 1, width: 500, mt: 3 }}>
-                <Select value={selectedCountry} onChange={handleCountryChange}>
-                  <MenuItem value="">Select a country</MenuItem>
-                  {/* {locations.map((location) => (
-                    <MenuItem key={location.isoCode} value={location.isoCode}>
-                      {location.name}
-                    </MenuItem>
-                  ))} */}
-                </Select>
-              </FormControl>
-              {/* <TextField
+              <TextField
                 id="outlined-basic"
                 label=""
                 variant="outlined"
@@ -609,7 +613,18 @@ export default function Personal() {
                 }}
                 {...register("Country", { required: true })}
                 onChange={(e) => setCountry(e.target.value)}
-              /> */}
+              />
+
+              {/* <FormControl sx={{ pl: 5, m: 1, width: 300, mt: 3 }}>
+                <Select value={selectedCountry} onChange={handleCountryChange}>
+                  <MenuItem value="">Select a country</MenuItem>
+                  {/* {locations.map((location) => (
+                    <MenuItem key={location.isoCode} value={location.isoCode}>
+                      {location.name}
+                    </MenuItem>
+                  ))} 
+                </Select>
+              </FormControl> */}
             </Box>
             <Box sx={{ ml: 24, mt: 1 }}>
               {errors.Country?.type === "required" && "Email Required"}

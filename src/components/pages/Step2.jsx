@@ -241,7 +241,7 @@ export default function BasicModal(props) {
                       },
                     }}
                     {...register("Purpose", { required: true })}
-                    onChange={(e) => setPurpose(e.target.id)}
+                    onChange={(e) => setPurpose(parseInt(e.target.id) + 1)}
                   >
                     {[
                       "Save time scheduling",
@@ -369,7 +369,7 @@ export default function BasicModal(props) {
                 },
               }}
               {...register("Payroll", { required: true })}
-              onChange={(e) => setPayroll(e.target.id)}
+              onChange={(e) => setPayroll(parseInt(e.target.id) + 1)}
             >
               {["XERO"].map((value, idx) => (
                 <Sheet

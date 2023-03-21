@@ -115,10 +115,18 @@ export default function Addleaveentitlement() {
   );
 
   axios
-    .post(
-      url + "/people/",
+    .patch(
+      url + "/people/6/",
       {
-        role: 2,
+        leave: leave,
+        role: 3,
+        profile:{},
+        work_detail:{},
+        pay_detail:{
+            employment_type: 1,
+            per_day_pay_rate:{}
+        },
+        leave_entitlements: [],
       },
       {
         headers: {

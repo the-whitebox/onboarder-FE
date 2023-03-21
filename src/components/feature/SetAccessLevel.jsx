@@ -107,10 +107,19 @@ export default function SetAccessLevel(props) {
   );
 
   axios
-    .post(
-      url + "/people/",
+    .patch(
+      url + "/people/6/",
       {
+        selectedValue: selectedValue,
         role: 2,
+        is_superuser: false,
+        profile: {},
+        // work_detail:{},
+        // pay_detail:{
+        //     employment_type: 1,
+        //     per_day_pay_rate:{}
+        // },
+        // leave_entitlements: [],
       },
       {
         headers: {

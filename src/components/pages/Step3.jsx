@@ -114,6 +114,7 @@ export default function BasicModal() {
           .then((response) => {
             console.log("Signup API was hit successfully");
             console.log(response);
+            navigate("/people");
 
             navigate("/people");
 
@@ -263,7 +264,7 @@ export default function BasicModal() {
                     size="lg"
                     sx={{ flexDirection: "row", gap: 1.5, mt: 2 }}
                     {...register("Process", { required: true })}
-                    onChange={(e) => setPayProcess(e.target.id)}
+                    onChange={(e) => setPayProcess(parseInt(e.target.id) + 1)}
                   >
                     {[
                       "As soon as possible",
@@ -286,11 +287,11 @@ export default function BasicModal() {
                         }}
                       >
                         <Radio
+                          id={idx}
                           label={`${value}`}
                           overlay
                           disableIcon
                           value={value}
-                          id={idx}
                           slotProps={{
                             label: ({ checked }) => ({
                               sx: {
@@ -319,7 +320,7 @@ export default function BasicModal() {
                     ))}
                   </RadioGroup>
                 </Grid>
-                {errors.payProcess?.type === "required" && "Process Required"}
+                {errors.payProcess?.type === "required" && "Required"}
                 <small>
                   {processError && (
                     <div
@@ -390,7 +391,7 @@ export default function BasicModal() {
                   },
                 }}
                 {...register("Hear", { required: true })}
-                onChange={(e) => setHear(e.target.id)}
+                onChange={(e) => setHear(parseInt(e.target.id) + 1)}
               >
                 {[
                   "Using MaxPilot in the past",
@@ -449,7 +450,7 @@ export default function BasicModal() {
                 ))}
               </RadioGroup>
             </Grid>
-            {errors.hear?.type === "required" && "Hear Required"}
+            {errors.hear?.type === "required" && "Required"}
             <small>
               {hearError && (
                 <div

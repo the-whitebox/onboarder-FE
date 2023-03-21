@@ -31,6 +31,64 @@ export default function SyncPayroll() {
     setOpen(false);
   };
 
+  const token = process.env.REACT_APP_TEMP_TOKEN;
+  const url = process.env.REACT_APP_BASE_URL;
+  const [businessId, setBusinessId] = useState("");
+  const [listOfTeamMembers, setListOfTeamMembers] = React.useState([]);
+
+  let b_id = "";
+  let team_array = [];
+  const getBusiness = async () => {
+    try {
+      const response = await axios
+        .get(url + "/business/", {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        })
+        .then((response) => {
+          console.log(response.data);
+          const ids = response.data.map((obj) => obj.id);
+          const firstId = ids[0];
+          setBusinessId(firstId);
+          b_id = firstId;
+          // console.log("First Id: ", firstId);
+        });
+
+      // console.log({ businessId });
+
+      const teamResponse = await axios.get(
+        url + `/people/?business_id=${b_id}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      const teamMembers = teamResponse.data;
+      // console.log({ teamMembers });
+      team_array = teamMembers;
+      setListOfTeamMembers(teamMembers);
+
+      // console.log({ listOfTeamMembers });
+    } catch (error) {
+      console.log("Error", error);
+    }
+  };
+
+  useEffect(() => {
+    getBusiness();
+  }, []);
+
+  // getBusiness();
+
+  console.log("The rows", listOfTeamMembers);
+  const rows = team_array;
+  // console.log("The array of Objects: ", rows);
+
   return (
     <React.Fragment>
       <Box sx={{ ...style, width: 550, height: 430 }}>
