@@ -111,6 +111,8 @@ export default function SetAccessLevel(props) {
       url + "/people/",
       {
         role: 2,
+        is_superuser: false,
+        profile: {}, 
       },
       {
         headers: {

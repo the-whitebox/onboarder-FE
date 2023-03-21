@@ -19,10 +19,9 @@ import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 
-
-
 export default function Personal() {
-  const url = process.env.REACT_APP_BASE_URL + "/people";
+  const url = process.env.REACT_APP_BASE_URL + "/people/";
+  const token = process.env.REACT_APP_TEMP_TOKEN;
   const [state, setState] = React.useState({ data: "" });
   const [email, setEmail] = useState("");
   const [mobile, setMobile] = React.useState("");
@@ -33,11 +32,11 @@ export default function Personal() {
   const [country, setCountry] = React.useState("");
   const [contactName, setContactName] = React.useState("");
   const [contactNumber, setContactNumber] = React.useState("");
-  const [locations, setLocations] = useState([]);
-  const [selectedCountry, setSelectedCountry] = useState('');
-  const [states, setStates] = useState([]);
-  const [selectedState, setSelectedState] = useState('');
-  
+  // const [locations, setLocations] = useState([]);
+  // const [selectedCountry, setSelectedCountry] = useState("");
+  // const [states, setStates] = useState([]);
+  // const [selectedState, setSelectedState] = useState("");
+
   const [error, setError] = React.useState(null);
 
   const [emailError, setEmailError] = useState("");
@@ -50,38 +49,41 @@ export default function Personal() {
   const [contactNameError, setContactNameError] = React.useState("");
   const [contactNumberError, setContactNumberError] = React.useState("");
 
-  useEffect(() => {
-    fetch('https://api.countrystatecity.in/v1/countries', {
-      headers: {
-        'X-CSCAPI-KEY': 'your-api-key-here'
-      }
-    })
-    .then(response => response.json())
-    .then(data => setLocations(data))
-    .catch(error => console.error(error));
-}, []);
+  // useEffect(() => {
+  //   fetch("https://api.countrystatecity.in/v1/countries", {
+  //     headers: {
+  //       "X-CSCAPI-KEY": "your-api-key-here",
+  //     },
+  //   })
+  //     .then((response) => response.json())
+  //     .then((data) => setLocations(data))
+  //     .catch((error) => console.error(error));
+  // }, []);
 
-  useEffect(() => {
-    if (selectedCountry) {
-      fetch(`https://api.countrystatecity.in/v1/countries/${selectedCountry}/states`, {
-        headers: {
-          'X-CSCAPI-KEY': 'your-api-key-here'
-        }
-      })
-        .then(response => response.json())
-        .then(data => setStates(data))
-        .catch(error => console.error(error));
-    }
-  }, [selectedCountry]);
+  // useEffect(() => {
+  //   if (selectedCountry) {
+  //     fetch(
+  //       `https://api.countrystatecity.in/v1/countries/${selectedCountry}/states`,
+  //       {
+  //         headers: {
+  //           "X-CSCAPI-KEY": "your-api-key-here",
+  //         },
+  //       }
+  //     )
+  //       .then((response) => response.json())
+  //       .then((data) => setStates(data))
+  //       .catch((error) => console.error(error));
+  //   }
+  // }, [selectedCountry]);
 
-  const handleCountryChange = event => {
-    setSelectedCountry(event.target.value);
-    setSelectedState('');
-  };
+  // const handleCountryChange = (event) => {
+  //   setSelectedCountry(event.target.value);
+  //   setSelectedState("");
+  // };
 
-  const handleStateChange = event => {
-    setSelectedState(event.target.value);
-  };
+  // const handleStateChange = (event) => {
+  //   setSelectedState(event.target.value);
+  // };
 
   const navigate = useNavigate();
 
@@ -126,11 +128,11 @@ export default function Personal() {
     } else setCityStateError("");
   };
 
-  // const countryValidation = () => {
-  //   if (country === "") {
-  //     setCountryError("Please enter your country");
-  //   } else setCountryError("");
-  // };
+  const countryValidation = () => {
+    if (country === "") {
+      setCountryError("Please enter your country");
+    } else setCountryError("");
+  };
 
   const contactNameValidation = () => {
     if (contactName === "") {
@@ -159,7 +161,7 @@ export default function Personal() {
       postcode !== "" &&
       city !== "" &&
       cityState !== "" &&
-      // country !== "" &&
+      country !== "" &&
       contactName !== "" &&
       contactNumber !== ""
     ) {
@@ -172,7 +174,7 @@ export default function Personal() {
         postcode,
         city,
         cityState,
-        // country,
+        country,
         contactName,
         contactNumber
       );
@@ -185,9 +187,19 @@ export default function Personal() {
             postcode: postcode,
             city: city,
             state: cityState,
-            // country: country,
-            contact_name: contactName,
-            contact_number: contactNumber,
+            country: country,
+            emergency_contact_name: contactName,
+            emergency_phone_number: contactNumber,
+            role: 2,
+            is_superuser: false,
+            profile: {},
+
+          },
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+              "Content-Type": "application/json",
+            },
           })
           .then((response) => {
             console.log("Personal API was hit successfully");
@@ -273,7 +285,7 @@ export default function Personal() {
                 postcodeValidation();
                 cityValidation();
                 cityStateValidation();
-                // countryValidation();
+                countryValidation();
                 contactNameValidation();
                 contactNumberValidation();
                 personalDetails(e);
@@ -353,10 +365,9 @@ export default function Personal() {
                 {...register("Email", { required: true })}
                 onChange={(e) => setEmail(e.target.value)}
               />
-            
             </Box>
             <Box sx={{ ml: 24, mt: 1 }}>
-            {errors.Email?.type === "required" && "Email Required"}
+              {errors.Email?.type === "required" && "Email Required"}
               <small>
                 {emailError && (
                   <div
@@ -368,7 +379,7 @@ export default function Personal() {
                   </div>
                 )}
               </small>
-              </Box>
+            </Box>
             <br />
             <Box className="flex flex-row ">
               <Typography
@@ -395,7 +406,7 @@ export default function Personal() {
               />
             </Box>
             <Box sx={{ ml: 24, mt: 1 }}>
-            {errors.Mobile?.type === "required" && "Mobile Required"}
+              {errors.Mobile?.type === "required" && "Mobile Required"}
               <small>
                 {mobileError && (
                   <div
@@ -407,7 +418,7 @@ export default function Personal() {
                   </div>
                 )}
               </small>
-              </Box>
+            </Box>
             <br />
             <Box className="flex flex-row ">
               <Typography
@@ -434,7 +445,7 @@ export default function Personal() {
               />
             </Box>
             <Box sx={{ ml: 24, mt: 1 }}>
-            {errors.Address?.type === "required" && "Address Required"}
+              {errors.Address?.type === "required" && "Address Required"}
               <small>
                 {addressError && (
                   <div
@@ -446,7 +457,7 @@ export default function Personal() {
                   </div>
                 )}
               </small>
-              </Box>
+            </Box>
             <br />
             <Box className="flex flex-row ">
               <Typography
@@ -473,7 +484,7 @@ export default function Personal() {
               />
             </Box>
             <Box sx={{ ml: 24, mt: 1 }}>
-            {errors.Postcode?.type === "required" && "Postcode Required"}
+              {errors.Postcode?.type === "required" && "Postcode Required"}
               <small>
                 {postcodeError && (
                   <div
@@ -485,7 +496,7 @@ export default function Personal() {
                   </div>
                 )}
               </small>
-              </Box>
+            </Box>
             <br />
             <Box className="flex flex-row ">
               <Typography
@@ -512,7 +523,7 @@ export default function Personal() {
               />
             </Box>
             <Box sx={{ ml: 24, mt: 1 }}>
-            {errors.City?.type === "required" && "City Required"}
+              {errors.City?.type === "required" && "City Required"}
               <small>
                 {cityError && (
                   <div
@@ -524,7 +535,7 @@ export default function Personal() {
                   </div>
                 )}
               </small>
-              </Box>
+            </Box>
             <br />
             <Box className="flex flex-row ">
               <Typography
@@ -537,19 +548,33 @@ export default function Personal() {
               >
                 State
               </Typography>
-              {selectedCountry && (
-              <FormControl>
-                <Select value={selectedState} onChange={handleStateChange}>
-                <MenuItem value="">Select a state</MenuItem>
-            {states.map(state => (
-              <MenuItem key={state.id} value={state.id}>{state.name}</MenuItem>
-            ))}
-                </Select>
-              </FormControl>
-              )}
+              <TextField
+                id="outlined-basic"
+                label=""
+                variant="outlined"
+                size="small"
+                sx={{
+                  width: "300px",
+                  mr: 60,
+                }}
+                {...register("State", { required: true })}
+                onChange={(e) => setCityState(e.target.value)}
+              />
+              {/* {selectedCountry && (
+                <FormControl>
+                  <Select value={selectedState} onChange={handleStateChange}>
+                    <MenuItem value="">Select a state</MenuItem>
+                    {states.map((state) => (
+                      <MenuItem key={state.id} value={state.id}>
+                        {state.name}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                </FormControl>
+              )} */}
             </Box>
             <Box sx={{ ml: 24, mt: 1 }}>
-            {errors.CityState?.type === "required" && "Email Required"}
+              {errors.CityState?.type === "required" && "Email Required"}
               <small>
                 {cityStateError && (
                   <div
@@ -561,7 +586,7 @@ export default function Personal() {
                   </div>
                 )}
               </small>
-              </Box>
+            </Box>
             <br />
             <Box className="flex flex-row ">
               <Typography
@@ -575,7 +600,7 @@ export default function Personal() {
               >
                 Country
               </Typography>
-              {/* <TextField
+              <TextField
                 id="outlined-basic"
                 label=""
                 variant="outlined"
@@ -586,18 +611,21 @@ export default function Personal() {
                 }}
                 {...register("Country", { required: true })}
                 onChange={(e) => setCountry(e.target.value)}
-              /> */}
-               <FormControl sx={{ pl: 5, m: 1, width: 300, mt: 3 }}>
-              <Select value={selectedCountry} onChange={handleCountryChange}>
-              <MenuItem value="">Select a country</MenuItem>
-          {locations.map(location => (
-            <MenuItem key={location.isoCode} value={location.isoCode}>{location.name}</MenuItem>
-          ))}
-              </Select>
-              </FormControl>
+              />
+
+              {/* <FormControl sx={{ pl: 5, m: 1, width: 300, mt: 3 }}>
+                <Select value={selectedCountry} onChange={handleCountryChange}>
+                  <MenuItem value="">Select a country</MenuItem>
+                  {/* {locations.map((location) => (
+                    <MenuItem key={location.isoCode} value={location.isoCode}>
+                      {location.name}
+                    </MenuItem>
+                  ))} 
+                </Select>
+              </FormControl> */}
             </Box>
             <Box sx={{ ml: 24, mt: 1 }}>
-            {errors.Country?.type === "required" && "Email Required"}
+              {errors.Country?.type === "required" && "Email Required"}
               <small>
                 {countryError && (
                   <div
@@ -609,7 +637,7 @@ export default function Personal() {
                   </div>
                 )}
               </small>
-              </Box>
+            </Box>
             <br />
             <Box className="flex flex-row ">
               <Typography
@@ -637,7 +665,8 @@ export default function Personal() {
               />
             </Box>
             <Box sx={{ ml: 24, mt: 1 }}>
-            {errors.EmergencyContact?.type === "required" && "Emergency Contact Name Required"}
+              {errors.EmergencyContact?.type === "required" &&
+                "Emergency Contact Name Required"}
               <small>
                 {contactNameError && (
                   <div
@@ -649,7 +678,7 @@ export default function Personal() {
                   </div>
                 )}
               </small>
-              </Box>
+            </Box>
             <br />
             <Box className="flex flex-row">
               <Typography
@@ -663,7 +692,7 @@ export default function Personal() {
               >
                 Emergency phone number
               </Typography>
-              <Box sx={{ width: 50, pl: 1 }}>
+              <Box sx={{ pl: 1 }}>
                 <TextField
                   id="outlined-basic"
                   label=""
@@ -678,19 +707,11 @@ export default function Personal() {
                 />
               </Box>
               <br />
-              <TextField
-                id="outlined-basic"
-                label=""
-                variant="outlined"
-                size="small"
-                sx={{
-                  width: "300px",
-                  mr: 60,
-                }}
-              />
+            
             </Box>
             <Box sx={{ ml: 25, mt: 0 }}>
-                {errors.EmergencyContactNumber?.type === "required" && "Emergency Contact Number Required"}
+              {errors.EmergencyContactNumber?.type === "required" &&
+                "Emergency Contact Number Required"}
               <small>
                 {contactNumberError && (
                   <div
@@ -702,7 +723,7 @@ export default function Personal() {
                   </div>
                 )}
               </small>
-              </Box>
+            </Box>
 
             <Avatar
               className="messageCircle"
