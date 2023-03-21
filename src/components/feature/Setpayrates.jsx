@@ -57,7 +57,7 @@ export default function Setpayrates() {
 
   const theme = useTheme();
   const [personName, setPersonName] = React.useState([]);
-  const url = process.env.REACT_APP_BASE_URL + "/people/";
+  const url = process.env.REACT_APP_BASE_URL + "/people/6/";
   const token = process.env.REACT_APP_TEMP_TOKEN;
 
   const [state, setState] = React.useState({ data: "" });
@@ -159,26 +159,22 @@ export default function Setpayrates() {
       );
       try {
         axios
-          .post(url, {
-            role: 2,
-            pay_rates: payRates,
+          .patch(url, {
+            pay_rate: payRates,
             monday: mondays,
             tuesday: tuesdays,
             wednesday: wednesdays,
             thursday: thursdays,
             friday: fridays,
             is_superuser: false,
-            profile: {},
-            per_day_pay_rate: {},
-            pay_detail: {},
-            work_detail: {},
-            hourly_one_and_half_overtime_pay_rate: {}, 
-            salary_pay_rate:{},
-            fixed_pay_rate:{},
-            hourly_forty_four_hour_overtime_rate: {},
-            working_hours: {},
-            leave_entitlements: {},
-          },
+            role: 3,
+            profile:{},
+            work_detail:{},
+            pay_detail:{
+                employment_type: 1,
+                per_day_pay_rate:{}
+            }
+        },
           {
             headers: {
               Authorization: `Bearer ${token}`,

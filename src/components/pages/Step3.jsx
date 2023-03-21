@@ -83,6 +83,7 @@ export default function BasicModal() {
       setError(false);
       console.log(payProcess, hear);
       try {
+        
         axios
           .post(url, {
             business_name: location.state.business,
@@ -98,6 +99,7 @@ export default function BasicModal() {
           .then((response) => {
             console.log("Signup API was hit successfully");
             console.log(response);
+            navigate("/people");
 
             // Navigate to Home Screen
           });
@@ -246,13 +248,13 @@ export default function BasicModal() {
                     size="lg"
                     sx={{ flexDirection: "row", gap: 1.5, mt: 2 }}
                     {...register("Process", { required: true })}
-                    onChange={(e) => setPayProcess(e.target.value)}
+                    onChange={(e) => setPayProcess(parseInt(e.target.id)+1)}
                   >
                     {[
                       "As soon as possible",
                       "In the near future",
                       "Just looking around",
-                    ].map((value) => (
+                    ].map((value, idx) => (
                       <Sheet
                         key={value}
                         sx={{
@@ -269,6 +271,7 @@ export default function BasicModal() {
                         }}
                       >
                         <Radio
+                        id={idx}
                           label={`${value}`}
                           overlay
                           disableIcon
@@ -301,7 +304,7 @@ export default function BasicModal() {
                     ))}
                   </RadioGroup>
                 </Grid>
-                {errors.payProcess?.type === "required" && "Process Required"}
+                {errors.payProcess?.type === "required" && "Required"}
                 <small>
                   {processError && (
                     <div
@@ -372,7 +375,7 @@ export default function BasicModal() {
                   },
                 }}
                 {...register("Hear", { required: true })}
-                onChange={(e) => setHear(e.target.value)}
+                onChange={(e) => setHear(parseInt(e.target.id)+1)}
               >
                 {[
                   "Using MaxPilot in the past",
@@ -403,7 +406,7 @@ export default function BasicModal() {
                     }}
                   >
                     <Radio
-                      id={value}
+                      id={idx}
                       value={value}
                       checkedIcon={<CheckCircleRoundedIcon />}
                     />
@@ -431,7 +434,7 @@ export default function BasicModal() {
                 ))}
               </RadioGroup>
             </Grid>
-            {errors.hear?.type === "required" && "Hear Required"}
+            {errors.hear?.type === "required" && "Required"}
             <small>
               {hearError && (
                 <div

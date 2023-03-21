@@ -82,8 +82,17 @@ export default function SetStandardHours() {
       url + "/people/",
       {
         role: 2,
-        hours: hours,
-      },
+        hours_per_work_period: hours,
+        working_hours: {
+          hours_per_work_period: 4,
+          total_hours_for_work_period:3,
+          pay_overtime:6,
+          stress_level:4,
+          work_period:{
+              work_period_length:2,
+              next_work_period_day:1
+          }
+      }},
       {
         headers: {
           Authorization: `Bearer ${token}`,

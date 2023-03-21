@@ -237,7 +237,7 @@ export default function BasicModal(props) {
                       },
                     }}
                     {...register("Purpose", { required: true })}
-                    onChange={(e) => setPurpose(e.target.value)}
+                    onChange={(e) => setPurpose(parseInt(e.target.id)+1)}
                   >
                     {[
                       "Save time scheduling",
@@ -262,7 +262,7 @@ export default function BasicModal(props) {
                         }}
                       >
                         <Radio
-                          id={value}
+                          id={idx}
                           value={value}
                           checkedIcon={<CheckCircleRoundedIcon />}
                         />
@@ -365,7 +365,7 @@ export default function BasicModal(props) {
                 },
               }}
               {...register("Payroll", { required: true })}
-              onChange={(e) => setPayroll(e.target.value)}
+              onChange={(e) => setPayroll(parseInt(e.target.id)+1)}
             >
               {["XERO"].map((value, idx) => (
                 <Sheet
@@ -388,7 +388,7 @@ export default function BasicModal(props) {
                     sx={{ mr: 1 }}
                   />
                   <Radio
-                    id={value}
+                    id={idx}
                     label={`${value}`}
                     overlay
                     disableIcon
