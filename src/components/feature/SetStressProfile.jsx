@@ -61,8 +61,9 @@ export default function SetStressProfile() {
   const [stress, setStress] = React.useState("");
   const [open, setOpen] = React.useState(false);
 
-  const [error, setError] = React.useState(null);
   const [stressError, setStressError] = React.useState("");
+  const [selectedValue, setSelectedValue] = useState("");
+  const [error, setError] = React.useState(null);
   const token = process.env.REACT_APP_TEMP_TOKEN;
   const url = process.env.REACT_APP_BASE_URL;
 
@@ -126,11 +127,19 @@ export default function SetStressProfile() {
   //   }
   // };
 
+  console.log(
+    {selectedValue}
+    );
+
   axios
-    .post(
-      url + "/people/",
+    .patch(
+      url + "/people/6/",
       {
+        stress_level: stress,
         role: 2,
+        is_superuser: false,
+        profile: {},
+        working_hours: {},
       },
       {
         headers: {
@@ -191,34 +200,45 @@ export default function SetStressProfile() {
               Stress Profile{" "}
             </Typography>
             <Select
-             {...register("Stress Profile", { required: true })}
-             onChange={handleChange}
+            //  {...register("Stress Profile", { required: true })}
+             
               sx={{ borderRadius: "10px" }}
               displayEmpty
-              value={personName}
-              input={<OutlinedInput />}
-              renderValue={(selected) => {
-                if (selected.length === 0) {
-                  console.log("Selected values:", selected)
-                  return <em>Select</em>;
-                } else
+              value={selectedValue}
+              onChange={(e) => setSelectedValue(e.target.value)}
+            //   value={personName}
+            //   input={<OutlinedInput />}
+            //   renderValue={(selected) => {
+            //     if (selected.length === 0) {
+            //       console.log("Selected values:", selected)
+            //       return <em>Select</em>;
+            //     } else
 
-                return selected.join(", ");
-              }}
-              MenuProps={MenuProps}
-              inputProps={{ "aria-label": "Without label" }}
+            //     return selected.join(", ");
+            //   }}
+            //   MenuProps={MenuProps}
+            //   inputProps={{ "aria-label": "Without label" }}
+            // >
             >
-              {names.map((name) => (
-                <MenuItem
-                  key={name}
-                  value={name}
-                  style={getStyles(name, personName, theme)}
-                >
-                  {name}
-                </MenuItem>
-              ))}
-             
+            {/* //   {names.map((name) => (
+            //     <MenuItem
+            //       key={name}
+            //       value={name}
+            //       style={getStyles(name, personName, theme)}
+            //     >
+            //       {name}
+            //     </MenuItem>
+            } */}
+             <MenuItem disabled value=""></MenuItem>
+              <MenuItem value=""><em>None</em></MenuItem>
+              <MenuItem value={"2 days per week"}>2 days per week</MenuItem>
+              <MenuItem value={"24/7"}>24/7</MenuItem>
+              <MenuItem value={"CA Overtime 40 hrs per week"}>CA Overtime 40 hrs per week</MenuItem>
+              <MenuItem value={"Max 20 hours per week"}>Max 20 hours per week</MenuItem>
+              <MenuItem value={"Normal 38 hours per week"}>Normal 38 hours per week</MenuItem>
+              <MenuItem value={"Standard 40 hours, 8 hours per day"}>Standard 40 hours, 8 hours per day</MenuItem>
             </Select>
+            {error && <FormHelperText>Select a value</FormHelperText>}
           </FormControl>
           <Box sx={{ ml: 1, mt: 1 }}>
         {errors.Stress?.type === "required" && "Stress Profile Required"}
@@ -245,7 +265,7 @@ export default function SetStressProfile() {
           }}
           onClick={() => {
            
-            stressValidation();
+            // stressValidation();
             toEmployment();
           }}
         >
