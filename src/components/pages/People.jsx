@@ -205,6 +205,7 @@ export default function People() {
           console.log(response.data);
           const ids = response.data.map((obj) => obj.id);
           const firstId = ids[0];
+          debugger;
           setBusinessId(firstId);
           b_id = firstId;
           // console.log("First Id: ", firstId);
