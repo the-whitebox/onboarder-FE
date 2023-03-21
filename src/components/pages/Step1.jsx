@@ -140,14 +140,23 @@ export default function BasicModal() {
     ) {
       console.log("Data Found");
       setError(false);
-      console.log(mobile, business, businesstype, industry);
+
+      const tempBusinessType = parseInt(businesstype) + 1;
+
+      console.log({
+        mobile,
+        business,
+        businesstype,
+        industry,
+        tempBusinessType,
+      });
       // alert(mobile + business + businesstype + industry);
 
       navigate("/step2", {
         state: {
           business: business,
           mobile: mobile,
-          businesstype: businesstype,
+          businesstype: tempBusinessType,
           industry: industry,
         },
       });
@@ -171,11 +180,15 @@ export default function BasicModal() {
   }, [businesstype]);
 
   const businessTypeChange = (e) => {
-    setBusinesstype(e.target.value);
+    setBusinesstype(e.target.id);
 
     console.log({ industryData });
     // console.log(e.target.value)
   };
+
+  // const industryChange = (e) => {
+  //   setIndustry(e.target.value);
+  // };
 
   const icons = [Icon1, Icon2, Icon3, Icon4, Icon5];
 
@@ -459,10 +472,8 @@ export default function BasicModal() {
                 onChange={(e) => setIndustry(e.target.value)}
               >
                 {businesstype &&
-                  industryData.map((industry) => (
-                    <MenuItem value={industry["name"]}>
-                      {industry["name"]}
-                    </MenuItem>
+                  industryData.map((industry, idx) => (
+                    <MenuItem value={idx}>{industry["name"]}</MenuItem>
                   ))}
               </Select>
             </FormControl>

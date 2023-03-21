@@ -46,7 +46,8 @@ const style = {
 };
 
 export default function BasicModal() {
-  const url = process.env.REACT_APP_BASE_URL + "/business";
+  const token = process.env.REACT_APP_TEMP_TOKEN;
+  const url = process.env.REACT_APP_BASE_URL + "/business/";
   const [state, setState] = React.useState({ data: "" });
   const [payProcess, setPayProcess] = React.useState("");
   const [hear, setHear] = React.useState("");
@@ -76,28 +77,45 @@ export default function BasicModal() {
   } = useForm();
 
   const createBusiness = (e) => {
+    const tempteamPay = parseInt(payProcess) + 1;
+    const tempHear = parseInt(hear) + 1;
     console.log("Inside createBusiness");
     console.log(location.state, payProcess, hear);
     if (payProcess !== "" && hear !== "") {
       console.log("Data Found");
       setError(false);
-      console.log(payProcess, hear);
+      console.log({ tempteamPay, tempHear });
+      // const tempPayProcess = parseInt(payProcess) + 1;
+      // const Hear = parseInt(hear) + 1;
+
+      // console.log({tempPayProcess, Hear});
       try {
         axios
-          .post(url, {
-            business_name: location.state.business,
-            mobile_number: location.state.mobile,
-            business_type: location.state.businessType,
-            industry_type: location.state.industry,
-            employess_range: null,
-            joining_purpose: location.state.purpose,
-            payroll_type: location.state.payroll,
-            pay_proces_improvement_duration: payProcess,
-            how_you_hear: hear,
-          })
+          .post(
+            url,
+            {
+              business_name: location.state.business,
+              mobile_number: location.state.mobile,
+              business_type: location.state.businessType,
+              industry_type: location.state.industry,
+              employess_range: null,
+              joining_purpose: location.state.purpose,
+              payroll_type: location.state.payroll,
+              pay_proces_improvement_duration: tempteamPay,
+              how_you_hear: tempHear,
+            },
+            {
+              headers: {
+                Authorization: `Bearer ${token}`,
+                "Content-Type": "application/json",
+              },
+            }
+          )
           .then((response) => {
             console.log("Signup API was hit successfully");
             console.log(response);
+
+            navigate("/people");
 
             // Navigate to Home Screen
           });
@@ -105,7 +123,6 @@ export default function BasicModal() {
         console.log(error.response.data);
       }
 
-      console.log(payProcess, hear);
       // alert(payProcess + hear);
 
       // navigate("/about", {
@@ -246,13 +263,13 @@ export default function BasicModal() {
                     size="lg"
                     sx={{ flexDirection: "row", gap: 1.5, mt: 2 }}
                     {...register("Process", { required: true })}
-                    onChange={(e) => setPayProcess(e.target.value)}
+                    onChange={(e) => setPayProcess(e.target.id)}
                   >
                     {[
                       "As soon as possible",
                       "In the near future",
                       "Just looking around",
-                    ].map((value) => (
+                    ].map((value, idx) => (
                       <Sheet
                         key={value}
                         sx={{
@@ -273,6 +290,7 @@ export default function BasicModal() {
                           overlay
                           disableIcon
                           value={value}
+                          id={idx}
                           slotProps={{
                             label: ({ checked }) => ({
                               sx: {
@@ -372,7 +390,7 @@ export default function BasicModal() {
                   },
                 }}
                 {...register("Hear", { required: true })}
-                onChange={(e) => setHear(e.target.value)}
+                onChange={(e) => setHear(e.target.id)}
               >
                 {[
                   "Using MaxPilot in the past",
@@ -403,7 +421,7 @@ export default function BasicModal() {
                     }}
                   >
                     <Radio
-                      id={value}
+                      id={idx}
                       value={value}
                       checkedIcon={<CheckCircleRoundedIcon />}
                     />
