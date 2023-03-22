@@ -14,7 +14,6 @@ import { useState } from "react";
 import { FormHelperText } from "@mui/material";
 import axios from "axios";
 
-
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
 const MenuProps = {
@@ -56,8 +55,6 @@ export default function SetAccessLevel(props) {
   const token = process.env.REACT_APP_TEMP_TOKEN;
   const url = process.env.REACT_APP_BASE_URL;
 
-  
-
   function getStyles(name, personName, theme) {
     return {
       fontWeight:
@@ -90,50 +87,30 @@ export default function SetAccessLevel(props) {
   };
 
   const toAccess = (e) => {
-  //   if (selectedValue !== "") {
-  //     console.log("Data Found");
-  //     setError(false);
-  //     console.log(selectedValue);
-  //   } 
-  //   else {
-  //     setError(true);
-  //     setState({ data: e.target.value });
-  //   }
-  // };
+    console.log({ selectedValue });
 
-
-  console.log(
-    { selectedValue }
-  );
-debugger;
-  axios
-    .patch(
-      url + "/people/6/",
-      {
-        role: selectedValue,
-        is_superuser: false,
-        profile: {},
-        // work_detail:{},
-        // pay_detail:{
-        //     employment_type: 1,
-        //     per_day_pay_rate:{}
-        // },
-        // leave_entitlements: [],
-      },
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "application/json",
+    axios
+      .patch(
+        url + "/people/6/",
+        {
+          role: selectedValue,
+          is_superuser: false,
+          profile: {},
         },
-      }
-    )
-    .then((response) => {
-      console.log(response);
-    })
-    .catch((error) => {
-      console.error(error);
-    });
-};
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        }
+      )
+      .then((response) => {
+        console.log(response);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  };
 
   return (
     <React.Fragment>
@@ -163,15 +140,17 @@ debugger;
               padding: "5px  ",
             }}
           >
-            <Select 
+            <Select
               size="small"
               sx={{ borderRadius: "7px" }}
               displayEmpty
               value={selectedValue}
               onChange={(e) => setSelectedValue(e.target.value)}
-              >
+            >
               <MenuItem disabled value=""></MenuItem>
-              <MenuItem value=""><em>None</em></MenuItem>
+              <MenuItem value="">
+                <em>None</em>
+              </MenuItem>
               <MenuItem value={1}>System Administrator</MenuItem>
               <MenuItem value={2}>Supervisior</MenuItem>
               <MenuItem value={3}>Employee</MenuItem>
@@ -238,7 +217,7 @@ debugger;
           }}
           onClick={() => {
             // accessValidation();
-            toAccess();                  
+            toAccess();
             // setError(!selectedValue)
           }}
         >
