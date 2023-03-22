@@ -38,7 +38,14 @@ import { useEffect, useState } from "react";
 import { SmallDashOutlined } from "@ant-design/icons";
 import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
 import SetAccessLevelModalBody from "../feature/SetAccessLevel";
-
+import Link from "@mui/material/Link";
+import InfoIcon from "@mui/icons-material/Info";
+import Radio from "@mui/material/Radio";
+import RadioGroup from "@mui/material/RadioGroup";
+import { useForm } from "react-hook-form";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import OutlinedInput from "@mui/material/OutlinedInput";
+import InputAdornment from "@mui/material/InputAdornment";
 
 const theme = createTheme();
 
@@ -158,22 +165,96 @@ export default function People() {
   const [otherLocation, setOtherLocattion] = useState("");
   const [businessId, setBusinessId] = useState("");
   const [selectedModel, setSelectedModel] = useState([]);
-  
-  // console.log({ token, url });
+  const [workPeriodError, setWorkPeriodError] = useState("");
+  const [netWorkPeriodError, setNetWorkPeriodError] = useState("");
+  const [hoursError, setHoursError] = useState("");
+
+  const workPeriodValidation = () => {
+    if (workPeriod == "") {
+      setWorkPeriodError("Please enter work period length");
+    } else setWorkPeriodError("");
+  };
+
+  const netWorkPeriodValidation = () => {
+    if (netWorkPeriod == "") {
+      setNetWorkPeriodError("Please enter start day");
+    } else setNetWorkPeriodError("");
+  };
+
+  const hoursValidation = () => {
+    if (hours == "") {
+      setHoursError("Please enter hours per work period");
+    } else setHoursError("");
+  };
+
+  const {
+    register,
+    formState: { errors },
+  } = useForm();
+
+  const toAccess = (e) => {
+    console.log({ selectedValue });
+
+    axios
+      .patch(
+        url + "/people/6/",
+        {
+          role: selectedValue,
+          is_superuser: false,
+          profile: {},
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        }
+      )
+      .then((response) => {
+        console.log(response);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  };
+
+  const toPeople = (e) => {
+    axios
+      .patch(
+        url + "/people/6/",
+        {
+          role: 4,
+          is_superuser: false,
+          working_hours: {},
+          profile: {},
+          hours_per_work_period: hours,
+          next_work_period_day: netWorkPeriod,
+          work_period_length: workPeriod,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        }
+      )
+      .then((response) => {
+        console.log(response);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  };
 
   const [listOfTeamMembers, setListOfTeamMembers] = React.useState([]);
 
-  const handleSelectionModelChange = ((newSelection) => {
+  const handleSelectionModelChange = (newSelection) => {
     setSelectedModel(newSelection);
-    // const ids = newSelection.map((id) => {
-    //   console.log(id)
-    // });
-    
-  });
+  };
 
-
-
-  
+  const [openWorkPeriod, setOpenWorkPeriod] = React.useState(false);
+  const handleOpenWorkPeriod = () => setOpenWorkPeriod(true);
+  const handleCloseWorkPeriod = () => setOpenWorkPeriod(false);
 
   let b_id = "";
   let team_array = [];
@@ -190,7 +271,7 @@ export default function People() {
           console.log(response.data);
           const ids = response.data.map((obj) => obj.id);
           const firstId = ids[0];
-          
+
           setBusinessId(firstId);
           b_id = firstId;
           // console.log("First Id: ", firstId);
@@ -230,6 +311,8 @@ export default function People() {
   // console.log("The array of Objects: ", rows);
 
   const [openAccess, setOpenAccess] = React.useState(false);
+  const [selectedValue, setSelectedValue] = useState("");
+
   const handleOpenAccess = () => setOpenAccess(true);
   const handleCloseAccess = () => setOpenAccess(false);
   const [open, setOpen] = React.useState(false);
@@ -237,6 +320,7 @@ export default function People() {
     setOpen(true);
   };
   const handleClose = () => setOpen(false);
+  const [error, setError] = React.useState(null);
 
   const modalWrapper = {
     overflow: "auto",
@@ -246,17 +330,103 @@ export default function People() {
   const handleChange = (event) => {
     setPeople(event.target.value);
   };
+
+  const [openATM, setOpenATM] = React.useState(false);
+
+  const handleOpenATM = () => {
+    setOpenATM(true);
+  };
+  const handleCloseATM = () => {
+    setOpenATM(false);
+  };
+
+  const style = {
+    position: "absolute",
+    top: "50%",
+    left: "50%",
+    transform: "translate(-50%, -50%)",
+    bgcolor: "background.paper",
+    // border: "2px solid #000",
+    boxShadow: 24,
+    pt: 2,
+    px: 4,
+    pb: 3,
+    borderRadius: "12px",
+    padding: "20px",
+  };
   return (
-    
     <ThemeProvider theme={theme}>
-       <Modal
+      <Modal
         open={openAccess}
         onClose={handleCloseAccess}
         onClick={handleClose}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
-        <SetAccessLevelModalBody />
+        <Box sx={{ ...style, width: 370, height: 270 }}>
+          <Typography
+            variant="h5"
+            sx={{ mt: 2, fontWeight: "bold", paddingBottom: 1 }}
+            id="child-modal-title"
+          >
+            Set Access level
+          </Typography>
+
+          <div>
+            <p className="team">2 Team members </p>
+            <Typography sx={{ fontWeight: "bold", ml: "8px" }}>
+              Access level
+            </Typography>
+            <FormControl
+              error={error}
+              sx={{
+                width: 200,
+                height: 5,
+                padding: "5px  ",
+              }}
+            >
+              <Select
+                size="small"
+                sx={{ borderRadius: "7px" }}
+                displayEmpty
+                value={selectedValue}
+                onChange={(e) => setSelectedValue(e.target.value)}
+              >
+                <MenuItem disabled value=""></MenuItem>
+                <MenuItem value="">
+                  <em>None</em>
+                </MenuItem>
+                <MenuItem value={1}>System Administrator</MenuItem>
+                <MenuItem value={2}>Supervisior</MenuItem>
+                <MenuItem value={3}>Employee</MenuItem>
+                <MenuItem value={4}>Location Manager</MenuItem>
+                <MenuItem value={5}>Advisor</MenuItem>
+              </Select>
+              {error && <FormHelperText>Select a value</FormHelperText>}
+            </FormControl>
+          </div>
+          <Button
+            variant="primary"
+            className="btn"
+            sx={{
+              ml: 34,
+              borderRadius: "6px",
+              width: "22%",
+              bgcolor: "#38b492",
+              color: "white",
+              textTransform: "none",
+              mt: 6,
+            }}
+            onClick={() => {
+              // accessValidation();
+              toAccess();
+              // setError(!selectedValue)
+            }}
+          >
+            Update
+          </Button>
+        </Box>
+        {/* <SetAccessLevelModalBody /> */}
       </Modal>
       <Modal
         open={open}
@@ -266,6 +436,300 @@ export default function People() {
         aria-describedby="modal-modal-description"
       >
         <AddTeammemberModalBody businessId={businessId} />
+      </Modal>
+      <Modal
+        open={openATM}
+        onClose={handleCloseATM}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box sx={{ ...style, width: 550, height: 430 }}>
+          <Box className="flex flex-row" sx={{ width: "500px" }}>
+            <h2>Archive Team members</h2>
+            {/* <CloseIcon onClick={handleClose} sx={{ mb: 6 }}></CloseIcon> */}
+          </Box>
+
+          <div>
+            <Typography sx={{ color: "#b4b4b4", ml: 1 }}>
+              {team_array.length} Team members
+            </Typography>
+            <Box
+              sx={{
+                display: "flex",
+                flexDirection: "row",
+              }}
+            >
+              <InfoIcon
+                sx={{
+                  fontSize: "medium",
+                  color: "Gray",
+                  mt: "12px",
+                  ml: "12px",
+                }}
+              />
+              <Typography
+                sx={{
+                  ml: "5px",
+                  pb: "15px",
+                  mt: "10px",
+                }}
+              >
+                Archiving these people will revoke their access to this
+                organization and will no longer be able to login to any device
+                but historical records will be retained.
+              </Typography>
+            </Box>
+            <Box sx={{ display: "flex", flexDirection: "row" }}>
+              <Typography
+                sx={{ pt: 2, pb: 2, mr: 1, pl: 2, fontWeight: "bold" }}
+              ></Typography>
+
+              <Typography sx={{ pt: 2, pb: 2, ml: 4, fontWeight: "bold" }}>
+                Asher Muneer
+              </Typography>
+              <Typography sx={{ pt: 2, pb: 2, ml: 20, color: "#a1a1a1" }}>
+                Ready to Archive
+              </Typography>
+            </Box>
+            <Box sx={{ display: "flex", flexDirection: "row" }}>
+              <Typography sx={{ pt: 2, pb: 2, ml: 2, fontWeight: "bold" }}>
+                ss
+              </Typography>
+              <Typography sx={{ pt: 2, pb: 2, ml: 6, fontWeight: "bold" }}>
+                sss sss
+              </Typography>
+              <Typography sx={{ pt: 2, pb: 2, ml: 26, color: "#a1a1a1" }}>
+                Ready to Archive
+              </Typography>
+            </Box>
+          </div>
+
+          <Button
+            className="button"
+            sx={{
+              textTransform: "none",
+              ml: 35,
+              borderRadius: "7px",
+              mt: 4,
+              width: "210px",
+            }}
+          >
+            Archive Team members
+          </Button>
+        </Box>
+      </Modal>
+      <Modal
+        open={openWorkPeriod}
+        sx={modalWrapper}
+        onClose={handleCloseWorkPeriod}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box
+          sx={{
+            ...style,
+            width: 490,
+            height: "auto",
+          }}
+        >
+          <Box className="flex flex-row" sx={{ width: "100%" }}>
+            <h2 className="set">Set agreed hours</h2>
+            {/* <CloseIcon onClick={handleClose} sx={{ pb: "25px" }}></CloseIcon> */}
+          </Box>
+          <div>
+            <Typography
+              sx={{
+                pt: "10px",
+                fontWeight: "bold",
+                color: "rgba(95, 91, 81, 0.518)",
+              }}
+            >
+              Team members
+            </Typography>
+            <Typography
+              sx={{
+                fontWeight: "bold",
+                mt: "20px",
+                pb: "20px",
+              }}
+            >
+              Work period
+            </Typography>
+            <Typography
+              variant="h6"
+              sx={{ fontWeight: "bold", ml: "20px", pb: "15px" }}
+            >
+              Create a new work period{" "}
+            </Typography>
+            <Typography sx={{ ml: "20px", pb: "30px" }}>
+              Saving this template will allow it to be used across any team
+              member profile.
+            </Typography>
+            <Typography
+              sx={{
+                fontWeight: "Bold",
+                fontSize: "large",
+                ml: "20px",
+                pb: "10px",
+              }}
+            >
+              Work period length
+            </Typography>
+
+            <FormControl>
+              <RadioGroup
+                sx={{
+                  display: "flex",
+                  flexDirection: "row",
+                  ml: "20px",
+                  gap: 3,
+                }}
+                aria-labelledby="demo-radio-buttons-group-label"
+                defaultValue=""
+                name="radio-buttons-group"
+                {...register("Work Period", { required: true })}
+                onChange={(e) => setWorkPeriod(e.target.value)}
+              >
+                <FormControlLabel
+                  value={1}
+                  control={<Radio />}
+                  label="Weekly"
+                />
+                <FormControlLabel
+                  value={2}
+                  control={<Radio />}
+                  label="2-Weekly"
+                />
+                <FormControlLabel
+                  value={3}
+                  control={<Radio />}
+                  label="4-Weekly"
+                />
+              </RadioGroup>
+            </FormControl>
+            <Box sx={{ ml: 3, mt: 1, mb: 1 }}>
+              {errors.workPeriod?.type === "required" && "Work Period Required"}
+              <small>
+                {workPeriodError && (
+                  <div
+                    style={{
+                      color: "red",
+                    }}
+                  >
+                    {workPeriodError}
+                  </div>
+                )}
+              </small>
+            </Box>
+            <Typography
+              sx={{
+                ml: "20px",
+                fontWeight: "Bold",
+                fontSize: "large",
+                pb: "10px",
+              }}
+            >
+              {" "}
+              Next Work period starts on{" "}
+            </Typography>
+
+            <FormControl>
+              <RadioGroup
+                sx={{
+                  display: "flex",
+                  flexDirection: "row",
+                  gap: 2,
+
+                  ml: "20px",
+                }}
+                aria-labelledby="demo-radio-buttons-group-label"
+                defaultValue=""
+                name="radio-buttons-group"
+                {...register("Work Period", { required: true })}
+                onChange={(e) => setNetWorkPeriod(e.target.value)}
+              >
+                <FormControlLabel value={1} control={<Radio />} label="Mon" />
+                <FormControlLabel value={2} control={<Radio />} label="Tue" />
+                <FormControlLabel value={3} control={<Radio />} label="Wed" />
+                <FormControlLabel value={4} control={<Radio />} label="Thu" />
+                <FormControlLabel value={5} control={<Radio />} label="Fri" />
+                <FormControlLabel value={6} control={<Radio />} label="Sat" />
+                <FormControlLabel value={7} control={<Radio />} label="Sun" />
+              </RadioGroup>
+            </FormControl>
+            <Box sx={{ ml: 3, mt: 1 }}>
+              {errors.netWorkPeriod?.type === "required" &&
+                "Work Period Required"}
+              <small>
+                {netWorkPeriodError && (
+                  <div
+                    style={{
+                      color: "red",
+                    }}
+                  >
+                    {netWorkPeriodError}
+                  </div>
+                )}
+              </small>
+            </Box>
+            <Typography
+              sx={{ fontWeight: "bold", pt: "15px", pb: "20px", ml: 3 }}
+            >
+              Hours per Work period
+            </Typography>
+            <FormControl
+              size="small"
+              sx={{ m: 1, width: 150 }}
+              variant="outlined"
+            >
+              <OutlinedInput
+                id="outlined-adornment-weight"
+                endAdornment={
+                  <InputAdornment position="end"> hours</InputAdornment>
+                }
+                aria-describedby="outlined-weight-helper-text"
+                inputProps={{
+                  "aria-label": "weight",
+                }}
+                placeholder="0"
+                {...register("Hours", { required: true })}
+                onChange={(e) => setHours(e.target.value)}
+              />
+            </FormControl>
+          </div>
+          <Box sx={{ ml: 3, mt: 1 }}>
+            {errors.hours?.type === "required" && "Work Period Required"}
+            <small>
+              {hoursError && (
+                <div
+                  style={{
+                    color: "red",
+                  }}
+                >
+                  {hoursError}
+                </div>
+              )}
+            </small>
+          </Box>
+          <Button
+            className="btn btn-primary"
+            sx={{
+              ml: 45,
+              borderRadius: "5px",
+              width: "16%",
+              textTransform: "none",
+              mt: 3,
+            }}
+            onClick={() => {
+              workPeriodValidation();
+              netWorkPeriodValidation();
+              hoursValidation();
+              toPeople();
+            }}
+          >
+            Save
+          </Button>
+        </Box>
       </Modal>
       <Box
         sx={{
@@ -447,7 +911,8 @@ export default function People() {
         </Grid>
         <Box
           component="main"
-          sx={{ flexGrow: 1, bgcolor: "background.default", pl: 2, pr: 2 }}>
+          sx={{ flexGrow: 1, bgcolor: "background.default", pl: 2, pr: 2 }}
+        >
           <Toolbar />
 
           <Box
@@ -475,18 +940,50 @@ export default function People() {
             </FormControl>
           </Box>
           <Box display="flex" alignItems="center" className="pl-2">
-            {/* <Search>
-              <SearchIconWrapper>
-                <SearchIcon />
-              </SearchIconWrapper>
-              <StyledInputBase
-                placeholder="Search…"
-                inputProps={{ "aria-label": "search" }}
-              />
-            </Search>
-            <Filters />
-            <Display /> */}
-            <BulkActions />
+            <FormControl variant="standard" sx={{ m: 1, minWidth: 120 }}>
+              <InputLabel id="demo-simple-select-standard-label">
+                Bulk Actions
+              </InputLabel>
+              <Select
+                labelId="demo-simple-select-standard-label"
+                id="demo-simple-select-standard"
+                value={people}
+                onChange={handleChange}
+                label="Age"
+              >
+                <MenuItem value="">
+                  <Link
+                    sx={{ textDecoration: "none" }}
+                    onClick={handleOpenWorkPeriod}
+                    color="#38b492"
+                  >
+                    Agreed hours
+                  </Link>
+                </MenuItem>
+
+                <MenuItem>
+                  {" "}
+                  <Link
+                    sx={{ textDecoration: "none" }}
+                    onClick={handleOpenAccess}
+                    color="#38b492"
+                  >
+                    Access level
+                  </Link>
+                </MenuItem>
+                <MenuItem>
+                  {" "}
+                  <Link
+                    sx={{ textDecoration: "none" }}
+                    onClick={handleOpenATM}
+                    color="#38b492"
+                  >
+                    {" "}
+                    Archive team{" "}
+                  </Link>{" "}
+                </MenuItem>
+              </Select>
+            </FormControl>
           </Box>
           <Box sx={{ pt: 3, pb: 2 }}>
             <Typography variant="h6" fontWeight="Bold">

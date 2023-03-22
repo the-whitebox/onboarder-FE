@@ -16,7 +16,6 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useForm } from "react-hook-form";
 
-
 const style = {
   position: "absolute",
   top: "50%",
@@ -42,7 +41,6 @@ export default function SetAgreedhours() {
   const [hoursError, setHoursError] = useState("");
   const token = process.env.REACT_APP_TEMP_TOKEN;
   const url = process.env.REACT_APP_BASE_URL;
-
 
   const workPeriodValidation = () => {
     if (workPeriod == "") {
@@ -70,43 +68,32 @@ export default function SetAgreedhours() {
   const navigate = useNavigate();
 
   const toPeople = (e) => {
-  //   if (workPeriod !== "" && netWorkPeriod !== "" && hours !== "") {
-  //     console.log("Data Found");
-  //     setError(false);
-  //     console.log(workPeriod, netWorkPeriod, hours);
-
-  //   } else {
-  //     setError(true);
-  //     setState({ data: e.target.value });
-  //   }
-  // };
-
-  axios
-    .patch(
-      url + "/people/6/",
-      {
-        role:4,
-        is_superuser: false,
-        working_hours:{},
-        profile:{},
-        hours_per_work_period:hours,
-        next_work_period_day: netWorkPeriod,
-        work_period_length: workPeriod,
-      },
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "application/json",
+    axios
+      .patch(
+        url + "/people/6/",
+        {
+          role: 4,
+          is_superuser: false,
+          working_hours: {},
+          profile: {},
+          hours_per_work_period: hours,
+          next_work_period_day: netWorkPeriod,
+          work_period_length: workPeriod,
         },
-      }
-    )
-    .then((response) => {
-      console.log(response);
-    })
-    .catch((error) => {
-      console.error(error);
-    });
-};
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        }
+      )
+      .then((response) => {
+        console.log(response);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  };
 
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => {
@@ -183,11 +170,7 @@ export default function SetAgreedhours() {
               {...register("Work Period", { required: true })}
               onChange={(e) => setWorkPeriod(e.target.value)}
             >
-              <FormControlLabel
-                value={1}
-                control={<Radio />}
-                label="Weekly"
-              />
+              <FormControlLabel value={1} control={<Radio />} label="Weekly" />
               <FormControlLabel
                 value={2}
                 control={<Radio />}
@@ -201,18 +184,18 @@ export default function SetAgreedhours() {
             </RadioGroup>
           </FormControl>
           <Box sx={{ ml: 3, mt: 1, mb: 1 }}>
-          {errors.workPeriod?.type === "required" && "Work Period Required"}
-          <small>
-            {workPeriodError && (
-              <div
-                style={{
-                  color: "red",
-                }}
-              >
-                {workPeriodError}
-              </div>
-            )}
-          </small>
+            {errors.workPeriod?.type === "required" && "Work Period Required"}
+            <small>
+              {workPeriodError && (
+                <div
+                  style={{
+                    color: "red",
+                  }}
+                >
+                  {workPeriodError}
+                </div>
+              )}
+            </small>
           </Box>
           <Typography
             sx={{
@@ -251,18 +234,19 @@ export default function SetAgreedhours() {
             </RadioGroup>
           </FormControl>
           <Box sx={{ ml: 3, mt: 1 }}>
-          {errors.netWorkPeriod?.type === "required" && "Work Period Required"}
-          <small>
-            {netWorkPeriodError && (
-              <div
-                style={{
-                  color: "red",
-                }}
-              >
-                {netWorkPeriodError}
-              </div>
-            )}
-          </small>
+            {errors.netWorkPeriod?.type === "required" &&
+              "Work Period Required"}
+            <small>
+              {netWorkPeriodError && (
+                <div
+                  style={{
+                    color: "red",
+                  }}
+                >
+                  {netWorkPeriodError}
+                </div>
+              )}
+            </small>
           </Box>
           <Typography
             sx={{ fontWeight: "bold", pt: "15px", pb: "20px", ml: 3 }}
@@ -290,18 +274,18 @@ export default function SetAgreedhours() {
           </FormControl>
         </div>
         <Box sx={{ ml: 3, mt: 1 }}>
-        {errors.hours?.type === "required" && "Work Period Required"}
-        <small>
-          {hoursError && (
-            <div
-              style={{
-                color: "red",
-              }}
-            >
-              {hoursError}
-            </div>
-          )}
-        </small>
+          {errors.hours?.type === "required" && "Work Period Required"}
+          <small>
+            {hoursError && (
+              <div
+                style={{
+                  color: "red",
+                }}
+              >
+                {hoursError}
+              </div>
+            )}
+          </small>
         </Box>
         <Button
           className="btn btn-primary"
