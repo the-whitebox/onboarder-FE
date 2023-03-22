@@ -37,6 +37,8 @@ import ReactDOM from "react-dom";
 import { useEffect, useState } from "react";
 import { SmallDashOutlined } from "@ant-design/icons";
 import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
+import SetAccessLevelModalBody from "../feature/SetAccessLevel";
+
 
 const theme = createTheme();
 
@@ -146,36 +148,6 @@ const columns = [
   },
 ];
 
-// const rows = [
-//   {
-//     id: 1,
-//     name: "Asher",
-//     access: "Advisor",
-//     location: "Talha's Professonal Service",
-//     status: "Employed",
-//     email: "Someemail@some.com",
-//     mobile: 1234,
-//   },
-//   {
-//     id: 2,
-//     name: "Cersei",
-//     access: "Supervisor",
-//     location: "Talha's Professonal Service",
-//     status: "Employed",
-//     email: "Someemail@some.com",
-//     mobile: 1234,
-//   },
-//   {
-//     id: 3,
-//     name: "Talha",
-//     access: "System Administrator",
-//     location: "Talha's Professonal Service",
-//     status: "Employed",
-//     email: "Someemail@some.com",
-//     mobile: 1234,
-//   },
-// ];
-
 export default function People() {
   const token = process.env.REACT_APP_TEMP_TOKEN;
   const url = process.env.REACT_APP_BASE_URL;
@@ -185,10 +157,23 @@ export default function People() {
   const [location, setLocattion] = useState("");
   const [otherLocation, setOtherLocattion] = useState("");
   const [businessId, setBusinessId] = useState("");
-
+  const [selectedModel, setSelectedModel] = useState([]);
+  
   // console.log({ token, url });
 
   const [listOfTeamMembers, setListOfTeamMembers] = React.useState([]);
+
+  const handleSelectionModelChange = ((newSelection) => {
+    setSelectedModel(newSelection);
+    // const ids = newSelection.map((id) => {
+    //   console.log(id)
+    // });
+    
+  });
+
+
+
+  
 
   let b_id = "";
   let team_array = [];
@@ -205,7 +190,7 @@ export default function People() {
           console.log(response.data);
           const ids = response.data.map((obj) => obj.id);
           const firstId = ids[0];
-          debugger;
+          
           setBusinessId(firstId);
           b_id = firstId;
           // console.log("First Id: ", firstId);
@@ -244,6 +229,9 @@ export default function People() {
   const rows = team_array;
   // console.log("The array of Objects: ", rows);
 
+  const [openAccess, setOpenAccess] = React.useState(false);
+  const handleOpenAccess = () => setOpenAccess(true);
+  const handleCloseAccess = () => setOpenAccess(false);
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => {
     setOpen(true);
@@ -259,7 +247,17 @@ export default function People() {
     setPeople(event.target.value);
   };
   return (
+    
     <ThemeProvider theme={theme}>
+       <Modal
+        open={openAccess}
+        onClose={handleCloseAccess}
+        onClick={handleClose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <SetAccessLevelModalBody />
+      </Modal>
       <Modal
         open={open}
         onClose={handleClose}
@@ -447,11 +445,9 @@ export default function People() {
             variant="square"
           /> */}
         </Grid>
-
         <Box
           component="main"
-          sx={{ flexGrow: 1, bgcolor: "background.default", pl: 2, pr: 2 }}
-        >
+          sx={{ flexGrow: 1, bgcolor: "background.default", pl: 2, pr: 2 }}>
           <Toolbar />
 
           <Box
@@ -513,9 +509,8 @@ export default function People() {
               rowsPerPageOptions={[5]}
               checkboxSelection
               disableSelectionOnClick
-              onSelectionModelChange={(ids) => {
-                console.log(ids);
-              }}
+              selectionModel={selectedModel}
+              onSelectionModelChange={handleSelectionModelChange}
               components={{
                 Toolbar: GridToolbar,
               }}

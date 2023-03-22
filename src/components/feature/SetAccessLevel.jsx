@@ -105,13 +105,12 @@ export default function SetAccessLevel(props) {
   console.log(
     { selectedValue }
   );
-
+debugger;
   axios
     .patch(
       url + "/people/6/",
       {
-        selectedValue: selectedValue,
-        role: 2,
+        role: selectedValue,
         is_superuser: false,
         profile: {},
         // work_detail:{},
@@ -173,11 +172,11 @@ export default function SetAccessLevel(props) {
               >
               <MenuItem disabled value=""></MenuItem>
               <MenuItem value=""><em>None</em></MenuItem>
-              <MenuItem value={"System Administrator"}>System Administrator</MenuItem>
-              <MenuItem value={"Supervisor"}>Supervisior</MenuItem>
-              <MenuItem value={"Employee"}>Employee</MenuItem>
-              <MenuItem value={"Location Manager"}>Location Manager</MenuItem>
-              <MenuItem value={"Advisor"}>Advisor</MenuItem>
+              <MenuItem value={1}>System Administrator</MenuItem>
+              <MenuItem value={2}>Supervisior</MenuItem>
+              <MenuItem value={3}>Employee</MenuItem>
+              <MenuItem value={4}>Location Manager</MenuItem>
+              <MenuItem value={5}>Advisor</MenuItem>
             </Select>
             {error && <FormHelperText>Select a value</FormHelperText>}
             {/* <Select

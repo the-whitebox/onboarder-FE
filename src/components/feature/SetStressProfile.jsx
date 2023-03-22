@@ -57,6 +57,8 @@ const style = {
 };
 
 export default function SetStressProfile() {
+  
+
   const [state, setState] = React.useState({ data: "" });
   const [stress, setStress] = React.useState("");
   const [open, setOpen] = React.useState(false);
@@ -130,12 +132,12 @@ export default function SetStressProfile() {
   console.log(
     {selectedValue}
     );
-
+    // debugger
   axios
     .patch(
       url + "/people/6/",
       {
-        stress_level: stress,
+        stress_level: selectedValue,
         role: 2,
         is_superuser: false,
         profile: {},
@@ -165,7 +167,7 @@ export default function SetStressProfile() {
         </Box>
         <div>
           <Typography sx={{ color: "#a9a9a9", pt: "15px" }}>
-            2 Team members
+            1 Team members
           </Typography>
           <Box
             sx={{
@@ -231,12 +233,12 @@ export default function SetStressProfile() {
             } */}
              <MenuItem disabled value=""></MenuItem>
               <MenuItem value=""><em>None</em></MenuItem>
-              <MenuItem value={"2 days per week"}>2 days per week</MenuItem>
-              <MenuItem value={"24/7"}>24/7</MenuItem>
-              <MenuItem value={"CA Overtime 40 hrs per week"}>CA Overtime 40 hrs per week</MenuItem>
-              <MenuItem value={"Max 20 hours per week"}>Max 20 hours per week</MenuItem>
-              <MenuItem value={"Normal 38 hours per week"}>Normal 38 hours per week</MenuItem>
-              <MenuItem value={"Standard 40 hours, 8 hours per day"}>Standard 40 hours, 8 hours per day</MenuItem>
+              <MenuItem value={1}>2 days per week</MenuItem>
+              <MenuItem value={2}>24/7</MenuItem>
+              <MenuItem value={3}>CA Overtime 40 hrs per week</MenuItem>
+              <MenuItem value={4}>Max 20 hours per week</MenuItem>
+              <MenuItem value={5}>Normal 38 hours per week</MenuItem>
+              <MenuItem value={6}>Standard 40 hours, 8 hours per day</MenuItem>
             </Select>
             {error && <FormHelperText>Select a value</FormHelperText>}
           </FormControl>
