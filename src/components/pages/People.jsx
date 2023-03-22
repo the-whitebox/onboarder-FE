@@ -37,8 +37,6 @@ import ReactDOM from "react-dom";
 import { useEffect, useState } from "react";
 import { SmallDashOutlined } from "@ant-design/icons";
 import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
-import SetAccessLevelModalBody from "../feature/SetAccessLevel";
-
 
 const theme = createTheme();
 
@@ -158,7 +156,6 @@ export default function People() {
   const [otherLocation, setOtherLocattion] = useState("");
   const [businessId, setBusinessId] = useState("");
   const [selectedModel, setSelectedModel] = useState([]);
-  
   // console.log({ token, url });
 
   const [listOfTeamMembers, setListOfTeamMembers] = React.useState([]);
@@ -229,9 +226,6 @@ export default function People() {
   const rows = team_array;
   // console.log("The array of Objects: ", rows);
 
-  const [openAccess, setOpenAccess] = React.useState(false);
-  const handleOpenAccess = () => setOpenAccess(true);
-  const handleCloseAccess = () => setOpenAccess(false);
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => {
     setOpen(true);
@@ -249,15 +243,6 @@ export default function People() {
   return (
     
     <ThemeProvider theme={theme}>
-       <Modal
-        open={openAccess}
-        onClose={handleCloseAccess}
-        onClick={handleClose}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
-      >
-        <SetAccessLevelModalBody />
-      </Modal>
       <Modal
         open={open}
         onClose={handleClose}
