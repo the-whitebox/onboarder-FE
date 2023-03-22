@@ -58,8 +58,29 @@ export default function Employment() {
   const [openPayroll, setOpenPayroll] = React.useState(false);
   const handleOpenPayroll = () => setOpenPayroll(true);
   const handleClosePayroll = () => setOpenPayroll(false);
+  const [userId, setUserId] = useState(null);
 
   const indexToHL = 1;
+
+  const getUser = async () => {
+    try {
+      const response = await axios.post(url + "/auth/login/", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+      })
+        .then(response => response.data)
+        .then(data => setUserId(data.id))
+        .catch(error => console.error(error));
+    } catch (error) {
+      console.error(error);
+    }
+  };  
+
+  useEffect(() => {
+    getUser();
+  }, []);
 
   return (
     <>
