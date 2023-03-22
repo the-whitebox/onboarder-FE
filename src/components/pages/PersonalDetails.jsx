@@ -92,35 +92,24 @@ export default function PersonalDetails() {
 
   const handleOnChange = (newValue) => {
     console.log(newValue.$d);
-    console.log(
-      new Intl.DateTimeFormat(
-        "en-US",
-        { year: "numeric", month: "numeric", day: "numeric" }.format(
-          newValue.$d
-        )
-      )
-    );
-    debugger;
+
+    // debugger;
     setBirthday(newValue.$d);
   };
 
   const personalDetails = (e) => {
     console.log("Inside Personal Details");
     console.log({ email }, { firstName }, { lastName });
-    debugger;
+    // debugger;
     axios
-      .post(
-        url + "/people/",
+      .patch(
+        url + "/people/6/",
         {
           first_name: firstName,
           last_name: lastName,
           email: email,
           is_superuser: false,
-          // pronouns: pronouns,
-          // birthday: birthday,
-          // full_name: fullName,
-          role: 3,
-          business: 1,
+          role: 2,
           profile: {
             date_of_birth: birthday,
             pronouns: pronouns,
@@ -141,54 +130,6 @@ export default function PersonalDetails() {
         console.error(error);
       });
   };
-  // if (
-  //   email !== "" &&
-  //   firstName !== "" &&
-  //   lastName !== "" &&
-  //   fullName !== "" &&
-  //   pronouns !== "" &&
-  //   birthday !== ""
-
-  // ) {
-  //   console.log("Data Found");
-  //   setError(false);
-  //   console.log(
-  //     email,
-  //     firstName,
-  //     lastName,
-  //     fullName,
-  //     pronouns,
-  //     birthday
-
-  //   );
-
-  //     try {
-  //       axios
-  //         .post(url, {
-  //           email: email,
-  //           first_name: firstName,
-  //           last_name: lastName,
-  //           full_name: fullName,
-  //           profile: {},
-
-  //         }, {
-  //           headers: {
-  //             Authorization: `Bearer ${token}`,
-  //             "Content-Type": "application/json",
-  //           }})
-  //         .then((response) => {
-  //           console.log("Personal API was hit successfully");
-  //           console.log(response);
-  //         });
-  //     } catch (error) {
-  //       console.log(error.response.data);
-  //     }
-  //     console.log(email, firstName, lastName);
-  //   } else {
-  //     setError(true);
-  //     setState({ data: e.target.value });
-  //   }
-  // };
 
   return (
     <>
