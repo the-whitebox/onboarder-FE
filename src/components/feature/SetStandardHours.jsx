@@ -78,11 +78,14 @@ export default function SetStandardHours() {
   );
 
   axios
-    .post(
-      url + "/people/",
+    .patch(
+      url + "/people/6/",
       {
         role: 2,
-        hours: hours,
+        hours_per_work_period: hours,
+        is_superuser: false,
+        profile: {},
+        working_hours: {},
       },
       {
         headers: {

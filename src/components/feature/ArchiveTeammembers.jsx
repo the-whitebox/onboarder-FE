@@ -7,6 +7,8 @@ import Typography from "@mui/material/Typography";
 import CloseIcon from "@mui/icons-material/Close";
 import "../../style/Archiveteam.css";
 import InfoIcon from "@mui/icons-material/Info";
+import { useEffect, useState } from "react";
+import axios from "axios";
 
 const style = {
   position: "absolute",
@@ -23,6 +25,56 @@ const style = {
 };
 
 export default function SyncPayroll() {
+  const token = process.env.REACT_APP_TEMP_TOKEN;
+  const url = process.env.REACT_APP_BASE_URL;
+  const [listOfTeamMembers, setListOfTeamMembers] = React.useState([]);
+
+  let b_id = "";
+  let team_array = [];
+  const getBusiness = async () => {
+    try {
+      const response = await axios
+        .get(url + "/business/", {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        })
+        .then((response) => {
+          console.log(response.data);
+          const ids = response.data.map((obj) => obj.id);
+          const firstId = ids[0];
+
+          // setBusinessId(firstId);
+          b_id = firstId;
+          // console.log("First Id: ", firstId);
+        });
+
+      // console.log({ businessId });
+
+      const teamResponse = await axios
+        .get(url + `/people/?business_id=${b_id}`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        })
+        .then((response) => {
+          const teamMembers = response.data;
+          // console.log({ teamMembers });
+          team_array = teamMembers;
+          setListOfTeamMembers(teamMembers);
+          console.log({ team_array });
+        });
+    } catch (error) {
+      console.log("Error", error);
+    }
+  };
+
+  useEffect(() => {
+    getBusiness();
+  }, []);
+
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => {
     setOpen(true);
@@ -41,7 +93,7 @@ export default function SyncPayroll() {
 
         <div>
           <Typography sx={{ color: "#b4b4b4", ml: 1 }}>
-            2 Team members
+            {team_array.length} Team members
           </Typography>
           <Box
             sx={{
@@ -70,9 +122,10 @@ export default function SyncPayroll() {
             </Typography>
           </Box>
           <Box sx={{ display: "flex", flexDirection: "row" }}>
-            <Typography sx={{ pt: 2, pb: 2, mr: 1, pl: 2, fontWeight: "bold" }}>
-              AM
-            </Typography>
+            <Typography
+              sx={{ pt: 2, pb: 2, mr: 1, pl: 2, fontWeight: "bold" }}
+            ></Typography>
+
             <Typography sx={{ pt: 2, pb: 2, ml: 4, fontWeight: "bold" }}>
               Asher Muneer
             </Typography>

@@ -77,7 +77,11 @@ export default function BasicModal(props) {
     if (purpose !== "" && payroll !== "") {
       console.log("Data Found");
       setError(false);
-      console.log(purpose, payroll);
+
+      const tempPayroll = parseInt(payroll) + 1;
+      const temppurpose = parseInt(purpose) + 1;
+
+      console.log(temppurpose, tempPayroll);
 
       // alert(payroll + purpose);
 
@@ -87,8 +91,8 @@ export default function BasicModal(props) {
           mobile: location.state.mobile,
           businessType: location.state.businesstype,
           industry: location.state.industry,
-          purpose: purpose,
-          payroll: payroll,
+          purpose: temppurpose,
+          payroll: tempPayroll,
         },
       });
     } else {
@@ -237,7 +241,7 @@ export default function BasicModal(props) {
                       },
                     }}
                     {...register("Purpose", { required: true })}
-                    onChange={(e) => setPurpose(e.target.value)}
+                    onChange={(e) => setPurpose(parseInt(e.target.id) + 1)}
                   >
                     {[
                       "Save time scheduling",
@@ -262,7 +266,7 @@ export default function BasicModal(props) {
                         }}
                       >
                         <Radio
-                          id={value}
+                          id={idx}
                           value={value}
                           checkedIcon={<CheckCircleRoundedIcon />}
                         />
@@ -365,7 +369,7 @@ export default function BasicModal(props) {
                 },
               }}
               {...register("Payroll", { required: true })}
-              onChange={(e) => setPayroll(e.target.value)}
+              onChange={(e) => setPayroll(parseInt(e.target.id) + 1)}
             >
               {["XERO"].map((value, idx) => (
                 <Sheet
@@ -388,7 +392,7 @@ export default function BasicModal(props) {
                     sx={{ mr: 1 }}
                   />
                   <Radio
-                    id={value}
+                    id={idx}
                     label={`${value}`}
                     overlay
                     disableIcon

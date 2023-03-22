@@ -180,27 +180,29 @@ export default function Personal() {
       );
       try {
         axios
-          .post(url, {
-            email: email,
-            mobile_number: mobile,
-            address: address,
-            postcode: postcode,
-            city: city,
-            state: cityState,
-            country: country,
-            emergency_contact_name: contactName,
-            emergency_phone_number: contactNumber,
-            role: 2,
-            is_superuser: false,
-            profile: {},
-
-          },
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-              "Content-Type": "application/json",
+          .post(
+            url,
+            {
+              email: email,
+              mobile_number: mobile,
+              address: address,
+              postcode: postcode,
+              city: city,
+              state: cityState,
+              country: country,
+              emergency_contact_name: contactName,
+              emergency_phone_number: contactNumber,
+              role: 2,
+              is_superuser: false,
+              profile: {},
             },
-          })
+            {
+              headers: {
+                Authorization: `Bearer ${token}`,
+                "Content-Type": "application/json",
+              },
+            }
+          )
           .then((response) => {
             console.log("Personal API was hit successfully");
             console.log(response);
@@ -593,7 +595,7 @@ export default function Personal() {
                 className="text-align"
                 id="modal-modal-description"
                 sx={{
-                  mt: 2,
+                  mt: 5,
                   fontSize: 14,
                   fontWeight: "Bold",
                 }}
@@ -707,7 +709,6 @@ export default function Personal() {
                 />
               </Box>
               <br />
-            
             </Box>
             <Box sx={{ ml: 25, mt: 0 }}>
               {errors.EmergencyContactNumber?.type === "required" &&
