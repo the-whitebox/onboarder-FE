@@ -40,7 +40,7 @@ export default function SyncPayroll() {
 
         <div>
           <Typography sx={{ color: "#b4b4b4", ml: 1 }}>
-            2 Team members
+            Team members
           </Typography>
           <Box
             sx={{
@@ -57,7 +57,7 @@ export default function SyncPayroll() {
               }}
             />
             <Typography sx={{ pt: "10px" }}>
-              Refresh the mapping of Team members between UROSTERS
+              Refresh the mapping of Team members between MaxPilot
             </Typography>
           </Box>
           <Typography sx={{ pt: 2, pb: 2, ml: 4 }}>Asher Muneer</Typography>

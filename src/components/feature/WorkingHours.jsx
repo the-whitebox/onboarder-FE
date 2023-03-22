@@ -16,7 +16,21 @@ const Item = styled("div")(({ theme }) => ({
 
 const theme = createTheme();
 
-export default function WorkingHours() {
+export default function WorkingHours(props) {
+  const [selectedStressLevel] = React.useState(props.stressLevel);
+
+  console.log( "Stress Level in working hours: "+ props.stressLevel);
+
+  const stressArray = [
+    "2 days per week",
+    "24/7",
+    "CA Overtime 40 hrs per week",
+    "Max 20 hours per week",
+    "Normal 38 hours per week",
+    "Standard 40 hours, 8 hours per day",
+  ];
+
+
   const [openWorkPeriod, setOpenWorkPeriod] = React.useState(false);
   const handleOpenWorkPeriod = () => setOpenWorkPeriod(true);
   const handleCloseWorkPeriod = () => setOpenWorkPeriod(false);
@@ -108,7 +122,9 @@ export default function WorkingHours() {
                   <li>Stress Profile</li>
                   <li>
                     <Link onClick={handleOpenStress} color="#38b492">
-                      24/7
+                      {
+                        props.stressLevel === "" ? "None" : stressArray[parseInt(props.stressLevel)-1]
+                      }
                     </Link>
                   </li>
                 </Box>

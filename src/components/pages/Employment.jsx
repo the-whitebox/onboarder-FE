@@ -26,6 +26,7 @@ import SetpayratesModalBody from "../feature/Setpayrates";
 import SyncPayrollModalBody from "../feature/SyncPayroll";
 import SetAdvisorModalBody from "../feature/SetAccessLevel";
 import Breadcrumbs from "@mui/material/Breadcrumbs";
+import axios from "axios";
 
 import useState from "react";
 
@@ -36,8 +37,11 @@ const Item = styled("div")(({ theme }) => ({
 }));
 
 // const drawerWidth = 240;
+let stressLevel = "";
 
 export default function Employment() {
+  const token = process.env.REACT_APP_TEMP_TOKEN;
+  const url = process.env.REACT_APP_BASE_URL;
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => {
     setOpen(true);
@@ -58,30 +62,38 @@ export default function Employment() {
   const [openPayroll, setOpenPayroll] = React.useState(false);
   const handleOpenPayroll = () => setOpenPayroll(true);
   const handleClosePayroll = () => setOpenPayroll(false);
-  const [userId, setUserId] = useState(null);
+  const [userAccess, setUserAccess] = React.useState("");
+  const [userStress, setUserStress] = React.useState("");
+
 
   const indexToHL = 1;
 
-  const getUser = async () => {
+  const getUser = () => {
     try {
-      const response = await axios.post(url + "/auth/login/", {
+      const response =  axios.get(url + "/people/6/", {
         headers: {
           Authorization: `Bearer ${token}`,
           "Content-Type": "application/json",
         },
       })
-        .then(response => response.data)
-        .then(data => setUserId(data.id))
-        .catch(error => console.error(error));
+        .then((response) => {
+            setUserAccess(response.data.role.role);
+            setUserStress(response.data.working_hours.stress_level);
+            stressLevel = response.data.working_hours.stress_level
+            
+        })
     } catch (error) {
       console.error(error);
     }
   };  
+  getUser();
 
-  useEffect(() => {
-    getUser();
-  }, []);
-
+  // React.useEffect(() => {
+  //   getUser();
+  // }, []);
+  
+console.log("Stress level variable: " + stressLevel);
+// debugger
   return (
     <>
       <ThemeProvider theme={theme}>
@@ -168,7 +180,7 @@ export default function Employment() {
                           <li>Access level</li>
                           <li>
                             <Link onClick={handleOpenAccess} color="#38b492">
-                              Advisor
+                              {userAccess}
                             </Link>
                           </li>
                         </Box>
@@ -288,7 +300,7 @@ export default function Employment() {
               </Box>
             </Box>
             <Box sx={{ mt: 1 }}>
-              <WorkingHours />
+              <WorkingHours stressLevel={stressLevel} />
             </Box>
             <Box
               sx={{
@@ -319,4 +331,4 @@ export default function Employment() {
       </ThemeProvider>
     </>
   );
-}
+              }

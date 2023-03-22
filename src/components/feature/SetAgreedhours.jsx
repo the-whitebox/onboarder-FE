@@ -82,10 +82,16 @@ export default function SetAgreedhours() {
   // };
 
   axios
-    .post(
-      url + "/people/",
+    .patch(
+      url + "/people/6/",
       {
-        role: 2,
+        role:4,
+        is_superuser: false,
+        working_hours:{},
+        profile:{},
+        hours_per_work_period:hours,
+        next_work_period_day: netWorkPeriod,
+        work_period_length: workPeriod,
       },
       {
         headers: {
@@ -178,17 +184,17 @@ export default function SetAgreedhours() {
               onChange={(e) => setWorkPeriod(e.target.value)}
             >
               <FormControlLabel
-                value="Weekly"
+                value={1}
                 control={<Radio />}
                 label="Weekly"
               />
               <FormControlLabel
-                value="2-Weekly"
+                value={2}
                 control={<Radio />}
                 label="2-Weekly"
               />
               <FormControlLabel
-                value="4-Weekly"
+                value={3}
                 control={<Radio />}
                 label="4-Weekly"
               />
@@ -217,7 +223,7 @@ export default function SetAgreedhours() {
             }}
           >
             {" "}
-            Net Work period starts on{" "}
+            Next Work period starts on{" "}
           </Typography>
 
           <FormControl>
@@ -235,13 +241,13 @@ export default function SetAgreedhours() {
               {...register("Work Period", { required: true })}
               onChange={(e) => setNetWorkPeriod(e.target.value)}
             >
-              <FormControlLabel value="Mon" control={<Radio />} label="Mon" />
-              <FormControlLabel value="Tue" control={<Radio />} label="Tue" />
-              <FormControlLabel value="Wed" control={<Radio />} label="Wed" />
-              <FormControlLabel value="Thu" control={<Radio />} label="Thu" />
-              <FormControlLabel value="Fri" control={<Radio />} label="Fri" />
-              <FormControlLabel value="Sat" control={<Radio />} label="Sat" />
-              <FormControlLabel value="Sun" control={<Radio />} label="Sun" />
+              <FormControlLabel value={1} control={<Radio />} label="Mon" />
+              <FormControlLabel value={2} control={<Radio />} label="Tue" />
+              <FormControlLabel value={3} control={<Radio />} label="Wed" />
+              <FormControlLabel value={4} control={<Radio />} label="Thu" />
+              <FormControlLabel value={5} control={<Radio />} label="Fri" />
+              <FormControlLabel value={6} control={<Radio />} label="Sat" />
+              <FormControlLabel value={7} control={<Radio />} label="Sun" />
             </RadioGroup>
           </FormControl>
           <Box sx={{ ml: 3, mt: 1 }}>
