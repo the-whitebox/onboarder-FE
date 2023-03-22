@@ -14,18 +14,17 @@ import "../../style/General.css";
 import Stack from "@mui/material/Stack";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import { DesktopDatePicker } from "@mui/x-date-pickers/DesktopDatePicker";
+// import { DesktopDatePicker } from "@mui/x-date-pickers/DesktopDatePicker";
+import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+import dayjs from "dayjs";
 import "../../style/PersonalDetails.css";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useForm } from "react-hook-form";
+
 // import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
 // import { DatePicker } from '@mui/x-date-pickers/DatePicker';
-
-
-
-
 
 export default function PersonalDetails() {
   const url = process.env.REACT_APP_BASE_URL;
@@ -44,9 +43,9 @@ export default function PersonalDetails() {
   const [firstNameError, setFirstNameError] = useState("");
   const [lastNameError, setLastNameError] = useState("");
   const [fullNameError, setFullNameError] = useState("");
-  const [pronounsError , setPronounsError] = useState("");
+  const [pronounsError, setPronounsError] = useState("");
   const [birthdayError, setBirthdayError] = useState("");
-  const [date, setDate] = React.useState<Date | null>(null);
+  const [date, setDate] = React.useState("");
   console.log(date);
 
   const navigate = useNavigate();
@@ -91,15 +90,24 @@ export default function PersonalDetails() {
     formState: { errors },
   } = useForm();
 
-
   const handleOnChange = (newValue) => {
-    setDate(newValue);
+    console.log(newValue.$d);
+    console.log(
+      new Intl.DateTimeFormat(
+        "en-US",
+        { year: "numeric", month: "numeric", day: "numeric" }.format(
+          newValue.$d
+        )
+      )
+    );
+    debugger;
+    setBirthday(newValue.$d);
   };
 
   const personalDetails = (e) => {
     console.log("Inside Personal Details");
-    console.log({email}, {firstName}, {lastName});
-
+    console.log({ email }, { firstName }, { lastName });
+    debugger;
     axios
       .post(
         url + "/people/",
@@ -116,7 +124,7 @@ export default function PersonalDetails() {
           profile: {
             date_of_birth: birthday,
             pronouns: pronouns,
-            full_name: fullName
+            full_name: fullName,
           },
         },
         {
@@ -133,27 +141,27 @@ export default function PersonalDetails() {
         console.error(error);
       });
   };
-    // if (
-    //   email !== "" &&
-    //   firstName !== "" &&
-    //   lastName !== "" &&
-    //   fullName !== "" &&
-    //   pronouns !== "" &&
-    //   birthday !== ""
-      
-    // ) {
-    //   console.log("Data Found");
-    //   setError(false);
-    //   console.log(
-    //     email,
-    //     firstName,
-    //     lastName,
-    //     fullName,
-    //     pronouns,
-    //     birthday
-    
-    //   );
-      
+  // if (
+  //   email !== "" &&
+  //   firstName !== "" &&
+  //   lastName !== "" &&
+  //   fullName !== "" &&
+  //   pronouns !== "" &&
+  //   birthday !== ""
+
+  // ) {
+  //   console.log("Data Found");
+  //   setError(false);
+  //   console.log(
+  //     email,
+  //     firstName,
+  //     lastName,
+  //     fullName,
+  //     pronouns,
+  //     birthday
+
+  //   );
+
   //     try {
   //       axios
   //         .post(url, {
@@ -162,7 +170,7 @@ export default function PersonalDetails() {
   //           last_name: lastName,
   //           full_name: fullName,
   //           profile: {},
-            
+
   //         }, {
   //           headers: {
   //             Authorization: `Bearer ${token}`,
@@ -330,7 +338,7 @@ export default function PersonalDetails() {
               />
             </Box>
             <Box sx={{ ml: 30, mt: 1 }}>
-            {errors.Email?.type === "required" && "Email Required"}
+              {errors.Email?.type === "required" && "Email Required"}
               <small>
                 {emailError && (
                   <div
@@ -342,7 +350,7 @@ export default function PersonalDetails() {
                   </div>
                 )}
               </small>
-              </Box>
+            </Box>
 
             <br />
             <Box className="flex flex-row ">
@@ -370,7 +378,7 @@ export default function PersonalDetails() {
               />
             </Box>
             <Box sx={{ ml: 30, mt: 1 }}>
-              {errors.FirstName?.type === "required" && "Firstname Required"}
+              {errors.FirstName?.type === "required" && "First name Required"}
               <small>
                 {firstNameError && (
                   <div
@@ -409,7 +417,7 @@ export default function PersonalDetails() {
               />
             </Box>
             <Box sx={{ ml: 30, mt: 1 }}>
-              {errors.LastName?.type === "required" && "Lastname Required"}
+              {errors.LastName?.type === "required" && "Last name Required"}
               <small>
                 {lastNameError && (
                   <div
@@ -449,7 +457,7 @@ export default function PersonalDetails() {
               />
             </Box>
             <Box sx={{ ml: 30, mt: 1 }}>
-              {errors.FullName?.type === "required" && "Fullname Required"}
+              {errors.FullName?.type === "required" && "Full name Required"}
               <small>
                 {fullNameError && (
                   <div
@@ -522,13 +530,13 @@ export default function PersonalDetails() {
               >
                 Date of Birth
               </Typography>
-              {/* <Box sx={{ width: 600, pl: 4 }}>
+              <Box sx={{ width: 600, pl: 4 }}>
                 <LocalizationProvider
                   dateAdapter={AdapterDayjs}
                   sx={{ height: 0.1, pt: 5 }}
                 >
                   <Stack spacing={3}>
-                    <DesktopDatePicker
+                    <DatePicker
                       inputFormat="DD/MM/YYYY"
                       value={date}
                       onChange={handleOnChange}
@@ -536,7 +544,7 @@ export default function PersonalDetails() {
                     />
                   </Stack>
                 </LocalizationProvider>
-              </Box> */}
+              </Box>
               {/* <Box>
               <LocalizationProvider dateAdapter={AdapterDayjs}>
               <DemoContainer components={['DatePicker']}>
