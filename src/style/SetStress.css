@@ -6,8 +6,8 @@
 
 .Btn {
   color: white !important;
-  background-color: green !important;
+  background-color: #38b492 !important;
 }
 .Btn:hover {
-  background-color: green !important;
+  background-color: #38b492 !important;
 }

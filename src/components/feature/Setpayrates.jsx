@@ -29,7 +29,7 @@ const MenuProps = {
   },
 };
 
-const names = ["2","3"];
+const names = ["2", "3"];
 
 const style = {
   position: "absolute",
@@ -54,7 +54,6 @@ function getStyles(name, personName, theme) {
 }
 
 export default function Setpayrates() {
-
   const theme = useTheme();
   const [personName, setPersonName] = React.useState([]);
   const url = process.env.REACT_APP_BASE_URL;
@@ -119,8 +118,6 @@ export default function Setpayrates() {
     formState: { errors },
   } = useForm();
 
-
-
   const handleChange = (event) => {
     const {
       target: { value },
@@ -129,7 +126,7 @@ export default function Setpayrates() {
       // On autofill we get a stringified value.
       typeof value === "string" ? value.split(",") : value
     );
-    setPayRates(event.target.value)
+    setPayRates(event.target.value);
   };
 
   const [open, setOpen] = React.useState(false);
@@ -142,48 +139,46 @@ export default function Setpayrates() {
 
   const payRatesDetails = (e) => {
     console.log("Inside Pay Rates");
-    console.log(payRates, mondays, tuesdays, wednesdays, thursdays, fridays); ;
+    console.log(payRates, mondays, tuesdays, wednesdays, thursdays, fridays);
     if (
       payRates !== "" &&
       mondays !== "" &&
       tuesdays !== "" &&
-      wednesdays!== "" &&
-      thursdays!== "" &&
-      fridays!== ""
-      
+      wednesdays !== "" &&
+      thursdays !== "" &&
+      fridays !== ""
     ) {
       console.log("Data Found");
       setError(false);
-      console.log(
-        payRates, mondays, tuesdays, wednesdays, thursdays, fridays
-      );
+      console.log(payRates, mondays, tuesdays, wednesdays, thursdays, fridays);
       try {
-        debugger
+        debugger;
         axios
           .patch(
-            url + "/people/6/", 
+            url + "/people/6/",
             {
-              pay_detail:{
-                per_day_pay_rate:{
+              pay_detail: {
+                per_day_pay_rate: {
                   monday: mondays,
                   tuesday: tuesdays,
                   wednesday: wednesdays,
                   thursday: thursdays,
                   friday: fridays,
-                }
+                },
               },
-            pay_rate: payRates,
-            is_superuser: false,
-            role: 3,
-            profile:{},
-            work_detail:{},
-        },
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-              "Content-Type": "application/json",
+              pay_rate: payRates,
+              is_superuser: false,
+              role: 3,
+              profile: {},
+              work_detail: {},
             },
-          })
+            {
+              headers: {
+                Authorization: `Bearer ${token}`,
+                "Content-Type": "application/json",
+              },
+            }
+          )
           .then((response) => {
             console.log("Pay Rates API was hit successfully");
             console.log(response);
@@ -256,7 +251,7 @@ export default function Setpayrates() {
               MenuProps={MenuProps}
               inputProps={{ "aria-label": "Without label" }}
               {...register("Pay Rates", { required: true })}
-                onChange={handleChange}
+              onChange={handleChange}
             >
               <MenuItem disabled value="">
                 <em>Rates per Day</em>
@@ -274,18 +269,18 @@ export default function Setpayrates() {
           </FormControl>
           <Box sx={{ ml: 2, mt: 1 }}>
             {errors.PayRates?.type === "required" && "Pay Rates Required"}
-              <small>
-                {payRatesError && (
-                  <div
-                    style={{
-                      color: "red",
-                    }}
-                  >
-                    {payRatesError}
-                  </div>
-                )}
-              </small>
-              </Box>
+            <small>
+              {payRatesError && (
+                <div
+                  style={{
+                    color: "red",
+                  }}
+                >
+                  {payRatesError}
+                </div>
+              )}
+            </small>
+          </Box>
           <Box sx={{ ml: "12px" }}>
             <Typography
               sx={{
@@ -317,7 +312,7 @@ export default function Setpayrates() {
               />
             </FormControl>
             <Box sx={{ ml: 1, mt: 1 }}>
-            {errors.Mondays?.type === "required" && "Mondays Rates Required"}
+              {errors.Mondays?.type === "required" && "Mondays Rates Required"}
               <small>
                 {mondaysError && (
                   <div
@@ -329,7 +324,7 @@ export default function Setpayrates() {
                   </div>
                 )}
               </small>
-              </Box>
+            </Box>
             <Typography
               sx={{
                 ml: "7px",
@@ -360,7 +355,8 @@ export default function Setpayrates() {
               />
             </FormControl>
             <Box sx={{ ml: 1, mt: 1 }}>
-            {errors.Tuesdays?.type === "required" && "Tuesdays Rates Required"}
+              {errors.Tuesdays?.type === "required" &&
+                "Tuesdays Rates Required"}
               <small>
                 {tuesdaysError && (
                   <div
@@ -372,7 +368,7 @@ export default function Setpayrates() {
                   </div>
                 )}
               </small>
-              </Box>
+            </Box>
             <Typography
               sx={{
                 ml: "7px",
@@ -403,7 +399,8 @@ export default function Setpayrates() {
               />
             </FormControl>
             <Box sx={{ ml: 1, mt: 1 }}>
-            {errors.Wednesdays?.type === "required" && "Wednesdays Rates Required"}
+              {errors.Wednesdays?.type === "required" &&
+                "Wednesdays Rates Required"}
               <small>
                 {wednesdaysError && (
                   <div
@@ -415,7 +412,7 @@ export default function Setpayrates() {
                   </div>
                 )}
               </small>
-              </Box>
+            </Box>
             <Typography
               sx={{
                 ml: "7px",
@@ -424,7 +421,6 @@ export default function Setpayrates() {
                 pt: "10px",
               }}
             >
-              
               Thursdays
             </Typography>
             <FormControl
@@ -446,7 +442,8 @@ export default function Setpayrates() {
               />
             </FormControl>
             <Box sx={{ ml: 1, mt: 1 }}>
-            {errors.Thursdays?.type === "required" && "Thursdays Rates Required"}
+              {errors.Thursdays?.type === "required" &&
+                "Thursdays Rates Required"}
               <small>
                 {thursdaysError && (
                   <div
@@ -458,7 +455,7 @@ export default function Setpayrates() {
                   </div>
                 )}
               </small>
-              </Box>
+            </Box>
             <Typography
               sx={{
                 ml: "7px",
@@ -489,7 +486,7 @@ export default function Setpayrates() {
               />
             </FormControl>
             <Box sx={{ ml: 1, mt: 1 }}>
-            {errors.Fridays?.type === "required" && "Fridays Rates Required"}
+              {errors.Fridays?.type === "required" && "Fridays Rates Required"}
               <small>
                 {fridaysError && (
                   <div
@@ -501,11 +498,11 @@ export default function Setpayrates() {
                   </div>
                 )}
               </small>
-              </Box>
+            </Box>
           </Box>
         </div>
         <Button
-          className="btn"
+          className="Btn"
           size="small"
           sx={{
             mt: "25px",
@@ -522,7 +519,6 @@ export default function Setpayrates() {
             thursdaysValidation();
             fridaysValidation();
             payRatesDetails(e);
-            
           }}
         >
           Save

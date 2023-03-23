@@ -5,10 +5,10 @@
   color: #bcbcbc;
 }
 
-.btn {
+.Btn {
   color: white !important;
-  background-color: green !important;
+  background-color: #38b492 !important;
 }
-.btn:hover {
-  background-color: green !important;
+.Btn:hover {
+  background-color: #38b492 !important;
 }
