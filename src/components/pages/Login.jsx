@@ -159,8 +159,8 @@ export default function SignInSide() {
             xs: 600,
             sm: 700,
             md: 900,
-            lg: 1400,
-            xl: 1900,
+            lg: 1300,
+            xl: 1600,
           },
         }}
       >
