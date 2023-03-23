@@ -13,6 +13,7 @@ import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import axios from "axios";
+import "../../style/SetStress.css";
 
 const ITEM_HEIGHT = 40;
 const ITEM_PADDING_TOP = 45;
@@ -74,11 +75,8 @@ export default function Addleaveentitlement() {
     const {
       target: { value },
     } = event;
-    setPersonName(
-      // On autofill we get a stringified value.
-      typeof value === "string" ? value.split(",") : value
-    );
-    setLeave(event.target.value)
+
+    setLeave(event.target.value);
   };
 
   const leaveValidation = () => {
@@ -95,54 +93,31 @@ export default function Addleaveentitlement() {
   const navigate = useNavigate();
 
   const toEmployment = (e) => {
-  //   if (leave !== "") {
-  //     console.log("Data Found");
-  //     setError(false);
-  //     console.log(leave);
+    console.log({ leave });
 
-  //     navigate("/employment", {
-  //       state: {
-  //         leave: leave,
-  //       },
-  //     });
-  //   } else {
-  //     setError(true);
-  //     setState({ data: e.target.value });
-  //   }
-  // };
-  console.log(
-    { leave }
-  );
-
-  axios
-    .patch(
-      url + "/people/6/",
-      {
-        leave: leave,
-        role: 3,
-        profile:{},
-        work_detail:{},
-        pay_detail:{
-            employment_type: 1,
-            per_day_pay_rate:{}
+    axios
+      .patch(
+        url + "/people/6/",
+        {
+          profile: {},
+          leave_entitlements: [
+            { id: 6, leave_entitlement: parseInt(leave) + 1 },
+          ],
         },
-        leave_entitlements: [],
-      },
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "application/json",
-        },
-      }
-    )
-    .then((response) => {
-      console.log(response);
-    })
-    .catch((error) => {
-      console.error(error);
-    });
-};
-
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        }
+      )
+      .then((response) => {
+        console.log(response);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  };
 
   return (
     <React.Fragment>
@@ -171,27 +146,20 @@ export default function Addleaveentitlement() {
             }}
           >
             <Select
-            {...register("Leave Entitlement", { required: true })}
-            onChange={handleChange}
+              {...register("Leave Entitlement", { required: true })}
+              onChange={handleChange}
               sx={{ borderRadius: "7px" }}
               size="small"
               displayEmpty
-              value={personName}
+              value={leave}
               input={<OutlinedInput />}
-              renderValue={(selected) => {
-                if (selected.length === 0) {
-                  return <em>Select</em>;
-                }
-
-                return selected.join(", ");
-              }}
               MenuProps={MenuProps}
               inputProps={{ "aria-label": "Without label" }}
             >
-              {names.map((name) => (
+              {names.map((name, idx) => (
                 <MenuItem
                   key={name}
-                  value={name}
+                  value={idx}
                   style={getStyles(name, personName, theme)}
                 >
                   {name}
@@ -200,23 +168,24 @@ export default function Addleaveentitlement() {
             </Select>
           </FormControl>
           <Box sx={{ ml: 1, mt: 1 }}>
-        {errors.LeaveEntitlement?.type === "required" && "Leave Entitlement Required"}
-        <small>
-          {leaveError && (
-            <div
-              style={{
-                color: "red",
-              }}
-            >
-              {leaveError}
-            </div>
-          )}
-        </small>
-        </Box>
+            {errors.LeaveEntitlement?.type === "required" &&
+              "Leave Entitlement Required"}
+            <small>
+              {leaveError && (
+                <div
+                  style={{
+                    color: "red",
+                  }}
+                >
+                  {leaveError}
+                </div>
+              )}
+            </small>
+          </Box>
         </div>
         <Button
           variant="primary"
-          className="btn btn-primary"
+          className="Btn"
           sx={{
             ml: 40,
             borderRadius: "5px",
@@ -225,7 +194,6 @@ export default function Addleaveentitlement() {
             textTransform: "none",
           }}
           onClick={() => {
-           
             leaveValidation();
             toEmployment();
           }}

@@ -72,13 +72,15 @@ export default function SetAgreedhours() {
       .patch(
         url + "/people/6/",
         {
-          role: 4,
           is_superuser: false,
-          working_hours: {},
+          working_hours: {
+            hours_per_work_period: hours,
+            work_period: {
+              next_work_period_day: netWorkPeriod,
+              work_period_length: workPeriod,
+            },
+          },
           profile: {},
-          hours_per_work_period: hours,
-          next_work_period_day: netWorkPeriod,
-          work_period_length: workPeriod,
         },
         {
           headers: {
@@ -288,7 +290,7 @@ export default function SetAgreedhours() {
           </small>
         </Box>
         <Button
-          className="btn btn-primary"
+          className="Btn"
           sx={{
             ml: 45,
             borderRadius: "5px",

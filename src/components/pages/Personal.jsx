@@ -224,30 +224,39 @@ export default function Personal() {
           display: "flex",
         }}
       >
-        <CssBaseline />
         <Grid
-          className="max-width"
-          // item
-          // xs={false}
-          // sm={4}
-          // md={6}
-          sx={{
-            minHeight: "100vh",
-            backgroundColor: "#38b492",
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "start",
-            alignItems: "center",
-          }}
+          container
+          component="main"
+          sx={{ minHeight: "100vh", width: "240px" }}
         >
-          <Avatar
-            src={MaxPilotLogo}
-            aria-label="Busy Man"
+          <CssBaseline />
+          <Grid
+            className="max-width"
+            item
+            xs={false}
+            sm={4}
+            md={6}
             sx={{
-              height: "10vh",
-              width: "200px",
+              backgroundColor: "#38b492",
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "start",
+              alignItems: "center",
+              flexBasis: "100% !important",
             }}
-          />
+          >
+            <Box
+              component="img"
+              sx={{
+                height: 120,
+                width: 250,
+                maxHeight: { xs: 120, md: 120 },
+                maxWidth: { xs: 250, md: 250 },
+              }}
+              alt="Max Pilot"
+              src={MaxPilotLogo}
+            />
+          </Grid>
         </Grid>
 
         <Grid>
@@ -562,18 +571,6 @@ export default function Personal() {
                 {...register("State", { required: true })}
                 onChange={(e) => setCityState(e.target.value)}
               />
-              {/* {selectedCountry && (
-                <FormControl>
-                  <Select value={selectedState} onChange={handleStateChange}>
-                    <MenuItem value="">Select a state</MenuItem>
-                    {states.map((state) => (
-                      <MenuItem key={state.id} value={state.id}>
-                        {state.name}
-                      </MenuItem>
-                    ))}
-                  </Select>
-                </FormControl>
-              )} */}
             </Box>
             <Box sx={{ ml: 24, mt: 1 }}>
               {errors.CityState?.type === "required" && "Email Required"}
@@ -595,7 +592,7 @@ export default function Personal() {
                 className="text-align"
                 id="modal-modal-description"
                 sx={{
-                  mt: 5,
+                  mt: 2,
                   fontSize: 14,
                   fontWeight: "Bold",
                 }}
@@ -614,17 +611,6 @@ export default function Personal() {
                 {...register("Country", { required: true })}
                 onChange={(e) => setCountry(e.target.value)}
               />
-
-              {/* <FormControl sx={{ pl: 5, m: 1, width: 300, mt: 3 }}>
-                <Select value={selectedCountry} onChange={handleCountryChange}>
-                  <MenuItem value="">Select a country</MenuItem>
-                  {/* {locations.map((location) => (
-                    <MenuItem key={location.isoCode} value={location.isoCode}>
-                      {location.name}
-                    </MenuItem>
-                  ))} 
-                </Select>
-              </FormControl> */}
             </Box>
             <Box sx={{ ml: 24, mt: 1 }}>
               {errors.Country?.type === "required" && "Email Required"}

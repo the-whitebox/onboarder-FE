@@ -65,35 +65,34 @@ export default function Employment() {
   const [userAccess, setUserAccess] = React.useState("");
   const [userStress, setUserStress] = React.useState("");
 
-
   const indexToHL = 1;
 
   const getUser = () => {
     try {
-      const response =  axios.get(url + "/people/6/", {
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "application/json",
-        },
-      })
-        .then((response) => {
-            setUserAccess(response.data.role.role);
-            setUserStress(response.data.working_hours.stress_level);
-            stressLevel = response.data.working_hours.stress_level
-            
+      const response = axios
+        .get(url + "/people/6/", {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
         })
+        .then((response) => {
+          setUserAccess(response.data.role.role);
+          setUserStress(response.data.working_hours.stress_level);
+          stressLevel = response.data.working_hours.stress_level;
+        });
     } catch (error) {
       console.error(error);
     }
-  };  
+  };
   getUser();
 
   // React.useEffect(() => {
   //   getUser();
   // }, []);
-  
-console.log("Stress level variable: " + stressLevel);
-// debugger
+
+  console.log("Stress level variable: " + stressLevel);
+  // debugger
   return (
     <>
       <ThemeProvider theme={theme}>
@@ -180,7 +179,7 @@ console.log("Stress level variable: " + stressLevel);
                           <li>Access level</li>
                           <li>
                             <Link onClick={handleOpenAccess} color="#38b492">
-                              {userAccess}
+                              {userAccess ? userAccess : "Add Access level"}
                             </Link>
                           </li>
                         </Box>
@@ -331,4 +330,4 @@ console.log("Stress level variable: " + stressLevel);
       </ThemeProvider>
     </>
   );
-              }
+}
