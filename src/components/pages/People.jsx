@@ -192,58 +192,64 @@ export default function People() {
     formState: { errors },
   } = useForm();
 
-  const toAccess = (e) => {
-    console.log({ selectedValue });
+  const bulkAccessUpdate = (e) => {
+    console.log({ selectedModel });
 
-    axios
-      .patch(
-        url + "/people/6/",
-        {
-          role: selectedValue,
-          is_superuser: false,
-          profile: {},
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-            "Content-Type": "application/json",
+    selectedModel.map((id) => {
+      console.log(id);
+
+      axios
+        .patch(
+          url + `/people/${id}/`,
+          {
+            role: selectedValue,
+            is_superuser: false,
+            profile: {},
           },
-        }
-      )
-      .then((response) => {
-        console.log(response);
-      })
-      .catch((error) => {
-        console.error(error);
-      });
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+              "Content-Type": "application/json",
+            },
+          }
+        )
+        .then((response) => {
+          console.log(response);
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    });
   };
 
-  const toPeople = (e) => {
-    axios
-      .patch(
-        url + "/people/6/",
-        {
-          role: 4,
-          is_superuser: false,
-          working_hours: {},
-          profile: {},
-          hours_per_work_period: hours,
-          next_work_period_day: netWorkPeriod,
-          work_period_length: workPeriod,
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-            "Content-Type": "application/json",
+  const bulkWorkPeriodUpdate = (e) => {
+    selectedModel.map((id) => {
+      axios
+        .patch(
+          url + `/people/${id}/`,
+          {
+            role: 4,
+            is_superuser: false,
+            working_hours: {},
+            profile: {},
+            hours_per_work_period: hours,
+            next_work_period_day: netWorkPeriod,
+            work_period_length: workPeriod,
           },
-        }
-      )
-      .then((response) => {
-        console.log(response);
-      })
-      .catch((error) => {
-        console.error(error);
-      });
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+              "Content-Type": "application/json",
+            },
+          }
+        )
+        .then((response) => {
+          console.log(response);
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    });
   };
 
   const [listOfTeamMembers, setListOfTeamMembers] = React.useState([]);
@@ -419,7 +425,7 @@ export default function People() {
             }}
             onClick={() => {
               // accessValidation();
-              toAccess();
+              bulkAccessUpdate();
               // setError(!selectedValue)
             }}
           >
@@ -724,7 +730,7 @@ export default function People() {
               workPeriodValidation();
               netWorkPeriodValidation();
               hoursValidation();
-              toPeople();
+              bulkWorkPeriodUpdate();
             }}
           >
             Save
@@ -892,23 +898,7 @@ export default function People() {
             minHeight: "100vh",
             border: "1px solid black",
           }}
-        >
-          {/* <Paper elevation={3} style={{ transform: "rotate(270deg)" }}>
-            <img src={MaxPilotLogo} alt="my image" />
-          </Paper> */}
-          {/* <img src={MaxPilotLogo} alt="my image" /> */}
-          {/* <Avatar
-            src={MaxPilotLogo}
-            aria-label="Busy Man"
-            sx={{
-              mt: 55,
-              height: "10vh",
-              width: "230px",
-              transform: "rotate(270deg)",
-            }}
-            variant="square"
-          /> */}
-        </Grid>
+        ></Grid>
         <Box
           component="main"
           sx={{ flexGrow: 1, bgcolor: "background.default", pl: 2, pr: 2 }}

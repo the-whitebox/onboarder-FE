@@ -115,7 +115,6 @@ export default function Addteammember(props) {
       { otherLocation },
       { employeeType }
     );
-
     axios
       .post(
         url + "/people/",
@@ -124,9 +123,11 @@ export default function Addteammember(props) {
           last_name: inputs.lastname,
           is_superuser: false,
           email: inputs.email,
-          role: 2,
+          role: employeeType,
           business: props.businessId,
-          profile: {},
+          profile: {
+            phone_number: inputs.phoneNumber,
+          },
         },
         {
           headers: {

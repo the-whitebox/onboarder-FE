@@ -158,54 +158,11 @@ export default function SetAccessLevel(props) {
               <MenuItem value={5}>Advisor</MenuItem>
             </Select>
             {error && <FormHelperText>Select a value</FormHelperText>}
-            {/* <Select
-              size="small"
-              sx={{ borderRadius: "7px" }}
-              displayEmpty
-              value={personName}
-              onChange={handleChange}
-              input={<OutlinedInput />}
-              renderValue={(selected) => {
-                if (selected.length === 0) {
-                  return <em>Select</em>;
-                }
-
-                return selected.join(", ");
-              }}
-              MenuProps={MenuProps}
-              inputProps={{ "aria-label": "Without label" }}
-              // {...register("Access Level", { required: true })}
-              // onClick={(e) => setAccess(e.target.value)}
-            >
-              {names.map((name) => (
-                <MenuItem
-                  key={name}
-                  value={name}
-                  style={getStyles(name, access, theme)}
-                >
-                  {name}
-                </MenuItem>
-              ))}
-            </Select> */}
           </FormControl>
-          {/* <Box sx={{ ml: 1, mt: 4 }}>
-        {errors.Access?.type === "required" && "Access Level Required"}
-        <small>
-          {accessError && (
-            <div
-              style={{
-                color: "red",
-              }}
-            >
-              {accessError}
-            </div>
-          )}
-        </small>
-        </Box> */}
         </div>
         <Button
           variant="primary"
-          className="btn"
+          className="Btn"
           sx={{
             ml: 34,
             borderRadius: "6px",
@@ -216,9 +173,7 @@ export default function SetAccessLevel(props) {
             mt: 6,
           }}
           onClick={() => {
-            // accessValidation();
             toAccess();
-            // setError(!selectedValue)
           }}
         >
           Update

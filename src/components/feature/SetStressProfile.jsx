@@ -16,8 +16,6 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import axios from "axios";
 
-
-
 const ITEM_HEIGHT = 50;
 const ITEM_PADDING_TOP = 8;
 const MenuProps = {
@@ -57,8 +55,6 @@ const style = {
 };
 
 export default function SetStressProfile() {
-  
-
   const [state, setState] = React.useState({ data: "" });
   const [stress, setStress] = React.useState("");
   const [open, setOpen] = React.useState(false);
@@ -113,50 +109,33 @@ export default function SetStressProfile() {
   };
 
   const toEmployment = (e) => {
-  //   if (stress !== "") {
-  //     console.log("Data Found");
-  //     setError(false);
-  //     console.log(stress);
-
-  //     navigate("/employment", {
-  //       state: {
-  //         stress: stress
-  //       },
-  //     });
-  //   } else {
-  //     setError(true);
-  //     setState({ data: e.target.value });
-  //   }
-  // };
-
-  console.log(
-    {selectedValue}
-    );
-    // debugger
-  axios
-    .patch(
-      url + "/people/6/",
-      {
-        stress_level: selectedValue,
-        role: 2,
-        is_superuser: false,
-        profile: {},
-        working_hours: {},
-      },
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "application/json",
+    console.log({ selectedValue });
+    // debugger;
+    axios
+      .patch(
+        url + "/people/6/",
+        {
+          role: 2,
+          is_superuser: false,
+          profile: {},
+          working_hours: {
+            stress_level: selectedValue,
+          },
         },
-      }
-    )
-    .then((response) => {
-      console.log(response);
-    })
-    .catch((error) => {
-      console.error(error);
-    });
-};
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        }
+      )
+      .then((response) => {
+        console.log(response);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  };
 
   return (
     <React.Fragment>
@@ -167,7 +146,7 @@ export default function SetStressProfile() {
         </Box>
         <div>
           <Typography sx={{ color: "#a9a9a9", pt: "15px" }}>
-            1 Team members
+            Team members
           </Typography>
           <Box
             sx={{
@@ -202,37 +181,17 @@ export default function SetStressProfile() {
               Stress Profile{" "}
             </Typography>
             <Select
-            //  {...register("Stress Profile", { required: true })}
-             
+              //  {...register("Stress Profile", { required: true })}
+
               sx={{ borderRadius: "10px" }}
               displayEmpty
               value={selectedValue}
               onChange={(e) => setSelectedValue(e.target.value)}
-            //   value={personName}
-            //   input={<OutlinedInput />}
-            //   renderValue={(selected) => {
-            //     if (selected.length === 0) {
-            //       console.log("Selected values:", selected)
-            //       return <em>Select</em>;
-            //     } else
-
-            //     return selected.join(", ");
-            //   }}
-            //   MenuProps={MenuProps}
-            //   inputProps={{ "aria-label": "Without label" }}
-            // >
             >
-            {/* //   {names.map((name) => (
-            //     <MenuItem
-            //       key={name}
-            //       value={name}
-            //       style={getStyles(name, personName, theme)}
-            //     >
-            //       {name}
-            //     </MenuItem>
-            } */}
-             <MenuItem disabled value=""></MenuItem>
-              <MenuItem value=""><em>None</em></MenuItem>
+              <MenuItem disabled value=""></MenuItem>
+              <MenuItem value="">
+                <em>None</em>
+              </MenuItem>
               <MenuItem value={1}>2 days per week</MenuItem>
               <MenuItem value={2}>24/7</MenuItem>
               <MenuItem value={3}>CA Overtime 40 hrs per week</MenuItem>
@@ -243,19 +202,19 @@ export default function SetStressProfile() {
             {error && <FormHelperText>Select a value</FormHelperText>}
           </FormControl>
           <Box sx={{ ml: 1, mt: 1 }}>
-        {errors.Stress?.type === "required" && "Stress Profile Required"}
-        <small>
-          {stressError && (
-            <div
-              style={{
-                color: "red",
-              }}
-            >
-              {stressError}
-            </div>
-          )}
-        </small>
-        </Box>
+            {errors.Stress?.type === "required" && "Stress Profile Required"}
+            <small>
+              {stressError && (
+                <div
+                  style={{
+                    color: "red",
+                  }}
+                >
+                  {stressError}
+                </div>
+              )}
+            </small>
+          </Box>
         </div>
         <Button
           className="Btn"
@@ -266,7 +225,6 @@ export default function SetStressProfile() {
             textTransform: "none",
           }}
           onClick={() => {
-           
             // stressValidation();
             toEmployment();
           }}

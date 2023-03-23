@@ -18,9 +18,9 @@ export const MoreVert = () => {
       label="Icon"
       onChange={handleChange}
     >
-      <MenuItem value={10}>Agreed hours</MenuItem>
-      <MenuItem value={20}>Access level</MenuItem>
-      <MenuItem value={30}>Archive team</MenuItem>
+      <MenuItem value={1}>Agreed hours</MenuItem>
+      <MenuItem value={2}>Access level</MenuItem>
+      <MenuItem value={3}>Archive team</MenuItem>
     </Select>
   );
 };

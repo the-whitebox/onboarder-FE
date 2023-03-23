@@ -10,11 +10,9 @@ import Grid from "@mui/material/Grid";
 import CssBaseline from "@mui/material/CssBaseline";
 import MaxPilotLogo from "../../assets/images/maxpilot-logo-w.png";
 import "../../style/General.css";
-// import dayjs from "dayjs";
 import Stack from "@mui/material/Stack";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-// import { DesktopDatePicker } from "@mui/x-date-pickers/DesktopDatePicker";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import dayjs from "dayjs";
 import "../../style/PersonalDetails.css";
@@ -22,9 +20,6 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useForm } from "react-hook-form";
-
-// import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
-// import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 
 export default function PersonalDetails() {
   const url = process.env.REACT_APP_BASE_URL;
@@ -92,9 +87,13 @@ export default function PersonalDetails() {
 
   const handleOnChange = (newValue) => {
     console.log(newValue.$d);
+    setDate(newValue);
 
+    const formatDate = newValue.toISOString().slice(0, 10);
+
+    console.log(formatDate);
     // debugger;
-    setBirthday(newValue.$d);
+    setBirthday(formatDate);
   };
 
   const personalDetails = (e) => {
@@ -152,20 +151,23 @@ export default function PersonalDetails() {
               flexDirection: "column",
               justifyContent: "start",
               alignItems: "center",
+              flexBasis: "100% !important",
             }}
           >
-            <Grid>
-              <Avatar
-                src={MaxPilotLogo}
-                aria-label="Busy Man"
-                sx={{
-                  height: "16vh",
-                  width: "230px",
-                }}
-              />
-            </Grid>
+            <Box
+              component="img"
+              sx={{
+                height: 120,
+                width: 250,
+                maxHeight: { xs: 120, md: 120 },
+                maxWidth: { xs: 250, md: 250 },
+              }}
+              alt="Max Pilot"
+              src={MaxPilotLogo}
+            />
           </Grid>
         </Grid>
+
         <Grid>
           <Box
             sx={{
@@ -478,7 +480,6 @@ export default function PersonalDetails() {
                 >
                   <Stack spacing={3}>
                     <DatePicker
-                      inputFormat="DD/MM/YYYY"
                       value={date}
                       onChange={handleOnChange}
                       renderInput={(params) => <TextField {...params} />}
@@ -486,16 +487,6 @@ export default function PersonalDetails() {
                   </Stack>
                 </LocalizationProvider>
               </Box>
-              {/* <Box>
-              <LocalizationProvider dateAdapter={AdapterDayjs}>
-              <DemoContainer components={['DatePicker']}>
-              <DatePicker label="Basic date picker" />
-              </DemoContainer>
-              </LocalizationProvider>
-
-
-                
-              </Box> */}
               <Grid
                 container
                 sx={{
