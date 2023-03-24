@@ -28,83 +28,54 @@ import SignupModalBody from "./Signup";
 import WelcomeModalBody from "./Welcome";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import { useForm } from "react-hook-form";
 import { useState } from "react";
+import CircularProgress from "@mui/material/CircularProgress";
+import { toast } from "react-toastify";
+import { useFormik } from "formik";
+import * as Yup from "yup";
+const LoginSchema = Yup.object({
+  email: Yup.string().email().required("Please enter your email"),
+  password: Yup.string().required("Please enter your password"),
+});
+const initialValues = {
+  email: "",
+  password: "",
+};
 
 const theme = createTheme();
 
 export default function SignInSide() {
-  const [email, setEmail] = useState("");
-  const [emailError, setEmailError] = useState("");
-  const [password, setPassword] = useState("");
-  const [passwordError, setPasswordError] = useState("");
-  const url = process.env.REACT_APP_BASE_URL + "/auth/login/";
-
   const navigate = useNavigate();
+  const url = process.env.REACT_APP_BASE_URL + "/auth/login/";
+  const [loading, setLoading] = useState(false);
 
-  const emailValidation = () => {
-    const regEx = /^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[A-Za-z]+$/;
-    if (regEx.test(email)) {
-      setEmailError("");
-    } else if (email == "") {
-      setEmailError("Email should not be empty");
-    } else if (!regEx.test(email)) {
-      setEmailError("Email is not valid");
-    }
-  };
-
-  const passwordValidation = () => {
-    const regExp = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/;
-
-    if (regExp.test(password)) {
-      setPasswordError("");
-    } else if (password == "") {
-      setPasswordError("Password should not be empty");
-    }
-  };
-
-  const handleOnEmailChange = (e) => {
-    setEmail(e.target.value);
-  };
-
-  const handleOnChange = (e) => {
-    setPassword(e.target.value);
-    // console.log(password);
-  };
-
-  const {
-    register,
-    formState: { errors },
-  } = useForm();
-
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-
-    emailValidation();
-    passwordValidation();
-
-    console.log("Password and Email Validation checked");
-
-    if (passwordError === "" && emailError === "") {
-      try {
-        const resp = await axios
-          .post(
-            url,
-            { username: email, password: password }
-            // { auth: email, password }
-          )
+  const { values, errors, touched, handleBlur, handleChange, handleSubmit } =
+    useFormik({
+      initialValues,
+      validationSchema: LoginSchema,
+      onSubmit: async (values, action) => {
+        setLoading(true);
+        await axios
+          .post(url, { username: values.email, password: values.password })
           .then((response) => {
-            console.log("Login API was hit successfully");
-            console.log(response.data);
-            localStorage.setItem("token", response.data.access_token);
-            navigate("/people");
-            // Navigate to Home Screen
+            if (response.status === 200) {
+              // console.log("Login Response", response);
+              toast.success("You have successfully LoggedIn!");
+              localStorage.setItem("token", response.data.access_token);
+              localStorage.setItem("userId", response.data.user.pk);
+              // navigate("/people");
+              window.location.href = "/people";
+              setLoading(false);
+              action.resetForm();
+            }
+          })
+          .catch((error) => {
+            // console.log("Login Error", error.response);
+            toast.error(error.response.data.non_field_errors[0]);
+            setLoading(false);
           });
-      } catch (error) {
-        console.log(error.response);
-      }
-    }
-  };
+      },
+    });
 
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
@@ -241,26 +212,15 @@ export default function SignInSide() {
                 type="email"
                 id="email"
                 autoComplete="email"
-                className={`input-email ${emailError ? "emailError" : ""}`}
-                error={emailError}
                 autoFocus
                 iconEnd={<AlternateEmailOutlinedIcon />}
-                value={email}
-                {...register("Email", { required: true })}
-                onChange={handleOnEmailChange}
+                value={values.email}
+                onChange={handleChange}
+                onBlur={handleBlur}
               />
-              {errors.Email?.type === "required" && "Email Required"}
-              <small>
-                {emailError && (
-                  <div
-                    style={{
-                      color: "red",
-                    }}
-                  >
-                    {emailError}
-                  </div>
-                )}
-              </small>
+              {errors.email && touched.email ? (
+                <small style={{ color: "red" }}>{errors.email}</small>
+              ) : null}
               <IconTextField
                 label="Password"
                 margin="normal"
@@ -269,25 +229,14 @@ export default function SignInSide() {
                 type="password"
                 id="password"
                 className="input-password"
-                error={passwordError}
                 iconEnd={<LockOutlinedIcon />}
-                value={password}
-                {...register("Confirmpassword", { required: true })}
-                onChange={handleOnChange}
+                value={values.password}
+                onChange={handleChange}
+                onBlur={handleBlur}
               />
-              {errors.Confirmpassword?.type === "required" &&
-                "confirmpassword Required"}
-              <small>
-                {passwordError && (
-                  <div
-                    style={{
-                      color: "red",
-                    }}
-                  >
-                    {passwordError}
-                  </div>
-                )}
-              </small>
+              {errors.password && touched.password ? (
+                <small style={{ color: "red" }}>{errors.password}</small>
+              ) : null}
               <Grid
                 item
                 xs
@@ -300,7 +249,7 @@ export default function SignInSide() {
                   Forgot password?
                 </Link>
               </Grid>
-              {/* <Button >Open modal</Button> */}
+              {/* <Button>Open modal</Button> */}
               <Button
                 type="submit"
                 fullWidth
@@ -314,7 +263,11 @@ export default function SignInSide() {
                 }}
                 onSubmit={handleSubmit}
               >
-                Login
+                {loading ? (
+                  <CircularProgress color="inherit" size={25} />
+                ) : (
+                  <>Login</>
+                )}
               </Button>
               <Grid container className="sign-in-options">
                 <Grid item>
