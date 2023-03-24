@@ -23,6 +23,8 @@ import Modal from "@mui/material/Modal";
 import ArchiveTeamMemberModalBody from "../feature/ArchiveTeammembers";
 import Breadcrumbs from "@mui/material/Breadcrumbs";
 import { useTheme } from "@mui/material/styles";
+import axios from "axios";
+import { useState } from "react";
 
 const Item = styled("div")(({ theme }) => ({
   border: "none",
@@ -32,6 +34,29 @@ const drawerWidth = 240;
 
 export default function Profile() {
   const theme = useTheme();
+  const userId = localStorage.getItem("userId");
+  const token = localStorage.getItem("token");
+  const url = process.env.REACT_APP_BASE_URL + `/people/${userId}/`;
+  const [userInfo, setUserInfo] = useState();
+
+  React.useEffect(() => {
+    const getLoggedInPeopleDetails = async () => {
+      await axios
+        .get(url, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        })
+        .then((response) => {
+          setUserInfo(response.data);
+          console.log("userInfo", response.data);
+        })
+        .catch((error) => console.log("Error", error));
+    };
+    getLoggedInPeopleDetails();
+  }, []);
+
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => {
     setOpen(true);
@@ -61,7 +86,7 @@ export default function Profile() {
               ml: `${drawerWidth}px`,
             }}
           ></AppBar>
-          <VerticalMenu indexToHL={indexToHL} />
+          <VerticalMenu indexToHL={indexToHL} userInfo={userInfo} />
           <Box
             component="main"
             sx={{ flexGrow: 1, bgcolor: "background.default", p: 3 }}
@@ -115,7 +140,7 @@ export default function Profile() {
                           sx={{ pl: 2 }}
                         >
                           <li>Name</li>
-                          <li>Emergency contact</li>
+                          <li>{userInfo?.profile.full_name}</li>
                         </Box>
                       </Item>
                     </Grid>
@@ -139,7 +164,7 @@ export default function Profile() {
                           sx={{ pl: 2 }}
                         >
                           <li>Pronouns</li>
-                          <li>Not specified</li>
+                          <li>{userInfo?.profile.pronouns}</li>
                         </Box>
                       </Item>
                     </Grid>
@@ -152,7 +177,8 @@ export default function Profile() {
                         >
                           <li>Date of Birth</li>
                           <li>
-                            <Link color="#38b492">Add a date of Birth</Link>
+                            {userInfo?.profile.date_of_birth}
+                            {/* <Link color="#38b492">Add a date of Birth</Link> */}
                           </li>
                         </Box>
                       </Item>
@@ -170,7 +196,7 @@ export default function Profile() {
               </Box>
             </Box>
             <Box sx={{ pt: 3 }}>
-              <Contact />
+              <Contact userInfo={userInfo} />
             </Box>
             <Box sx={{ pt: 3 }}>
               <LoginInfo />

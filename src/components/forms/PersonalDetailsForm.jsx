@@ -14,114 +14,77 @@ import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import "../../style/PersonalDetails.css";
 import { useState } from "react";
 import axios from "axios";
-import { useForm } from "react-hook-form";
+import { toast } from "react-toastify";
+import CircularProgress from "@mui/material/CircularProgress";
+import { useFormik } from "formik";
+import * as Yup from "yup";
+const formSchema = Yup.object({
+  email: Yup.string().email().required("Please enter your email"),
+  firstName: Yup.string().required("Please enter your first name"),
+  lastName: Yup.string().required("Please enter your last name"),
+  fullName: Yup.string().required("Please enter your full name"),
+  pronouns: Yup.string().required("Please enter pronouns"),
+  birthday: Yup.date().required("Please select your birthday"),
+});
+const initialValues = {
+  email: "",
+  firstName: "",
+  lastName: "",
+  fullName: "",
+  pronouns: "",
+  birthday: "",
+};
 
 function PersonalDetailsForm() {
-  const url = process.env.REACT_APP_BASE_URL;
-  const token = process.env.REACT_APP_TEMP_TOKEN;
-  const [state, setState] = React.useState({ data: "" });
-  const [email, setEmail] = useState("");
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
-  const [fullName, setFullName] = useState("");
-  const [pronouns, setPronouns] = useState("");
-  const [birthday, setBirthday] = useState("");
+  const userId = localStorage.getItem("userId");
+  const token = localStorage.getItem("token");
+  const url = process.env.REACT_APP_BASE_URL + `/people/${userId}/`;
+  const [loading, setLoading] = useState(false);
 
-  const [error, setError] = React.useState(null);
-
-  const [emailError, setEmailError] = useState("");
-  const [firstNameError, setFirstNameError] = useState("");
-  const [lastNameError, setLastNameError] = useState("");
-  const [fullNameError, setFullNameError] = useState("");
-  const [pronounsError, setPronounsError] = useState("");
-  const [birthdayError, setBirthdayError] = useState("");
-  const [date, setDate] = React.useState("");
-  console.log(date);
-
-  const emailValidation = () => {
-    const regEx = /^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[A-Za-z]+$/;
-    if (regEx.test(email)) {
-      setEmailError("");
-    } else if (email === "") {
-      setEmailError("Email should not be empty");
-    } else if (!regEx.test(email)) {
-      setEmailError("Email is not valid");
-    }
-  };
-
-  const firstNameValidation = () => {
-    if (firstName === "") {
-      setFirstNameError("Please enter first name");
-    } else setFirstNameError("");
-  };
-
-  const lastNameValidation = () => {
-    if (lastName === "") {
-      setLastNameError("Please enter last name");
-    } else setLastNameError("");
-  };
-
-  const fullNameValidation = () => {
-    if (fullName === "") {
-      setFullNameError("Please enter full name");
-    } else setFullNameError("");
-  };
-
-  const pronounsValidation = () => {
-    if (pronouns === "") {
-      setPronounsError("Please enter first name");
-    } else setPronounsError("");
-  };
-
-  const {
-    register,
-    formState: { errors },
-  } = useForm();
-
-  const handleOnChange = (newValue) => {
-    console.log(newValue.$d);
-    setDate(newValue);
-
-    const formatDate = newValue.toISOString().slice(0, 10);
-
-    console.log(formatDate);
-    // debugger;
-    setBirthday(formatDate);
-  };
-
-  const personalDetails = (e) => {
-    console.log("Inside Personal Details");
-    console.log({ email }, { firstName }, { lastName });
-    // debugger;
-    axios
-      .patch(
-        url + "/people/6/",
-        {
-          first_name: firstName,
-          last_name: lastName,
-          email: email,
-          is_superuser: false,
-          role: 2,
-          profile: {
-            date_of_birth: birthday,
-            pronouns: pronouns,
-            full_name: fullName,
-          },
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-            "Content-Type": "application/json",
-          },
-        }
-      )
-      .then((response) => {
-        console.log(response);
-      })
-      .catch((error) => {
-        console.error(error);
-      });
-  };
+  const { values, errors, touched, handleBlur, handleChange, handleSubmit } =
+    useFormik({
+      initialValues,
+      validationSchema: formSchema,
+      onSubmit: async (values, action) => {
+        setLoading(true);
+        console.log(values);
+        await axios
+          .patch(
+            url,
+            {
+              first_name: values.firstName,
+              last_name: values.lastName,
+              email: values.email,
+              is_superuser: false,
+              role: 2,
+              profile: {
+                date_of_birth: values.birthday,
+                pronouns: values.pronouns,
+                full_name: values.fullName,
+              },
+            },
+            {
+              headers: {
+                Authorization: `Bearer ${token}`,
+                "Content-Type": "application/json",
+              },
+            }
+          )
+          .then((response) => {
+            if (response.status === 200) {
+              console.log("Response", response);
+              toast.success("Successfully Added!");
+              setLoading(false);
+              action.resetForm();
+            }
+          })
+          .catch((error) => {
+            console.log("Error", error);
+            toast.error(error.message);
+            setLoading(false);
+          });
+      },
+    });
   return (
     <>
       <Box
@@ -130,7 +93,7 @@ function PersonalDetailsForm() {
           pb: 2,
         }}
       >
-        <Box className="flex flex-row ">
+        <Box className="flex flex-row">
           <Typography
             id="modal-modal-description"
             sx={{
@@ -141,34 +104,28 @@ function PersonalDetailsForm() {
           >
             Email
           </Typography>
-          <TextField
-            id="outlined-basic"
-            label=""
-            variant="outlined"
-            size="small"
-            sx={{
-              width: "300px",
-              mr: 60,
-            }}
-            {...register("Email", { required: true })}
-            onChange={(e) => setEmail(e.target.value)}
-          />
+          <Box>
+            <TextField
+              id="outlined-basic"
+              label=""
+              variant="outlined"
+              size="small"
+              sx={{
+                width: "300px",
+                mr: { xs: 0, sm: 0, md: 0, lg: 60, xl: 60 },
+              }}
+              name="email"
+              value={values.email}
+              onChange={handleChange}
+              onBlur={handleBlur}
+            />
+            <Box>
+              {errors.email && touched.email ? (
+                <small style={{ color: "red" }}>{errors.email}</small>
+              ) : null}
+            </Box>
+          </Box>
         </Box>
-        <Box sx={{ ml: 30, mt: 1 }}>
-          {errors.Email?.type === "required" && "Email Required"}
-          <small>
-            {emailError && (
-              <div
-                style={{
-                  color: "red",
-                }}
-              >
-                {emailError}
-              </div>
-            )}
-          </small>
-        </Box>
-
         <br />
         <Box className="flex flex-row ">
           <Typography
@@ -181,32 +138,27 @@ function PersonalDetailsForm() {
           >
             First Name
           </Typography>
-          <TextField
-            id="outlined-basic"
-            label=""
-            variant="outlined"
-            size="small"
-            sx={{
-              width: "300px",
-              mr: 60,
-            }}
-            {...register("First Name", { required: true })}
-            onChange={(e) => setFirstName(e.target.value)}
-          />
-        </Box>
-        <Box sx={{ ml: 30, mt: 1 }}>
-          {errors.FirstName?.type === "required" && "First name Required"}
-          <small>
-            {firstNameError && (
-              <div
-                style={{
-                  color: "red",
-                }}
-              >
-                {firstNameError}
-              </div>
-            )}
-          </small>
+          <Box>
+            <TextField
+              id="outlined-basic"
+              label=""
+              variant="outlined"
+              size="small"
+              sx={{
+                width: "300px",
+                mr: { xs: 0, sm: 0, md: 0, lg: 60, xl: 60 },
+              }}
+              name="firstName"
+              value={values.firstName}
+              onChange={handleChange}
+              onBlur={handleBlur}
+            />
+            <Box>
+              {errors.firstName && touched.firstName ? (
+                <small style={{ color: "red" }}>{errors.firstName}</small>
+              ) : null}
+            </Box>
+          </Box>
         </Box>
         <br />
         <Box className="flex flex-row ">
@@ -220,32 +172,27 @@ function PersonalDetailsForm() {
           >
             Last Name
           </Typography>
-          <TextField
-            id="outlined-basic"
-            label=""
-            variant="outlined"
-            size="small"
-            sx={{
-              width: "300px",
-              mr: 60,
-            }}
-            {...register("Last Name", { required: true })}
-            onChange={(e) => setLastName(e.target.value)}
-          />
-        </Box>
-        <Box sx={{ ml: 30, mt: 1 }}>
-          {errors.LastName?.type === "required" && "Last name Required"}
-          <small>
-            {lastNameError && (
-              <div
-                style={{
-                  color: "red",
-                }}
-              >
-                {lastNameError}
-              </div>
-            )}
-          </small>
+          <Box>
+            <TextField
+              id="outlined-basic"
+              label=""
+              variant="outlined"
+              size="small"
+              sx={{
+                width: "300px",
+                mr: { xs: 0, sm: 0, md: 0, lg: 60, xl: 60 },
+              }}
+              name="lastName"
+              value={values.lastName}
+              onChange={handleChange}
+              onBlur={handleBlur}
+            />
+            <Box>
+              {errors.lastName && touched.lastName ? (
+                <small style={{ color: "red" }}>{errors.lastName}</small>
+              ) : null}
+            </Box>
+          </Box>
         </Box>
         <br />
         <Box className="flex flex-row ">
@@ -260,32 +207,27 @@ function PersonalDetailsForm() {
           >
             Preferred Full Name
           </Typography>
-          <TextField
-            id="outlined-basic"
-            label=""
-            variant="outlined"
-            size="small"
-            sx={{
-              width: "300px",
-              mr: 60,
-            }}
-            {...register("Full Name", { required: true })}
-            onChange={(e) => setFullName(e.target.value)}
-          />
-        </Box>
-        <Box sx={{ ml: 30, mt: 1 }}>
-          {errors.FullName?.type === "required" && "Full name Required"}
-          <small>
-            {fullNameError && (
-              <div
-                style={{
-                  color: "red",
-                }}
-              >
-                {fullNameError}
-              </div>
-            )}
-          </small>
+          <Box>
+            <TextField
+              id="outlined-basic"
+              label=""
+              variant="outlined"
+              size="small"
+              sx={{
+                width: "300px",
+                mr: { xs: 0, sm: 0, md: 0, lg: 60, xl: 60 },
+              }}
+              name="fullName"
+              value={values.fullName}
+              onChange={handleChange}
+              onBlur={handleBlur}
+            />
+            <Box>
+              {errors.fullName && touched.fullName ? (
+                <small style={{ color: "red" }}>{errors.fullName}</small>
+              ) : null}
+            </Box>
+          </Box>
         </Box>
         <br />
         <Box className="flex flex-row ">
@@ -299,32 +241,62 @@ function PersonalDetailsForm() {
           >
             Pronouns
           </Typography>
-          <TextField
-            id="outlined-basic"
-            label=""
-            variant="outlined"
-            size="small"
-            sx={{
-              width: "300px",
-              mr: 60,
-            }}
-            {...register("Pronouns", { required: true })}
-            onChange={(e) => setPronouns(e.target.value)}
-          />
+          <Box>
+            <TextField
+              id="outlined-basic"
+              label=""
+              variant="outlined"
+              size="small"
+              sx={{
+                width: "300px",
+                mr: { xs: 0, sm: 0, md: 0, lg: 60, xl: 60 },
+              }}
+              name="pronouns"
+              value={values.pronouns}
+              onChange={handleChange}
+              onBlur={handleBlur}
+            />
+            <Box>
+              {errors.pronouns && touched.pronouns ? (
+                <small style={{ color: "red" }}>{errors.pronouns}</small>
+              ) : null}
+            </Box>
+          </Box>
         </Box>
-        <Box sx={{ ml: 30, mt: 1 }}>
-          {errors.Pronouns?.type === "required" && "Pronouns Required"}
-          <small>
-            {pronounsError && (
-              <div
-                style={{
-                  color: "red",
-                }}
-              >
-                {pronounsError}
-              </div>
-            )}
-          </small>
+        <br />
+        <Box className="flex flex-row ">
+          <Typography
+            id="modal-modal-description"
+            sx={{
+              mt: 2,
+              fontSize: 14,
+              fontWeight: "Bold",
+            }}
+          >
+            Date of Birth
+          </Typography>
+          <Box>
+            <TextField
+              id="outlined-basic"
+              label=""
+              variant="outlined"
+              size="small"
+              sx={{
+                width: "300px",
+                mr: { xs: 0, sm: 0, md: 0, lg: 60, xl: 60 },
+              }}
+              type="date"
+              name="birthday"
+              value={values.birthday}
+              onChange={handleChange}
+              onBlur={handleBlur}
+            />
+            <Box>
+              {errors.birthday && touched.birthday ? (
+                <small style={{ color: "red" }}>{errors.birthday}</small>
+              ) : null}
+            </Box>
+          </Box>
         </Box>
         <br />
         <Box
@@ -334,67 +306,27 @@ function PersonalDetailsForm() {
             justifyContent: "space-between",
           }}
         >
-          <Typography
-            inline
-            id="modal-modal-description"
-            sx={{
-              mt: 2,
-              mr: 15,
-              fontSize: 14,
-              width: 180,
-              fontWeight: "Bold",
-            }}
-          >
-            Date of Birth
-          </Typography>
-          <Box sx={{ width: 600, pl: 4 }}>
-            <LocalizationProvider
-              dateAdapter={AdapterDayjs}
-              sx={{ height: 0.1, pt: 5 }}
+          <Box>
+            <Button
+              variant="contained"
+              sx={{
+                bgcolor: "#38b492",
+                color: "#ffffff",
+                mt: 3,
+              }}
+              onClick={handleSubmit}
             >
-              <Stack spacing={3}>
-                <DatePicker
-                  value={date}
-                  onChange={handleOnChange}
-                  renderInput={(params) => <TextField {...params} />}
-                />
-              </Stack>
-            </LocalizationProvider>
+              {loading ? (
+                <CircularProgress color="inherit" size={25} />
+              ) : (
+                <>Save</>
+              )}
+            </Button>
           </Box>
-          <Grid
-            container
-            sx={{
-              display: "flex",
-              flexDirection: "row",
-              alignItems: "end",
-              justifyContent: "flex-end",
-            }}
-          >
-            <Avatar
-              className="messageCircle"
-              sx={{ backgroundColor: "#38b492" }}
-            >
-              <TbMessageCircle />
-            </Avatar>
-          </Grid>
+          <Avatar className="messageCircle" sx={{ backgroundColor: "#38b492" }}>
+            <TbMessageCircle />
+          </Avatar>
         </Box>
-        <Button
-          variant="contained"
-          sx={{
-            bgcolor: "#38b492",
-            color: "#ffffff",
-          }}
-          onClick={(e) => {
-            emailValidation();
-            firstNameValidation();
-            lastNameValidation();
-            fullNameValidation();
-            pronounsValidation();
-            personalDetails(e);
-          }}
-        >
-          Save
-        </Button>
       </Box>
     </>
   );
