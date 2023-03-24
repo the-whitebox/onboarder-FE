@@ -1,7 +1,9 @@
-import { BrowserRouter, Routes, Route, Navigate, } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import "./App.css";
 import Login from "./components/pages/Login";
 import Signup from "./components/pages/Signup";
-import "./App.css";
 import ForgotPassword from "./components/pages/ForgotPassword";
 import ResetPassword from "./components/pages/ResetPassword";
 import Welcome from "./components/pages/Welcome";
@@ -21,7 +23,7 @@ import SetAgreedhours from "./components/feature/SetAgreedhours";
 import ArchiveTeammembers from "./components/feature/ArchiveTeammembers";
 import Addlocation from "./components/feature/Addlocation";
 import WebFont from "webfontloader";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import Profile from "./components/pages/Profile";
 import Contact from "./components/feature/Contact";
 import Employment from "./components/pages/Employment";
@@ -30,9 +32,8 @@ import Personal from "./components/pages/Personal";
 import PersonalDetails from "./components/pages/PersonalDetails";
 import AddNewPeople from "./components/pages/AddNewPeople";
 
-
 function App() {
- 
+  const token = localStorage.getItem("token");
   useEffect(() => {
     WebFont.load({
       google: {
@@ -41,30 +42,53 @@ function App() {
     });
   }, []);
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<Login />} />
-        <Route path="/home" element={<Login />} />
-        <Route path="/signup" element={<Signup />} />
-        <Route path="/forgotpassword" element={<ForgotPassword />} />
-        <Route path="/resetpassword" element={<ResetPassword />} />
-        <Route path="/welcome" element={<Welcome />} />
-        <Route path="/about" element={<About />} />
-        <Route path="/step1" element={<Step1 />} />
-        <Route path="/step2" element={<Step2 />} />
-        <Route path="/step3" element={<Step3 />} />
-        <Route path="/profile" element={<Profile />} />
-        <Route path="/contact" element={<Contact />} />
-        <Route path="/employment" element={<Employment />} />
-        <Route path="/employment_details" element={<EmploymentDetails />} />
-        <Route path="/personal" element={<Personal />} />
-        <Route path="/personal_details" element={<PersonalDetails />} />
-        <Route path="/add" element={<AddNewPeople />} />
-        <Route path="/new" element={<AddNewPeople />} />
-        <Route path="/setAccess" element={<SetAccessLevel />} />
-        <Route path="/people" element={<People/>}/>
-      </Routes>
-    </BrowserRouter>
+    <>
+      <ToastContainer position="top-right" style={{ zIndex: "9999999" }} />
+      <BrowserRouter>
+        <Routes>
+          {token ? (
+            <>
+              <Route path="/welcome" element={<Welcome />} />
+              <Route path="/about" element={<About />} />
+              <Route path="/step1" element={<Step1 />} />
+              <Route path="/step2" element={<Step2 />} />
+              <Route path="/step3" element={<Step3 />} />
+              <Route path="/profile" element={<Profile />} />
+              <Route path="/contact" element={<Contact />} />
+              <Route path="/employment" element={<Employment />} />
+              <Route
+                path="/employment_details"
+                element={<EmploymentDetails />}
+              />
+              <Route path="/personal" element={<Personal />} />
+              <Route path="/personal_details" element={<PersonalDetails />} />
+              <Route path="/add" element={<AddNewPeople />} />
+              <Route path="/new" element={<AddNewPeople />} />
+              <Route path="/setAccess" element={<SetAccessLevel />} />
+              <Route path="/people" element={<People />} />
+            </>
+          ) : (
+            <>
+              <Route path="/" element={<Login />} />
+              <Route path="/home" element={<Login />} />
+              <Route path="/signup" element={<Signup />} />
+              <Route path="/forgotpassword" element={<ForgotPassword />} />
+              <Route path="/resetpassword" element={<ResetPassword />} />
+            </>
+          )}
+          {/* Error Page */}
+          <Route
+            path="*"
+            element={
+              <>
+                <h1>404 Not Found</h1>
+                <Link to="/">Home Page</Link>
+              </>
+            }
+          />
+        </Routes>
+      </BrowserRouter>
+    </>
   );
 }
 
