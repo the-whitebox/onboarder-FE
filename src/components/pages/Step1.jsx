@@ -199,7 +199,8 @@ export default function BasicModal() {
 
   return (
     <div>
-      <Grid container component="main" sx={{ height: "100vh" }}>
+      <Grid container component="main" sx={{ height: "100%" }}>
+        
         <Grid item xs={12} sm={8} md={7} component={Paper} elevation={0} square>
           <Box
             sx={{
@@ -518,14 +519,15 @@ export default function BasicModal() {
             </Button>
           </Box>
         </Grid>
+        {/* right side image of step1 */}
         <Grid item xs={false} sm={4} md={5} sx={{ backgroundColor: "#FFFFFF" }}>
           <Avatar
             src={RightSideImage}
             aria-label="UROOSTER"
             sx={{
-              height: "100vh",
+              height: "100%",
               width: "100%",
-              objectFit: "Fill",
+              objectFit: "contain",
               borderRadius: "0px !important",
             }}
           />

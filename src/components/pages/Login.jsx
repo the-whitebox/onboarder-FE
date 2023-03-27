@@ -150,13 +150,14 @@ export default function SignInSide() {
             alignItems: "center",
           }}
         >
+          {/* login image man with graph */}
           <Grid>
             <Avatar
               src={ManWithGraphs}
               aria-label="Busy Man"
               sx={{
-                height: "50vh",
-                width: "50vh",
+                height: "40vh",
+                width: "37vh",
               }}
             />
           </Grid>
