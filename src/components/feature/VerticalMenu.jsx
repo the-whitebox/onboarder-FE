@@ -90,7 +90,7 @@ export default function VerticalMenu(props) {
               mt: 2,
             }}
           >
-            Asher Muneer
+            {props.userInfo?.profile.username}
           </Typography>
           <Typography
             component="h3"
@@ -101,7 +101,7 @@ export default function VerticalMenu(props) {
               color: "#ffffff",
             }}
           >
-            Advisor
+            {props.userInfo?.role.role}
           </Typography>
           <Button
             type="submit"

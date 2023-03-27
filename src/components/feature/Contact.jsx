@@ -9,7 +9,7 @@ const Item = styled("div")(({ theme }) => ({
   border: "none",
 }));
 
-export default function Contact() {
+export default function Contact(props) {
   return (
     <>
       <Box sx={{ pt: 2, pb: 2 }}>
@@ -36,15 +36,17 @@ export default function Contact() {
                   >
                     <li>Email</li>
                     <li>
-                      <Link href="/personal_details" color="#38b492">
+                      {props.userInfo?.profile.email}
+                      {/* <Link href="/personal_details" color="#38b492">
                         Add an email
-                      </Link>
+                      </Link> */}
                     </li>
                     <li>Emergency contact</li>
                     <li>
-                      <Link href="/personal" color="#38b492">
+                      {props.userInfo?.profile.emergency_contact_name}
+                      {/* <Link href="/personal" color="#38b492">
                         Add an emergency contact
-                      </Link>
+                      </Link> */}
                     </li>
                   </Box>
                 </Item>
@@ -58,13 +60,14 @@ export default function Contact() {
                   >
                     <li>Mobile</li>
                     <li>
-                      <Link href="/personal" color="#38b492">
+                      {props.userInfo?.profile.phone_number}
+                      {/* <Link href="/personal" color="#38b492">
                         Add a mobile
-                      </Link>
+                      </Link> */}
                     </li>
                     <li>Contact Details</li>
                     <li>
-                      <Link href="/personal" color="#38b492">
+                      <Link href="/personal_details" color="#38b492">
                         Add contact details
                       </Link>
                     </li>
@@ -80,11 +83,11 @@ export default function Contact() {
                   >
                     <li>Address</li>
                     <li>
-                      <Link href="/personal" color="#38b492">
+                      {props.userInfo?.profile.address}
+                      {/* <Link href="/personal" color="#38b492">
                         Add an address
-                      </Link>
+                      </Link> */}
                     </li>
-                    <li></li>
                   </Box>
                 </Item>
               </Grid>
