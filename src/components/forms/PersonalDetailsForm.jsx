@@ -3,14 +3,7 @@ import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
-import { TbMessageCircle } from "react-icons/tb";
-import { Avatar } from "@mui/material";
-import Grid from "@mui/material/Grid";
 import "../../style/General.css";
-import Stack from "@mui/material/Stack";
-import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
-import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import "../../style/PersonalDetails.css";
 import { useState } from "react";
 import axios from "axios";
@@ -18,6 +11,8 @@ import { toast } from "react-toastify";
 import CircularProgress from "@mui/material/CircularProgress";
 import { useFormik } from "formik";
 import * as Yup from "yup";
+import { useLocation } from "react-router-dom";
+import { Grid } from "@mui/material";
 const formSchema = Yup.object({
   email: Yup.string().email().required("Please enter your email"),
   firstName: Yup.string().required("Please enter your first name"),
@@ -26,41 +21,41 @@ const formSchema = Yup.object({
   pronouns: Yup.string().required("Please enter pronouns"),
   birthday: Yup.date().required("Please select your birthday"),
 });
-const initialValues = {
-  email: "",
-  firstName: "",
-  lastName: "",
-  fullName: "",
-  pronouns: "",
-  birthday: "",
-};
 
 function PersonalDetailsForm() {
+  const location = useLocation();
+  const userInfo = location.state;
   const userId = localStorage.getItem("userId");
   const token = localStorage.getItem("token");
   const url = process.env.REACT_APP_BASE_URL + `/people/${userId}/`;
   const [loading, setLoading] = useState(false);
 
+  const initialValues = {
+    email: userInfo?.email,
+    firstName: userInfo?.first_name,
+    lastName: userInfo?.last_name,
+    fullName: userInfo?.full_name,
+    pronouns: userInfo?.pronouns,
+    birthday: userInfo?.date_of_birth,
+  };
   const { values, errors, touched, handleBlur, handleChange, handleSubmit } =
     useFormik({
       initialValues,
       validationSchema: formSchema,
       onSubmit: async (values, action) => {
         setLoading(true);
-        console.log(values);
         await axios
           .patch(
             url,
             {
+              email: values.email,
               first_name: values.firstName,
               last_name: values.lastName,
-              email: values.email,
               is_superuser: false,
-              role: 2,
               profile: {
-                date_of_birth: values.birthday,
-                pronouns: values.pronouns,
                 full_name: values.fullName,
+                pronouns: values.pronouns,
+                date_of_birth: values.birthday,
               },
             },
             {
@@ -71,12 +66,8 @@ function PersonalDetailsForm() {
             }
           )
           .then((response) => {
-            if (response.status === 200) {
-              console.log("Response", response);
-              toast.success("Successfully Added!");
-              setLoading(false);
-              action.resetForm();
-            }
+            console.log("Response", response);
+            setLoading(false);
           })
           .catch((error) => {
             console.log("Error", error);
@@ -87,32 +78,74 @@ function PersonalDetailsForm() {
     });
   return (
     <>
-      <Box
+      <Grid
+        container
         sx={{
-          pl: 2,
+          pl: 0,
           pb: 2,
         }}
       >
-        <Box className="flex flex-row">
+        <Grid container alignItems="center">
+          <Grid item lg={8} md={8} sm={8} xs={8}>
+            <Typography
+              id="modal-modal-description"
+              sx={{
+                fontSize: 16,
+                fontWeight: "Bold",
+              }}
+            >
+              Personal Details
+            </Typography>
+          </Grid>
+          <Grid item lg={4} md={4} sm={4} xs={4} sx={{ paddingRight: "10px" }}>
+            <Button
+              variant="contained"
+              sx={{
+                bgcolor: "#38b492",
+                color: "#ffffff",
+                padding: "8px 30px",
+              }}
+              onClick={handleSubmit}
+            >
+              {loading ? (
+                <CircularProgress color="inherit" size={30} />
+              ) : (
+                <>Save</>
+              )}
+            </Button>
+          </Grid>
+        </Grid>
+        <Grid
+          item
+          lg={12}
+          md={12}
+          sm={12}
+          xs={12}
+          sx={{
+            display: "flex",
+            flexDirection: { lg: "row", md: "row", sm: "column", xs: "column" },
+            alignItems: { lg: "center", sm: "flex-start" },
+            mt: { lg: "20px", xs: "15px" },
+          }}
+        >
           <Typography
             id="modal-modal-description"
             sx={{
-              mt: 2,
               fontSize: 14,
               fontWeight: "Bold",
+              width: { lg: "180px" },
             }}
           >
             Email
           </Typography>
-          <Box>
+          <Box sx={{ ml: { xs: 0, sm: 0, md: 0, lg: 20, xl: 20 } }}>
             <TextField
               id="outlined-basic"
               label=""
               variant="outlined"
               size="small"
               sx={{
-                width: "300px",
-                mr: { xs: 0, sm: 0, md: 0, lg: 60, xl: 60 },
+                width: { xl: "400px", sm: "350px", xs: "280px" },
               }}
               name="email"
               value={values.email}
@@ -125,28 +158,39 @@ function PersonalDetailsForm() {
               ) : null}
             </Box>
           </Box>
-        </Box>
+        </Grid>
         <br />
-        <Box className="flex flex-row ">
+        <Grid
+          item
+          lg={12}
+          md={12}
+          sm={12}
+          xs={12}
+          sx={{
+            display: "flex",
+            flexDirection: { lg: "row", md: "row", sm: "column", xs: "column" },
+            alignItems: { lg: "center", sm: "flex-start" },
+            mt: { lg: "20px", xs: "15px" },
+          }}
+        >
           <Typography
             id="modal-modal-description"
             sx={{
-              mt: 2,
               fontSize: 14,
               fontWeight: "Bold",
+              width: { lg: "180px" },
             }}
           >
             First Name
           </Typography>
-          <Box>
+          <Box sx={{ ml: { xs: 0, sm: 0, md: 0, lg: 20, xl: 20 } }}>
             <TextField
               id="outlined-basic"
               label=""
               variant="outlined"
               size="small"
               sx={{
-                width: "300px",
-                mr: { xs: 0, sm: 0, md: 0, lg: 60, xl: 60 },
+                width: { xl: "400px", sm: "350px", xs: "280px" },
               }}
               name="firstName"
               value={values.firstName}
@@ -159,28 +203,39 @@ function PersonalDetailsForm() {
               ) : null}
             </Box>
           </Box>
-        </Box>
+        </Grid>
         <br />
-        <Box className="flex flex-row ">
+        <Grid
+          item
+          lg={12}
+          md={12}
+          sm={12}
+          xs={12}
+          sx={{
+            display: "flex",
+            flexDirection: { lg: "row", md: "row", sm: "column", xs: "column" },
+            alignItems: { lg: "center", sm: "flex-start" },
+            mt: { lg: "20px", xs: "15px" },
+          }}
+        >
           <Typography
             id="modal-modal-description"
             sx={{
-              mt: 2,
               fontSize: 14,
               fontWeight: "Bold",
+              width: { lg: "180px" },
             }}
           >
             Last Name
           </Typography>
-          <Box>
+          <Box sx={{ ml: { xs: 0, sm: 0, md: 0, lg: 20, xl: 20 } }}>
             <TextField
               id="outlined-basic"
               label=""
               variant="outlined"
               size="small"
               sx={{
-                width: "300px",
-                mr: { xs: 0, sm: 0, md: 0, lg: 60, xl: 60 },
+                width: { xl: "400px", sm: "350px", xs: "280px" },
               }}
               name="lastName"
               value={values.lastName}
@@ -193,29 +248,39 @@ function PersonalDetailsForm() {
               ) : null}
             </Box>
           </Box>
-        </Box>
+        </Grid>
         <br />
-        <Box className="flex flex-row ">
+        <Grid
+          item
+          lg={12}
+          md={12}
+          sm={12}
+          xs={12}
+          sx={{
+            display: "flex",
+            flexDirection: { lg: "row", md: "row", sm: "column", xs: "column" },
+            alignItems: { lg: "center", sm: "flex-start" },
+            mt: { lg: "20px", xs: "15px" },
+          }}
+        >
           <Typography
             id="modal-modal-description"
             sx={{
-              mr: 2,
-              mt: 2,
               fontSize: 14,
               fontWeight: "Bold",
+              width: { lg: "180px" },
             }}
           >
             Preferred Full Name
           </Typography>
-          <Box>
+          <Box sx={{ ml: { xs: 0, sm: 0, md: 0, lg: 20, xl: 20 } }}>
             <TextField
               id="outlined-basic"
               label=""
               variant="outlined"
               size="small"
               sx={{
-                width: "300px",
-                mr: { xs: 0, sm: 0, md: 0, lg: 60, xl: 60 },
+                width: { xl: "400px", sm: "350px", xs: "280px" },
               }}
               name="fullName"
               value={values.fullName}
@@ -228,28 +293,40 @@ function PersonalDetailsForm() {
               ) : null}
             </Box>
           </Box>
-        </Box>
+        </Grid>
         <br />
-        <Box className="flex flex-row ">
+        <Grid
+          item
+          lg={12}
+          md={12}
+          sm={12}
+          xs={12}
+          sx={{
+            display: "flex",
+            flexDirection: { lg: "row", md: "row", sm: "column", xs: "column" },
+            alignItems: { lg: "center", sm: "flex-start" },
+            mt: { lg: "20px", xs: "15px" },
+          }}
+        >
           <Typography
             id="modal-modal-description"
             sx={{
-              mt: 2,
               fontSize: 14,
               fontWeight: "Bold",
+              width: { lg: "180px" },
             }}
           >
             Pronouns
           </Typography>
-          <Box>
+          <Box sx={{ ml: { xs: 0, sm: 0, md: 0, lg: 20, xl: 20 } }}>
             <TextField
               id="outlined-basic"
               label=""
               variant="outlined"
               size="small"
+              type="number"
               sx={{
-                width: "300px",
-                mr: { xs: 0, sm: 0, md: 0, lg: 60, xl: 60 },
+                width: { xl: "400px", sm: "350px", xs: "280px" },
               }}
               name="pronouns"
               value={values.pronouns}
@@ -262,28 +339,43 @@ function PersonalDetailsForm() {
               ) : null}
             </Box>
           </Box>
-        </Box>
+        </Grid>
         <br />
-        <Box className="flex flex-row ">
+        <Grid
+          item
+          lg={12}
+          md={12}
+          sm={12}
+          xs={12}
+          sx={{
+            display: "flex",
+            flexDirection: { lg: "row", md: "row", sm: "column", xs: "column" },
+            alignItems: { lg: "center", sm: "flex-start" },
+            mt: { lg: "20px", xs: "15px" },
+          }}
+        >
           <Typography
             id="modal-modal-description"
             sx={{
-              mt: 2,
               fontSize: 14,
               fontWeight: "Bold",
+              width: { lg: "180px" },
             }}
           >
             Date of Birth
           </Typography>
-          <Box>
+          <Box sx={{ ml: { xs: 0, sm: 0, md: 0, lg: 20, xl: 20 } }}>
             <TextField
               id="outlined-basic"
               label=""
               variant="outlined"
               size="small"
               sx={{
-                width: "300px",
-                mr: { xs: 0, sm: 0, md: 0, lg: 60, xl: 60 },
+                width: {
+                  xl: "400px !important",
+                  sm: "350px !important",
+                  xs: "280px !important",
+                },
               }}
               type="date"
               name="birthday"
@@ -297,37 +389,9 @@ function PersonalDetailsForm() {
               ) : null}
             </Box>
           </Box>
-        </Box>
+        </Grid>
         <br />
-        <Box
-          sx={{
-            display: "flex",
-            flexDirection: "row",
-            justifyContent: "space-between",
-          }}
-        >
-          <Box>
-            <Button
-              variant="contained"
-              sx={{
-                bgcolor: "#38b492",
-                color: "#ffffff",
-                mt: 3,
-              }}
-              onClick={handleSubmit}
-            >
-              {loading ? (
-                <CircularProgress color="inherit" size={25} />
-              ) : (
-                <>Save</>
-              )}
-            </Button>
-          </Box>
-          <Avatar className="messageCircle" sx={{ backgroundColor: "#38b492" }}>
-            <TbMessageCircle />
-          </Avatar>
-        </Box>
-      </Box>
+      </Grid>
     </>
   );
 }

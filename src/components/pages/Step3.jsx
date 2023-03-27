@@ -46,7 +46,7 @@ const style = {
 };
 
 export default function BasicModal() {
-  const token = process.env.REACT_APP_TEMP_TOKEN;
+  const token = localStorage.getItem("token");
   const url = process.env.REACT_APP_BASE_URL + "/business/";
   const [state, setState] = React.useState({ data: "" });
   const [payProcess, setPayProcess] = React.useState("");

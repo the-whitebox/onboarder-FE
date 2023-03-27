@@ -14,3 +14,32 @@
   flex-direction: row !important;
   justify-content: space-between;
 }
+
+.aTag{
+    margin: 0;
+    color: #38b492;
+    -webkit-text-decoration: underline;
+    text-decoration: underline;
+    text-decoration-color: rgba(56, 180, 146, 0.4);
+    color: #38b492;
+    cursor: pointer;
+}
+
+
+.aTag:hover {
+  text-decoration-color: #38b492;
+}
+
+@media screen and (max-width:600px) {
+  .avatar-size {
+      width: 60px !important;
+      height: 60px !important;
+      font-size: 30px !important;
+    }
+  
+    .messageCircle {
+      width: 60px !important;
+      height: 60px !important;
+      font-size: 30px !important;
+    }
+}

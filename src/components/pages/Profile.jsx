@@ -1,15 +1,9 @@
 import * as React from "react";
 import Box from "@mui/material/Box";
-import Drawer from "@mui/material/Drawer";
 import CssBaseline from "@mui/material/CssBaseline";
 import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
-import List from "@mui/material/List";
 import Typography from "@mui/material/Typography";
-import Divider from "@mui/material/Divider";
-import ListItem from "@mui/material/ListItem";
-import ListItemButton from "@mui/material/ListItemButton";
-import ListItemText from "@mui/material/ListItemText";
 import Button from "@mui/material/Button";
 import Contact from "../feature/Contact";
 import LoginInfo from "../feature/LoginInfo";
@@ -18,13 +12,13 @@ import styled from "@mui/system/styled";
 import Link from "@mui/material/Link";
 import VerticalMenu from "../feature/VerticalMenu";
 import "../../style/General.css";
-import { createTheme, ThemeProvider } from "@mui/material/styles";
+import { ThemeProvider } from "@mui/material/styles";
 import Modal from "@mui/material/Modal";
 import ArchiveTeamMemberModalBody from "../feature/ArchiveTeammembers";
 import Breadcrumbs from "@mui/material/Breadcrumbs";
 import { useTheme } from "@mui/material/styles";
 import axios from "axios";
-import { useState } from "react";
+import ChatIcon from "../feature/ChatIcon";
 
 const Item = styled("div")(({ theme }) => ({
   border: "none",
@@ -37,7 +31,7 @@ export default function Profile() {
   const userId = localStorage.getItem("userId");
   const token = localStorage.getItem("token");
   const url = process.env.REACT_APP_BASE_URL + `/people/${userId}/`;
-  const [userInfo, setUserInfo] = useState();
+  const [userInfo, setUserInfo] = React.useState();
 
   React.useEffect(() => {
     const getLoggedInPeopleDetails = async () => {
@@ -50,7 +44,6 @@ export default function Profile() {
         })
         .then((response) => {
           setUserInfo(response.data);
-          console.log("userInfo", response.data);
         })
         .catch((error) => console.log("Error", error));
     };
@@ -204,6 +197,7 @@ export default function Profile() {
           </Box>
         </Box>
       </ThemeProvider>
+      <ChatIcon />
     </>
   );
 }

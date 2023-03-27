@@ -40,7 +40,7 @@ const Item = styled("div")(({ theme }) => ({
 let stressLevel = "";
 
 export default function Employment() {
-  const token = process.env.REACT_APP_TEMP_TOKEN;
+  const token = localStorage.getItem("token");
   const url = process.env.REACT_APP_BASE_URL;
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => {

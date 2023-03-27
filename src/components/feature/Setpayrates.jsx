@@ -57,7 +57,7 @@ export default function Setpayrates() {
   const theme = useTheme();
   const [personName, setPersonName] = React.useState([]);
   const url = process.env.REACT_APP_BASE_URL;
-  const token = process.env.REACT_APP_TEMP_TOKEN;
+  const token = localStorage.getItem("token");
 
   const [state, setState] = React.useState({ data: "" });
   const [payRates, setPayRates] = useState("");

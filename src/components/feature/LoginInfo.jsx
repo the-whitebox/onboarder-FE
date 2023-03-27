@@ -4,8 +4,6 @@ import Grid from "@mui/system/Unstable_Grid";
 import styled from "@mui/system/styled";
 import Typography from "@mui/material/Typography";
 import Link from "@mui/material/Link";
-import { TbMessageCircle } from "react-icons/tb";
-import { Avatar } from "@mui/material";
 
 const Item = styled("div")(({ theme }) => ({
   border: "none",
@@ -100,13 +98,6 @@ export default function LoginInfo() {
       <Box sx={{ pt: 2, pb: 2 }}>
         <Typography variant="h5">Login Information</Typography>
       </Box>
-      <Avatar
-        className="messageCircle"
-        sx={{ backgroundColor: "#38b492", float: "right" }}
-      >
-        <TbMessageCircle />
-      </Avatar>
-
       <Box
         sx={{
           ml: 2,

@@ -3,11 +3,8 @@ import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
-import { TbMessageCircle } from "react-icons/tb";
-import { Avatar } from "@mui/material";
-import Grid from "@mui/material/Grid";
 import "../../style/General.css";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useForm } from "react-hook-form";
@@ -576,16 +573,6 @@ function ContactForm() {
             )}
           </small>
         </Box>
-
-        <Avatar
-          className="messageCircle"
-          sx={{
-            backgroundColor: "#38b492",
-            ml: "90%",
-          }}
-        >
-          <TbMessageCircle />
-        </Avatar>
 
         <Button
           variant="contained"

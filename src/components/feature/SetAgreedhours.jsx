@@ -39,7 +39,7 @@ export default function SetAgreedhours() {
   const [workPeriodError, setWorkPeriodError] = useState("");
   const [netWorkPeriodError, setNetWorkPeriodError] = useState("");
   const [hoursError, setHoursError] = useState("");
-  const token = process.env.REACT_APP_TEMP_TOKEN;
+  const token = localStorage.getItem("token");
   const url = process.env.REACT_APP_BASE_URL;
 
   const workPeriodValidation = () => {

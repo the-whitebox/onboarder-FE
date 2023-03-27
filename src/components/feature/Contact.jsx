@@ -1,15 +1,20 @@
 import * as React from "react";
+import "../../style/General.css";
 import Box from "@mui/system/Box";
 import Grid from "@mui/system/Unstable_Grid";
 import styled from "@mui/system/styled";
 import Typography from "@mui/material/Typography";
-import Link from "@mui/material/Link";
-
+import { useNavigate } from "react-router-dom";
+import { Button } from "@mui/material";
 const Item = styled("div")(({ theme }) => ({
   border: "none",
 }));
 
 export default function Contact(props) {
+  const Navigate = useNavigate();
+  const routeToNextPage = (userInfo) => {
+    Navigate("/personal_details", { state: userInfo });
+  };
   return (
     <>
       <Box sx={{ pt: 2, pb: 2 }}>
@@ -67,9 +72,13 @@ export default function Contact(props) {
                     </li>
                     <li>Contact Details</li>
                     <li>
-                      <Link href="/personal_details" color="#38b492">
+                      <Typography
+                        component="p"
+                        className="aTag"
+                        onClick={() => routeToNextPage(props.userInfo)}
+                      >
                         Add contact details
-                      </Link>
+                      </Typography>
                     </li>
                   </Box>
                 </Item>

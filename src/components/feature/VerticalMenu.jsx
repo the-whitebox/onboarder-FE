@@ -35,7 +35,6 @@ export default function VerticalMenu(props) {
   // const handleListItemClick = (index: number) => {
   //   setSelectedIndex(index);
   // };
-  console.log(props.indexToHL);
 
   // setSelectedIndex(props.indexToHL);
 
@@ -78,7 +77,9 @@ export default function VerticalMenu(props) {
           <Avatar
             className="avatar-size"
             // sx={{ width: "120px !important", height: 120 }}
-            {...stringAvatar("Asher Muneer")}
+            {...stringAvatar(
+              `${props.userInfo?.first_name} ${props.userInfo?.last_name}`
+            )}
           />
           <Typography
             component="h3"
