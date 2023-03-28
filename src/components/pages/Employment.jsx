@@ -15,9 +15,7 @@ import WorkingHours from "../feature/WorkingHours";
 import LeaveEntitlement from "../feature/LeaveEntitlement";
 import Grid from "@mui/system/Unstable_Grid";
 import styled from "@mui/system/styled";
-import Link from "@mui/material/Link";
-import { TbMessageCircle } from "react-icons/tb";
-import { Avatar } from "@mui/material";
+import { Link } from "react-router-dom";
 import "../../style/General.css";
 import "../../style/Employment.css";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
@@ -27,33 +25,27 @@ import SyncPayrollModalBody from "../feature/SyncPayroll";
 import SetAdvisorModalBody from "../feature/SetAccessLevel";
 import Breadcrumbs from "@mui/material/Breadcrumbs";
 import axios from "axios";
-
-import useState from "react";
-
+import ChatIcon from "../feature/ChatIcon";
 const theme = createTheme();
 
 const Item = styled("div")(({ theme }) => ({
   border: "none",
 }));
-
 // const drawerWidth = 240;
-let stressLevel = "";
 
 export default function Employment() {
-  const token = process.env.REACT_APP_TEMP_TOKEN;
-  const url = process.env.REACT_APP_BASE_URL;
-  const [open, setOpen] = React.useState(false);
-  const handleOpen = () => {
-    setOpen(true);
-  };
-  const handleClose = () => {
-    setOpen(false);
-  };
+  const userId = localStorage.getItem("userId");
+  const token = localStorage.getItem("token");
+  const url = process.env.REACT_APP_BASE_URL + `/people/${userId}/`;
+  const [userInfo, setUserInfo] = React.useState();
 
   const modalWrapper = {
     overflow: "auto",
     display: "flex",
   };
+  const [openPayrate, setOpenPayrate] = React.useState(false);
+  const handleOpenPayrate = () => setOpenPayrate(true);
+  const handleClosePayrate = () => setOpenPayrate(false);
 
   const [openAccess, setOpenAccess] = React.useState(false);
   const handleOpenAccess = () => setOpenAccess(true);
@@ -62,37 +54,24 @@ export default function Employment() {
   const [openPayroll, setOpenPayroll] = React.useState(false);
   const handleOpenPayroll = () => setOpenPayroll(true);
   const handleClosePayroll = () => setOpenPayroll(false);
-  const [userAccess, setUserAccess] = React.useState("");
-  const [userStress, setUserStress] = React.useState("");
-
   const indexToHL = 1;
 
-  const getUser = () => {
-    try {
-      const response = axios
-        .get(url + "/people/6/", {
+  React.useEffect(() => {
+    const getLoggedInUserDetails = async () => {
+      await axios
+        .get(url, {
           headers: {
             Authorization: `Bearer ${token}`,
             "Content-Type": "application/json",
           },
         })
         .then((response) => {
-          setUserAccess(response.data.role.role);
-          setUserStress(response.data.working_hours.stress_level);
-          stressLevel = response.data.working_hours.stress_level;
-        });
-    } catch (error) {
-      console.error(error);
-    }
-  };
-  getUser();
-
-  // React.useEffect(() => {
-  //   getUser();
-  // }, []);
-
-  console.log("Stress level variable: " + stressLevel);
-  // debugger
+          setUserInfo(response.data);
+        })
+        .catch((error) => console.log("Error", error));
+    };
+    getLoggedInUserDetails();
+  }, []);
   return (
     <>
       <ThemeProvider theme={theme}>
@@ -102,7 +81,10 @@ export default function Employment() {
           aria-labelledby="modal-modal-title"
           aria-describedby="modal-modal-description"
         >
-          <SetAdvisorModalBody />
+          <SetAdvisorModalBody
+            handleCloseAccess={handleCloseAccess}
+            userInfo={userInfo}
+          />
         </Modal>
 
         <Modal
@@ -111,20 +93,23 @@ export default function Employment() {
           aria-labelledby="modal-modal-title"
           aria-describedby="modal-modal-description"
         >
-          <SyncPayrollModalBody />
+          <SyncPayrollModalBody handleClosePayroll={handleClosePayroll} />
         </Modal>
         <Modal
-          open={open}
-          onClose={handleClose}
+          open={openPayrate}
+          onClose={handleClosePayrate}
           sx={modalWrapper}
           aria-labelledby="modal-modal-title"
           aria-describedby="modal-modal-description"
         >
-          <SetpayratesModalBody />
+          <SetpayratesModalBody
+            userInfo={userInfo}
+            handleClosePayrate={handleClosePayrate}
+          />
         </Modal>
 
         <Box sx={{ display: "flex" }}>
-          <VerticalMenu indexToHL={indexToHL} />
+          <VerticalMenu indexToHL={indexToHL} userInfo={userInfo} />
 
           <Box
             component="main"
@@ -133,7 +118,7 @@ export default function Employment() {
             <Toolbar />
             <Box>
               <Breadcrumbs aria-label="breadcrumb">
-                <Link underline="hover" color="black" href="/People">
+                <Link t="/People" className="aTag">
                   Home
                 </Link>
                 <Typography color="text.primary">Employment</Typography>
@@ -143,6 +128,7 @@ export default function Employment() {
               <Typography variant="h4">Employment</Typography>
               <Button
                 variant="contained"
+                className="all-green-btns"
                 sx={{
                   bgcolor: "#38b492",
                   color: "#ffffff",
@@ -158,8 +144,14 @@ export default function Employment() {
             <Box
               sx={{
                 mt: 0,
-                ml: 2,
-                maxWidth: "80%",
+                ml: { xl: 2, lg: 2, md: 0, sm: 0, xs: 0 },
+                maxWidth: {
+                  xl: "80%",
+                  lg: "80%",
+                  md: "100%",
+                  sm: "100%",
+                  xs: "100%",
+                },
                 border: "1px solid",
                 borderColor: "#ced7e0",
                 borderRadius: "10px",
@@ -178,8 +170,10 @@ export default function Employment() {
                         >
                           <li>Access level</li>
                           <li>
-                            <Link onClick={handleOpenAccess} color="#38b492">
-                              {userAccess ? userAccess : "Add Access level"}
+                            <Link onClick={handleOpenAccess} className="aTag">
+                              {userInfo?.role.role
+                                ? userInfo?.role.role
+                                : "Add Access level"}
                             </Link>
                           </li>
                         </Box>
@@ -218,24 +212,28 @@ export default function Employment() {
                         >
                           <li>Training</li>
                           <li>
-                            <Link color="#38b492">Add Training</Link>
+                            <Link className="aTag">Add Training</Link>
                           </li>
                         </Box>
                       </Item>
                     </Grid>
                   </Grid>
-                  <Grid
-                    xs={12}
-                    container
-                    justifyContent="space-between"
-                    alignItems="center"
-                    flexDirection={{ xs: "column", sm: "row" }}
-                    sx={{ fontSize: "12px" }}
-                  ></Grid>
                 </Grid>
               </Box>
             </Box>
-            <Box sx={{ mt: 3, ml: 2, maxWidth: "80%" }}>
+            <Box
+              sx={{
+                mt: 3,
+                ml: { xl: 2, lg: 2, md: 0, sm: 0, xs: 0 },
+                maxWidth: {
+                  xl: "80%",
+                  lg: "80%",
+                  md: "100%",
+                  sm: "100%",
+                  xs: "100%",
+                },
+              }}
+            >
               <Box
                 sx={{
                   pt: 0.5,
@@ -257,12 +255,15 @@ export default function Employment() {
                           >
                             <li>Payroll Id</li>
                             <li>
-                              <Link onClick={handleOpenPayroll} color="#38b492">
+                              <Link
+                                onClick={handleOpenPayroll}
+                                className="aTag"
+                              >
                                 Add a payroll ID
                               </Link>
                             </li>
                             <li>
-                              <Link color="#38b492">
+                              <Link className="aTag">
                                 View all rates and allowances
                               </Link>
                             </li>
@@ -278,7 +279,10 @@ export default function Employment() {
                           >
                             <li>Pay rate (Default)</li>
                             <li>
-                              <Link onClick={handleOpen} color="#38b492">
+                              <Link
+                                onClick={handleOpenPayrate}
+                                className="aTag"
+                              >
                                 Set a pay rate
                               </Link>
                             </li>
@@ -286,48 +290,20 @@ export default function Employment() {
                         </Item>
                       </Grid>
                     </Grid>
-                    <Grid
-                      xs={12}
-                      container
-                      justifyContent="space-between"
-                      alignItems="center"
-                      flexDirection={{ xs: "column", sm: "row" }}
-                      sx={{ fontSize: "12px" }}
-                    ></Grid>
                   </Grid>
                 </Box>
               </Box>
             </Box>
             <Box sx={{ mt: 1 }}>
-              <WorkingHours stressLevel={stressLevel} />
+              <WorkingHours userInfo={userInfo} />
             </Box>
-            <Box
-              sx={{
-                mt: 1,
-                display: "flex",
-                flexDirection: "row",
-                justifyContent: "space-between",
-              }}
-            >
-              <LeaveEntitlement />
-              <Grid
-                container
-                sx={{
-                  display: "flex",
-                  alignItems: "end",
-                }}
-              >
-                <Avatar
-                  className="messageCircle"
-                  sx={{ backgroundColor: "#38b492" }}
-                >
-                  <TbMessageCircle />
-                </Avatar>
-              </Grid>
+            <Box sx={{ mt: 1 }}>
+              <LeaveEntitlement userInfo={userInfo} />
             </Box>
           </Box>
         </Box>
       </ThemeProvider>
+      <ChatIcon />
     </>
   );
 }

@@ -65,7 +65,7 @@ export default function Addteammember(props) {
   const [employeeType, setEmployeeType] = React.useState([]);
   const [inputs, setInputs] = React.useState([]);
   const [inviteLink, setInviteLink] = React.useState("");
-  const token = process.env.REACT_APP_TEMP_TOKEN;
+  const token = localStorage.getItem("token");
   const url = process.env.REACT_APP_BASE_URL;
 
   console.log(props);

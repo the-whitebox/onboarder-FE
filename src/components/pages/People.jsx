@@ -175,7 +175,7 @@ const columns = [
 
 export default function People() {
   const token = localStorage.getItem("token");
-  // const token = process.env.REACT_APP_TEMP_TOKEN;
+
   const url = process.env.REACT_APP_BASE_URL;
   const [people, setPeople] = useState("");
   const [firstName, setFirstName] = useState("");

@@ -3,7 +3,7 @@ import Box from "@mui/system/Box";
 import Grid from "@mui/system/Unstable_Grid";
 import styled from "@mui/system/styled";
 import Typography from "@mui/material/Typography";
-import Link from "@mui/material/Link";
+import { Link } from "react-router-dom";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import Modal from "@mui/material/Modal";
 import SetAgreedHoursModalBody from "../feature/SetAgreedhours";
@@ -17,10 +17,6 @@ const Item = styled("div")(({ theme }) => ({
 const theme = createTheme();
 
 export default function WorkingHours(props) {
-  const [selectedStressLevel] = React.useState(props.stressLevel);
-
-  console.log("Stress Level in working hours: " + props.stressLevel);
-
   const stressArray = [
     "2 days per week",
     "24/7",
@@ -81,8 +77,14 @@ export default function WorkingHours(props) {
         <Box
           sx={{
             mt: 0,
-            ml: 2,
-            maxWidth: "80%",
+            ml: { xl: 2, lg: 2, md: 0, sm: 0, xs: 0 },
+            maxWidth: {
+              xl: "80%",
+              lg: "80%",
+              md: "100%",
+              sm: "100%",
+              xs: "100%",
+            },
             border: "1px solid",
             borderColor: "#ced7e0",
             borderRadius: "10px",
@@ -96,7 +98,7 @@ export default function WorkingHours(props) {
                 <Box component="ul" aria-labelledby="category-a" sx={{ pl: 2 }}>
                   <li>Work Period</li>
                   <li>
-                    <Link onClick={handleOpenWorkPeriod} color="#38b492">
+                    <Link onClick={handleOpenWorkPeriod} className="aTag">
                       Set a work period
                     </Link>
                   </li>
@@ -108,7 +110,7 @@ export default function WorkingHours(props) {
                 <Box component="ul" aria-labelledby="category-b" sx={{ pl: 2 }}>
                   <li>Hours per Period</li>
                   <li>
-                    <Link onClick={handleOpenHours} color="#38b492">
+                    <Link onClick={handleOpenHours} className="aTag">
                       Set hours per period
                     </Link>
                   </li>
@@ -120,8 +122,8 @@ export default function WorkingHours(props) {
                 <Box component="ul" aria-labelledby="category-c" sx={{ pl: 2 }}>
                   <li>Stress Profile</li>
                   <li>
-                    <Link onClick={handleOpenStress} color="#38b492">
-                      {props.stressLevel === ""
+                    <Link onClick={handleOpenStress} className="aTag">
+                      {props.userInfo?.working_hours?.stress_level === ""
                         ? "Add stress level"
                         : stressArray[parseInt(props.stressLevel) - 1]}
                     </Link>

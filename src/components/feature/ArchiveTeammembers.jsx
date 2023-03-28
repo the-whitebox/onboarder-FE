@@ -25,7 +25,7 @@ const style = {
 };
 
 export default function SyncPayroll() {
-  const token = process.env.REACT_APP_TEMP_TOKEN;
+  const token = localStorage.getItem("token");
   const url = process.env.REACT_APP_BASE_URL;
   const [listOfTeamMembers, setListOfTeamMembers] = React.useState([]);
 

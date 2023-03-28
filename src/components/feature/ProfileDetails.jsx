@@ -1,24 +1,22 @@
 import * as React from "react";
-import "../../style/General.css";
-import Box from "@mui/system/Box";
-import Grid from "@mui/system/Unstable_Grid";
-import styled from "@mui/system/styled";
+import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
+import Grid from "@mui/system/Unstable_Grid";
+import "../../style/General.css";
 import { useNavigate } from "react-router-dom";
+import styled from "@mui/system/styled";
+
 const Item = styled("div")(({ theme }) => ({
   border: "none",
 }));
 
-export default function Contact(props) {
+function ProfileDetails({ userInfo }) {
   const Navigate = useNavigate();
   const routeToNextPage = (userInfo) => {
     Navigate("/personal_details", { state: userInfo });
   };
   return (
     <>
-      <Box sx={{ pt: 2, pb: 2 }}>
-        <Typography variant="h5">Contact</Typography>
-      </Box>
       <Box
         sx={{
           ml: { xl: 2, lg: 2, md: 0, sm: 0, xs: 0 },
@@ -33,96 +31,90 @@ export default function Contact(props) {
         <Box sx={{ flexGrow: 1 }}>
           <Grid container spacing={2}>
             <Grid container xs={12} md={7} lg={12}>
-              <Grid xs={6} lg={4}>
+              <Grid xs={6} lg={3}>
                 <Item>
                   <Box
                     component="ul"
                     aria-labelledby="category-a"
                     sx={{ pl: 2 }}
                   >
-                    <li>Email</li>
+                    <li>Name</li>
                     <li>
-                      {props.userInfo?.profile.email ? (
-                        props.userInfo?.profile.email
+                      {userInfo?.profile.full_name ? (
+                        userInfo?.profile.full_name
                       ) : (
                         <Typography
                           component="p"
                           className="aTag"
-                          onClick={() => routeToNextPage(props.userInfo)}
+                          onClick={() => routeToNextPage(userInfo)}
                         >
-                          Add an email
-                        </Typography>
-                      )}
-                    </li>
-                    <li>Emergency contact</li>
-                    <li>
-                      {props.userInfo?.profile.emergency_contact_name ? (
-                        props.userInfo?.profile.emergency_contact_name
-                      ) : (
-                        <Typography
-                          component="p"
-                          className="aTag"
-                          onClick={() => routeToNextPage(props.userInfo)}
-                        >
-                          Add an emergency contact
+                          Add a name
                         </Typography>
                       )}
                     </li>
                   </Box>
                 </Item>
               </Grid>
-              <Grid xs={6} lg={4}>
+              <Grid xs={6} lg={3}>
                 <Item>
                   <Box
                     component="ul"
                     aria-labelledby="category-b"
                     sx={{ pl: 2 }}
                   >
-                    <li>Mobile</li>
+                    <li>Preferred name</li>
                     <li>
-                      {props.userInfo?.profile.phone_number ? (
-                        props.userInfo?.profile.phone_number
+                      {userInfo?.profile.full_name ? (
+                        userInfo?.profile.full_name
                       ) : (
                         <Typography
                           component="p"
                           className="aTag"
-                          onClick={() => routeToNextPage(props.userInfo)}
+                          onClick={() => routeToNextPage(userInfo)}
                         >
-                          Add a mobile
+                          Add a preferred name
                         </Typography>
                       )}
-                    </li>
-                    <li>Contact Details</li>
-                    <li>
-                      <Typography
-                        component="p"
-                        className="aTag"
-                        onClick={() => routeToNextPage(props.userInfo)}
-                      >
-                        Add contact details
-                      </Typography>
                     </li>
                   </Box>
                 </Item>
               </Grid>
-              <Grid xs={6} lg={4}>
+              <Grid xs={6} lg={3}>
                 <Item>
                   <Box
                     component="ul"
                     aria-labelledby="category-c"
                     sx={{ pl: 2 }}
                   >
-                    <li>Address</li>
+                    <li>Pronouns</li>
                     <li>
-                      {props.userInfo?.profile.address ? (
-                        props.userInfo?.profile.address
+                      {userInfo?.profile.pronouns ? (
+                        userInfo?.profile.pronouns
+                      ) : (
+                        <Typography component="p">Not Specified</Typography>
+                      )}
+                    </li>
+                  </Box>
+                </Item>
+              </Grid>
+              <Grid xs={6} lg={3}>
+                <Item>
+                  <Box
+                    component="ul"
+                    aria-labelledby="category-c"
+                    sx={{ pl: 2 }}
+                  >
+                    <li>Date of Birth</li>
+                    <li>
+                      {userInfo?.profile.date_of_birth ? (
+                        userInfo?.profile.date_of_birth
                       ) : (
                         <Typography
                           component="p"
                           className="aTag"
-                          onClick={() => routeToNextPage(props.userInfo)}
+                          onClick={() => routeToNextPage(userInfo)}
                         >
-                          Add an address
+                          Add a date of Birth
                         </Typography>
                       )}
                     </li>
@@ -144,3 +136,5 @@ export default function Contact(props) {
     </>
   );
 }
+
+export default ProfileDetails;

@@ -1,37 +1,22 @@
 import * as React from "react";
 import Box from "@mui/material/Box";
-import Modal from "@mui/material/Modal";
 import Button from "@mui/material/Button";
-import { useTheme } from "@mui/material/styles";
-import OutlinedInput from "@mui/material/OutlinedInput";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import CloseButton from "@mui/icons-material/Close";
 import Typography from "@mui/material/Typography";
 import "../../style/SetAccesslevel.css";
+import "../../style/General.css";
 import { useState } from "react";
-import { FormHelperText } from "@mui/material";
+import CircularProgress from "@mui/material/CircularProgress";
 import axios from "axios";
-
-const ITEM_HEIGHT = 48;
-const ITEM_PADDING_TOP = 8;
-const MenuProps = {
-  PaperProps: {
-    style: {
-      maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
-      width: 150,
-    },
-  },
-};
-
-const names = [
-  "System Administrator",
-  "Supervisor",
-  "Employee",
-  "Location Manager",
-  "Advisor",
-];
+import { useFormik } from "formik";
+import * as Yup from "yup";
+import { toast } from "react-toastify";
+const formSchema = Yup.object({
+  role: Yup.string().required("Please select your role"),
+});
 
 const style = {
   position: "absolute",
@@ -39,7 +24,6 @@ const style = {
   left: "50%",
   transform: "translate(-50%, -50%)",
   bgcolor: "background.paper",
-  // border: "2px solid #000",
   boxShadow: 24,
   pt: 2,
   px: 4,
@@ -48,76 +32,60 @@ const style = {
   padding: "20px",
 };
 
+const role = [
+  { id: 1, role: "System Administrator" },
+  { id: 2, role: "Supervisor" },
+  { id: 3, role: "Employee" },
+  { id: 4, role: "Location Manager" },
+  { id: 5, role: "Advisor" },
+];
+
 export default function SetAccessLevel(props) {
-  const [state, setState] = React.useState({ data: "" });
-  const [selectedValue, setSelectedValue] = useState("");
-  const [error, setError] = React.useState(null);
-  const token = process.env.REACT_APP_TEMP_TOKEN;
-  const url = process.env.REACT_APP_BASE_URL;
+  const userId = localStorage.getItem("userId");
+  const token = localStorage.getItem("token");
+  const url = process.env.REACT_APP_BASE_URL + `/people/${userId}/`;
+  const [loading, setLoading] = useState(false);
 
-  function getStyles(name, personName, theme) {
-    return {
-      fontWeight:
-        personName.indexOf(name) === -1
-          ? theme.typography.fontWeightRegular
-          : theme.typography.fontWeightMedium,
-    };
-  }
-
-  const theme = useTheme();
-  const [personName, setPersonName] = React.useState([]);
-
-  const handleChange = (event) => {
-    const {
-      target: { value },
-    } = event;
-    setPersonName(typeof value === "string" ? value.split(",") : value);
-  };
-  const [open, setOpen] = React.useState(false);
-  const handleOpen = () => {
-    setOpen(true);
-  };
-  const handleClose = () => {
-    setOpen(false);
+  const initialValues = {
+    role: props.userInfo?.role.id,
   };
 
-  const [isOpen, setIsOpen] = useState(true);
-  const toggleDropdown = () => {
-    setIsOpen(!isOpen);
-  };
-
-  const toAccess = (e) => {
-    console.log({ selectedValue });
-
-    axios
-      .patch(
-        url + "/people/6/",
-        {
-          role: selectedValue,
-          is_superuser: false,
-          profile: {},
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-            "Content-Type": "application/json",
-          },
-        }
-      )
-      .then((response) => {
-        console.log(response);
-      })
-      .catch((error) => {
-        console.error(error);
-      });
-  };
+  const { values, errors, touched, handleBlur, handleChange, handleSubmit } =
+    useFormik({
+      initialValues,
+      validationSchema: formSchema,
+      onSubmit: async (values, action) => {
+        setLoading(true);
+        await axios
+          .patch(
+            url,
+            { role: values.role },
+            {
+              headers: {
+                Authorization: `Bearer ${token}`,
+                "Content-Type": "application/json",
+              },
+            }
+          )
+          .then((response) => {
+            console.log("Response", response);
+            setLoading(false);
+            props.handleCloseAccess();
+          })
+          .catch((error) => {
+            toast.error(error.message);
+            setLoading(false);
+          });
+      },
+    });
 
   return (
     <React.Fragment>
       <Box sx={{ ...style, width: 370, height: 270 }}>
         <CloseButton
           id="child-modal-title"
-          sx={{ float: "right" }}
+          sx={{ float: "right", cursor: "pointer" }}
+          onClick={props.handleCloseAccess}
         ></CloseButton>
         <Typography
           variant="h5"
@@ -133,7 +101,6 @@ export default function SetAccessLevel(props) {
             Access level
           </Typography>
           <FormControl
-            error={error}
             sx={{
               width: 200,
               height: 5,
@@ -143,40 +110,45 @@ export default function SetAccessLevel(props) {
             <Select
               size="small"
               sx={{ borderRadius: "7px" }}
-              displayEmpty
-              value={selectedValue}
-              onChange={(e) => setSelectedValue(e.target.value)}
+              name="role"
+              value={values.role}
+              onChange={handleChange}
+              handleBlur={handleBlur}
             >
-              <MenuItem disabled value=""></MenuItem>
               <MenuItem value="">
                 <em>None</em>
               </MenuItem>
-              <MenuItem value={1}>System Administrator</MenuItem>
-              <MenuItem value={2}>Supervisior</MenuItem>
-              <MenuItem value={3}>Employee</MenuItem>
-              <MenuItem value={4}>Location Manager</MenuItem>
-              <MenuItem value={5}>Advisor</MenuItem>
+              {role?.map((data) => (
+                <MenuItem value={data.id}>{data.role}</MenuItem>
+              ))}
             </Select>
-            {error && <FormHelperText>Select a value</FormHelperText>}
+            <Box>
+              {errors.role && touched.role ? (
+                <small style={{ color: "red" }}>{errors.role}</small>
+              ) : null}
+            </Box>
           </FormControl>
         </div>
         <Button
           variant="primary"
-          className="Btn"
+          className="all-green-btns"
           sx={{
-            ml: 34,
+            ml: 30,
             borderRadius: "6px",
-            width: "22%",
+            width: "30%",
+            height: "40px",
             bgcolor: "#38b492",
             color: "white",
             textTransform: "none",
             mt: 6,
           }}
-          onClick={() => {
-            toAccess();
-          }}
+          onClick={handleSubmit}
         >
-          Update
+          {loading ? (
+            <CircularProgress color="inherit" size={30} />
+          ) : (
+            <>Update</>
+          )}
         </Button>
       </Box>
     </React.Fragment>

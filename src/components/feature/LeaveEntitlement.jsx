@@ -3,7 +3,7 @@ import Box from "@mui/system/Box";
 import Grid from "@mui/system/Unstable_Grid";
 import styled from "@mui/system/styled";
 import Typography from "@mui/material/Typography";
-import Link from "@mui/material/Link";
+import { Link } from "react-router-dom";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import Modal from "@mui/material/Modal";
 import AddLeaveEntitlementModalBody from "../feature/Addleaveentitlement";
@@ -13,7 +13,7 @@ const Item = styled("div")(({ theme }) => ({
 }));
 const theme = createTheme();
 
-export default function LeaveEntitlement() {
+export default function LeaveEntitlement(props) {
   const [openLeaveEntitlement, setOpenLeaveEntitlement] = React.useState(false);
   const handleOpenLeaveEntitlement = () => setOpenLeaveEntitlement(true);
   const handleCloseLeaveEntitlement = () => setOpenLeaveEntitlement(false);
@@ -29,7 +29,7 @@ export default function LeaveEntitlement() {
         >
           <AddLeaveEntitlementModalBody />
         </Modal>
-        <Grid sx={{ width: "100% !important", maxWidth: "100% !important" }}>
+        <Grid>
           <Box
             sx={{
               pt: 3,
@@ -43,8 +43,14 @@ export default function LeaveEntitlement() {
           <Box
             sx={{
               mt: 0,
-              ml: 2,
-              maxWidth: "88%",
+              ml: { xl: 2, lg: 2, md: 0, sm: 0, xs: 0 },
+              maxWidth: {
+                xl: "80%",
+                lg: "80%",
+                md: "100%",
+                sm: "100%",
+                xs: "100%",
+              },
               border: "1px solid",
               borderColor: "#ced7e0",
               borderRadius: "10px",
@@ -64,7 +70,7 @@ export default function LeaveEntitlement() {
                     <li>
                       <Link
                         onClick={handleOpenLeaveEntitlement}
-                        color="#38b492"
+                        className="aTag"
                       >
                         Add leave entitlements
                       </Link>

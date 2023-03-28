@@ -58,7 +58,7 @@ export default function BasicModal() {
   const [businessTypeError, setBusinessTypeError] = useState("");
   const [industryError, setIndustryError] = useState("");
 
-  const token = process.env.REACT_APP_TEMP_TOKEN;
+  const token = localStorage.getItem("token");
   const url = process.env.REACT_APP_BASE_URL;
   let subIndustries = "";
 

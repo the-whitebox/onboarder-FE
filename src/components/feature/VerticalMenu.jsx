@@ -23,7 +23,7 @@ const StyledList = styled(List)({
   // hover states
   "& .MuiListItemButton-root:hover": {
     backgroundColor: "white",
-    // borderRadius: "12px",
+    // borderRadius: "12px 0px 0px 12px",
     "&, & .MuiListItemIcon-root": {
       color: "#38B492",
     },
@@ -35,7 +35,6 @@ export default function VerticalMenu(props) {
   // const handleListItemClick = (index: number) => {
   //   setSelectedIndex(index);
   // };
-  console.log(props.indexToHL);
 
   // setSelectedIndex(props.indexToHL);
 
@@ -78,7 +77,9 @@ export default function VerticalMenu(props) {
           <Avatar
             className="avatar-size"
             // sx={{ width: "120px !important", height: 120 }}
-            {...stringAvatar("Asher Muneer")}
+            {...stringAvatar(
+              `${props.userInfo?.first_name} ${props.userInfo?.last_name}`
+            )}
           />
           <Typography
             component="h3"
@@ -90,7 +91,7 @@ export default function VerticalMenu(props) {
               mt: 2,
             }}
           >
-            {props.userInfo?.profile.username}
+            {props.userInfo?.first_name} {props.userInfo?.last_name}
           </Typography>
           <Typography
             component="h3"
@@ -106,9 +107,8 @@ export default function VerticalMenu(props) {
           <Button
             type="submit"
             variant="contained"
+            className="all-white-btns"
             sx={{
-              // mt: 4,
-              // width: "89px",
               borderRadius: "5px",
               justifyContent: "center",
               backgroundColor: "#ffffff",
