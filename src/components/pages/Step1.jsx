@@ -199,11 +199,18 @@ export default function BasicModal() {
 
   return (
     <div>
-      <Grid container component="main" sx={{ height: "100vh" }}>
+      {/* change in box marginTop */}
+      <Grid
+        container
+        component="main"
+        sx={{
+          height: "100vh",
+        }}
+      >
         <Grid item xs={12} sm={8} md={7} component={Paper} elevation={0} square>
           <Box
             sx={{
-              mt: 7,
+              mt: 2,
               mx: 4,
               display: "flex",
               flexDirection: "column",
@@ -217,7 +224,7 @@ export default function BasicModal() {
               sx={{
                 fontWeight: "Bold",
                 fontSize: "43px",
-                color: "#38B492",
+                color: "#38b492" ,
               }}
             >
               MaxPilot
@@ -373,6 +380,7 @@ export default function BasicModal() {
                 width: "100%",
               }}
             >
+              {/* Cards Here */}
               <RadioGroup
                 aria-label="platform"
                 defaultValue="Website"
@@ -495,12 +503,15 @@ export default function BasicModal() {
               )}
             </small>
 
+            {/* changed bottom margin */}
+
             <Button
               type="submit"
               variant="contained"
               className="btn-forgetPwd btn-login"
               sx={{
-                mt: 4,
+                mt: 2,
+                mb: 2,
                 width: "89px",
                 borderRadius: "10px",
                 justifyContent: "center",
@@ -518,14 +529,30 @@ export default function BasicModal() {
             </Button>
           </Box>
         </Grid>
-        <Grid item xs={false} sm={4} md={5} sx={{ backgroundColor: "#FFFFFF" }}>
+
+        {/* ------right side image of step1-------------- */}
+        {/* ------Position Changed On Right Side Image ---------*/}
+
+        <Grid
+          item
+          xs={false}
+          sm={4}
+          md={5}
+          sx={{
+            position: "fixed",
+            right: "0px",
+            top: "0px",
+            backgroundColor: "#FFFFFF",
+          }}
+        >
           <Avatar
             src={RightSideImage}
             aria-label="UROOSTER"
             sx={{
+              marginRight: "12px",
               height: "100vh",
               width: "100%",
-              objectFit: "Fill",
+              objectFit: "fill",
               borderRadius: "0px !important",
             }}
           />
