@@ -1,19 +1,21 @@
 import * as React from "react";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
-import Link from "@mui/material/Link";
+import { Link, useLocation } from "react-router-dom";
 import { Tabs } from "@mui/material";
 import Grid from "@mui/material/Grid";
-import CssBaseline from "@mui/material/CssBaseline";
-import MaxPilotLogo from "../../assets/images/maxpilot-logo-w.png";
 import "../../style/General.css";
 import "../../style/PersonalDetails.css";
 import PropTypes from "prop-types";
 import Tab from "@mui/material/Tab";
 import PersonalDetailsForm from "../forms/PersonalDetailsForm";
 import ContactForm from "../forms/ContactForm";
+import ChatIcon from "../feature/ChatIcon";
+import SimpleSidebar from "../feature/SimpleSidebar";
 
 export default function PersonalDetails() {
+  const location = useLocation();
+  const userInfo = location.state;
   const [value, setValue] = React.useState(0);
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -21,97 +23,74 @@ export default function PersonalDetails() {
 
   return (
     <>
-      <Grid sx={{ display: "flex" }}>
-        <Grid
-          container
-          component="main"
-          sx={{ minHeight: "100vh", width: "240px" }}
-        >
-          <CssBaseline />
-          <Grid
-            className="max-width"
-            item
-            xs={false}
-            sm={4}
-            md={6}
-            sx={{
-              backgroundColor: "#38b492",
-              display: "flex",
-              flexDirection: "column",
-              justifyContent: "start",
-              alignItems: "center",
-              flexBasis: "100% !important",
-            }}
-          >
+      <Box sx={{ position: "relative", minHeight: "100vh" }}>
+        <Grid sx={{ display: "flex" }}>
+          <Grid item lg={4} md={6} sm={4} xs={2}>
+            <SimpleSidebar />
+          </Grid>
+          <Grid item lg={8} md={6} sm={8} xs={10}>
             <Box
-              component="img"
               sx={{
-                height: 120,
-                width: 250,
-                maxHeight: { xs: 120, md: 120 },
-                maxWidth: { xs: 250, md: 250 },
+                pl: 2,
+                pt: 2,
               }}
-              alt="Max Pilot"
-              src={MaxPilotLogo}
-            />
+            >
+              <Link to="/profile" className="aTag">
+                Back to Profile
+              </Link>
+            </Box>
+            <Box
+              sx={{
+                pl: 2,
+                pt: 2,
+                pb: 1,
+                pr: 10,
+                display: "flex",
+                justifyContent: "space-between",
+              }}
+            >
+              <Typography variant="h4" sx={{ fontWeight: "Bold" }}>
+                Personal
+              </Typography>
+            </Box>
+            <Box
+              sx={{
+                pl: 2,
+                pb: 2,
+              }}
+            >
+              <Typography variant="h6" sx={{ fontWeight: "Bold" }}>
+                {userInfo?.first_name} {userInfo?.last_name}
+              </Typography>
+            </Box>
+            <Box sx={{ width: "100%" }}>
+              <Box sx={{ borderBottom: 1, borderColor: "divider", ml: 2 }}>
+                <Tabs
+                  value={value}
+                  onChange={handleChange}
+                  textColor="#38b492 !important"
+                  TabIndicatorProps={{
+                    sx: {
+                      backgroundColor: "#38b492",
+                    },
+                  }}
+                  aria-label="basic tabs example"
+                >
+                  <Tab label="Personal Details" {...a11yProps(0)} />
+                  <Tab label="Contact" {...a11yProps(1)} />
+                </Tabs>
+              </Box>
+              <TabPanel value={value} index={0}>
+                <PersonalDetailsForm />
+              </TabPanel>
+              <TabPanel value={value} index={1}>
+                <ContactForm />
+              </TabPanel>
+            </Box>
           </Grid>
         </Grid>
-
-        <Grid>
-          <Box
-            sx={{
-              pl: 2,
-              pt: 2,
-            }}
-          >
-            <Link href="/profile" color="#38b492">
-              Back to Profile
-            </Link>
-          </Box>
-          <Box
-            sx={{
-              pl: 2,
-              pt: 2,
-              pb: 2,
-              pr: 10,
-              display: "flex",
-              justifyContent: "space-between",
-            }}
-          >
-            <Typography variant="h4" sx={{ fontWeight: "Bold" }}>
-              Personal
-            </Typography>
-          </Box>
-          <Box
-            sx={{
-              pl: 2,
-              pb: 2,
-            }}
-          >
-            <Typography variant="h6" sx={{ fontWeight: "Bold" }}>
-              Asher Muneer
-            </Typography>
-          </Box>
-          <Box sx={{ width: "100%" }}>
-            <Box sx={{ borderBottom: 1, borderColor: "divider", ml: 2 }}>
-              <Tabs
-                value={value}
-                onChange={handleChange}
-                aria-label="basic tabs example"
-              >
-                <Tab label="Personal Details" {...a11yProps(0)} />
-                <Tab label="Contact" {...a11yProps(1)} />
-              </Tabs>
-            </Box>
-            <TabPanel value={value} index={0}>
-              <PersonalDetailsForm />
-            </TabPanel>
-            <TabPanel value={value} index={1}>
-              <ContactForm />
-            </TabPanel>
-          </Box>
-        </Grid>
-      </Grid>
+      </Box>
+      <ChatIcon />
     </>
   );
 }

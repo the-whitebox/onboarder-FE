@@ -14,3 +14,47 @@
   flex-direction: row !important;
   justify-content: space-between;
 }
+
+.aTag{
+    margin: 0;
+    color: #38b492;
+    -webkit-text-decoration: underline;
+    text-decoration: underline;
+    text-decoration-color: rgba(56, 180, 146, 0.4);
+    color: #38b492;
+    cursor: pointer;
+}
+
+.aTag:hover {
+  text-decoration-color: #38b492;
+}
+
+.all-green-btns {
+  background-color: #38b492 !important;
+}
+
+.all-green-btns:hover {
+  background-color: #38b492 !important;
+}
+
+.all-white-btns {
+  background-color: #ffffff !important;
+}
+
+.all-white-btns:hover {
+  background-color: #ffffff !important;
+}
+
+@media screen and (max-width:768px) {
+  .avatar-size {
+      width: 60px !important;
+      height: 60px !important;
+      font-size: 30px !important;
+    }
+  
+    .messageCircle {
+      width: 60px !important;
+      height: 60px !important;
+      font-size: 30px !important;
+    }
+}

@@ -1,6 +1,5 @@
 import * as React from "react";
 import Box from "@mui/material/Box";
-import Modal from "@mui/material/Modal";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import Checkbox from "@mui/material/Checkbox";
@@ -21,27 +20,20 @@ const style = {
   pb: 3,
 };
 
-export default function SyncPayroll() {
-  const [open, setOpen] = React.useState(false);
-  const handleOpen = () => {
-    setOpen(true);
-  };
-  const handleClose = () => {
-    setOpen(false);
-  };
-
+export default function SyncPayroll(props) {
   return (
     <React.Fragment>
       <Box sx={{ ...style, width: 490, height: 280 }}>
         <Box className="flex flex-row" sx={{ width: "500px" }}>
           <h2>Sync Team member with payroll</h2>
-          <CloseIcon onClick={handleClose} sx={{ pb: "45px" }}></CloseIcon>
+          <CloseIcon
+            onClick={props.handleClosePayroll}
+            sx={{ pb: "45px", cursor: "pointer" }}
+          ></CloseIcon>
         </Box>
 
         <div>
-          <Typography sx={{ color: "#b4b4b4", ml: 1 }}>
-            Team members
-          </Typography>
+          <Typography sx={{ color: "#b4b4b4", ml: 1 }}>Team members</Typography>
           <Box
             sx={{
               display: "flex",

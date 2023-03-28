@@ -56,7 +56,7 @@ export default function Addleaveentitlement() {
 
   const [error, setError] = React.useState(null);
   const [leaveError, setLeaveError] = useState("");
-  const token = process.env.REACT_APP_TEMP_TOKEN;
+  const token = localStorage.getItem("token");
   const url = process.env.REACT_APP_BASE_URL;
 
   function getStyles(name, personName, theme) {

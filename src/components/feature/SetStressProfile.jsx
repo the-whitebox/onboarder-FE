@@ -62,7 +62,7 @@ export default function SetStressProfile() {
   const [stressError, setStressError] = React.useState("");
   const [selectedValue, setSelectedValue] = useState("");
   const [error, setError] = React.useState(null);
-  const token = process.env.REACT_APP_TEMP_TOKEN;
+  const token = localStorage.getItem("token");
   const url = process.env.REACT_APP_BASE_URL;
 
   const stressValidation = () => {

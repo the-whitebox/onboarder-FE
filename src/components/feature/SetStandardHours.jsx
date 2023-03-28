@@ -32,7 +32,7 @@ export default function SetStandardHours() {
 
   const [error, setError] = React.useState(null);
   const [hoursError, setHoursError] = useState("");
-  const token = process.env.REACT_APP_TEMP_TOKEN;
+  const token = localStorage.getItem("token");
   const url = process.env.REACT_APP_BASE_URL;
 
   const hoursValidation = () => {
@@ -48,8 +48,6 @@ export default function SetStandardHours() {
 
   const navigate = useNavigate();
 
-
-
   const handleOpen = () => {
     setOpen(true);
   };
@@ -58,49 +56,47 @@ export default function SetStandardHours() {
   };
 
   const toEmployment = (e) => {
-  //   if (hours !== "") {
-  //     console.log("Data Found");
-  //     setError(false);
-  //     console.log(hours);
+    //   if (hours !== "") {
+    //     console.log("Data Found");
+    //     setError(false);
+    //     console.log(hours);
 
-  //     navigate("/employment", {
-  //       state: {
-  //         hours: hours,
-  //       },
-  //     });
-  //   } else {
-  //     setError(true);
-  //     setState({ data: e.target.value });
-  //   }
-  // };
-  console.log(
-    { hours }
-  );
+    //     navigate("/employment", {
+    //       state: {
+    //         hours: hours,
+    //       },
+    //     });
+    //   } else {
+    //     setError(true);
+    //     setState({ data: e.target.value });
+    //   }
+    // };
+    console.log({ hours });
 
-  axios
-    .patch(
-      url + "/people/6/",
-      {
-        role: 2,
-        hours_per_work_period: hours,
-        is_superuser: false,
-        profile: {},
-        working_hours: {},
-      },
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "application/json",
+    axios
+      .patch(
+        url + "/people/6/",
+        {
+          role: 2,
+          hours_per_work_period: hours,
+          is_superuser: false,
+          profile: {},
+          working_hours: {},
         },
-      }
-    )
-    .then((response) => {
-      console.log(response);
-    })
-    .catch((error) => {
-      console.error(error);
-    });
-};
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        }
+      )
+      .then((response) => {
+        console.log(response);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  };
 
   return (
     <React.Fragment>
@@ -142,19 +138,19 @@ export default function SetStandardHours() {
             onChange={(e) => setHours(e.target.value)}
           ></TextField>
           <Box sx={{ ml: 1, mt: 1 }}>
-        {errors.hours?.type === "required" && "Work Period Required"}
-        <small>
-          {hoursError && (
-            <div
-              style={{
-                color: "red",
-              }}
-            >
-              {hoursError}
-            </div>
-          )}
-        </small>
-        </Box>
+            {errors.hours?.type === "required" && "Work Period Required"}
+            <small>
+              {hoursError && (
+                <div
+                  style={{
+                    color: "red",
+                  }}
+                >
+                  {hoursError}
+                </div>
+              )}
+            </small>
+          </Box>
 
           <Typography sx={{ fontSize: "12px", ml: "10px", mt: "10px" }}>
             Not applicable to 2 Team members selected as they do not a pay rate
@@ -171,7 +167,6 @@ export default function SetStandardHours() {
             textTransform: "none",
           }}
           onClick={() => {
-           
             hoursValidation();
             toEmployment();
           }}
