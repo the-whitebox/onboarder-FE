@@ -44,6 +44,7 @@ function PersonalDetailsForm() {
       validationSchema: formSchema,
       onSubmit: async (values, action) => {
         setLoading(true);
+        console.log("values", values);
         await axios
           .patch(
             url,
@@ -100,6 +101,7 @@ function PersonalDetailsForm() {
           <Grid item lg={4} md={4} sm={4} xs={4} sx={{ paddingRight: "10px" }}>
             <Button
               variant="contained"
+              className="all-green-btns"
               sx={{
                 bgcolor: "#38b492",
                 color: "#ffffff",
@@ -390,7 +392,6 @@ function PersonalDetailsForm() {
             </Box>
           </Box>
         </Grid>
-        <br />
       </Grid>
     </>
   );

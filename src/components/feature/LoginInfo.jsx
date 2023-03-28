@@ -22,16 +22,18 @@ export default function LoginInfo() {
       </Box>
       <Box
         sx={{
-          ml: 2,
-          mr: 40,
+          ml: { xl: 2, lg: 2, md: 0, sm: 0, xs: 0 },
+          mr: { xl: 40, lg: 30, md: 0, sm: 0, xs: 0 },
           pt: 0.5,
           border: "1px solid",
           borderColor: "#ced7e0",
+          borderRadius: "10px",
+          bgcolor: "#ffffff",
         }}
       >
         <Box sx={{ flexGrow: 1 }}>
           <Grid container spacing={2}>
-            <Grid container xs={12} md={7} lg={12} spacing={2}>
+            <Grid container xs={12} md={7} lg={12}>
               <Grid xs={6} lg={3}>
                 <Item>
                   <Box
@@ -100,11 +102,13 @@ export default function LoginInfo() {
       </Box>
       <Box
         sx={{
-          ml: 2,
-          mr: 40,
+          ml: { xl: 2, lg: 2, md: 0, sm: 0, xs: 0 },
+          mr: { xl: 40, lg: 30, md: 0, sm: 0, xs: 0 },
           pt: 0.5,
           border: "1px solid",
           borderColor: "#ced7e0",
+          borderRadius: "10px",
+          bgcolor: "#ffffff",
         }}
       >
         <Box sx={{ flexGrow: 1 }}>

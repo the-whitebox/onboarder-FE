@@ -25,12 +25,27 @@
     cursor: pointer;
 }
 
-
 .aTag:hover {
   text-decoration-color: #38b492;
 }
 
-@media screen and (max-width:600px) {
+.all-green-btns {
+  background-color: #38b492 !important;
+}
+
+.all-green-btns:hover {
+  background-color: #38b492 !important;
+}
+
+.all-white-btns {
+  background-color: #ffffff !important;
+}
+
+.all-white-btns:hover {
+  background-color: #ffffff !important;
+}
+
+@media screen and (max-width:768px) {
   .avatar-size {
       width: 60px !important;
       height: 60px !important;

@@ -60,7 +60,7 @@ export default function PersonalDetails() {
               }}
             >
               <Typography variant="h6" sx={{ fontWeight: "Bold" }}>
-                {userInfo?.username}
+                {userInfo?.first_name} {userInfo?.last_name}
               </Typography>
             </Box>
             <Box sx={{ width: "100%" }}>
@@ -68,6 +68,12 @@ export default function PersonalDetails() {
                 <Tabs
                   value={value}
                   onChange={handleChange}
+                  textColor="#38b492 !important"
+                  TabIndicatorProps={{
+                    sx: {
+                      backgroundColor: "#38b492",
+                    },
+                  }}
                   aria-label="basic tabs example"
                 >
                   <Tab label="Personal Details" {...a11yProps(0)} />

@@ -6,9 +6,9 @@ function ChatIcon() {
   return (
     <Box
       sx={{
-        position: "absolute",
-        bottom: { lg: "50px", md: "40px", sm: "20px", xs: "20px" },
-        right: { lg: "50px", md: "40px", sm: "20px", xs: "0px" },
+        position: "fixed",
+        bottom: { lg: "30px", md: "30px", sm: "20px", xs: "20px" },
+        right: { lg: "30px", md: "30px", sm: "20px", xs: "0px" },
       }}
     >
       <Avatar
