@@ -46,7 +46,7 @@ const theme = createTheme();
 
 export default function SignInSide() {
   const navigate = useNavigate();
-  const url = process.env.REACT_APP_BASE_URL + "/auth/login/";
+  const url = process.env.REACT_APP_BASE_URL;
   const [loading, setLoading] = useState(false);
 
   const { values, errors, touched, handleBlur, handleChange, handleSubmit } =
@@ -56,7 +56,10 @@ export default function SignInSide() {
       onSubmit: async (values, action) => {
         setLoading(true);
         await axios
-          .post(url, { username: values.email, password: values.password })
+          .post(`${url}/auth/login/`, {
+            username: values.email,
+            password: values.password,
+          })
           .then((response) => {
             if (response.status === 200) {
               // console.log("Login Response", response);
@@ -142,6 +145,7 @@ export default function SignInSide() {
           sm={4}
           md={6}
           lg={6}
+          xl={6}
           sx={{
             backgroundColor: "#38b492",
             borderTopRightRadius: "76px",
@@ -149,18 +153,18 @@ export default function SignInSide() {
             flexDirection: "column",
             justifyContent: "center",
             alignItems: "center",
-
           }}
         >
           {/* login image man with graph */}
-          <Grid 
-          item sm={12} xs={12}
-          sx={{
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            
-          }}
+          <Grid
+            item
+            sm={12}
+            xs={12}
+            sx={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
           >
             {/* Login Avatar Made Responsive */}
             <Avatar
@@ -169,9 +173,8 @@ export default function SignInSide() {
               sx={{
                 width: "100%",
                 height: "auto",
-                padding: '0px',
-                margin: '0px',
-            
+                padding: "0px",
+                margin: "0px",
               }}
             />
           </Grid>
@@ -186,7 +189,17 @@ export default function SignInSide() {
             </Typography>
           </Grid>
         </Grid>
-        <Grid item xs={12} sm={8} md={6} component={Paper} elevation={0} square>
+        <Grid
+          item
+          xs={12}
+          sm={8}
+          md={6}
+          lg={6}
+          xl={6}
+          component={Paper}
+          elevation={0}
+          square
+        >
           <Box
             sx={{
               mt: "210px",

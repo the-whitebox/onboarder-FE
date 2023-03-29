@@ -103,7 +103,13 @@ export default function Setpayrates(props) {
   return (
     <React.Fragment>
       <Box sx={{ ...style, width: 400, height: "auto" }}>
-        <Box className="flex flex-row" sx={{ width: "420px" }}>
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+          }}
+        >
           <h2>Set Pay rates</h2>
           <CloseIcon
             onClick={props.handleClosePayrate}
@@ -321,7 +327,8 @@ export default function Setpayrates(props) {
           </Box>
         </Box>
         <Button
-          className="Btn"
+          className="all-green-btns"
+          variant="contained"
           size="small"
           sx={{
             ml: 36,

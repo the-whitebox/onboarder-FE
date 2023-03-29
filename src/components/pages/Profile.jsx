@@ -18,15 +18,16 @@ import ProfileDetails from "../feature/ProfileDetails";
 import Contact from "../feature/Contact";
 import LoginInfo from "../feature/LoginInfo";
 import { Link } from "react-router-dom";
+import GlobalContext from "../../context/GlobalContext";
 
 const drawerWidth = 240;
 
 export default function Profile() {
+  const { setUserInfo } = React.useContext(GlobalContext);
   const theme = useTheme();
   const userId = localStorage.getItem("userId");
   const token = localStorage.getItem("token");
   const url = process.env.REACT_APP_BASE_URL + `/people/${userId}/`;
-  const [userInfo, setUserInfo] = React.useState();
 
   React.useEffect(() => {
     const getLoggedInUserDetails = async () => {
@@ -75,7 +76,7 @@ export default function Profile() {
               ml: `${drawerWidth}px`,
             }}
           ></AppBar>
-          <VerticalMenu indexToHL={indexToHL} userInfo={userInfo} />
+          <VerticalMenu indexToHL={indexToHL} />
           <Box component="main" sx={{ flexGrow: 1, bgcolor: "#fcfcfc", p: 3 }}>
             <Toolbar />
             <Box sx={{ display: "flex", justifyContent: "space-between" }}>
@@ -108,10 +109,10 @@ export default function Profile() {
               <Typography variant="h5">Personal Details</Typography>
             </Box>
             <Box>
-              <ProfileDetails userInfo={userInfo} />
+              <ProfileDetails />
             </Box>
             <Box sx={{ pt: 3 }}>
-              <Contact userInfo={userInfo} />
+              <Contact />
             </Box>
             <Box sx={{ pt: 3 }}>
               <LoginInfo />

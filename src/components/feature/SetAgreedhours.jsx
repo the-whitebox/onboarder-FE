@@ -105,8 +105,14 @@ export default function SetAgreedhours(props) {
           height: "auto",
         }}
       >
-        <Box className="flex flex-row" sx={{ width: "100%" }}>
-          <h2 className="set">Set agreed hours</h2>
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+          }}
+        >
+          <h2>Set agreed hours</h2>
           <CloseIcon
             onClick={props.handleCloseWorkPeriod}
             sx={{ cursor: "pointer" }}
@@ -283,24 +289,27 @@ export default function SetAgreedhours(props) {
             )}
           </small>
         </Box>
-        <Button
-          className="Btn"
-          sx={{
-            ml: 45,
-            borderRadius: "5px",
-            width: "16%",
-            textTransform: "none",
-            mt: 3,
-          }}
-          onClick={() => {
-            workPeriodValidation();
-            netWorkPeriodValidation();
-            hoursValidation();
-            toPeople();
-          }}
-        >
-          Save
-        </Button>
+        <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
+          <Button
+            className="all-green-btns"
+            variant="contained"
+            sx={{
+              borderRadius: "5px",
+              width: "20%",
+              height: 35,
+              textTransform: "none",
+              mt: 3,
+            }}
+            onClick={() => {
+              workPeriodValidation();
+              netWorkPeriodValidation();
+              hoursValidation();
+              toPeople();
+            }}
+          >
+            Save
+          </Button>
+        </Box>
       </Box>
     </React.Fragment>
   );

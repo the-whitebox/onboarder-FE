@@ -28,7 +28,7 @@ import AddTeammemberModalBody from "../feature/AddTeammember";
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import axios from "axios";
 import Avatar from "@mui/material/Avatar";
-import MoreVertIcon from '@mui/icons-material/MoreVert';
+import MoreVertIcon from "@mui/icons-material/MoreVert";
 import { MoreVert } from "../feature/MoreVert";
 import IconButton from "@mui/material/IconButton";
 import NotificationsOutlinedIcon from "@mui/icons-material/NotificationsOutlined";
@@ -47,7 +47,6 @@ import { useForm } from "react-hook-form";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import OutlinedInput from "@mui/material/OutlinedInput";
 import InputAdornment from "@mui/material/InputAdornment";
-
 
 const theme = createTheme();
 
@@ -150,24 +149,22 @@ const columns = [
       // };
 
       return (
-
-            /*  Circled Icon on Table's last cloumn */
-                    <Avatar
-            sx={{
-              backgroundColor: "#38B492",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-            }}
-          >
-            <Button
-             
-            >
-              <MoreVertIcon sx={{ height: '20px', width: '20px', color: 'white' }} />
-              {/* <MoreVert/> */}
-            </Button>
-          </Avatar>
-     
+        /*  Circled Icon on Table's last cloumn */
+        <Avatar
+          sx={{
+            backgroundColor: "#38B492",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          <Button>
+            <MoreVertIcon
+              sx={{ height: "20px", width: "20px", color: "white" }}
+            />
+            {/* <MoreVert/> */}
+          </Button>
+        </Avatar>
       );
     },
   },
@@ -282,10 +279,9 @@ export default function People() {
   const handleCloseWorkPeriod = () => setOpenWorkPeriod(false);
 
   let b_id = "";
-  let team_array = [];
   const getBusiness = async () => {
     try {
-      const response = await axios
+      await axios
         .get(url + "/business/", {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -299,10 +295,7 @@ export default function People() {
 
           setBusinessId(firstId);
           b_id = firstId;
-          // console.log("First Id: ", firstId);
         });
-
-      // console.log({ businessId });
 
       const teamResponse = await axios.get(
         url + `/people/?business_id=${b_id}`,
@@ -313,13 +306,8 @@ export default function People() {
           },
         }
       );
-
       const teamMembers = teamResponse.data;
-      // console.log({ teamMembers });
-      team_array = teamMembers;
       setListOfTeamMembers(teamMembers);
-
-      // console.log({ listOfTeamMembers });
     } catch (error) {
       console.log("Error", error);
     }
@@ -328,12 +316,6 @@ export default function People() {
   useEffect(() => {
     getBusiness();
   }, []);
-
-  // getBusiness();
-
-  console.log("The rows", listOfTeamMembers);
-  const rows = team_array;
-  // console.log("The array of Objects: ", rows);
 
   const [openAccess, setOpenAccess] = React.useState(false);
   const [selectedValue, setSelectedValue] = useState("");
@@ -381,7 +363,6 @@ export default function People() {
   };
   return (
     <ThemeProvider theme={theme}>
-    
       <Modal
         open={openAccess}
         onClose={handleCloseAccess}
@@ -462,10 +443,13 @@ export default function People() {
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
-        <AddTeammemberModalBody businessId={businessId} />
+        <AddTeammemberModalBody
+          businessId={businessId}
+          handleClose={handleClose}
+          getBusiness={getBusiness}
+        />
       </Modal>
-      
-      
+
       <Modal
         open={openATM}
         onClose={handleCloseATM}
@@ -480,7 +464,7 @@ export default function People() {
 
           <div>
             <Typography sx={{ color: "#b4b4b4", ml: 1 }}>
-              {team_array.length} Team members
+              {listOfTeamMembers.length} Team members
             </Typography>
             <Box
               sx={{
@@ -953,10 +937,8 @@ export default function People() {
             </FormControl>
           </Box>
 
-          
-          <Box display="flex"  alignItems="center" className="pl-2">
-
-{/* drop down menu of Right side of Screen with bulk */}
+          <Box display="flex" alignItems="center" className="pl-2">
+            {/* drop down menu of Right side of Screen with bulk */}
 
             <FormControl variant="standard" sx={{ m: 1, minWidth: 120 }}>
               <InputLabel id="demo-simple-select-standard-label">
@@ -1003,7 +985,6 @@ export default function People() {
               </Select>
             </FormControl>
           </Box>
-
 
           <Box sx={{ pt: 3, pb: 2 }}>
             <Typography variant="h6" fontWeight="Bold">

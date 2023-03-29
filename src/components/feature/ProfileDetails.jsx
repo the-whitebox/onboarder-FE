@@ -5,15 +5,17 @@ import Grid from "@mui/system/Unstable_Grid";
 import "../../style/General.css";
 import { useNavigate } from "react-router-dom";
 import styled from "@mui/system/styled";
+import GlobalContext from "../../context/GlobalContext";
 
 const Item = styled("div")(({ theme }) => ({
   border: "none",
 }));
 
-function ProfileDetails({ userInfo }) {
+function ProfileDetails() {
+  const { userInfo } = React.useContext(GlobalContext);
   const Navigate = useNavigate();
-  const routeToNextPage = (userInfo) => {
-    Navigate("/personal_details", { state: userInfo });
+  const routeToNextPage = () => {
+    Navigate("/personal_details");
   };
   return (
     <>
@@ -46,7 +48,7 @@ function ProfileDetails({ userInfo }) {
                         <Typography
                           component="p"
                           className="aTag"
-                          onClick={() => routeToNextPage(userInfo)}
+                          onClick={routeToNextPage}
                         >
                           Add a name
                         </Typography>

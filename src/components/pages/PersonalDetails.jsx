@@ -12,10 +12,10 @@ import PersonalDetailsForm from "../forms/PersonalDetailsForm";
 import ContactForm from "../forms/ContactForm";
 import ChatIcon from "../feature/ChatIcon";
 import SimpleSidebar from "../feature/SimpleSidebar";
+import GlobalContext from "../../context/GlobalContext";
 
 export default function PersonalDetails() {
-  const location = useLocation();
-  const userInfo = location.state;
+  const { userInfo } = React.useContext(GlobalContext);
   const [value, setValue] = React.useState(0);
   const handleChange = (event, newValue) => {
     setValue(newValue);

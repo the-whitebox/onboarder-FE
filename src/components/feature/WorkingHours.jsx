@@ -9,6 +9,7 @@ import Modal from "@mui/material/Modal";
 import SetAgreedHoursModalBody from "../feature/SetAgreedhours";
 import SetStandardHoursModalBody from "../feature/SetStandardHours";
 import SetStressProfileModalBody from "../feature/SetStressProfile";
+import GlobalContext from "../../context/GlobalContext";
 
 const Item = styled("div")(({ theme }) => ({
   border: "none",
@@ -17,6 +18,8 @@ const Item = styled("div")(({ theme }) => ({
 const theme = createTheme();
 
 export default function WorkingHours(props) {
+  const { userInfo } = React.useContext(GlobalContext);
+
   const stressArray = [
     "2 days per week",
     "24/7",
@@ -125,7 +128,7 @@ export default function WorkingHours(props) {
                   <li>Stress Profile</li>
                   <li>
                     <Link onClick={handleOpenStress} className="aTag">
-                      {props.userInfo?.working_hours?.stress_level
+                      {userInfo?.working_hours?.stress_level
                         ? stressArray[parseInt(props.stressLevel) - 1]
                         : "Add stress level"}
                     </Link>

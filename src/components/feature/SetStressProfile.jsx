@@ -51,13 +51,12 @@ const style = {
   boxShadow: 24,
   pt: 2,
   px: 4,
-  pb: 3,
+  pb: 4,
 };
 
-export default function SetStressProfile() {
+export default function SetStressProfile(props) {
   const [state, setState] = React.useState({ data: "" });
   const [stress, setStress] = React.useState("");
-  const [open, setOpen] = React.useState(false);
 
   const [stressError, setStressError] = React.useState("");
   const [selectedValue, setSelectedValue] = useState("");
@@ -77,13 +76,6 @@ export default function SetStressProfile() {
   } = useForm();
 
   const navigate = useNavigate();
-
-  const handleOpen = () => {
-    setOpen(true);
-  };
-  const handleClose = () => {
-    setOpen(false);
-  };
 
   function getStyles(name, personName, theme) {
     return {
@@ -139,15 +131,22 @@ export default function SetStressProfile() {
 
   return (
     <React.Fragment>
-      <Box sx={{ ...style, width: 400 }}>
-        <Box className="flex flex-row" sx={{ width: "420px" }}>
-          <h2 className="set">Set Stress Profile</h2>
-          <CloseIcon onClick={handleClose} sx={{ pb: "30px" }}></CloseIcon>
+      <Box sx={{ ...style, width: 400, height: "auto" }}>
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+          }}
+        >
+          <h2>Set Stress Profile</h2>
+          <CloseIcon
+            onClick={props.handleCloseStress}
+            sx={{ cursor: "pointer" }}
+          ></CloseIcon>
         </Box>
-        <div>
-          <Typography sx={{ color: "#a9a9a9", pt: "15px" }}>
-            Team members
-          </Typography>
+        <Box>
+          <Typography sx={{ color: "#a9a9a9" }}>Team members</Typography>
           <Box
             sx={{
               display: "flex",
@@ -158,8 +157,8 @@ export default function SetStressProfile() {
               sx={{
                 fontSize: "large",
                 color: "Gray",
-                mt: "13px",
-                ml: "12px",
+                mt: "10px",
+                ml: "5px",
               }}
             />
             <Typography
@@ -176,13 +175,12 @@ export default function SetStressProfile() {
           </Box>
           <p className="own">Create your own.</p>
 
-          <FormControl sx={{ m: 1, width: 220, mt: 3 }}>
-            <Typography sx={{ pb: "10px", fontWeight: "bold", ml: "5px" }}>
-              Stress Profile{" "}
+          <FormControl sx={{ width: 220, mt: 3 }}>
+            <Typography sx={{ pb: "10px", fontWeight: "bold" }}>
+              Stress Profile
             </Typography>
             <Select
               //  {...register("Stress Profile", { required: true })}
-
               sx={{ borderRadius: "10px" }}
               displayEmpty
               value={selectedValue}
@@ -215,22 +213,25 @@ export default function SetStressProfile() {
               )}
             </small>
           </Box>
-        </div>
-        <Button
-          className="Btn"
-          sx={{
-            borderRadius: "7px",
-            ml: 42,
-            width: 80,
-            textTransform: "none",
-          }}
-          onClick={() => {
-            // stressValidation();
-            toEmployment();
-          }}
-        >
-          Save
-        </Button>
+        </Box>
+        <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
+          <Button
+            className="all-green-btns"
+            variant="contained"
+            sx={{
+              borderRadius: "7px",
+              width: "25%",
+              height: 35,
+              textTransform: "none",
+            }}
+            onClick={() => {
+              // stressValidation();
+              toEmployment();
+            }}
+          >
+            Save
+          </Button>
+        </Box>
       </Box>
     </React.Fragment>
   );
