@@ -2,6 +2,7 @@ import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "./App.css";
+import "./style/General.css";
 import Login from "./components/pages/Login";
 import Signup from "./components/pages/Signup";
 import ForgotPassword from "./components/pages/ForgotPassword";

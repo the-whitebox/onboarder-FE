@@ -103,7 +103,13 @@ export default function Setpayrates(props) {
   return (
     <React.Fragment>
       <Box sx={{ ...style, width: 400, height: "auto" }}>
-        <Box className="flex flex-row" sx={{ width: "420px" }}>
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+          }}
+        >
           <h2>Set Pay rates</h2>
           <CloseIcon
             onClick={props.handleClosePayrate}
@@ -142,7 +148,7 @@ export default function Setpayrates(props) {
             </Typography>
           </Box>
 
-          <FormControl size="small" sx={{ width: 390, mt: 3 }}>
+          <FormControl size="small" sx={{ width: 300, mt: 3 }}>
             <Typography sx={{ fontWeight: "bold" }}> Pay rates </Typography>
             <Select
               sx={{ font: "inherit" }}
@@ -170,7 +176,7 @@ export default function Setpayrates(props) {
               <small style={{ color: "red" }}>{errors.payRates}</small>
             ) : null}
           </Box>
-          <Box>
+          <Box sx={{ marginLeft: "15px" }}>
             <Typography
               sx={{
                 fontWeight: "bold",
@@ -321,10 +327,11 @@ export default function Setpayrates(props) {
           </Box>
         </Box>
         <Button
-          className="Btn"
+          className="all-green-btns"
+          variant="contained"
           size="small"
           sx={{
-            ml: 34,
+            ml: 36,
             borderRadius: "6px",
             width: "30%",
             height: "40px",

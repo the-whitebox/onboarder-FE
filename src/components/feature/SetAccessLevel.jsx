@@ -14,6 +14,7 @@ import axios from "axios";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { toast } from "react-toastify";
+import GlobalContext from "../../context/GlobalContext";
 const formSchema = Yup.object({
   role: Yup.string().required("Please select your role"),
 });
@@ -25,11 +26,9 @@ const style = {
   transform: "translate(-50%, -50%)",
   bgcolor: "background.paper",
   boxShadow: 24,
-  pt: 2,
   px: 4,
-  pb: 3,
+  py: 4,
   borderRadius: "12px",
-  padding: "20px",
 };
 
 const role = [
@@ -41,13 +40,15 @@ const role = [
 ];
 
 export default function SetAccessLevel(props) {
+  const { userInfo } = React.useContext(GlobalContext);
+
   const userId = localStorage.getItem("userId");
   const token = localStorage.getItem("token");
   const url = process.env.REACT_APP_BASE_URL + `/people/${userId}/`;
   const [loading, setLoading] = useState(false);
 
   const initialValues = {
-    role: props.userInfo?.role.id,
+    role: userInfo?.role.id,
   };
 
   const { values, errors, touched, handleBlur, handleChange, handleSubmit } =
@@ -81,30 +82,38 @@ export default function SetAccessLevel(props) {
 
   return (
     <React.Fragment>
-      <Box sx={{ ...style, width: 370, height: 270 }}>
-        <CloseButton
-          id="child-modal-title"
-          sx={{ float: "right", cursor: "pointer" }}
-          onClick={props.handleCloseAccess}
-        ></CloseButton>
-        <Typography
-          variant="h5"
-          sx={{ mt: 2, fontWeight: "bold", paddingBottom: 1 }}
-          id="child-modal-title"
+      <Box sx={{ ...style, width: 350, height: "auto" }}>
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+          }}
         >
-          Set Access level
-        </Typography>
+          <Typography
+            variant="h5"
+            sx={{ fontWeight: "bold" }}
+            id="child-modal-title"
+          >
+            Set Access level
+          </Typography>
+          <CloseButton
+            id="child-modal-title"
+            sx={{ cursor: "pointer" }}
+            onClick={props.handleCloseAccess}
+          ></CloseButton>
+        </Box>
 
-        <div>
+        <Box>
           <p className="team">2 Team members </p>
           <Typography sx={{ fontWeight: "bold", ml: "8px" }}>
             Access level
           </Typography>
           <FormControl
             sx={{
-              width: 200,
+              width: 250,
               height: 5,
-              padding: "5px  ",
+              padding: "5px",
             }}
           >
             <Select
@@ -128,12 +137,12 @@ export default function SetAccessLevel(props) {
               ) : null}
             </Box>
           </FormControl>
-        </div>
+        </Box>
         <Button
-          variant="primary"
+          variant="contained"
           className="all-green-btns"
           sx={{
-            ml: 30,
+            ml: 31,
             borderRadius: "6px",
             width: "30%",
             height: "40px",

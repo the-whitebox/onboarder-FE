@@ -9,6 +9,7 @@ import Modal from "@mui/material/Modal";
 import SetAgreedHoursModalBody from "../feature/SetAgreedhours";
 import SetStandardHoursModalBody from "../feature/SetStandardHours";
 import SetStressProfileModalBody from "../feature/SetStressProfile";
+import GlobalContext from "../../context/GlobalContext";
 
 const Item = styled("div")(({ theme }) => ({
   border: "none",
@@ -17,6 +18,8 @@ const Item = styled("div")(({ theme }) => ({
 const theme = createTheme();
 
 export default function WorkingHours(props) {
+  const { userInfo } = React.useContext(GlobalContext);
+
   const stressArray = [
     "2 days per week",
     "24/7",
@@ -53,7 +56,9 @@ export default function WorkingHours(props) {
           aria-labelledby="modal-modal-title"
           aria-describedby="modal-modal-description"
         >
-          <SetAgreedHoursModalBody />
+          <SetAgreedHoursModalBody
+            handleCloseWorkPeriod={handleCloseWorkPeriod}
+          />
         </Modal>
         <Modal
           open={openHours}
@@ -61,7 +66,7 @@ export default function WorkingHours(props) {
           aria-labelledby="modal-modal-title"
           aria-describedby="modal-modal-description"
         >
-          <SetStandardHoursModalBody />
+          <SetStandardHoursModalBody handleCloseHours={handleCloseHours} />
         </Modal>
         <Modal
           open={openStress}
@@ -69,7 +74,7 @@ export default function WorkingHours(props) {
           aria-labelledby="modal-modal-title"
           aria-describedby="modal-modal-description"
         >
-          <SetStressProfileModalBody />
+          <SetStressProfileModalBody handleCloseStress={handleCloseStress} />
         </Modal>
         <Box sx={{ pt: 3, pb: 2 }}>
           <Typography variant="h6">Working Hours</Typography>
@@ -123,9 +128,9 @@ export default function WorkingHours(props) {
                   <li>Stress Profile</li>
                   <li>
                     <Link onClick={handleOpenStress} className="aTag">
-                      {props.userInfo?.working_hours?.stress_level === ""
-                        ? "Add stress level"
-                        : stressArray[parseInt(props.stressLevel) - 1]}
+                      {userInfo?.working_hours?.stress_level
+                        ? stressArray[parseInt(props.stressLevel) - 1]
+                        : "Add stress level"}
                     </Link>
                   </li>
                 </Box>

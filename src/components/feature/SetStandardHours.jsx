@@ -1,7 +1,6 @@
 import * as React from "react";
 import "../../style/SetStandardHours.css";
 import Box from "@mui/material/Box";
-import Modal from "@mui/material/Modal";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import InfoIcon from "@mui/icons-material/Info";
@@ -20,15 +19,14 @@ const style = {
   bgcolor: "background.paper",
   borderRadius: "12px",
   boxShadow: 24,
-  pt: 2,
   px: 4,
-  pb: 3,
+  pt: 2,
+  pb: 4,
 };
 
-export default function SetStandardHours() {
+export default function SetStandardHours(props) {
   const [state, setState] = React.useState({ data: "" });
   const [hours, setHours] = React.useState("");
-  const [open, setOpen] = React.useState(false);
 
   const [error, setError] = React.useState(null);
   const [hoursError, setHoursError] = useState("");
@@ -47,13 +45,6 @@ export default function SetStandardHours() {
   } = useForm();
 
   const navigate = useNavigate();
-
-  const handleOpen = () => {
-    setOpen(true);
-  };
-  const handleClose = () => {
-    setOpen(false);
-  };
 
   const toEmployment = (e) => {
     //   if (hours !== "") {
@@ -100,12 +91,21 @@ export default function SetStandardHours() {
 
   return (
     <React.Fragment>
-      <Box sx={{ ...style, width: 350, height: 350, mt: 0 }}>
-        <Box className="flex flex-row" sx={{ width: "375px" }}>
+      <Box sx={{ ...style, width: 350, height: "auto" }}>
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+          }}
+        >
           <h2>Set Standard Hours</h2>
-          <CloseIcon onClick={handleClose} sx={{ pb: "48px" }}></CloseIcon>
+          <CloseIcon
+            onClick={props.handleCloseHours}
+            sx={{ cursor: "pointer" }}
+          ></CloseIcon>
         </Box>
-        <div>
+        <Box>
           <Typography sx={{ mt: "2px", color: "darkgray", ml: "2px" }}>
             2 Team members
           </Typography>
@@ -156,23 +156,26 @@ export default function SetStandardHours() {
             Not applicable to 2 Team members selected as they do not a pay rate
             assigned to their profile
           </Typography>
-        </div>
-        <Button
-          className="Btn"
-          sx={{
-            mt: "32px",
-            ml: 35,
-            borderRadius: "6px",
-            width: "22%",
-            textTransform: "none",
-          }}
-          onClick={() => {
-            hoursValidation();
-            toEmployment();
-          }}
-        >
-          Save
-        </Button>
+        </Box>
+        <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
+          <Button
+            className="all-green-btns"
+            variant="contained"
+            sx={{
+              mt: "32px",
+              borderRadius: "6px",
+              width: "25%",
+              height: 35,
+              textTransform: "none",
+            }}
+            onClick={() => {
+              hoursValidation();
+              toEmployment();
+            }}
+          >
+            Save
+          </Button>
+        </Box>
       </Box>
     </React.Fragment>
   );

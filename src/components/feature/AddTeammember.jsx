@@ -1,6 +1,5 @@
 import * as React from "react";
 import Box from "@mui/material/Box";
-import Modal from "@mui/material/Modal";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import TextField from "@mui/material/TextField";
@@ -68,7 +67,6 @@ export default function Addteammember(props) {
   const token = localStorage.getItem("token");
   const url = process.env.REACT_APP_BASE_URL;
 
-  console.log(props);
   axios
     .get(url + "/invitation_link/", {
       headers: {
@@ -77,7 +75,7 @@ export default function Addteammember(props) {
       },
     })
     .then((response) => {
-      // console.log(response.data.invitation_link);
+      // console.log("-----", response.data.invitation_link);
       setInviteLink(response.data.invitation_link);
     })
     .catch((error) => {
@@ -94,13 +92,6 @@ export default function Addteammember(props) {
     setEmployeeType(event.target.value);
   };
 
-  const [open, setOpen] = React.useState(false);
-  const handleOpen = () => {
-    setOpen(true);
-  };
-  const handleClose = () => {
-    setOpen(false);
-  };
   const handleChange = (event) => {
     const name = event.target.name;
     const value = event.target.value;
@@ -138,6 +129,8 @@ export default function Addteammember(props) {
       )
       .then((response) => {
         console.log(response);
+        props.getBusiness();
+        props.handleClose();
       })
       .catch((error) => {
         console.error(error);
@@ -149,13 +142,23 @@ export default function Addteammember(props) {
       <Box
         sx={{
           ...style,
-          mt: 20,
+          mt: 15,
           width: 660,
-          height: 930,
+          height: "auto",
         }}
       >
-        <Box className="flex flex-row" sx={{ width: "620px" }}>
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+          }}
+        >
           <h2 className="set">Add Team member</h2>
+          <CloseIcon
+            onClick={props.handleClose}
+            sx={{ cursor: "pointer" }}
+          ></CloseIcon>
         </Box>
         <Grid sx={{ display: "flex", flexDirection: "row", pt: "20px" }}>
           <Avatar
@@ -175,11 +178,9 @@ export default function Addteammember(props) {
                 pt: "20px",
               }}
             >
-              {" "}
-              Invite with a unique link{" "}
+              Invite with a unique link
             </Typography>
             <Typography sx={{ mt: "20px" }}>
-              {" "}
               Don't know your team's email addresses? Share the unique link
               below to get your team onto your uRoaster workplace faster. To
               keep things secured, you will need to approve each request.{" "}
@@ -187,7 +188,7 @@ export default function Addteammember(props) {
           </Box>
         </Grid>
 
-        <div>
+        <Box>
           <Box sx={{ display: "flex", flexDirection: "row" }}>
             <TextField
               size="small"
@@ -202,7 +203,8 @@ export default function Addteammember(props) {
               {inviteLink}
             </TextField>
             <Button
-              className="btn btn-primary"
+              className="all-green-btns"
+              variant="contained"
               size="small"
               sx={{
                 borderRadius: "5px",
@@ -216,74 +218,48 @@ export default function Addteammember(props) {
               Copy link
             </Button>
           </Box>
-          <Typography sx={{ color: "green", ml: 18, pt: "5px" }}>
+          <Typography style={{ color: "#38b492" }} sx={{ ml: 18, pt: "5px" }}>
             How invite links work
           </Typography>
           <Box sx={{ pt: 2 }}>
-            <Box sx={{ display: "flex", flexDirection: "row" }}>
-              <Typography
-                sx={{
-                  ml: "2px",
-                  pt: "15px",
-                  width: "100px",
-                }}
-              >
-                First name
-              </Typography>
+            <Box sx={{ display: "flex", alignItems: "center", mt: 2 }}>
+              <Typography sx={{ width: 140 }}>First name</Typography>
               <TextField
                 name="firstname"
                 size="small"
                 sx={{
-                  width: 530,
-                  ml: "46px",
-                  pt: "10px",
-                  borderRadius: 20,
+                  font: "inherit",
+                  width: 450,
+                  borderRadius: "8px",
                 }}
                 placeholder="Please input"
                 onChange={handleChange}
               ></TextField>
             </Box>
 
-            <Box sx={{ display: "flex", flexDirection: "row" }}>
-              <Typography
-                sx={{
-                  ml: "2px",
-                  pt: "30px",
-                  width: "100px",
-                }}
-              >
-                Last name
-              </Typography>
+            <Box sx={{ display: "flex", alignItems: "center", mt: 2 }}>
+              <Typography sx={{ width: 140 }}>Last name</Typography>
               <TextField
                 name="lastname"
                 size="small"
                 sx={{
-                  width: 530,
-                  ml: "46px",
-                  pt: "30px",
+                  font: "inherit",
+                  width: 450,
+                  borderRadius: "8px",
                 }}
                 placeholder="Please input "
                 onChange={handleChange}
               ></TextField>
             </Box>
 
-            <Box sx={{ display: "flex", flexDirection: "row" }}>
-              <Typography sx={{ mt: "40px", width: "350px", ml: 1 }}>
-                Main Location{" "}
-              </Typography>
-              <FormControl
-                size="small"
-                sx={{
-                  mt: 4,
-                }}
-              >
+            <Box sx={{ display: "flex", alignItems: "center", mt: 2 }}>
+              <Typography sx={{ width: 140 }}>Main Location</Typography>
+              <FormControl size="small">
                 <Select
                   name="mainLocation"
                   sx={{
-                    mb: "5px",
                     font: "inherit",
-                    width: 460,
-                    mr: 98,
+                    width: 450,
                     borderRadius: "8px",
                   }}
                   displayEmpty
@@ -308,115 +284,85 @@ export default function Addteammember(props) {
                     </MenuItem>
                   ))}
                 </Select>
-              </FormControl>{" "}
+              </FormControl>
             </Box>
 
-            <FormControl
-              size="small"
-              sx={{
-                m: 1,
-                mt: 3,
-                pt: "5px",
-                display: "flex",
-                flexDirection: "row",
-              }}
-            >
-              <Typography sx={{ width: "400px", mt: "10px" }}>
-                {" "}
-                Other Location{" "}
-              </Typography>
-              <Select
-                name="otherLocation"
-                sx={{
-                  mr: 32,
-                  mb: "5px",
-                  font: "inherit",
-                  width: "620px",
-                }}
-                displayEmpty
-                value={otherLocation}
-                onChange={handleOtherLocation}
-                label="Other Location"
-                input={<OutlinedInput />}
-                MenuProps={MenuProps}
-                inputProps={{ "aria-label": "Without label" }}
-              >
-                <MenuItem value="">
-                  <em>None</em>
-                </MenuItem>
-                {names.map((name, idx) => (
-                  <MenuItem
-                    key={name}
-                    value={idx}
-                    style={getStyles(name, personName, theme)}
-                  >
-                    {name}
+            <Box sx={{ display: "flex", alignItems: "center", mt: 2 }}>
+              <Typography sx={{ width: 140 }}>Other Location</Typography>
+              <FormControl size="small">
+                <Select
+                  name="otherLocation"
+                  sx={{
+                    font: "inherit",
+                    width: 300,
+                    borderRadius: "8px",
+                  }}
+                  displayEmpty
+                  value={otherLocation}
+                  onChange={handleOtherLocation}
+                  label="Other Location"
+                  input={<OutlinedInput />}
+                  MenuProps={MenuProps}
+                  inputProps={{ "aria-label": "Without label" }}
+                >
+                  <MenuItem value="">
+                    <em>None</em>
                   </MenuItem>
-                ))}
-              </Select>
-            </FormControl>
-
-            <Box sx={{ display: "flex", flexDirection: "row", mt: "25px" }}>
-              <Typography
-                sx={{
-                  ml: "2px",
-                  pt: "15px",
-                  pb: "20px",
-                }}
-              >
-                Mobile
-              </Typography>
-              <TextField
-                name="mobile"
-                size="small"
-                sx={{
-                  width: 520,
-                  ml: "87px",
-                  pt: "10px",
-                }}
-                placeholder="Please input "
-                onChange={handleChange}
-              ></TextField>
+                  {names.map((name, idx) => (
+                    <MenuItem
+                      key={name}
+                      value={idx}
+                      style={getStyles(name, personName, theme)}
+                    >
+                      {name}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
             </Box>
 
-            <Box sx={{ display: "flex", flexDirection: "row" }}>
-              <Typography
-                sx={{
-                  ml: "2px",
-                  pt: "15px",
-                }}
-              >
-                Email
-              </Typography>
-              <TextField
-                name="email"
-                size="small"
-                sx={{
-                  width: 530,
-                  ml: "95px",
-                  pt: "10px",
-                }}
-                placeholder="Please input "
-                onChange={handleChange}
-              ></TextField>
+            <Box sx={{ display: "flex", alignItems: "center", mt: 2 }}>
+              <Typography sx={{ width: 140 }}>Mobile</Typography>
+              <FormControl size="small">
+                <TextField
+                  name="mobile"
+                  size="small"
+                  sx={{
+                    font: "inherit",
+                    width: 450,
+                    borderRadius: "8px",
+                  }}
+                  placeholder="Please input "
+                  onChange={handleChange}
+                ></TextField>
+              </FormControl>
             </Box>
-            <Box sx={{ display: "flex", flexDirection: "row" }}>
-              <Typography sx={{ mt: "40px", width: "350px" }}>
-                Access level{" "}
-              </Typography>
-              <FormControl
-                size="small"
-                sx={{
-                  mt: 4,
-                }}
-              >
+
+            <Box sx={{ display: "flex", alignItems: "center", mt: 2 }}>
+              <Typography sx={{ width: 140 }}>Email</Typography>
+              <FormControl size="small">
+                <TextField
+                  name="email"
+                  size="small"
+                  sx={{
+                    font: "inherit",
+                    width: 450,
+                    borderRadius: "8px",
+                  }}
+                  placeholder="Please input "
+                  onChange={handleChange}
+                ></TextField>
+              </FormControl>
+            </Box>
+
+            <Box sx={{ display: "flex", alignItems: "center", mt: 2 }}>
+              <Typography sx={{ width: 140 }}>Access level</Typography>
+              <FormControl size="small">
                 <Select
                   name="accessLevel"
                   sx={{
-                    pb: "5px",
                     font: "inherit",
-                    width: 460,
-                    mr: 88,
+                    width: 450,
                     borderRadius: "8px",
                   }}
                   displayEmpty
@@ -444,36 +390,42 @@ export default function Addteammember(props) {
               </FormControl>
             </Box>
           </Box>
-        </div>
+        </Box>
         <Box
           sx={{
             display: "flex",
-            flexDirection: "row",
-
-            ml: 30,
+            alignItems: "center",
+            justifyContent: "flex-end",
           }}
         >
-          <Checkbox
-            name="inviteCheckbox"
-            size="small"
-            sx={{ mt: "23px", pr: "5px", color: "rgba(95, 91, 81, 0.518)" }}
-            onChange={handleChange}
-          />
-          <Typography
-            sx={{ width: 400, mt: 4, color: "rgba(95, 91, 81, 0.518)" }}
+          <Box
+            sx={{
+              display: "flex",
+              alignItems: "center",
+              mr: 2,
+              mt: 4,
+            }}
           >
-            {" "}
-            Invite to use Maxpilot{" "}
-          </Typography>
+            <Checkbox
+              name="inviteCheckbox"
+              size="small"
+              sx={{ pr: "5px", color: "rgba(95, 91, 81, 0.518)" }}
+              onChange={handleChange}
+            />
+            <Typography sx={{ color: "rgba(95, 91, 81, 0.518)" }}>
+              Invite to use Maxpilot
+            </Typography>
+          </Box>
           <Button
             sx={{
               textTransform: "capitalize",
-              width: 350,
-              height: 30,
+              width: 180,
+              height: 35,
               mt: 4,
               borderRadius: 2,
             }}
-            className="bttn"
+            className="all-green-btns"
+            variant="contained"
             onClick={handleSubmit}
           >
             Add Team member

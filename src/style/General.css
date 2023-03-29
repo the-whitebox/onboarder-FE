@@ -30,6 +30,7 @@
 }
 
 .all-green-btns {
+  color: white !important;
   background-color: #38b492 !important;
 }
 

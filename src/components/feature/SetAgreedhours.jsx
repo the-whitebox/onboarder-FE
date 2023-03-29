@@ -1,6 +1,5 @@
 import * as React from "react";
 import Box from "@mui/material/Box";
-import Modal from "@mui/material/Modal";
 import Button from "@mui/material/Button";
 import "../../style/SetAgreedhours.css";
 import Radio from "@mui/material/Radio";
@@ -29,7 +28,7 @@ const style = {
   pb: 3,
 };
 
-export default function SetAgreedhours() {
+export default function SetAgreedhours(props) {
   const [state, setState] = React.useState({ data: "" });
   const [workPeriod, setWorkPeriod] = React.useState("");
   const [netWorkPeriod, setNetWorkPeriod] = React.useState("");
@@ -97,14 +96,6 @@ export default function SetAgreedhours() {
       });
   };
 
-  const [open, setOpen] = React.useState(false);
-  const handleOpen = () => {
-    setOpen(false);
-  };
-  const handleClose = () => {
-    setOpen(true);
-  };
-
   return (
     <React.Fragment>
       <Box
@@ -114,9 +105,18 @@ export default function SetAgreedhours() {
           height: "auto",
         }}
       >
-        <Box className="flex flex-row" sx={{ width: "100%" }}>
-          <h2 className="set">Set agreed hours</h2>
-          <CloseIcon onClick={handleClose} sx={{ pb: "25px" }}></CloseIcon>
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+          }}
+        >
+          <h2>Set agreed hours</h2>
+          <CloseIcon
+            onClick={props.handleCloseWorkPeriod}
+            sx={{ cursor: "pointer" }}
+          ></CloseIcon>
         </Box>
         <div>
           <Typography
@@ -289,24 +289,27 @@ export default function SetAgreedhours() {
             )}
           </small>
         </Box>
-        <Button
-          className="Btn"
-          sx={{
-            ml: 45,
-            borderRadius: "5px",
-            width: "16%",
-            textTransform: "none",
-            mt: 3,
-          }}
-          onClick={() => {
-            workPeriodValidation();
-            netWorkPeriodValidation();
-            hoursValidation();
-            toPeople();
-          }}
-        >
-          Save
-        </Button>
+        <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
+          <Button
+            className="all-green-btns"
+            variant="contained"
+            sx={{
+              borderRadius: "5px",
+              width: "20%",
+              height: 35,
+              textTransform: "none",
+              mt: 3,
+            }}
+            onClick={() => {
+              workPeriodValidation();
+              netWorkPeriodValidation();
+              hoursValidation();
+              toPeople();
+            }}
+          >
+            Save
+          </Button>
+        </Box>
       </Box>
     </React.Fragment>
   );
