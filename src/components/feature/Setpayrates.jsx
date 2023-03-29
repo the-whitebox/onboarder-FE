@@ -142,7 +142,7 @@ export default function Setpayrates(props) {
             </Typography>
           </Box>
 
-          <FormControl size="small" sx={{ width: 390, mt: 3 }}>
+          <FormControl size="small" sx={{ width: 300, mt: 3 }}>
             <Typography sx={{ fontWeight: "bold" }}> Pay rates </Typography>
             <Select
               sx={{ font: "inherit" }}
@@ -170,7 +170,7 @@ export default function Setpayrates(props) {
               <small style={{ color: "red" }}>{errors.payRates}</small>
             ) : null}
           </Box>
-          <Box>
+          <Box sx={{ marginLeft: "15px" }}>
             <Typography
               sx={{
                 fontWeight: "bold",
@@ -324,7 +324,7 @@ export default function Setpayrates(props) {
           className="Btn"
           size="small"
           sx={{
-            ml: 34,
+            ml: 36,
             borderRadius: "6px",
             width: "30%",
             height: "40px",

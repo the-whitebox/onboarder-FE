@@ -1,6 +1,5 @@
 import * as React from "react";
 import Box from "@mui/material/Box";
-import Modal from "@mui/material/Modal";
 import Button from "@mui/material/Button";
 import "../../style/SetAgreedhours.css";
 import Radio from "@mui/material/Radio";
@@ -29,7 +28,7 @@ const style = {
   pb: 3,
 };
 
-export default function SetAgreedhours() {
+export default function SetAgreedhours(props) {
   const [state, setState] = React.useState({ data: "" });
   const [workPeriod, setWorkPeriod] = React.useState("");
   const [netWorkPeriod, setNetWorkPeriod] = React.useState("");
@@ -97,14 +96,6 @@ export default function SetAgreedhours() {
       });
   };
 
-  const [open, setOpen] = React.useState(false);
-  const handleOpen = () => {
-    setOpen(false);
-  };
-  const handleClose = () => {
-    setOpen(true);
-  };
-
   return (
     <React.Fragment>
       <Box
@@ -116,7 +107,10 @@ export default function SetAgreedhours() {
       >
         <Box className="flex flex-row" sx={{ width: "100%" }}>
           <h2 className="set">Set agreed hours</h2>
-          <CloseIcon onClick={handleClose} sx={{ pb: "25px" }}></CloseIcon>
+          <CloseIcon
+            onClick={props.handleCloseWorkPeriod}
+            sx={{ cursor: "pointer" }}
+          ></CloseIcon>
         </Box>
         <div>
           <Typography

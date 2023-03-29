@@ -53,7 +53,9 @@ export default function WorkingHours(props) {
           aria-labelledby="modal-modal-title"
           aria-describedby="modal-modal-description"
         >
-          <SetAgreedHoursModalBody />
+          <SetAgreedHoursModalBody
+            handleCloseWorkPeriod={handleCloseWorkPeriod}
+          />
         </Modal>
         <Modal
           open={openHours}
@@ -61,7 +63,7 @@ export default function WorkingHours(props) {
           aria-labelledby="modal-modal-title"
           aria-describedby="modal-modal-description"
         >
-          <SetStandardHoursModalBody />
+          <SetStandardHoursModalBody handleCloseHours={handleCloseHours} />
         </Modal>
         <Modal
           open={openStress}
@@ -69,7 +71,7 @@ export default function WorkingHours(props) {
           aria-labelledby="modal-modal-title"
           aria-describedby="modal-modal-description"
         >
-          <SetStressProfileModalBody />
+          <SetStressProfileModalBody handleCloseStress={handleCloseStress} />
         </Modal>
         <Box sx={{ pt: 3, pb: 2 }}>
           <Typography variant="h6">Working Hours</Typography>
@@ -123,9 +125,9 @@ export default function WorkingHours(props) {
                   <li>Stress Profile</li>
                   <li>
                     <Link onClick={handleOpenStress} className="aTag">
-                      {props.userInfo?.working_hours?.stress_level === ""
-                        ? "Add stress level"
-                        : stressArray[parseInt(props.stressLevel) - 1]}
+                      {props.userInfo?.working_hours?.stress_level
+                        ? stressArray[parseInt(props.stressLevel) - 1]
+                        : "Add stress level"}
                     </Link>
                   </li>
                 </Box>
