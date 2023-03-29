@@ -141,6 +141,7 @@ export default function SignInSide() {
           xs={false}
           sm={4}
           md={6}
+          lg={6}
           sx={{
             backgroundColor: "#38b492",
             borderTopRightRadius: "76px",
@@ -148,15 +149,29 @@ export default function SignInSide() {
             flexDirection: "column",
             justifyContent: "center",
             alignItems: "center",
+
           }}
         >
-          <Grid>
+          {/* login image man with graph */}
+          <Grid 
+          item sm={12} xs={12}
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            
+          }}
+          >
+            {/* Login Avatar Made Responsive */}
             <Avatar
               src={ManWithGraphs}
               aria-label="Busy Man"
               sx={{
-                height: "50vh",
-                width: "50vh",
+                width: "100%",
+                height: "auto",
+                padding: '0px',
+                margin: '0px',
+            
               }}
             />
           </Grid>
@@ -174,7 +189,7 @@ export default function SignInSide() {
         <Grid item xs={12} sm={8} md={6} component={Paper} elevation={0} square>
           <Box
             sx={{
-              mt: "247px",
+              mt: "210px",
               mx: 4,
               display: "flex",
               flexDirection: "column",
@@ -190,7 +205,7 @@ export default function SignInSide() {
               variant="h2"
               sx={{
                 fontWeight: "Bold",
-                mt: -12,
+                mb: 0,
               }}
             >
               Hello Again!
