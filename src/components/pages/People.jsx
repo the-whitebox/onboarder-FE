@@ -254,6 +254,12 @@ export default function People() {
   };
 
   const [listOfTeamMembers, setListOfTeamMembers] = React.useState([]);
+  const [newTeamMemberAdded, setNewTeamMemberAdded] = useState(false);
+
+  const addTeamMemberToList = (newTeamMember) => {
+    setListOfTeamMembers([...listOfTeamMembers, newTeamMember]);
+    setNewTeamMemberAdded(true);
+  }
 
   const handleSelectionModelChange = (newSelection) => {
     setSelectedModel(newSelection);
@@ -308,10 +314,21 @@ export default function People() {
   };
 
   useEffect(() => {
-    getBusiness();
-  }, []);
+    if (newTeamMemberAdded) {
+      getBusiness();
+      setNewTeamMemberAdded(false);
+    }
+   
+    
+    
+    // const interval=setInterval(()=>{
+    //   getBusiness()
+    // },10000)
+    // return()=>clearInterval(interval)
+  }, [addTeamMemberToList]);
+ 
 
-  // getBusiness();
+  getBusiness();
 
   console.log("The rows", listOfTeamMembers);
   const rows = team_array;
@@ -442,7 +459,7 @@ export default function People() {
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
-        <AddTeammemberModalBody businessId={businessId} />
+        <AddTeammemberModalBody businessId={businessId} addTeamMemberToList={addTeamMemberToList} />
       </Modal>
       <Modal
         open={openATM}

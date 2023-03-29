@@ -105,9 +105,9 @@ export default function BulkActions() {
               onClick={handleOpen}
               color="#38b492"
             >
-              {" "}
-              Archive team{" "}
-            </Link>{" "}
+              
+              Archive team
+            </Link>
           </MenuItem>
         </Select>
       </FormControl>

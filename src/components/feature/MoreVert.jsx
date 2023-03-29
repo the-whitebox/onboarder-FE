@@ -8,6 +8,8 @@ import SetAccessLevelModalBody from "../feature/SetAccessLevel";
 import ArchiveTeamMemberModalBody from "../feature/ArchiveTeammembers";
 import SetAgreedHoursModalBody from "../feature/SetAgreedhours";
 import Modal from "@mui/material/Modal";
+import MoreVertIcon from '@material-ui/icons/MoreVert';
+import { Menu, Popover } from "@mui/material";
 
 export const MoreVert = () => {
   const [people, setPeople] = React.useState("");
@@ -66,13 +68,14 @@ export const MoreVert = () => {
         <SetAgreedHoursModalBody />
       </Modal>
 
-      <Select
+      <Menu
+          // sx={{ "& .MuiSvgIcon-root": { color: "red",  } }}
           labelId="demo-simple-select-standard-label"
           id="demo-simple-select-standard"
           value={people}
           onChange={handleChange}
           label="Age"
-        >
+          >
           <MenuItem value="">
             <Link
               sx={{ textDecoration: "none" }}
@@ -84,7 +87,6 @@ export const MoreVert = () => {
           </MenuItem>
 
           <MenuItem>
-            {" "}
             <Link
               sx={{ textDecoration: "none" }}
               onClick={handleOpenAccess}
@@ -94,7 +96,6 @@ export const MoreVert = () => {
             </Link>
           </MenuItem>
           <MenuItem>
-            {" "}
             <Link
               sx={{ textDecoration: "none" }}
               onClick={handleOpen}
@@ -104,7 +105,7 @@ export const MoreVert = () => {
               Archive team
             </Link>
           </MenuItem>
-        </Select>
+          </Menu>
               </React.Fragment>
   );
 };
