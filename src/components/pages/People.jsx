@@ -325,7 +325,7 @@ export default function People() {
     //   getBusiness()
     // },10000)
     // return()=>clearInterval(interval)
-  }, [addTeamMemberToList]);
+  }, [newTeamMemberAdded]);
  
 
   getBusiness();
