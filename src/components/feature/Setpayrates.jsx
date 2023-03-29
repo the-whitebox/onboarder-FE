@@ -1,7 +1,5 @@
 import * as React from "react";
-
 import Box from "@mui/material/Box";
-import Modal from "@mui/material/Modal";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import InfoIcon from "@mui/icons-material/Info";
@@ -17,17 +15,18 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useForm } from "react-hook-form";
-
-const ITEM_HEIGHT = 48;
-const ITEM_PADDING_TOP = 8;
-const MenuProps = {
-  PaperProps: {
-    style: {
-      maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
-      width: 250,
-    },
-  },
-};
+import CircularProgress from "@mui/material/CircularProgress";
+import { useFormik } from "formik";
+import * as Yup from "yup";
+import { toast } from "react-toastify";
+const formSchema = Yup.object({
+  payRates: Yup.array().required("Please enter pay rates"),
+  mondays: Yup.string().required("Please enter mondays rates"),
+  tuesdays: Yup.string().required("Please enter tuesdays rates"),
+  wednesdays: Yup.string().required("Please enter wednesdays rates"),
+  thursdays: Yup.string().required("Please enter thursdays rates"),
+  fridays: Yup.string().required("Please enter fridays rates"),
+});
 
 const names = ["2", "3"];
 
@@ -41,136 +40,46 @@ const style = {
   boxShadow: 24,
   pt: 2,
   px: 4,
-  pb: 3,
+  pb: 6,
 };
 
-function getStyles(name, personName, theme) {
-  return {
-    fontWeight:
-      personName.indexOf(name) === -1
-        ? theme.typography.fontWeightRegular
-        : theme.typography.fontWeightMedium,
-  };
-}
-
-export default function Setpayrates() {
+export default function Setpayrates(props) {
   const theme = useTheme();
-  const [personName, setPersonName] = React.useState([]);
-  const url = process.env.REACT_APP_BASE_URL;
-  const token = process.env.REACT_APP_TEMP_TOKEN;
+  const userId = localStorage.getItem("userId");
+  const token = localStorage.getItem("token");
+  const url = process.env.REACT_APP_BASE_URL + `/people/${userId}/`;
+  const [loading, setLoading] = useState(false);
 
-  const [state, setState] = React.useState({ data: "" });
-  const [payRates, setPayRates] = useState("");
-  const [mondays, setMondays] = useState("");
-  const [tuesdays, setTuesdays] = useState("");
-  const [wednesdays, setWednesdays] = useState("");
-  const [thursdays, setThursdays] = useState("");
-  const [fridays, setFridays] = useState("");
-
-  const [error, setError] = React.useState(null);
-  const [payRatesError, setPayRatesError] = useState("");
-  const [mondaysError, setMondaysError] = useState("");
-  const [tuesdaysError, setTuesdaysError] = useState("");
-  const [wednesdaysError, setWednesdaysError] = useState("");
-  const [thursdaysError, setThursdaysError] = useState("");
-  const [fridaysError, setFridaysError] = useState("");
-
-  const navigate = useNavigate();
-
-  const payRatesValidation = () => {
-    if (payRates == "") {
-      setPayRatesError("Please enter pay rates");
-    } else setPayRatesError("");
+  const initialValues = {
+    payRates: [],
+    mondays: "",
+    tuesdays: "",
+    wednesdays: "",
+    thursdays: "",
+    fridays: "",
   };
 
-  const mondaysValidation = () => {
-    if (mondays == "") {
-      setMondaysError("Please enter mondays rates");
-    } else setMondaysError("");
-  };
-
-  const tuesdaysValidation = () => {
-    if (tuesdays == "") {
-      setTuesdaysError("Please enter tuesdays rates");
-    } else setTuesdaysError("");
-  };
-
-  const wednesdaysValidation = () => {
-    if (wednesdays == "") {
-      setWednesdaysError("Please enter wednesdays rates");
-    } else setWednesdaysError("");
-  };
-
-  const thursdaysValidation = () => {
-    if (thursdays == "") {
-      setThursdaysError("Please enter thursdays rates");
-    } else setThursdaysError("");
-  };
-
-  const fridaysValidation = () => {
-    if (fridays == "") {
-      setFridaysError("Please enter fridays rates");
-    } else setFridaysError("");
-  };
-
-  const {
-    register,
-    formState: { errors },
-  } = useForm();
-
-  const handleChange = (event) => {
-    const {
-      target: { value },
-    } = event;
-    setPersonName(
-      // On autofill we get a stringified value.
-      typeof value === "string" ? value.split(",") : value
-    );
-    setPayRates(event.target.value);
-  };
-
-  const [open, setOpen] = React.useState(false);
-  const handleOpen = () => {
-    setOpen(true);
-  };
-  const handleClose = () => {
-    setOpen(false);
-  };
-
-  const payRatesDetails = (e) => {
-    console.log("Inside Pay Rates");
-    console.log(payRates, mondays, tuesdays, wednesdays, thursdays, fridays);
-    if (
-      payRates !== "" &&
-      mondays !== "" &&
-      tuesdays !== "" &&
-      wednesdays !== "" &&
-      thursdays !== "" &&
-      fridays !== ""
-    ) {
-      console.log("Data Found");
-      setError(false);
-      console.log(payRates, mondays, tuesdays, wednesdays, thursdays, fridays);
-      try {
-        debugger;
-        axios
+  const { values, errors, touched, handleBlur, handleChange, handleSubmit } =
+    useFormik({
+      initialValues,
+      validationSchema: formSchema,
+      onSubmit: async (values, action) => {
+        setLoading(true);
+        await axios
           .patch(
-            url + "/people/6/",
+            url,
             {
               pay_detail: {
                 per_day_pay_rate: {
-                  monday: mondays,
-                  tuesday: tuesdays,
-                  wednesday: wednesdays,
-                  thursday: thursdays,
-                  friday: fridays,
+                  monday: values.mondays,
+                  tuesday: values.tuesdays,
+                  wednesday: values.wednesdays,
+                  thursday: values.thursdays,
+                  friday: values.fridays,
                 },
               },
-              pay_rate: payRates,
+              pay_rate: values.payRates,
               is_superuser: false,
-              role: 3,
-              profile: {},
-              work_detail: {},
             },
             {
               headers: {
@@ -180,42 +89,43 @@ export default function Setpayrates() {
             }
           )
           .then((response) => {
-            console.log("Pay Rates API was hit successfully");
-            console.log(response);
+            console.log("Response", response);
+            setLoading(false);
+            props.handleClosePayrate();
+          })
+          .catch((error) => {
+            toast.error(error.message);
+            setLoading(false);
           });
-      } catch (error) {
-        console.log(error.response.data);
-      }
-      console.log(payRates, mondays, tuesdays);
-    } else {
-      setError(true);
-      setState({ data: e.target.value });
-    }
-  };
+      },
+    });
 
   return (
     <React.Fragment>
-      <Box sx={{ ...style, width: 400, height: 930, mt: 25 }}>
+      <Box sx={{ ...style, width: 400, height: "auto" }}>
         <Box className="flex flex-row" sx={{ width: "420px" }}>
           <h2>Set Pay rates</h2>
-
-          <CloseIcon onClick={handleClose} sx={{ pb: "45px" }}></CloseIcon>
+          <CloseIcon
+            onClick={props.handleClosePayrate}
+            sx={{ cursor: "pointer" }}
+          ></CloseIcon>
         </Box>
-        <div>
+        <Box>
           <Typography sx={{ pb: "5px" }}> 2 Team members </Typography>
           <Box
             sx={{
               bgcolor: "#d5f9f6",
               display: "flex",
               flexDirection: "row",
+              pb: "5px",
             }}
           >
             <InfoIcon
               sx={{
                 fontSize: "small",
                 color: "Gray",
-                mt: "13px",
-                ml: "12px",
+                mt: "11px",
+                ml: "5px",
               }}
             />
             <Typography
@@ -232,115 +142,72 @@ export default function Setpayrates() {
             </Typography>
           </Box>
 
-          <FormControl size="small" sx={{ m: 1, width: 250, mt: 3, pt: "5px" }}>
+          <FormControl size="small" sx={{ width: 390, mt: 3 }}>
             <Typography sx={{ fontWeight: "bold" }}> Pay rates </Typography>
             <Select
-              sx={{ pb: "5px", font: "inherit" }}
+              sx={{ font: "inherit" }}
               multiple
               displayEmpty
-              value={personName}
-              // onChange={handleChange}
+              name="payRates"
+              value={values.payRates}
               input={<OutlinedInput />}
-              renderValue={(selected) => {
-                if (selected.length === 0) {
-                  return <em>Rates per Day</em>;
-                }
-
-                return selected.join(", ");
-              }}
-              MenuProps={MenuProps}
               inputProps={{ "aria-label": "Without label" }}
-              {...register("Pay Rates", { required: true })}
               onChange={handleChange}
+              handleBlur={handleBlur}
             >
               <MenuItem disabled value="">
                 <em>Rates per Day</em>
               </MenuItem>
               {names.map((name) => (
-                <MenuItem
-                  key={name}
-                  value={name}
-                  style={getStyles(name, personName, theme)}
-                >
+                <MenuItem key={name} value={name}>
                   {name}
                 </MenuItem>
               ))}
             </Select>
           </FormControl>
-          <Box sx={{ ml: 2, mt: 1 }}>
-            {errors.PayRates?.type === "required" && "Pay Rates Required"}
-            <small>
-              {payRatesError && (
-                <div
-                  style={{
-                    color: "red",
-                  }}
-                >
-                  {payRatesError}
-                </div>
-              )}
-            </small>
+          <Box>
+            {errors.payRates && touched.payRates ? (
+              <small style={{ color: "red" }}>{errors.payRates}</small>
+            ) : null}
           </Box>
-          <Box sx={{ ml: "12px" }}>
+          <Box>
             <Typography
               sx={{
-                ml: "7px",
                 fontWeight: "bold",
                 fontSize: "15px",
-                pt: "12px",
-                pb: 0,
+                mt: "15px",
               }}
             >
               Mondays
             </Typography>
-            <FormControl
-              size="small"
-              sx={{ m: 1, width: 370 }}
-              variant="outlined"
-            >
+            <FormControl size="small" sx={{ width: 390 }} variant="outlined">
               <OutlinedInput
                 id="outlined-adornment-weight"
                 endAdornment={
                   <InputAdornment position="end">Rs per hour</InputAdornment>
                 }
                 aria-describedby="outlined-weight-helper-text"
-                inputProps={{
-                  "aria-label": "weight",
-                }}
-                {...register("Mondays", { required: true })}
-                onChange={(e) => setMondays(e.target.value)}
+                name="mondays"
+                value={values.mondays}
+                onChange={handleChange}
+                handleBlur={handleBlur}
               />
             </FormControl>
-            <Box sx={{ ml: 1, mt: 1 }}>
-              {errors.Mondays?.type === "required" && "Mondays Rates Required"}
-              <small>
-                {mondaysError && (
-                  <div
-                    style={{
-                      color: "red",
-                    }}
-                  >
-                    {mondaysError}
-                  </div>
-                )}
-              </small>
+            <Box>
+              {errors.mondays && touched.mondays ? (
+                <small style={{ color: "red" }}>{errors.mondays}</small>
+              ) : null}
             </Box>
             <Typography
               sx={{
-                ml: "7px",
                 fontWeight: "bold",
                 fontSize: "15px",
-                pt: "10px",
+                mt: "15px",
               }}
             >
-              {" "}
               Tuesdays
             </Typography>
-            <FormControl
-              size="small"
-              sx={{ m: 1, width: 370 }}
-              variant="outlined"
-            >
+            <FormControl size="small" sx={{ width: 390 }} variant="outlined">
               <OutlinedInput
                 id="outlined-adornment-weight"
                 endAdornment={
@@ -350,41 +217,27 @@ export default function Setpayrates() {
                 inputProps={{
                   "aria-label": "weight",
                 }}
-                {...register("Tuesdays", { required: true })}
-                onChange={(e) => setTuesdays(e.target.value)}
+                name="tuesdays"
+                value={values.tuesdays}
+                onChange={handleChange}
+                handleBlur={handleBlur}
               />
             </FormControl>
-            <Box sx={{ ml: 1, mt: 1 }}>
-              {errors.Tuesdays?.type === "required" &&
-                "Tuesdays Rates Required"}
-              <small>
-                {tuesdaysError && (
-                  <div
-                    style={{
-                      color: "red",
-                    }}
-                  >
-                    {tuesdaysError}
-                  </div>
-                )}
-              </small>
+            <Box>
+              {errors.tuesdays && touched.tuesdays ? (
+                <small style={{ color: "red" }}>{errors.tuesdays}</small>
+              ) : null}
             </Box>
             <Typography
               sx={{
-                ml: "7px",
                 fontWeight: "bold",
                 fontSize: "15px",
-                pt: "10px",
+                mt: "15px",
               }}
             >
-              {" "}
               Wednesdays
             </Typography>
-            <FormControl
-              size="small"
-              sx={{ m: 1, width: 370 }}
-              variant="outlined"
-            >
+            <FormControl size="small" sx={{ width: 390 }} variant="outlined">
               <OutlinedInput
                 id="outlined-adornment-weight"
                 endAdornment={
@@ -394,40 +247,27 @@ export default function Setpayrates() {
                 inputProps={{
                   "aria-label": "weight",
                 }}
-                {...register("Wednesdays", { required: true })}
-                onChange={(e) => setWednesdays(e.target.value)}
+                name="wednesdays"
+                value={values.wednesdays}
+                onChange={handleChange}
+                handleBlur={handleBlur}
               />
             </FormControl>
-            <Box sx={{ ml: 1, mt: 1 }}>
-              {errors.Wednesdays?.type === "required" &&
-                "Wednesdays Rates Required"}
-              <small>
-                {wednesdaysError && (
-                  <div
-                    style={{
-                      color: "red",
-                    }}
-                  >
-                    {wednesdaysError}
-                  </div>
-                )}
-              </small>
+            <Box>
+              {errors.wednesdays && touched.wednesdays ? (
+                <small style={{ color: "red" }}>{errors.wednesdays}</small>
+              ) : null}
             </Box>
             <Typography
               sx={{
-                ml: "7px",
                 fontWeight: "bold",
                 fontSize: "15px",
-                pt: "10px",
+                mt: "15px",
               }}
             >
               Thursdays
             </Typography>
-            <FormControl
-              size="small"
-              sx={{ m: 1, width: 370 }}
-              variant="outlined"
-            >
+            <FormControl size="small" sx={{ width: 390 }} variant="outlined">
               <OutlinedInput
                 id="outlined-adornment-weight"
                 endAdornment={
@@ -437,41 +277,27 @@ export default function Setpayrates() {
                 inputProps={{
                   "aria-label": "weight",
                 }}
-                {...register("Thursdays", { required: true })}
-                onChange={(e) => setThursdays(e.target.value)}
+                name="thursdays"
+                value={values.thursdays}
+                onChange={handleChange}
+                handleBlur={handleBlur}
               />
             </FormControl>
-            <Box sx={{ ml: 1, mt: 1 }}>
-              {errors.Thursdays?.type === "required" &&
-                "Thursdays Rates Required"}
-              <small>
-                {thursdaysError && (
-                  <div
-                    style={{
-                      color: "red",
-                    }}
-                  >
-                    {thursdaysError}
-                  </div>
-                )}
-              </small>
+            <Box>
+              {errors.thursdays && touched.thursdays ? (
+                <small style={{ color: "red" }}>{errors.thursdays}</small>
+              ) : null}
             </Box>
             <Typography
               sx={{
-                ml: "7px",
                 fontWeight: "bold",
                 fontSize: "15px",
-                pt: "10px",
+                pt: "15px",
               }}
             >
-              {" "}
               Fridays
             </Typography>
-            <FormControl
-              size="small"
-              sx={{ m: 1, width: 370 }}
-              variant="outlined"
-            >
+            <FormControl size="small" sx={{ width: 390 }} variant="outlined">
               <OutlinedInput
                 id="outlined-adornment-weight"
                 endAdornment={
@@ -481,47 +307,35 @@ export default function Setpayrates() {
                 inputProps={{
                   "aria-label": "weight",
                 }}
-                {...register("Fridays", { required: true })}
-                onChange={(e) => setFridays(e.target.value)}
+                name="fridays"
+                value={values.fridays}
+                onChange={handleChange}
+                handleBlur={handleBlur}
               />
             </FormControl>
-            <Box sx={{ ml: 1, mt: 1 }}>
-              {errors.Fridays?.type === "required" && "Fridays Rates Required"}
-              <small>
-                {fridaysError && (
-                  <div
-                    style={{
-                      color: "red",
-                    }}
-                  >
-                    {fridaysError}
-                  </div>
-                )}
-              </small>
+            <Box>
+              {errors.fridays && touched.fridays ? (
+                <small style={{ color: "red" }}>{errors.fridays}</small>
+              ) : null}
             </Box>
           </Box>
-        </div>
+        </Box>
         <Button
           className="Btn"
           size="small"
           sx={{
-            mt: "25px",
-            ml: 40,
-            borderRadius: "8px",
-            width: "10%",
+            ml: 34,
+            borderRadius: "6px",
+            width: "30%",
+            height: "40px",
+            bgcolor: "#38b492",
+            color: "white",
             textTransform: "none",
+            mt: 6,
           }}
-          onClick={(e) => {
-            payRatesValidation();
-            mondaysValidation();
-            tuesdaysValidation();
-            wednesdaysValidation();
-            thursdaysValidation();
-            fridaysValidation();
-            payRatesDetails(e);
-          }}
+          onClick={handleSubmit}
         >
-          Save
+          {loading ? <CircularProgress color="inherit" size={30} /> : <>Save</>}
         </Button>
       </Box>
     </React.Fragment>

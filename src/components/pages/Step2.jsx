@@ -116,7 +116,7 @@ export default function BasicModal(props) {
         <Grid item xs={12} sm={8} md={7} component={Paper} elevation={0} square>
           <Box
             sx={{
-              mt: 7,
+              mt: 2,
               mx: 4,
               display: "flex",
               flexDirection: "column",
@@ -435,13 +435,16 @@ export default function BasicModal(props) {
                 </div>
               )}
             </small>
+            {/* changed bottom margin */}
+
             <Link to="/step3" style={{ textDecoration: "none" }}>
               <Button
                 type="submit"
                 variant="contained"
                 className="btn-forgetPwd btn-login"
                 sx={{
-                  mt: 4,
+                  mt: 2,
+                  mb: 2,
                   width: "89px",
                   borderRadius: "10px",
                   justifyContent: "center",
@@ -458,14 +461,30 @@ export default function BasicModal(props) {
             </Link>
           </Box>
         </Grid>
-        <Grid item xs={false} sm={4} md={5} sx={{ backgroundColor: "#FFFFFF" }}>
+
+        {/* ///////      Right Side Image       /////////*/}
+
+        {/* changes made on image position  */}
+
+        <Grid
+          item
+          xs={false}
+          sm={4}
+          md={5}
+          sx={{
+            position: "fixed",
+            right: "0px",
+            top: "0px",
+            backgroundColor: "#FFFFFF",
+          }}
+        >
           <Avatar
             src={RightSideImage}
             aria-label="UROOSTER"
             sx={{
               height: "100vh",
               width: "100%",
-              objectFit: "Fill",
+              objectFit: "contain",
               borderRadius: "0px !important",
             }}
           />

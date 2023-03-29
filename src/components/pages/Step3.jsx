@@ -46,7 +46,7 @@ const style = {
 };
 
 export default function BasicModal() {
-  const token = process.env.REACT_APP_TEMP_TOKEN;
+  const token = localStorage.getItem("token");
   const url = process.env.REACT_APP_BASE_URL + "/business/";
   const [state, setState] = React.useState({ data: "" });
   const [payProcess, setPayProcess] = React.useState("");
@@ -156,11 +156,17 @@ export default function BasicModal() {
 
   return (
     <div>
-      <Grid container component="main" sx={{ height: "100vh" }}>
+      <Grid
+        container
+        component="main"
+        sx={{
+          maxHeight: "100vh",
+        }}
+      >
         <Grid item xs={12} sm={8} md={7} component={Paper} elevation={0} square>
           <Box
             sx={{
-              mt: 7,
+              mt: 2,
               mx: 4,
               display: "flex",
               flexDirection: "column",
@@ -249,6 +255,7 @@ export default function BasicModal() {
                 <Grid
                   item
                   md={12}
+                
                   sx={{
                     display: "flex",
                     flexDirection: "row",
@@ -262,7 +269,11 @@ export default function BasicModal() {
                     // defaultValue="As soon as possible"
                     overlay
                     size="lg"
-                    sx={{ flexDirection: "row", gap: 1.5, mt: 2 }}
+                    sx={{ 
+                    flexDirection: "row", 
+                    gap: 2.5,
+                    mt: 2 
+                  }}
                     {...register("Process", { required: true })}
                     onChange={(e) => setPayProcess(parseInt(e.target.id) + 1)}
                   >
@@ -282,7 +293,7 @@ export default function BasicModal() {
                           borderRadius: "16px",
                           boxShadow: "sm",
                           bgcolor: "background.body",
-                          width: "228px",
+                          width: "190px",
                           height: "56px",
                         }}
                       >
@@ -356,6 +367,7 @@ export default function BasicModal() {
                 width: "100%",
               }}
             >
+              {/* ////////////  Seven ---7 Cards ----here----- */}
               <RadioGroup
                 aria-label="platform"
                 // defaultValue="Website"
@@ -402,6 +414,7 @@ export default function BasicModal() {
                   "Searched the internet",
                   "Other",
                 ].map((value, idx) => (
+                  // ----------Cards Height Changed-----------
                   <Sheet
                     key={value}
                     variant="outlined"
@@ -418,7 +431,7 @@ export default function BasicModal() {
                       gap: 1.5,
                       p: 2,
                       width: "120px",
-                      height: "120px",
+                      height: "130px",
                     }}
                   >
                     <Radio
@@ -463,13 +476,16 @@ export default function BasicModal() {
               )}
             </small>
             {/* </Grid> */}
+
+            {/* changed bottom margin */}
             <Link to="/step2" style={{ textDecoration: "none" }}>
               <Button
                 type="submit"
                 variant="contained"
                 className="btn-forgetPwd btn-login"
                 sx={{
-                  mt: 4,
+                  mt: 2,
+                  mb: 2,
                   width: "182px",
                   height: "46px",
                   borderRadius: "10px",
@@ -486,12 +502,19 @@ export default function BasicModal() {
             </Link>
           </Box>
         </Grid>
+        {/* ///////      Right Side Image       /////////*/}
+        {/* changes made on image position  */}
         <Grid
           item
           xs={false}
           sm={4}
           md={5}
-          sx={{ backgroundColor: "#FFFFFF", minHeight: "100vh" }}
+          sx={{
+            position: "fixed",
+            right: "0px",
+            top: "0px",
+            backgroundColor: "#FFFFFF",
+          }}
         >
           <Avatar
             src={RightSideImage}

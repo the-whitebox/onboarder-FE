@@ -28,6 +28,7 @@ import AddTeammemberModalBody from "../feature/AddTeammember";
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import axios from "axios";
 import Avatar from "@mui/material/Avatar";
+import MoreVertIcon from '@mui/icons-material/MoreVert';
 import { MoreVert } from "../feature/MoreVert";
 import IconButton from "@mui/material/IconButton";
 import NotificationsOutlinedIcon from "@mui/icons-material/NotificationsOutlined";
@@ -90,9 +91,19 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   },
 }));
 
-const handleClick = () => {
-  // Your code here
-};
+// const [anchorEl, setAnchorEl] = React.useState(null);
+// const openClick = Boolean(anchorEl);
+// const handleClick = (event) => {
+//   setAnchorEl(event.currentTarget);
+// };
+// const handleClickClose = () => {
+//   setAnchorEl(null);
+// };
+// const [click, setClick] = React.useState(false);
+
+// const clickClose = () => setClick(false);
+// const handleClick = () => {
+//   setClick(true);};
 
 const drawerWidth = 2;
 
@@ -139,25 +150,32 @@ const columns = [
       // };
 
       return (
-        <Avatar
-          sx={{
-            backgroundColor: "#38B492",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-          }}
-        >
-          <Button onClick={handleClick}>
-            <MoreVert />
-          </Button>
-        </Avatar>
+
+            /*  Circled Icon on Table's last cloumn */
+                    <Avatar
+            sx={{
+              backgroundColor: "#38B492",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
+            <Button
+             
+            >
+              <MoreVertIcon sx={{ height: '20px', width: '20px', color: 'white' }} />
+              {/* <MoreVert/> */}
+            </Button>
+          </Avatar>
+     
       );
     },
   },
 ];
 
 export default function People() {
-  const token = process.env.REACT_APP_TEMP_TOKEN;
+  const token = localStorage.getItem("token");
+
   const url = process.env.REACT_APP_BASE_URL;
   const [people, setPeople] = useState("");
   const [firstName, setFirstName] = useState("");
@@ -380,6 +398,7 @@ export default function People() {
   };
   return (
     <ThemeProvider theme={theme}>
+    
       <Modal
         open={openAccess}
         onClose={handleCloseAccess}
@@ -452,6 +471,7 @@ export default function People() {
         </Box>
         {/* <SetAccessLevelModalBody /> */}
       </Modal>
+
       <Modal
         open={open}
         onClose={handleClose}
@@ -461,6 +481,8 @@ export default function People() {
       >
         <AddTeammemberModalBody businessId={businessId} addTeamMemberToList={addTeamMemberToList} />
       </Modal>
+      
+      
       <Modal
         open={openATM}
         onClose={handleCloseATM}
@@ -947,7 +969,12 @@ export default function People() {
               </Button>
             </FormControl>
           </Box>
-          <Box display="flex" alignItems="center" className="pl-2">
+
+          
+          <Box display="flex"  alignItems="center" className="pl-2">
+
+{/* drop down menu of Right side of Screen with bulk */}
+
             <FormControl variant="standard" sx={{ m: 1, minWidth: 120 }}>
               <InputLabel id="demo-simple-select-standard-label">
                 Bulk Actions
@@ -993,6 +1020,8 @@ export default function People() {
               </Select>
             </FormControl>
           </Box>
+
+
           <Box sx={{ pt: 3, pb: 2 }}>
             <Typography variant="h6" fontWeight="Bold">
               Personal Details
