@@ -179,7 +179,7 @@ export default function People() {
   const [lastName, setLastName] = useState("");
   const [location, setLocattion] = useState("");
   const [otherLocation, setOtherLocattion] = useState("");
-  const [businessId, setBusinessId] = useState("");
+  const [businessId, setBusinessId] = useState();
   const [selectedModel, setSelectedModel] = useState([]);
   const [workPeriodError, setWorkPeriodError] = useState("");
   const [netWorkPeriodError, setNetWorkPeriodError] = useState("");
@@ -278,39 +278,34 @@ export default function People() {
   const handleOpenWorkPeriod = () => setOpenWorkPeriod(true);
   const handleCloseWorkPeriod = () => setOpenWorkPeriod(false);
 
-  let b_id = "";
   const getBusiness = async () => {
-    try {
-      await axios
-        .get(url + "/business/", {
-          headers: {
-            Authorization: `Bearer ${token}`,
-            "Content-Type": "application/json",
-          },
-        })
-        .then((response) => {
-          console.log(response.data);
-          const ids = response.data.map((obj) => obj.id);
-          const firstId = ids[0];
+    await axios
+      .get(url + "/business/", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+      })
+      .then((response) => {
+        const ids = response.data.map((obj) => obj.id);
+        setBusinessId(ids[0]);
+        getBusinessById(ids[0]);
+      })
+      .catch((err) => console.log(err));
+  };
 
-          setBusinessId(firstId);
-          b_id = firstId;
-        });
-
-      const teamResponse = await axios.get(
-        url + `/people/?business_id=${b_id}`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-            "Content-Type": "application/json",
-          },
-        }
-      );
-      const teamMembers = teamResponse.data;
-      setListOfTeamMembers(teamMembers);
-    } catch (error) {
-      console.log("Error", error);
-    }
+  const getBusinessById = async (id) => {
+    await axios
+      .get(`${url}/people/?business_id=${id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+      })
+      .then((response) => {
+        setListOfTeamMembers(response.data);
+      })
+      .catch((err) => console.log(err));
   };
 
   useEffect(() => {
@@ -462,7 +457,7 @@ export default function People() {
             {/* <CloseIcon onClick={handleClose} sx={{ mb: 6 }}></CloseIcon> */}
           </Box>
 
-          <div>
+          <Box>
             <Typography sx={{ color: "#b4b4b4", ml: 1 }}>
               {listOfTeamMembers.length} Team members
             </Typography>
@@ -515,7 +510,7 @@ export default function People() {
                 Ready to Archive
               </Typography>
             </Box>
-          </div>
+          </Box>
 
           <Button
             className="button"

@@ -4,8 +4,6 @@ import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
 import InputAdornment from "@mui/material/InputAdornment";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Checkbox from "@mui/material/Checkbox";
 import Link from "@mui/material/Link";
 import Paper from "@mui/material/Paper";
 import Box from "@mui/material/Box";
@@ -15,13 +13,9 @@ import AlternateEmailOutlinedIcon from "@mui/icons-material/AlternateEmailOutlin
 import Typography from "@mui/material/Typography";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import "../../style/Login.css";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import AppleIcon from "@mui/icons-material/Apple";
 import googleIcon from "../../assets/icons/google.png";
 import ManWithGraphs from "../../assets/images/man-with-graphs.png";
-import MaxPilotLogo from "../../assets/logos/maxpilot-logo.svg";
-import { CardMedia } from "@mui/material";
-import Card from "@mui/material/Card";
 import Modal from "@mui/material/Modal";
 import ForgetPasswordModalBody from "./ForgotPassword";
 import SignupModalBody from "./Signup";
@@ -73,8 +67,7 @@ export default function SignInSide() {
             }
           })
           .catch((error) => {
-            // console.log("Login Error", error.response);
-            toast.error(error.response.data.non_field_errors[0]);
+            toast.error("Something went wrong! Please try again");
             setLoading(false);
           });
       },
@@ -240,7 +233,6 @@ export default function SignInSide() {
                 type="email"
                 id="email"
                 autoComplete="email"
-                autoFocus
                 iconEnd={<AlternateEmailOutlinedIcon />}
                 value={values.email}
                 onChange={handleChange}

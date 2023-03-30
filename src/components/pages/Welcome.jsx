@@ -1,20 +1,12 @@
 import * as React from "react";
 import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import Avatar from "@mui/material/Avatar";
 import Paper from "@mui/material/Paper";
-import MobileStepper from "@mui/material/MobileStepper";
 import SwipeableViews from "react-swipeable-views";
 import { autoPlay } from "react-swipeable-views-utils";
 import { useTheme } from "@mui/material/styles";
-import TextField from "@mui/material/TextField";
 import Grid from "@mui/material/Grid";
-import Checkbox from "@mui/material/Checkbox";
-import "../../style/SignUp.css";
-import Link from "@mui/material/Link";
-import facebookIcon from "../../assets/icons/facebook.png";
-import googleIcon from "../../assets/icons/google.png";
 import RightSideImage from "../../assets/images/bg-image.png";
 
 const style = {

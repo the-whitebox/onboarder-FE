@@ -4,22 +4,14 @@ import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import Avatar from "@mui/material/Avatar";
 import Paper from "@mui/material/Paper";
-import { useTheme } from "@mui/material/styles";
-import TextField from "@mui/material/TextField";
 import Grid from "@mui/material/Grid";
 import "../../style/Step1.css";
-import Link from "@mui/material/Link";
 import FormLabel from "@mui/joy/FormLabel";
 import Radio, { radioClasses } from "@mui/joy/Radio";
 import RadioGroup from "@mui/joy/RadioGroup";
 import Sheet from "@mui/joy/Sheet";
 import CheckCircleRoundedIcon from "@mui/icons-material/CheckCircleRounded";
 import RightSideImage from "../../assets/images/bg-image.png";
-import Item from "antd/es/list/Item";
-import InputLabel from "@mui/material/InputLabel";
-import MenuItem from "@mui/material/MenuItem";
-import FormControl from "@mui/material/FormControl";
-import Select from "@mui/material/Select";
 import PastIcon from "../../assets/icons/past-icon.png";
 import FriendIcon from "../../assets/icons/friend-icon.png";
 import RecommendIcon from "../../assets/icons/recommend-icon.png";
@@ -27,132 +19,75 @@ import BlogIcon from "../../assets/icons/blog-icon.png";
 import AdIcon from "../../assets/icons/ad-icon.png";
 import InternetIcon from "../../assets/icons/internet-icon.png";
 import OthersIcon from "../../assets/icons/others-icon.png";
-import { useLocation } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
+import CircularProgress from "@mui/material/CircularProgress";
+import { toast } from "react-toastify";
 import axios from "axios";
-import { useState } from "react";
-import { useForm } from "react-hook-form";
-
-const style = {
-  position: "absolute",
-  top: "50%",
-  left: "50%",
-  transform: "translate(-50%, -50%)",
-  width: 650,
-  bgcolor: "background.paper",
-  borderRadius: "23px",
-  boxShadow: 24,
-  p: 4,
+import { useFormik } from "formik";
+import * as Yup from "yup";
+const formSchema = Yup.object({
+  payProcess: Yup.string().required("What process you prefer?"),
+  hear: Yup.string().required("How did you hear about us?"),
+});
+const initialValues = {
+  payProcess: "",
+  hear: "",
 };
 
+const icons = [
+  PastIcon,
+  FriendIcon,
+  RecommendIcon,
+  BlogIcon,
+  AdIcon,
+  InternetIcon,
+  OthersIcon,
+];
+
 export default function BasicModal() {
-  const token = localStorage.getItem("token");
-  const url = process.env.REACT_APP_BASE_URL + "/business/";
-  const [state, setState] = React.useState({ data: "" });
-  const [payProcess, setPayProcess] = React.useState("");
-  const [hear, setHear] = React.useState("");
-  const [error, setError] = React.useState(null);
-  const [processError, setProcessError] = useState("");
-  const [hearError, setHearError] = useState("");
-
-  const navigate = useNavigate();
-  const theme = useTheme();
+  const url = process.env.REACT_APP_BASE_URL;
+  const Navigate = useNavigate();
   const location = useLocation();
+  const [loading, setLoading] = React.useState(false);
 
-  const processValidation = () => {
-    if (payProcess === "") {
-      setProcessError("What process you prefer?");
-    } else setProcessError("");
-  };
-
-  const hearValidation = () => {
-    if (hear === "") {
-      setHearError("How did you hear about us?");
-    } else setHearError("");
-  };
-
-  const {
-    register,
-    formState: { errors },
-  } = useForm();
-
-  const createBusiness = (e) => {
-    const tempteamPay = parseInt(payProcess) + 1;
-    const tempHear = parseInt(hear) + 1;
-    console.log("Inside createBusiness");
-    console.log(location.state, payProcess, hear);
-    if (payProcess !== "" && hear !== "") {
-      console.log("Data Found");
-      setError(false);
-      console.log({ tempteamPay, tempHear });
-      // const tempPayProcess = parseInt(payProcess) + 1;
-      // const Hear = parseInt(hear) + 1;
-
-      // console.log({tempPayProcess, Hear});
-      try {
-        axios
-          .post(
-            url,
-            {
-              business_name: location.state.business,
-              mobile_number: location.state.mobile,
-              business_type: location.state.businessType,
-              industry_type: location.state.industry,
-              employess_range: null,
-              joining_purpose: location.state.purpose,
-              payroll_type: location.state.payroll,
-              pay_proces_improvement_duration: tempteamPay,
-              how_you_hear: tempHear,
-            },
-            {
-              headers: {
-                Authorization: `Bearer ${token}`,
-                "Content-Type": "application/json",
-              },
-            }
-          )
+  const { errors, touched, handleBlur, setFieldValue, handleSubmit } =
+    useFormik({
+      initialValues,
+      validationSchema: formSchema,
+      onSubmit: async (values, action) => {
+        setLoading(true);
+        await axios
+          .post(`${url}/business/`, {
+            business_name: location.state.business,
+            mobile_number: location.state.mobile,
+            business_type: location.state.businessType,
+            industry_type: location.state.industry,
+            employess_range: null,
+            joining_purpose: location.state.purpose,
+            payroll_type: location.state.payroll,
+            pay_proces_improvement_duration: values.payProcess,
+            how_you_hear: values.hear,
+          })
           .then((response) => {
-            console.log("Signup API was hit successfully");
-            console.log(response);
-            navigate("/people");
-
-            navigate("/people");
-
-            // Navigate to Home Screen
+            console.log("Login Response", response);
+            toast.success("You have successfully registered your business!");
+            // Navigate("/people");
+            setLoading(false);
+          })
+          .catch((error) => {
+            console.log("Error", error.response);
+            setLoading(false);
           });
-      } catch (error) {
-        console.log(error.response.data);
-      }
+      },
+    });
 
-      // alert(payProcess + hear);
-
-      // navigate("/about", {
-      //   state: {
-      //     business: location.state.business,
-      //     mobile: location.state.mobile,
-      //     businessType: location.state.businesstype,
-      //     industry: location.state.industry,
-      //     purpose: location.state.purpose,
-      //     payroll: location.state.payroll,
-      //     payProcess: payProcess,
-      //     hear: hear,
-      //   },
-      // });
-    } else {
-      setError(true);
-      setState({ data: e.target.value });
-    }
+  const handlePayProcessChange = (e) => {
+    setFieldValue("payProcess", parseInt(e.target.id));
   };
 
-  const icons = [
-    PastIcon,
-    FriendIcon,
-    RecommendIcon,
-    BlogIcon,
-    AdIcon,
-    InternetIcon,
-    OthersIcon,
-  ];
+  const handleHearChange = (e) => {
+    setFieldValue("hear", parseInt(e.target.id));
+  };
 
   return (
     <div>
@@ -255,7 +190,6 @@ export default function BasicModal() {
                 <Grid
                   item
                   md={12}
-                
                   sx={{
                     display: "flex",
                     flexDirection: "row",
@@ -269,13 +203,13 @@ export default function BasicModal() {
                     // defaultValue="As soon as possible"
                     overlay
                     size="lg"
-                    sx={{ 
-                    flexDirection: "row", 
-                    gap: 2.5,
-                    mt: 2 
-                  }}
-                    {...register("Process", { required: true })}
-                    onChange={(e) => setPayProcess(parseInt(e.target.id) + 1)}
+                    sx={{
+                      flexDirection: "row",
+                      gap: 2.5,
+                      mt: 2,
+                    }}
+                    onChange={handlePayProcessChange}
+                    handleBlur={handleBlur}
                   >
                     {[
                       "As soon as possible",
@@ -331,18 +265,9 @@ export default function BasicModal() {
                     ))}
                   </RadioGroup>
                 </Grid>
-                {errors.payProcess?.type === "required" && "Required"}
-                <small>
-                  {processError && (
-                    <div
-                      style={{
-                        color: "red",
-                      }}
-                    >
-                      {processError}
-                    </div>
-                  )}
-                </small>
+                {errors.payProcess && touched.payProcess ? (
+                  <small style={{ color: "red" }}>{errors.payProcess}</small>
+                ) : null}
               </Grid>
             </Grid>
 
@@ -402,8 +327,8 @@ export default function BasicModal() {
                     },
                   },
                 }}
-                {...register("Hear", { required: true })}
-                onChange={(e) => setHear(parseInt(e.target.id) + 1)}
+                onChange={handleHearChange}
+                handleBlur={handleBlur}
               >
                 {[
                   "Using MaxPilot in the past",
@@ -463,43 +388,32 @@ export default function BasicModal() {
                 ))}
               </RadioGroup>
             </Grid>
-            {errors.hear?.type === "required" && "Required"}
-            <small>
-              {hearError && (
-                <div
-                  style={{
-                    color: "red",
-                  }}
-                >
-                  {hearError}
-                </div>
-              )}
-            </small>
+            {errors.hear && touched.hear ? (
+              <small style={{ color: "red" }}>{errors.hear}</small>
+            ) : null}
             {/* </Grid> */}
 
             {/* changed bottom margin */}
-            <Link to="/step2" style={{ textDecoration: "none" }}>
-              <Button
-                type="submit"
-                variant="contained"
-                className="btn-forgetPwd btn-login"
-                sx={{
-                  mt: 2,
-                  mb: 2,
-                  width: "182px",
-                  height: "46px",
-                  borderRadius: "10px",
-                  justifyContent: "center",
-                }}
-                onClick={(e) => {
-                  processValidation();
-                  hearValidation();
-                  createBusiness(e);
-                }}
-              >
-                Create Business
-              </Button>
-            </Link>
+            <Button
+              type="submit"
+              variant="contained"
+              className="all-green-btns"
+              sx={{
+                mt: 2,
+                mb: 2,
+                width: "182px",
+                height: "46px",
+                borderRadius: "10px",
+                justifyContent: "center",
+              }}
+              onClick={handleSubmit}
+            >
+              {loading ? (
+                <CircularProgress color="inherit" size={25} />
+              ) : (
+                <>Create Business</>
+              )}
+            </Button>
           </Box>
         </Grid>
         {/* ///////      Right Side Image       /////////*/}

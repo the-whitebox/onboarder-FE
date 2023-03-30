@@ -50,7 +50,7 @@ const style = {
   padding: "20px",
 };
 
-export default function Addleaveentitlement() {
+export default function Addleaveentitlement(props) {
   const [state, setState] = React.useState({ data: "" });
   const [leave, setLeave] = React.useState("");
 
@@ -121,17 +121,29 @@ export default function Addleaveentitlement() {
 
   return (
     <React.Fragment>
-      <Box sx={{ ...style, width: 430, height: 380 }}>
-        <Typography
-          variant="h5"
-          sx={{ fontWeight: "bold", paddingBottom: 1 }}
-          id="child-modal-title"
+      <Box sx={{ ...style, width: 430, height: "auto" }}>
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+          }}
         >
-          Add leave entitlement
-        </Typography>
+          <Typography
+            variant="h5"
+            sx={{ fontWeight: "bold" }}
+            id="child-modal-title"
+          >
+            Add leave entitlement
+          </Typography>
+          <CloseIcon
+            onClick={props.handleCloseLeaveEntitlement}
+            sx={{ cursor: "pointer" }}
+          ></CloseIcon>
+        </Box>
 
-        <div>
-          <Typography sx={{ fontSize: "14px" }}>
+        <Box>
+          <Typography sx={{ fontSize: "14px", mt: 2 }}>
             Adding leave entitlement for 0 team members. 2 team members wil not
             assigned the leave entitlement because they don't have a pay rate.
           </Typography>
@@ -140,9 +152,8 @@ export default function Addleaveentitlement() {
           </Typography>
           <FormControl
             sx={{
-              width: 200,
+              width: 300,
               borderRadius: "2px",
-              ml: "5px",
             }}
           >
             <Select
@@ -182,24 +193,26 @@ export default function Addleaveentitlement() {
               )}
             </small>
           </Box>
-        </div>
-        <Button
-          variant="primary"
-          className="Btn"
-          sx={{
-            ml: 40,
-            borderRadius: "5px",
-            width: "18%",
-            mt: "90px",
-            textTransform: "none",
-          }}
-          onClick={() => {
-            leaveValidation();
-            toEmployment();
-          }}
-        >
-          Add
-        </Button>
+        </Box>
+        <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
+          <Button
+            variant="contained"
+            className="all-green-btns"
+            sx={{
+              borderRadius: "5px",
+              width: "25%",
+              height: 35,
+              mt: 4,
+              textTransform: "none",
+            }}
+            onClick={() => {
+              leaveValidation();
+              toEmployment();
+            }}
+          >
+            Add
+          </Button>
+        </Box>
       </Box>
     </React.Fragment>
   );

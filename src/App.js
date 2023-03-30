@@ -49,10 +49,10 @@ function App() {
           {token ? (
             <>
               <Route path="/welcome" element={<Welcome />} />
-              <Route path="/about" element={<About />} />
               <Route path="/step1" element={<Step1 />} />
               <Route path="/step2" element={<Step2 />} />
               <Route path="/step3" element={<Step3 />} />
+              <Route path="/about" element={<About />} />
               <Route path="/profile" element={<Profile />} />
               <Route path="/contact" element={<Contact />} />
               <Route path="/employment" element={<Employment />} />
@@ -65,26 +65,17 @@ function App() {
               <Route path="/new" element={<AddNewPeople />} />
               <Route path="/setAccess" element={<SetAccessLevel />} />
               <Route path="/people" element={<People />} />
+              <Route path="*" element={<People />} />
             </>
           ) : (
             <>
               <Route path="/" element={<Login />} />
-              <Route path="/home" element={<Login />} />
               <Route path="/signup" element={<Signup />} />
               <Route path="/forgotpassword" element={<ForgotPassword />} />
               <Route path="/resetpassword" element={<ResetPassword />} />
+              <Route path="*" element={<Login />} />
             </>
           )}
-          {/* Error Page */}
-          <Route
-            path="*"
-            element={
-              <>
-                <h1>404 Not Found</h1>
-                <Link to="/">Home Page</Link>
-              </>
-            }
-          />
         </Routes>
       </BrowserRouter>
     </>

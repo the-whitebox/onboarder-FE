@@ -4,111 +4,68 @@ import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import Avatar from "@mui/material/Avatar";
 import Paper from "@mui/material/Paper";
-import { useTheme } from "@mui/material/styles";
-import TextField from "@mui/material/TextField";
 import Grid from "@mui/material/Grid";
 import "../../style/Step1.css";
-import Link from "@mui/material/Link";
 import FormLabel from "@mui/joy/FormLabel";
 import Radio, { radioClasses } from "@mui/joy/Radio";
 import RadioGroup from "@mui/joy/RadioGroup";
 import Sheet from "@mui/joy/Sheet";
 import CheckCircleRoundedIcon from "@mui/icons-material/CheckCircleRounded";
 import RightSideImage from "../../assets/images/bg-image.png";
-import Item from "antd/es/list/Item";
-import InputLabel from "@mui/material/InputLabel";
-import MenuItem from "@mui/material/MenuItem";
-import FormControl from "@mui/material/FormControl";
-import Select from "@mui/material/Select";
 import ScheduleIcon from "../../assets/icons/schedule-icon.png";
 import TrackHoursIcon from "../../assets/icons/trackHours-icon.png";
 import PayIcon from "../../assets/icons/pay-icon.png";
 import XeroIcon from "../../assets/icons/xero-icon.png";
 import { useLocation } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
-import { useForm } from "react-hook-form";
-
-const style = {
-  position: "absolute",
-  top: "50%",
-  left: "50%",
-  transform: "translate(-50%, -50%)",
-  width: 650,
-  bgcolor: "background.paper",
-  borderRadius: "23px",
-  boxShadow: 24,
-  p: 4,
+import { useFormik } from "formik";
+import * as Yup from "yup";
+const formSchema = Yup.object({
+  purpose: Yup.string().required("What is the purpose to join?"),
+  payroll: Yup.string().required("Please provide a payroll"),
+});
+const initialValues = {
+  purpose: "",
+  payroll: "",
 };
 
+const icons = [ScheduleIcon, TrackHoursIcon, PayIcon];
+
 export default function BasicModal(props) {
-  const [state, setState] = React.useState({ data: "" });
-  const [purpose, setPurpose] = React.useState("");
-  const [payroll, setPayroll] = React.useState("");
-  const [error, setError] = React.useState(null);
-  const [purposeError, setPurposeError] = useState("");
-  const [payrollError, setPayrollError] = useState("");
-
-  const navigate = useNavigate();
-
-  const theme = useTheme();
   const location = useLocation();
+  const Navigate = useNavigate();
 
-  const purposeValidation = () => {
-    if (purpose == "") {
-      setPurposeError("What is the purpose to join?");
-    } else setPurposeError("");
+  const { errors, touched, handleBlur, setFieldValue, handleSubmit } =
+    useFormik({
+      initialValues,
+      validationSchema: formSchema,
+      onSubmit: (values, action) => {
+        Navigate("/step3", {
+          state: {
+            business: location.state.business,
+            mobile: location.state.mobile,
+            businessType: location.state.businessType,
+            industry: location.state.industry,
+            purpose: values.purpose,
+            payroll: values.payroll,
+          },
+        });
+      },
+    });
+
+  const handlePurposeChange = (e) => {
+    setFieldValue("purpose", parseInt(e.target.id));
   };
 
-  const payrollValidation = () => {
-    if (payroll == "") {
-      setPayrollError("Please provide a payroll");
-    } else setPayrollError("");
+  const handlePayrollChange = (e) => {
+    setFieldValue("payroll", parseInt(e.target.id));
   };
 
-  const {
-    register,
-    formState: { errors },
-  } = useForm();
-
-  const toStep3 = (e) => {
-    e.preventDefault();
-    console.log("to step", purpose, payroll);
-    if (purpose !== "" && payroll !== "") {
-      console.log("Data Found");
-      setError(false);
-
-      const tempPayroll = parseInt(payroll) + 1;
-      const temppurpose = parseInt(purpose) + 1;
-
-      console.log(temppurpose, tempPayroll);
-
-      // alert(payroll + purpose);
-
-      navigate("/step3", {
-        state: {
-          business: location.state.business,
-          mobile: location.state.mobile,
-          businessType: location.state.businesstype,
-          industry: location.state.industry,
-          purpose: temppurpose,
-          payroll: tempPayroll,
-        },
-      });
-    } else {
-      setError(true);
-      setState({ data: e.target.value });
-    }
-  };
-
-  const icons = [ScheduleIcon, TrackHoursIcon, PayIcon];
   const description = [
     "I want to know my teams availability, so I can create and share schedules",
     "I want a record of when my team works, so I can pay them correctly",
     "I want to be able to process pay cycle without headaches",
   ];
-
-  // console.log(props);
 
   return (
     <div>
@@ -240,8 +197,8 @@ export default function BasicModal(props) {
                         },
                       },
                     }}
-                    {...register("Purpose", { required: true })}
-                    onChange={(e) => setPurpose(parseInt(e.target.id) + 1)}
+                    onChange={handlePurposeChange}
+                    onBlur={handleBlur}
                   >
                     {[
                       "Save time scheduling",
@@ -301,18 +258,9 @@ export default function BasicModal(props) {
                     ))}
                   </RadioGroup>
                 </Grid>
-                {errors.purpose?.type === "required" && "Purpose Required"}
-                <small>
-                  {purposeError && (
-                    <div
-                      style={{
-                        color: "red",
-                      }}
-                    >
-                      {purposeError}
-                    </div>
-                  )}
-                </small>
+                {errors.purpose && touched.purpose ? (
+                  <small style={{ color: "red" }}>{errors.purpose}</small>
+                ) : null}
               </Grid>
             </Grid>
 
@@ -342,7 +290,6 @@ export default function BasicModal(props) {
             </Typography>
             <RadioGroup
               aria-labelledby="storage-label"
-              // defaultValue="XERO"
               overlay
               size="lg"
               sx={{
@@ -368,8 +315,8 @@ export default function BasicModal(props) {
                   },
                 },
               }}
-              {...register("Payroll", { required: true })}
-              onChange={(e) => setPayroll(parseInt(e.target.id) + 1)}
+              onChange={handlePayrollChange}
+              onBlur={handleBlur}
             >
               {["XERO"].map((value, idx) => (
                 <Sheet
@@ -398,74 +345,31 @@ export default function BasicModal(props) {
                     disableIcon
                     value={value}
                     checkedIcon={<CheckCircleRoundedIcon />}
-                    // slotProps={{
-                    //   label: ({ checked }) => ({
-                    //     sx: {
-                    //       fontWeight: "lg",
-                    //       fontSize: "md",
-                    //       color: checked ? "text.primary" : "text.secondary",
-                    //     },
-                    //   }),
-
-                    // action: ({ checked }) => ({
-                    //   sx: (theme) => ({
-                    //     ...(checked && {
-                    //       "--variant-borderWidth": "2px",
-                    //       "&&": {
-                    //         // && to increase the specificity to win the base :hover styles
-                    //         borderColor: theme.vars.palette.primary[500],
-                    //       },
-                    //     }),
-                    //   }),
-                    // }),
-                    // }}
                   />
                 </Sheet>
               ))}
             </RadioGroup>
-            {errors.payroll?.type === "required" && "Payroll Required"}
-            <small>
-              {payrollError && (
-                <div
-                  style={{
-                    color: "red",
-                  }}
-                >
-                  {payrollError}
-                </div>
-              )}
-            </small>
-            {/* changed bottom margin */}
+            {errors.payroll && touched.payroll ? (
+              <small style={{ color: "red" }}>{errors.payroll}</small>
+            ) : null}
 
-            <Link to="/step3" style={{ textDecoration: "none" }}>
-              <Button
-                type="submit"
-                variant="contained"
-                className="btn-forgetPwd btn-login"
-                sx={{
-                  mt: 2,
-                  mb: 2,
-                  width: "89px",
-                  borderRadius: "10px",
-                  justifyContent: "center",
-                }}
-                data={state.data}
-                onClick={(e) => {
-                  purposeValidation();
-                  payrollValidation();
-                  toStep3(e);
-                }}
-              >
-                Next
-              </Button>
-            </Link>
+            <Button
+              variant="contained"
+              className="all-green-btns"
+              sx={{
+                mt: 2,
+                mb: 2,
+                width: "90px",
+                borderRadius: "10px",
+                justifyContent: "center",
+              }}
+              onClick={handleSubmit}
+            >
+              Next
+            </Button>
           </Box>
         </Grid>
-
         {/* ///////      Right Side Image       /////////*/}
-
-        {/* changes made on image position  */}
-
         <Grid
           item
           xs={false}
