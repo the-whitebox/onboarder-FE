@@ -1,3 +1,4 @@
+import React from "react";
 import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -31,6 +32,7 @@ import Employment from "./components/pages/Employment";
 import EmploymentDetails from "./components/pages/EmploymentDetails";
 import PersonalDetails from "./components/pages/PersonalDetails";
 import AddNewPeople from "./components/pages/AddNewPeople";
+import PrivateRoute from "./helpers/PrivateRoute";
 
 function App() {
   const token = localStorage.getItem("token");
@@ -46,27 +48,129 @@ function App() {
       <ToastContainer position="top-right" style={{ zIndex: "9999999" }} />
       <BrowserRouter>
         <Routes>
+          <Route
+            path="/welcome"
+            element={
+              <PrivateRoute>
+                <Welcome />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/step1"
+            element={
+              <PrivateRoute>
+                <Step1 />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/step2"
+            element={
+              <PrivateRoute>
+                <Step2 />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/step3"
+            element={
+              <PrivateRoute>
+                <Step3 />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/about"
+            element={
+              <PrivateRoute>
+                <About />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/profile"
+            element={
+              <PrivateRoute>
+                <Profile />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/contact"
+            element={
+              <PrivateRoute>
+                <Contact />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/employment"
+            element={
+              <PrivateRoute>
+                <Employment />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/employment_details"
+            element={
+              <PrivateRoute>
+                <EmploymentDetails />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/personal_details"
+            element={
+              <PrivateRoute>
+                <PersonalDetails />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/add"
+            element={
+              <PrivateRoute>
+                <AddNewPeople />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/new"
+            element={
+              <PrivateRoute>
+                <AddNewPeople />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/setAccess"
+            element={
+              <PrivateRoute>
+                <SetAccessLevel />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/people"
+            element={
+              <PrivateRoute>
+                <People />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="*"
+            element={
+              <PrivateRoute>
+                <People />
+              </PrivateRoute>
+            }
+          />
+
           {token ? (
-            <>
-              <Route path="/welcome" element={<Welcome />} />
-              <Route path="/step1" element={<Step1 />} />
-              <Route path="/step2" element={<Step2 />} />
-              <Route path="/step3" element={<Step3 />} />
-              <Route path="/about" element={<About />} />
-              <Route path="/profile" element={<Profile />} />
-              <Route path="/contact" element={<Contact />} />
-              <Route path="/employment" element={<Employment />} />
-              <Route
-                path="/employment_details"
-                element={<EmploymentDetails />}
-              />
-              <Route path="/personal_details" element={<PersonalDetails />} />
-              <Route path="/add" element={<AddNewPeople />} />
-              <Route path="/new" element={<AddNewPeople />} />
-              <Route path="/setAccess" element={<SetAccessLevel />} />
-              <Route path="/people" element={<People />} />
-              <Route path="*" element={<People />} />
-            </>
+            <></>
           ) : (
             <>
               <Route path="/" element={<Login />} />

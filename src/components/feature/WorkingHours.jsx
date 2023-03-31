@@ -56,9 +56,7 @@ export default function WorkingHours(props) {
           aria-labelledby="modal-modal-title"
           aria-describedby="modal-modal-description"
         >
-          <SetAgreedHoursModalBody
-            handleCloseWorkPeriod={handleCloseWorkPeriod}
-          />
+          <SetAgreedHoursModalBody handleClose={handleCloseWorkPeriod} />
         </Modal>
         <Modal
           open={openHours}

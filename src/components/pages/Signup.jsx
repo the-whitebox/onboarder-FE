@@ -41,7 +41,7 @@ const style = {
   p: 4,
 };
 
-export default function BasicModal() {
+export default function BasicModal(props) {
   const Navigate = useNavigate();
   const url = process.env.REACT_APP_BASE_URL;
   const [loading, setLoading] = React.useState(false);
@@ -64,6 +64,7 @@ export default function BasicModal() {
             Navigate("/step1");
             setLoading(false);
             action.resetForm();
+            props.handleCloseSignup();
           })
           .catch((error) => {
             toast.error(error.response.data.data);

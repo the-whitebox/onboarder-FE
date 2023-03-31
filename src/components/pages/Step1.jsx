@@ -155,7 +155,7 @@ export default function BasicModal() {
               We will personalize your trial experience
             </Typography>
 
-            <Grid
+            <Box
               sx={{
                 mt: 2,
                 display: "flex",
@@ -165,7 +165,7 @@ export default function BasicModal() {
                 alignItems: "center",
               }}
             >
-              <Grid
+              <Box
                 sx={{
                   display: "flex",
                   flexDirection: "column",
@@ -179,6 +179,7 @@ export default function BasicModal() {
                     fontWeight: "bold",
                     fontSize: "18px",
                     color: "#332A60",
+                    mb: 1,
                   }}
                 >
                   What is your business?
@@ -197,9 +198,9 @@ export default function BasicModal() {
                 {errors.business && touched.business ? (
                   <small style={{ color: "red" }}>{errors.business}</small>
                 ) : null}
-              </Grid>
+              </Box>
 
-              <Grid
+              <Box
                 sx={{
                   display: "flex",
                   flexDirection: "column",
@@ -213,6 +214,7 @@ export default function BasicModal() {
                     fontWeight: "bold",
                     fontSize: "18px",
                     color: "#332A60",
+                    mb: 1,
                   }}
                 >
                   What is your mobile number?
@@ -231,14 +233,15 @@ export default function BasicModal() {
                 {errors.mobile && touched.mobile ? (
                   <small style={{ color: "red" }}>{errors.mobile}</small>
                 ) : null}
-              </Grid>
-            </Grid>
+              </Box>
+            </Box>
             <Typography
               sx={{
-                mt: 2,
+                mt: 4,
                 fontWeight: "bold",
                 fontSize: "18px",
                 color: "#332A60",
+                mb: 1,
               }}
             >
               What best describes your business?
@@ -257,19 +260,17 @@ export default function BasicModal() {
               {/* Cards Here */}
               <RadioGroup
                 aria-label="platform"
-                defaultValue="Website"
                 overlay
                 name="platform"
                 sx={{
-                  mt: 2,
                   flexWrap: "wrap",
                   flexDirection: "row",
                   gap: 2,
                   [`& .${radioClasses.checked}`]: {
                     [`& .${radioClasses.action}`]: {
-                      inset: -1,
-                      border: "3px solid",
-                      borderColor: "primary.500",
+                      inset: -2,
+                      border: "2px solid #38b492",
+                      borderRadius: "8px",
                     },
                   },
                   [`& .${radioClasses.radio}`]: {
@@ -298,7 +299,8 @@ export default function BasicModal() {
                     key={idx}
                     variant="outlined"
                     sx={{
-                      borderRadius: "md",
+                      borderRadius: "8px",
+                      border: "2px solid #e2e2e2",
                       bgcolor: "background.body",
                       boxShadow: "sm",
                       display: "flex",
@@ -329,16 +331,17 @@ export default function BasicModal() {
             ) : null}
             <Typography
               sx={{
-                mt: 2,
+                mt: 4,
                 fontWeight: "bold",
                 fontSize: "18px",
                 color: "#332A60",
+                mb: 1,
               }}
             >
               Select your industry
             </Typography>
-            <FormControl sx={{ width: "30%", mt: 2 }}>
-              <InputLabel id="demo-simple-select-label">Industry</InputLabel>
+            <FormControl sx={{ width: { lg: "30%", sm: "70%" } }}>
+              <InputLabel id="demo-simple-select-label">Select</InputLabel>
 
               <Select
                 labelId="demo-simple-select-label"
@@ -362,11 +365,11 @@ export default function BasicModal() {
               variant="contained"
               className="all-green-btns"
               sx={{
-                mt: 2,
-                mb: 2,
-                width: "89px",
-                borderRadius: "10px",
-                justifyContent: "center",
+                mt: 5,
+                width: "10%",
+                height: 35,
+                borderRadius: "8px",
+                textTransform: "none",
               }}
               onClick={handleSubmit}
             >

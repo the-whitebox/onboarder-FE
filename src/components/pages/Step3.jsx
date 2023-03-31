@@ -200,13 +200,21 @@ export default function BasicModal() {
                 >
                   <RadioGroup
                     aria-labelledby="storage-label"
-                    // defaultValue="As soon as possible"
                     overlay
                     size="lg"
                     sx={{
                       flexDirection: "row",
                       gap: 2.5,
                       mt: 2,
+                      [`& .${radioClasses.checked}`]: {
+                        [`& .${radioClasses.action}`]: {
+                          border: "2px solid #38b492",
+                        },
+                      },
+                      [`& .${radioClasses.action}`]: {
+                        borderRadius: "15px",
+                        border: "2px solid #e2e2e2",
+                      },
                     }}
                     onChange={handlePayProcessChange}
                     handleBlur={handleBlur}
@@ -219,16 +227,16 @@ export default function BasicModal() {
                       <Sheet
                         key={value}
                         sx={{
+                          borderRadius: "8px",
                           p: 2,
                           display: "flex",
                           flexDirection: "row",
                           justifyContent: "center",
                           alignItems: "center",
-                          borderRadius: "16px",
                           boxShadow: "sm",
                           bgcolor: "background.body",
                           width: "190px",
-                          height: "56px",
+                          height: "40px",
                         }}
                       >
                         <Radio
@@ -240,6 +248,7 @@ export default function BasicModal() {
                           slotProps={{
                             label: ({ checked }) => ({
                               sx: {
+                                // border: "2px solid #e2e2e2",
                                 fontWeight: "lg",
                                 fontSize: "md",
                                 color: checked
@@ -252,9 +261,8 @@ export default function BasicModal() {
                                 ...(checked && {
                                   "--variant-borderWidth": "2px",
                                   "&&": {
-                                    // && to increase the specificity to win the base :hover styles
-                                    borderColor:
-                                      theme.vars.palette.primary[500],
+                                    borderRadius: "8px",
+                                    borderColor: "#38b492",
                                   },
                                 }),
                               }),
@@ -310,9 +318,8 @@ export default function BasicModal() {
                   gap: 2,
                   [`& .${radioClasses.checked}`]: {
                     [`& .${radioClasses.action}`]: {
-                      inset: -1,
-                      border: "3px solid",
-                      borderColor: "primary.500",
+                      inset: -3,
+                      border: "2px solid #38b492",
                     },
                   },
                   [`& .${radioClasses.radio}`]: {
@@ -345,7 +352,8 @@ export default function BasicModal() {
                     variant="outlined"
                     md={3}
                     sx={{
-                      borderRadius: "16px",
+                      borderRadius: "15px",
+                      border: "2px solid #e2e2e2",
                       bgcolor: "background.body",
                       boxShadow: "sm",
                       display: "flex",
@@ -355,7 +363,7 @@ export default function BasicModal() {
 
                       gap: 1.5,
                       p: 2,
-                      width: "120px",
+                      width: "160px",
                       height: "130px",
                     }}
                   >
@@ -391,20 +399,15 @@ export default function BasicModal() {
             {errors.hear && touched.hear ? (
               <small style={{ color: "red" }}>{errors.hear}</small>
             ) : null}
-            {/* </Grid> */}
-
-            {/* changed bottom margin */}
             <Button
-              type="submit"
               variant="contained"
               className="all-green-btns"
               sx={{
-                mt: 2,
-                mb: 2,
-                width: "182px",
-                height: "46px",
-                borderRadius: "10px",
-                justifyContent: "center",
+                mt: 5,
+                width: "20%",
+                height: 35,
+                borderRadius: "8px",
+                textTransform: "none",
               }}
               onClick={handleSubmit}
             >

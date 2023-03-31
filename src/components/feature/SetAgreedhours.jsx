@@ -10,10 +10,21 @@ import Typography from "@mui/material/Typography";
 import CloseIcon from "@mui/icons-material/Close";
 import OutlinedInput from "@mui/material/OutlinedInput";
 import InputAdornment from "@mui/material/InputAdornment";
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import { useForm } from "react-hook-form";
+import CircularProgress from "@mui/material/CircularProgress";
+import { toast } from "react-toastify";
+import { useFormik } from "formik";
+import * as Yup from "yup";
+const formSchema = Yup.object({
+  workPeriod: Yup.string().required("Please enter work period length"),
+  netWorkPeriod: Yup.string().required("Please enter start day"),
+  hours: Yup.string().required("Please enter hours per work period"),
+});
+const initialValues = {
+  workPeriod: "",
+  netWorkPeriod: "",
+  hours: "",
+};
 
 const style = {
   position: "absolute",
@@ -29,72 +40,48 @@ const style = {
 };
 
 export default function SetAgreedhours(props) {
-  const [state, setState] = React.useState({ data: "" });
-  const [workPeriod, setWorkPeriod] = React.useState("");
-  const [netWorkPeriod, setNetWorkPeriod] = React.useState("");
-  const [hours, setHours] = React.useState("");
-
-  const [error, setError] = React.useState(null);
-  const [workPeriodError, setWorkPeriodError] = useState("");
-  const [netWorkPeriodError, setNetWorkPeriodError] = useState("");
-  const [hoursError, setHoursError] = useState("");
   const token = localStorage.getItem("token");
+  const userId = localStorage.getItem("userId");
   const url = process.env.REACT_APP_BASE_URL;
+  const [loading, setLoading] = React.useState(false);
 
-  const workPeriodValidation = () => {
-    if (workPeriod == "") {
-      setWorkPeriodError("Please enter work period length");
-    } else setWorkPeriodError("");
-  };
-
-  const netWorkPeriodValidation = () => {
-    if (netWorkPeriod == "") {
-      setNetWorkPeriodError("Please enter start day");
-    } else setNetWorkPeriodError("");
-  };
-
-  const hoursValidation = () => {
-    if (hours == "") {
-      setHoursError("Please enter hours per work period");
-    } else setHoursError("");
-  };
-
-  const {
-    register,
-    formState: { errors },
-  } = useForm();
-
-  const navigate = useNavigate();
-
-  const toPeople = (e) => {
-    axios
-      .patch(
-        url + "/people/6/",
-        {
-          is_superuser: false,
-          working_hours: {
-            hours_per_work_period: hours,
-            work_period: {
-              next_work_period_day: netWorkPeriod,
-              work_period_length: workPeriod,
+  const { values, errors, touched, handleBlur, handleChange, handleSubmit } =
+    useFormik({
+      initialValues,
+      validationSchema: formSchema,
+      onSubmit: async (values, action) => {
+        setLoading(true);
+        await axios
+          .post(
+            `${url}/people/${userId}/`,
+            {
+              is_superuser: false,
+              working_hours: {
+                hours_per_work_period: values.hours,
+                work_period: {
+                  next_work_period_day: values.netWorkPeriod,
+                  work_period_length: values.workPeriod,
+                },
+              },
             },
-          },
-          profile: {},
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-            "Content-Type": "application/json",
-          },
-        }
-      )
-      .then((response) => {
-        console.log(response);
-      })
-      .catch((error) => {
-        console.error(error);
-      });
-  };
+            {
+              headers: {
+                Authorization: `Bearer ${token}`,
+                "Content-Type": "application/json",
+              },
+            }
+          )
+          .then((response) => {
+            console.log("Response", response);
+            setLoading(false);
+            props.handleClose();
+          })
+          .catch((error) => {
+            toast.error("Something went wrong! Please try again");
+            setLoading(false);
+          });
+      },
+    });
 
   return (
     <React.Fragment>
@@ -114,7 +101,7 @@ export default function SetAgreedhours(props) {
         >
           <h2>Set agreed hours</h2>
           <CloseIcon
-            onClick={props.handleCloseWorkPeriod}
+            onClick={props.handleClose}
             sx={{ cursor: "pointer" }}
           ></CloseIcon>
         </Box>
@@ -141,7 +128,7 @@ export default function SetAgreedhours(props) {
             variant="h6"
             sx={{ fontWeight: "bold", ml: "20px", pb: "15px" }}
           >
-            Create a new work period{" "}
+            Create a new work period
           </Typography>
           <Typography sx={{ ml: "20px", pb: "30px" }}>
             Saving this template will allow it to be used across any team member
@@ -167,10 +154,10 @@ export default function SetAgreedhours(props) {
                 gap: 3,
               }}
               aria-labelledby="demo-radio-buttons-group-label"
-              defaultValue=""
-              name="radio-buttons-group"
-              {...register("Work Period", { required: true })}
-              onChange={(e) => setWorkPeriod(e.target.value)}
+              name="workPeriod"
+              value={values.workPeriod}
+              onChange={handleChange}
+              handleBlur={handleBlur}
             >
               <FormControlLabel value={1} control={<Radio />} label="Weekly" />
               <FormControlLabel
@@ -179,25 +166,16 @@ export default function SetAgreedhours(props) {
                 label="2-Weekly"
               />
               <FormControlLabel
-                value={3}
+                value={4}
                 control={<Radio />}
                 label="4-Weekly"
               />
             </RadioGroup>
           </FormControl>
           <Box sx={{ ml: 3, mt: 1, mb: 1 }}>
-            {errors.workPeriod?.type === "required" && "Work Period Required"}
-            <small>
-              {workPeriodError && (
-                <div
-                  style={{
-                    color: "red",
-                  }}
-                >
-                  {workPeriodError}
-                </div>
-              )}
-            </small>
+            {errors.workPeriod && touched.workPeriod ? (
+              <small style={{ color: "red" }}>{errors.workPeriod}</small>
+            ) : null}
           </Box>
           <Typography
             sx={{
@@ -207,8 +185,7 @@ export default function SetAgreedhours(props) {
               pb: "10px",
             }}
           >
-            {" "}
-            Next Work period starts on{" "}
+            Next Work period starts on
           </Typography>
 
           <FormControl>
@@ -221,10 +198,10 @@ export default function SetAgreedhours(props) {
                 ml: "20px",
               }}
               aria-labelledby="demo-radio-buttons-group-label"
-              defaultValue=""
-              name="radio-buttons-group"
-              {...register("Work Period", { required: true })}
-              onChange={(e) => setNetWorkPeriod(e.target.value)}
+              name="netWorkPeriod"
+              value={values.netWorkPeriod}
+              onChange={handleChange}
+              handleBlur={handleBlur}
             >
               <FormControlLabel value={1} control={<Radio />} label="Mon" />
               <FormControlLabel value={2} control={<Radio />} label="Tue" />
@@ -236,19 +213,9 @@ export default function SetAgreedhours(props) {
             </RadioGroup>
           </FormControl>
           <Box sx={{ ml: 3, mt: 1 }}>
-            {errors.netWorkPeriod?.type === "required" &&
-              "Work Period Required"}
-            <small>
-              {netWorkPeriodError && (
-                <div
-                  style={{
-                    color: "red",
-                  }}
-                >
-                  {netWorkPeriodError}
-                </div>
-              )}
-            </small>
+            {errors.netWorkPeriod && touched.netWorkPeriod ? (
+              <small style={{ color: "red" }}>{errors.netWorkPeriod}</small>
+            ) : null}
           </Box>
           <Typography
             sx={{ fontWeight: "bold", pt: "15px", pb: "20px", ml: 3 }}
@@ -257,37 +224,29 @@ export default function SetAgreedhours(props) {
           </Typography>
           <FormControl
             size="small"
-            sx={{ m: 1, width: 150 }}
+            sx={{ ml: 3, width: 160 }}
             variant="outlined"
           >
             <OutlinedInput
               id="outlined-adornment-weight"
               endAdornment={
-                <InputAdornment position="end"> hours</InputAdornment>
+                <InputAdornment position="end">Hours</InputAdornment>
               }
               aria-describedby="outlined-weight-helper-text"
               inputProps={{
                 "aria-label": "weight",
               }}
-              placeholder="0"
-              {...register("Hours", { required: true })}
-              onChange={(e) => setHours(e.target.value)}
+              name="hours"
+              value={values.hours}
+              onChange={handleChange}
+              handleBlur={handleBlur}
             />
           </FormControl>
         </div>
         <Box sx={{ ml: 3, mt: 1 }}>
-          {errors.hours?.type === "required" && "Work Period Required"}
-          <small>
-            {hoursError && (
-              <div
-                style={{
-                  color: "red",
-                }}
-              >
-                {hoursError}
-              </div>
-            )}
-          </small>
+          {errors.hours && touched.hours ? (
+            <small style={{ color: "red" }}>{errors.hours}</small>
+          ) : null}
         </Box>
         <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
           <Button
@@ -300,14 +259,13 @@ export default function SetAgreedhours(props) {
               textTransform: "none",
               mt: 3,
             }}
-            onClick={() => {
-              workPeriodValidation();
-              netWorkPeriodValidation();
-              hoursValidation();
-              toPeople();
-            }}
+            onClick={handleSubmit}
           >
-            Save
+            {loading ? (
+              <CircularProgress color="inherit" size={25} />
+            ) : (
+              <>Save</>
+            )}
           </Button>
         </Box>
       </Box>

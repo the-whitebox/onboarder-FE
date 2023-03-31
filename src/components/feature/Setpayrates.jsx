@@ -326,24 +326,29 @@ export default function Setpayrates(props) {
             </Box>
           </Box>
         </Box>
-        <Button
-          className="all-green-btns"
-          variant="contained"
-          size="small"
-          sx={{
-            ml: 36,
-            borderRadius: "6px",
-            width: "30%",
-            height: "40px",
-            bgcolor: "#38b492",
-            color: "white",
-            textTransform: "none",
-            mt: 6,
-          }}
-          onClick={handleSubmit}
-        >
-          {loading ? <CircularProgress color="inherit" size={30} /> : <>Save</>}
-        </Button>
+        <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
+          <Button
+            className="all-green-btns"
+            variant="contained"
+            size="small"
+            sx={{
+              borderRadius: "6px",
+              width: "30%",
+              height: "40px",
+              bgcolor: "#38b492",
+              color: "white",
+              textTransform: "none",
+              mt: 6,
+            }}
+            onClick={handleSubmit}
+          >
+            {loading ? (
+              <CircularProgress color="inherit" size={30} />
+            ) : (
+              <>Save</>
+            )}
+          </Button>
+        </Box>
       </Box>
     </React.Fragment>
   );

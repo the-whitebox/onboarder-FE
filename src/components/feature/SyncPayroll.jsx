@@ -43,31 +43,32 @@ export default function SyncPayroll(props) {
           ></CloseIcon>
         </Box>
 
-        <Box>
+        <Box sx={{ color: "#342b61" }}>
           <Typography sx={{ color: "#b4b4b4" }}>Team members</Typography>
           <Box sx={{ display: "flex", alignItems: "center" }}>
             <Checkbox size="small" sx={{ color: "rgba(95, 91, 81, 0.518)" }} />
             <Typography>
-              Refresh the mapping of Team members between MaxPilot
+              Refresh the mapping of team members between MaxPilot
             </Typography>
           </Box>
           <Typography sx={{ mt: 2, mb: 1, ml: 2 }}>Asher Muneer</Typography>
-          <Typography sx={{ ml: 2 }}>ssssssss</Typography>
+          <Typography sx={{ ml: 2 }}>30 Team members</Typography>
         </Box>
-
-        <Button
-          className="all-green-btns"
-          variant="contained"
-          sx={{
-            textTransform: "none",
-            ml: 40,
-            borderRadius: "8px",
-            mt: 3,
-            width: "170px",
-          }}
-        >
-          Sync Team member
-        </Button>
+        <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
+          <Button
+            className="all-blue-btns"
+            variant="contained"
+            sx={{
+              textTransform: "none",
+              borderRadius: "8px",
+              mt: 3,
+              width: "40%",
+              height: 35,
+            }}
+          >
+            Sync Team member
+          </Button>
+        </Box>
       </Box>
     </React.Fragment>
   );

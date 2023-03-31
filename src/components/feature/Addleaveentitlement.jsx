@@ -14,6 +14,14 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import axios from "axios";
 import "../../style/SetStress.css";
+import CircularProgress from "@mui/material/CircularProgress";
+import { toast } from "react-toastify";
+import { useFormik } from "formik";
+import * as Yup from "yup";
+const formSchema = Yup.object({
+  leave: Yup.string().required("Please select leave entitlement"),
+});
+const initialValues = { leave: "" };
 
 const ITEM_HEIGHT = 40;
 const ITEM_PADDING_TOP = 45;
@@ -51,73 +59,45 @@ const style = {
 };
 
 export default function Addleaveentitlement(props) {
-  const [state, setState] = React.useState({ data: "" });
-  const [leave, setLeave] = React.useState("");
-
-  const [error, setError] = React.useState(null);
-  const [leaveError, setLeaveError] = useState("");
-  const token = localStorage.getItem("token");
-  const url = process.env.REACT_APP_BASE_URL;
-
-  function getStyles(name, personName, theme) {
-    return {
-      fontWeight:
-        personName.indexOf(name) === -1
-          ? theme.typography.fontWeightRegular
-          : theme.typography.fontWeightMedium,
-    };
-  }
-
   const theme = useTheme();
-  const [personName, setPersonName] = React.useState([]);
+  const token = localStorage.getItem("token");
+  const userId = localStorage.getItem("userId");
+  const url = process.env.REACT_APP_BASE_URL;
+  const [loading, setLoading] = React.useState(false);
 
-  const handleChange = (event) => {
-    const {
-      target: { value },
-    } = event;
-
-    setLeave(event.target.value);
-  };
-
-  const leaveValidation = () => {
-    if (leave == "") {
-      setLeaveError("Please enter leave entitlement");
-    } else setLeaveError("");
-  };
-
-  const {
-    register,
-    formState: { errors },
-  } = useForm();
-
-  const navigate = useNavigate();
-
-  const toEmployment = (e) => {
-    console.log({ leave });
-
-    axios
-      .patch(
-        url + "/people/6/",
-        {
-          profile: {},
-          leave_entitlements: [
-            { id: 6, leave_entitlement: parseInt(leave) + 1 },
-          ],
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-            "Content-Type": "application/json",
-          },
-        }
-      )
-      .then((response) => {
-        console.log(response);
-      })
-      .catch((error) => {
-        console.error(error);
-      });
-  };
+  const { values, errors, touched, handleBlur, handleChange, handleSubmit } =
+    useFormik({
+      initialValues,
+      validationSchema: formSchema,
+      onSubmit: async (values, action) => {
+        setLoading(true);
+        await axios
+          .post(
+            `${url}/people/${userId}/`,
+            {
+              profile: {},
+              leave_entitlements: [
+                { id: 6, leave_entitlement: parseInt(values.leave) + 1 },
+              ],
+            },
+            {
+              headers: {
+                Authorization: `Bearer ${token}`,
+                "Content-Type": "application/json",
+              },
+            }
+          )
+          .then((response) => {
+            console.log("Response", response);
+            setLoading(false);
+            props.handleCloseStress();
+          })
+          .catch((error) => {
+            toast.error("Something went wrong! Please try again");
+            setLoading(false);
+          });
+      },
+    });
 
   return (
     <React.Fragment>
@@ -157,41 +137,30 @@ export default function Addleaveentitlement(props) {
             }}
           >
             <Select
-              {...register("Leave Entitlement", { required: true })}
-              onChange={handleChange}
               sx={{ borderRadius: "7px" }}
               size="small"
               displayEmpty
-              value={leave}
               input={<OutlinedInput />}
-              MenuProps={MenuProps}
               inputProps={{ "aria-label": "Without label" }}
+              name="leave"
+              value={values.leave}
+              onChange={handleChange}
+              handleBlur={handleBlur}
             >
+              <MenuItem value="" disabled>
+                Select
+              </MenuItem>
               {names.map((name, idx) => (
-                <MenuItem
-                  key={name}
-                  value={idx}
-                  style={getStyles(name, personName, theme)}
-                >
+                <MenuItem key={name} value={idx}>
                   {name}
                 </MenuItem>
               ))}
             </Select>
           </FormControl>
           <Box sx={{ ml: 1, mt: 1 }}>
-            {errors.LeaveEntitlement?.type === "required" &&
-              "Leave Entitlement Required"}
-            <small>
-              {leaveError && (
-                <div
-                  style={{
-                    color: "red",
-                  }}
-                >
-                  {leaveError}
-                </div>
-              )}
-            </small>
+            {errors.leave && touched.leave ? (
+              <small style={{ color: "red" }}>{errors.leave}</small>
+            ) : null}
           </Box>
         </Box>
         <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
@@ -205,12 +174,13 @@ export default function Addleaveentitlement(props) {
               mt: 4,
               textTransform: "none",
             }}
-            onClick={() => {
-              leaveValidation();
-              toEmployment();
-            }}
+            onClick={handleSubmit}
           >
-            Add
+            {loading ? (
+              <CircularProgress color="inherit" size={25} />
+            ) : (
+              <>Add</>
+            )}
           </Button>
         </Box>
       </Box>

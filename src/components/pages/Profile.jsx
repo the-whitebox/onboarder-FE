@@ -23,8 +23,8 @@ import GlobalContext from "../../context/GlobalContext";
 const drawerWidth = 240;
 
 export default function Profile() {
-  const { setUserInfo } = React.useContext(GlobalContext);
   const theme = useTheme();
+  const { setUserInfo } = React.useContext(GlobalContext);
   const userId = localStorage.getItem("userId");
   const token = localStorage.getItem("token");
   const url = process.env.REACT_APP_BASE_URL + `/people/${userId}/`;
@@ -65,7 +65,7 @@ export default function Profile() {
           aria-labelledby="modal-modal-title"
           aria-describedby="modal-modal-description"
         >
-          <ArchiveTeamMemberModalBody />
+          <ArchiveTeamMemberModalBody handleClose={handleClose} />
         </Modal>
         <Box sx={{ display: "flex" }}>
           <CssBaseline />
@@ -94,14 +94,16 @@ export default function Profile() {
                 sx={{
                   bgcolor: "#38b492",
                   color: "#ffffff",
+                  height: 35,
+                  mr: { lg: 15, xs: 0 },
                 }}
               >
                 Save
               </Button>
             </Box>
             <Box>
-              <Button sx={{ color: "#38b492" }}>Message</Button>
-              <Button onClick={handleOpen} sx={{ color: "#38b492" }}>
+              <Button sx={{ color: "#3d1cba" }}>Message</Button>
+              <Button onClick={handleOpen} sx={{ color: "#f2665b" }}>
                 Archive Team member
               </Button>
             </Box>

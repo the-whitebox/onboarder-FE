@@ -180,9 +180,8 @@ export default function BasicModal(props) {
                       gap: 2,
                       [`& .${radioClasses.checked}`]: {
                         [`& .${radioClasses.action}`]: {
-                          inset: -1,
-                          border: "3px solid",
-                          borderColor: "primary.500",
+                          inset: -3,
+                          border: "2px solid #38b492",
                         },
                       },
                       [`& .${radioClasses.radio}`]: {
@@ -209,7 +208,8 @@ export default function BasicModal(props) {
                         key={idx}
                         variant="outlined"
                         sx={{
-                          borderRadius: "md",
+                          borderRadius: "8px",
+                          border: "2px solid #e2e2e2",
                           bgcolor: "background.body",
                           boxShadow: "sm",
                           display: "flex",
@@ -298,11 +298,14 @@ export default function BasicModal(props) {
                 mt: 2,
                 [`& .${radioClasses.checked}`]: {
                   [`& .${radioClasses.action}`]: {
-                    inset: -1,
-                    border: "3px solid",
-                    borderColor: "primary.500",
+                    inset: -3,
+                    border: "2px solid #38b492",
                   },
                 },
+                [`& .${radioClasses.action}`]: {
+                  border: "none",
+                },
+
                 [`& .${radioClasses.radio}`]: {
                   display: "contents",
                   "& > svg": {
@@ -322,12 +325,12 @@ export default function BasicModal(props) {
                 <Sheet
                   key={idx}
                   sx={{
-                    p: 2,
+                    p: "10px 100px 10px 10px",
+                    borderRadius: "8px",
+                    border: "2px solid #e2e2e2",
                     display: "flex",
-                    flexDirection: "row",
-                    justifyContent: "center",
+                    justifyContent: "flex-start",
                     alignItems: "center",
-                    borderRadius: "md",
                     boxShadow: "sm",
                     bgcolor: "background.body",
                   }}
@@ -357,11 +360,12 @@ export default function BasicModal(props) {
               variant="contained"
               className="all-green-btns"
               sx={{
-                mt: 2,
+                mt: 5,
                 mb: 2,
-                width: "90px",
-                borderRadius: "10px",
-                justifyContent: "center",
+                width: "10%",
+                height: 35,
+                borderRadius: "8px",
+                textTransform: "none",
               }}
               onClick={handleSubmit}
             >

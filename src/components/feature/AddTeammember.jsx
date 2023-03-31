@@ -202,7 +202,7 @@ export default function Addteammember(props) {
               Copy link
             </Button>
           </Box>
-          <Typography style={{ color: "#38b492" }} sx={{ ml: 18, pt: "5px" }}>
+          <Typography className="aTag" sx={{ ml: 18, pt: "5px" }}>
             How invite links work
           </Typography>
           <Box sx={{ pt: 2 }}>
@@ -264,10 +264,12 @@ export default function Addteammember(props) {
                   label="Location"
                   input={<OutlinedInput />}
                   inputProps={{ "aria-label": "Without label" }}
+                  value=""
+                  handleBlur={handleBlur}
+                  onChange={handleChange}
                 >
-                  <MenuItem disabled value=""></MenuItem>
-                  <MenuItem value="">
-                    <em>None</em>
+                  <MenuItem value="" disabled>
+                    <em>Select</em>
                   </MenuItem>
                   {names.map((name, idx) => (
                     <MenuItem key={name} value={idx}>
@@ -285,16 +287,19 @@ export default function Addteammember(props) {
                   name="otherLocation"
                   sx={{
                     font: "inherit",
-                    width: 300,
+                    width: "300px",
                     borderRadius: "8px",
                   }}
                   displayEmpty
-                  label="Other Location"
                   input={<OutlinedInput />}
+                  label="Other Location"
                   inputProps={{ "aria-label": "Without label" }}
+                  value=""
+                  handleBlur={handleBlur}
+                  onChange={handleChange}
                 >
-                  <MenuItem value="">
-                    <em>None</em>
+                  <MenuItem value="" disabled>
+                    <em>Select</em>
                   </MenuItem>
                   {names.map((name, idx) => (
                     <MenuItem key={name} value={idx}>
@@ -372,8 +377,8 @@ export default function Addteammember(props) {
                     label="Access Level"
                     inputProps={{ "aria-label": "Without label" }}
                   >
-                    <MenuItem value="">
-                      <em>None</em>
+                    <MenuItem value="" disabled>
+                      <em>Select</em>
                     </MenuItem>
                     {access.map((name, idx) => (
                       <MenuItem key={name} value={idx}>
@@ -416,7 +421,7 @@ export default function Addteammember(props) {
           <Button
             sx={{
               textTransform: "capitalize",
-              width: 180,
+              width: "30%",
               height: 35,
               mt: 4,
               borderRadius: 2,
