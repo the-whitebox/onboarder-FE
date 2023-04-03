@@ -4,89 +4,86 @@ import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import Avatar from "@mui/material/Avatar";
 import TextField from "@mui/material/TextField";
-import Grid from "@mui/material/Grid";
 import { FormControlLabel, Checkbox } from "@mui/material";
-import "../../style/SignUp.css";
 import Link from "@mui/material/Link";
 import facebookIcon from "../../assets/icons/facebook.png";
 import googleIcon from "../../assets/icons/google.png";
 import { useNavigate } from "react-router-dom";
-import { useForm } from "react-hook-form";
-// import "lora";
+import "../../style/SignUp.css";
+import { useFormik } from "formik";
+import axios from "axios";
+import CircularProgress from "@mui/material/CircularProgress";
+import * as Yup from "yup";
+import { toast } from "react-toastify";
+const formSchema = Yup.object({
+  username: Yup.string().required("Please enter your username"),
+  email: Yup.string().email().required("Please enter your email"),
+  check: Yup.boolean().oneOf(
+    [true],
+    "Please accept the terms and privacy policy before get started!"
+  ),
+});
+const initialValues = {
+  username: "",
+  email: "",
+  check: false,
+};
 
 const style = {
   position: "absolute",
   top: "50%",
   left: "50%",
   transform: "translate(-50%, -50%)",
-  width: 650,
+  width: 500,
   bgcolor: "background.paper",
   borderRadius: "23px",
   boxShadow: 24,
   p: 4,
 };
 
-export default function BasicModal() {
-  const [state, setState] = React.useState({ data: "" });
-  const [username, setUserName] = React.useState("");
-  const [email, setEmail] = React.useState("");
-  const [error, setError] = React.useState(null);
-  const [userNameError, setUserNameError] = React.useState("");
-  const [emailError, setEmailError] = React.useState("");
-
-  const [checked, setChecked] = React.useState(false);
-  console.log({ checked });
-
-  const handleChange = (event) => {
-    setChecked(event.target.checked);
-  };
-
-  const usernameValidation = () => {
-    if (username === "") {
-      setUserNameError("Please enter a User name");
-    } else setUserNameError("");
-  };
-
-  const emailValidation = () => {
-    const regEx = /^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[A-Za-z]+$/;
-    if (regEx.test(email)) {
-      setEmailError("");
-    } else if (email === "") {
-      setEmailError("Email should not be empty");
-    } else if (!regEx.test(email)) {
-      setEmailError("Email is not valid");
-    }
-  };
-
-  const {
-    register,
-    formState: { errors },
-  } = useForm();
-
-  const navigate = useNavigate();
-
-  const toStep1 = (e) => {
-    if (username !== "" && email !== "") {
-      console.log("Data Found");
-      setError(false);
-      console.log(username, email);
-      // alert(mobile + business + businesstype + industry);
-
-      navigate("/step1", {
-        state: {
-          username: username,
-          email: email,
-        },
-      });
-    } else {
-      setError(true);
-      setState({ data: e.target.value });
-    }
-  };
+export default function BasicModal(props) {
+  const Navigate = useNavigate();
+  const url = process.env.REACT_APP_BASE_URL;
+  const [loading, setLoading] = React.useState(false);
+  const { values, errors, touched, handleBlur, handleChange, handleSubmit } =
+    useFormik({
+      initialValues,
+      validationSchema: formSchema,
+      onSubmit: async (values, action) => {
+        setLoading(true);
+        await axios
+          .post(`${url}/auth/user/registration/`, {
+            username: values.username,
+            email: values.email,
+          })
+          .then((response) => {
+            console.log("response", response);
+            toast.success("You have successfully Registered!");
+            // localStorage.setItem("token", response.data.access_token);
+            // localStorage.setItem("userId", response.data.user.pk);
+            Navigate("/step1");
+            setLoading(false);
+            action.resetForm();
+            props.handleCloseSignup();
+          })
+          .catch((error) => {
+            toast.error(error.response.data.data);
+            setLoading(false);
+          });
+      },
+    });
 
   return (
-    <div>
-      <Box sx={style} className="signUpBox">
+    <>
+      <Box
+        sx={{
+          ...style,
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
         <Typography
           id="modal-modal-title"
           variant="h4"
@@ -98,145 +95,175 @@ export default function BasicModal() {
         <Typography
           id="modal-modal-description"
           sx={{
-            mt: 2,
+            mt: 1,
             fontSize: 14,
           }}
         >
           Get started in minutes, no credit card required
         </Typography>
-        <TextField
+        <Box
           sx={{
             width: "100%",
             mt: 3,
           }}
-          id="nameForSignup"
-          label="Name"
-          variant="outlined"
-          className="signup-text-field"
-          value={username}
-          {...register("Username", { required: true })}
-          onChange={(e) => setUserName(e.target.value)}
-        />
-        {errors.username?.type === "required" && "Username Required"}
-        <small>
-          {userNameError && (
-            <div
-              style={{
-                color: "red",
-              }}
-            >
-              {userNameError}
-            </div>
-          )}
-        </small>
-        <TextField
-          sx={{
-            width: "100%",
-            mt: 2,
-          }}
-          id="emailForSignup"
-          label="Work Email"
-          variant="outlined"
-          className="signup-text-field"
-          value={email}
-          {...register("Email", { required: true })}
-          onChange={(e) => setEmail(e.target.value)}
-        />
-        {errors.email?.type === "required" && "Email Required"}
-        <small>
-          {emailError && (
-            <div
-              style={{
-                color: "red",
-              }}
-            >
-              {emailError}
-            </div>
-          )}
-        </small>
-        <Grid
-          sx={{
-            display: "flex",
-            direction: "row",
-            alignItems: "center",
-            justifyContent: "start",
-            width: "65%",
-          }}
         >
-          <FormControlLabel
-            control={<Checkbox checked={checked} onChange={handleChange} />}
-          />
-
-          <Typography
+          <TextField
             sx={{
-              fontSize: "9px",
+              width: "100%",
+            }}
+            label="Name"
+            variant="outlined"
+            name="username"
+            value={values.username}
+            onChange={handleChange}
+            onBlur={handleBlur}
+          />
+          {errors.username && touched.username ? (
+            <small style={{ color: "red" }}>{errors.username}</small>
+          ) : null}
+          <TextField
+            sx={{
+              width: "100%",
+              mt: 2,
+              borderRadius: "50px",
+            }}
+            label="Work Email"
+            variant="outlined"
+            name="email"
+            value={values.email}
+            onChange={handleChange}
+            onBlur={handleBlur}
+          />
+          {errors.email && touched.email ? (
+            <small style={{ color: "red" }}>{errors.email}</small>
+          ) : null}
+          <Box
+            sx={{
+              display: "flex",
+              alignItems: "center",
+              width: "100%",
             }}
           >
-            I agree to the terms of the Subscription Agreement & Privacy Policy
-          </Typography>
-        </Grid>
+            <FormControlLabel
+              control={
+                <Checkbox
+                  name="check"
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  value={values.check}
+                  size="small"
+                />
+              }
+            />
+            <Typography
+              sx={{
+                fontSize: "9px",
+                ml: "-20px",
+                mt: "2px",
+              }}
+            >
+              I agree to the terms of the Subscription Agreement & Privacy
+              Policy
+            </Typography>
+          </Box>
+          <Box sx={{ mt: "-10px" }}>
+            {errors.check && touched.check ? (
+              <small style={{ color: "red" }}>{errors.check}</small>
+            ) : null}
+          </Box>
+        </Box>
 
         <Button
           type="submit"
           variant="contained"
-          className="btn-forgetPwd btn-login"
-          onClick={() => {
-            usernameValidation();
-            emailValidation();
-            toStep1();
-          }}
+          className="all-green-btns"
+          onClick={handleSubmit}
           sx={{
-            mt: 4,
-            width: "65%",
-            justifyContent: "center",
+            mt: 2,
+            width: "100%",
           }}
         >
-          Get Started
+          {loading ? (
+            <CircularProgress color="inherit" size={25} />
+          ) : (
+            <>Get Started</>
+          )}
         </Button>
-        <Grid container className="SignUp-options">
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            mt: 3,
+          }}
+        >
           <Typography
             sx={{
-              fontSize: "9px",
+              fontSize: "12px",
             }}
           >
             OR SIGN UP WITH
           </Typography>
-          <Grid item>
+          <Box sx={{ display: "flex", mt: 2 }}>
             <Link
-              href="#"
               variant="body2"
-              className="SignUplinks iconOfSignUpLink"
+              sx={{
+                display: "flex",
+                alignItems: "center",
+                mr: 2,
+                cursor: "pointer",
+                textDecoration: "none",
+              }}
             >
               <Avatar
                 src={googleIcon}
                 aria-label="GOOGLE"
                 sx={{
-                  height: "15px",
-                  width: "15px",
+                  height: "20px",
+                  width: "20px",
+                  ml: "5px",
                 }}
               />
-              {"GOOGLE"}
+              <Typography
+                sx={{
+                  ml: "5px",
+                  fontSize: "12px",
+                  color: "black",
+                }}
+              >
+                {"GOOGLE"}
+              </Typography>
             </Link>
-          </Grid>
-          <Grid item>
             <Link
-              href="#"
               variant="body2"
-              className="SignUplinks iconOfSignUpLink"
+              sx={{
+                display: "flex",
+                alignItems: "center",
+                cursor: "pointer",
+                textDecoration: "none",
+              }}
             >
               <Avatar
                 src={facebookIcon}
                 aria-label="FACEBOOK"
                 sx={{
-                  height: "15px",
-                  width: "15px",
+                  height: "20px",
+                  width: "20px",
                 }}
               />
-              {"FACEBOOK"}
+              <Typography
+                sx={{
+                  ml: "5px",
+                  fontSize: "12px",
+                  color: "black",
+                }}
+              >
+                {"FACEBOOK"}
+              </Typography>
             </Link>
-          </Grid>
-        </Grid>
+          </Box>
+        </Box>
       </Box>
-    </div>
+    </>
   );
 }

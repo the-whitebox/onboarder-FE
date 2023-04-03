@@ -34,17 +34,23 @@
   background-color: #38b492 !important;
 }
 
-.all-green-btns:hover {
-  background-color: #38b492 !important;
-}
-
 .all-white-btns {
   background-color: #ffffff !important;
 }
 
-.all-white-btns:hover {
-  background-color: #ffffff !important;
+.all-blue-btns{
+  background-color: #3d1cba !important;
 }
+
+.all-red-btns{
+  background: #af1105 !important;
+}
+
+.css-lwt8hc-JoyRadio-action{
+  border: "none" !important;
+}
+
+
 
 @media screen and (max-width:768px) {
   .avatar-size {

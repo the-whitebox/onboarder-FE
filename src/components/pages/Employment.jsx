@@ -62,7 +62,7 @@ export default function Employment() {
           aria-labelledby="modal-modal-title"
           aria-describedby="modal-modal-description"
         >
-          <SetAdvisorModalBody handleCloseAccess={handleCloseAccess} />
+          <SetAdvisorModalBody handleClose={handleCloseAccess} />
         </Modal>
 
         <Modal
@@ -106,7 +106,9 @@ export default function Employment() {
                 className="all-green-btns"
                 sx={{
                   bgcolor: "#38b492",
+                  height: 35,
                   color: "#ffffff",
+                  mr: { lg: 15, xs: 0 },
                 }}
               >
                 Save

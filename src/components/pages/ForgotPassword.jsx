@@ -3,10 +3,19 @@ import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import TextField from "@mui/material/TextField";
-import Grid from "@mui/material/Grid";
+import CloseIcon from "@mui/icons-material/Close";
 import { useNavigate } from "react-router-dom";
-
 import axios from "axios";
+import CircularProgress from "@mui/material/CircularProgress";
+import { toast } from "react-toastify";
+import { useFormik } from "formik";
+import * as Yup from "yup";
+const formSchema = Yup.object({
+  email: Yup.string().email().required("Please enter your email"),
+});
+const initialValues = {
+  email: "",
+};
 
 const style = {
   position: "absolute",
@@ -20,34 +29,61 @@ const style = {
   p: 4,
 };
 
-export default function BasicModal() {
-  const [email, setEmail] = React.useState("");
+export default function BasicModal(props) {
   const navigate = useNavigate();
-  const sendEmail = () => {
-    // console.log(email);
-    axios
-      .post(process.env.REACT_APP_BASE_URL + "/auth/password/reset/", {
-        email: email,
-      })
-      .then((response) => {
-        console.log(response.status);
-        if (response.status === 200) {
-          console.log("I am inside status 200 condition");
-          navigate("/home");
-        }
-      });
-  };
+  const url = process.env.REACT_APP_BASE_URL;
+  const [loading, setLoading] = React.useState(false);
+
+  const { values, errors, touched, handleBlur, handleChange, handleSubmit } =
+    useFormik({
+      initialValues,
+      validationSchema: formSchema,
+      onSubmit: async (values, action) => {
+        setLoading(true);
+        await axios
+          .post(`${url}/auth/password/reset/`, {
+            email: values.email,
+          })
+          .then((response) => {
+            console.log("Login Response", response);
+            toast.success(response.data.detail);
+            setLoading(false);
+            props.handleClose();
+          })
+          .catch((error) => {
+            toast.error("Something went wrong! Please try again");
+            setLoading(false);
+          });
+      },
+    });
 
   return (
     <div>
       <Box sx={style}>
-        <Typography id="modal-modal-title" variant="h5" component="h2">
-          So you forgot your password?
-        </Typography>
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+          }}
+        >
+          <Typography
+            id="modal-modal-title"
+            variant="h5"
+            component="h5"
+            sx={{ fontWeight: "bold", fontSize: "20px" }}
+          >
+            So you forgot your password?
+          </Typography>
+          <CloseIcon
+            onClick={props.handleClose}
+            sx={{ cursor: "pointer" }}
+          ></CloseIcon>
+        </Box>
         <Typography
           id="modal-modal-description"
           sx={{
-            mt: 2,
+            mt: 4,
             fontSize: 14,
           }}
         >
@@ -58,15 +94,20 @@ export default function BasicModal() {
         <TextField
           sx={{
             width: "100%",
-            mt: 3,
+            mt: 1,
           }}
           id="emailForForgotPwd"
           label="Email"
           variant="outlined"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
+          name="email"
+          value={values.email}
+          onChange={handleChange}
+          handleBlur={handleBlur}
         />
-        <Grid
+        {errors.email && touched.email ? (
+          <small style={{ color: "red" }}>{errors.email}</small>
+        ) : null}
+        <Box
           sx={{
             display: "flex",
             justifyContent: "flex-end",
@@ -75,17 +116,21 @@ export default function BasicModal() {
           <Button
             type="submit"
             variant="contained"
-            className="btn-forgetPwd btn-login"
+            className="all-green-btns"
             sx={{
               mt: 4,
               width: "30%",
-              justifyContent: "center",
+              height: 35,
             }}
-            onClick={sendEmail}
+            onClick={handleSubmit}
           >
-            Let's do this
+            {loading ? (
+              <CircularProgress color="inherit" size={25} />
+            ) : (
+              <>Let's do this</>
+            )}
           </Button>
-        </Grid>
+        </Box>
       </Box>
     </div>
   );

@@ -27,7 +27,9 @@ export default function LeaveEntitlement(props) {
           aria-labelledby="modal-modal-title"
           aria-describedby="modal-modal-description"
         >
-          <AddLeaveEntitlementModalBody />
+          <AddLeaveEntitlementModalBody
+            handleCloseLeaveEntitlement={handleCloseLeaveEntitlement}
+          />
         </Modal>
         <Grid>
           <Box

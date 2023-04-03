@@ -4,202 +4,91 @@ import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import Avatar from "@mui/material/Avatar";
 import Paper from "@mui/material/Paper";
-import { useTheme } from "@mui/material/styles";
 import TextField from "@mui/material/TextField";
 import Grid from "@mui/material/Grid";
 import "../../style/Step1.css";
-import Link from "@mui/material/Link";
 import FormLabel from "@mui/joy/FormLabel";
 import Radio, { radioClasses } from "@mui/joy/Radio";
 import RadioGroup from "@mui/joy/RadioGroup";
 import Sheet from "@mui/joy/Sheet";
 import CheckCircleRoundedIcon from "@mui/icons-material/CheckCircleRounded";
 import RightSideImage from "../../assets/images/bg-image.png";
-import Item from "antd/es/list/Item";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
-import MaxPilotLogo from "../../assets/logos/maxpilot-logo.svg";
 import Icon1 from "../../assets/icons/health-icon.png";
 import Icon2 from "../../assets/icons/retail-icon.png";
 import Icon3 from "../../assets/icons/services-icon.png";
 import Icon4 from "../../assets/icons/charity-icon.png";
 import Icon5 from "../../assets/icons/others-icon.png";
 import { useNavigate } from "react-router-dom";
-import { useState, useEffect } from "react";
-import { useForm } from "react-hook-form";
+import { useState } from "react";
 import axios from "axios";
-
-const style = {
-  position: "absolute",
-  top: "50%",
-  left: "50%",
-  transform: "translate(-50%, -50%)",
-  width: 650,
-  bgcolor: "background.paper",
-  borderRadius: "23px",
-  boxShadow: 24,
-  p: 4,
+import { useFormik } from "formik";
+import * as Yup from "yup";
+const formSchema = Yup.object({
+  business: Yup.string().required("Please enter your username"),
+  mobile: Yup.string().required("Please enter your mobile number"),
+  businessType: Yup.string().required("Please select your business type"),
+  industry: Yup.string().required("Please select your industry"),
+});
+const initialValues = {
+  business: "",
+  mobile: "",
+  businessType: "",
+  industry: "",
 };
+const icons = [Icon1, Icon2, Icon3, Icon4, Icon5];
 
 export default function BasicModal() {
-  const [state, setState] = React.useState({ data: "" });
-  const [business, setBusiness] = React.useState("");
-  const [mobile, setMobile] = React.useState("");
-  const [businesstype, setBusinesstype] = React.useState("");
-  const [businessId, setBusinesstypeID] = React.useState("");
-  const [industry, setIndustry] = React.useState("");
-  const [industryId, setIndustryID] = React.useState("");
-  const [industryData, setIndustryData] = useState([]);
-  const [error, setError] = React.useState(null);
-  const [businessError, setBusinessError] = useState("");
-  const [mobileError, setMobileError] = useState("");
-  const [businessTypeError, setBusinessTypeError] = useState("");
-  const [industryError, setIndustryError] = useState("");
-
-  const token = localStorage.getItem("token");
   const url = process.env.REACT_APP_BASE_URL;
-  let subIndustries = "";
-
-  const businesses = [
-    "Healthcare",
-    "Retail & Hospitality",
-    "Services",
-    "Charity",
-    "Other",
-  ];
-
-  const industries = {
-    Healthcare: ["f", "g", "l"],
-    "Retail & Hospitality": ["a", "b"],
-    Services: ["tr", "trt", "rtt"],
-    Charity: ["abc", "def"],
-    Other: ["aik", "bot"],
-  };
-
-  const getIndustries = async () => {
-    try {
-      // debugger
-      if (businesstype === "Retail & Hospitality") {
-        setBusinesstype(encodeURIComponent(businesstype));
-      }
-      await axios
-        .get(url + `/EnumsReturn/?group=${businesstype}`, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-            "Content-Type": "application/json",
-          },
-        })
-        .then((res) => {
-          console.log("getting from api", res.data);
-
-          setIndustryData(res.data);
-          subIndustries = res.data;
-          // console.log("Sub Industries data", subIndustries)
-        })
-        .catch((err) => console.log(err));
-    } catch (error) {
-      console.log("Error", error);
-    }
-  };
-
-  const theme = useTheme();
-  const [age, setAge] = React.useState("");
-
-  const businessValidation = () => {
-    if (business == "") {
-      setBusinessError("Please enter a business name");
-    } else setBusinessError("");
-  };
-
-  const mobileValidation = () => {
-    if (mobile == "") {
-      setMobileError("Please enter your mobile number");
-    } else setMobileError("");
-  };
-
-  const businessTypeValidation = () => {
-    if (businesstype == "") {
-      setBusinessTypeError("Please describe your business type");
-    } else setBusinessTypeError("");
-  };
-
-  const industryValidation = () => {
-    if (industry == "") {
-      setIndustryError("Please describe your industry");
-    } else setIndustryError("");
-  };
+  const Navigate = useNavigate();
+  const [industryData, setIndustryData] = useState([]);
 
   const {
-    register,
-    formState: { errors },
-  } = useForm();
-
-  const navigate = useNavigate();
-
-  const toStep2 = (e) => {
-    if (
-      business !== "" &&
-      mobile !== "" &&
-      businesstype !== "" &&
-      industry !== ""
-    ) {
-      console.log("Data Found");
-      setError(false);
-      console.log(mobile, business, businessId, industryId);
-      // alert(mobile + business + businesstype + industry);
-
-      navigate("/step2", {
+    values,
+    errors,
+    touched,
+    setFieldValue,
+    handleBlur,
+    handleChange,
+    handleSubmit,
+  } = useFormik({
+    initialValues,
+    validationSchema: formSchema,
+    onSubmit: (values, action) => {
+      Navigate("/step2", {
         state: {
-          business: business,
-          mobile: mobile,
-          businesstype: businessId,
-          industry: industryId,
+          business: values.business,
+          mobile: values.mobile,
+          businessType: values.businessType,
+          industry: values.industry,
         },
       });
-    } else {
-      setError(true);
-      setState({ data: e.target.value });
-    }
+    },
+  });
+
+  const handleBusinessTypeChange = (e) => {
+    setFieldValue("businessType", parseInt(e.target.id));
+    getIndustries(parseInt(e.target.id));
   };
 
-  // const changeState = () => {
-  //   // setState({
-  //   //   data: `state/props of parent component
-  //   // is send by onClick event to another component`,
-  //   // });
-
-  //   setBusiness
-  // };
-
-  useEffect(() => {
-    getIndustries();
-  }, [businesstype]);
-
-  const businessTypeChange = (e) => {
-    const tempid = parseInt(e.target.id) + 1;
-    setBusinesstype(e.target.value);
-    setBusinesstypeID(tempid);
-    // console.log(tempid);
-
-    // console.log({ industryData });
-    // console.log(e.target.value)
-  };
-  const changeIndustry = (e) => {
-    setIndustry(e.target.value);
-    setIndustryID(parseInt(e.target.value) + 1);
+  const handleIndustryChange = (e) => {
+    setFieldValue("industry", parseInt(e.target.id));
   };
 
-  // const industryChange = (e) => {
-  //   setIndustry(e.target.value);
-  // };
-
-  const icons = [Icon1, Icon2, Icon3, Icon4, Icon5];
+  const getIndustries = async (id) => {
+    await axios
+      .get(`${url}/enums/${id}/`)
+      .then((response) => {
+        setIndustryData([response.data]);
+      })
+      .catch((err) => console.log(err));
+  };
 
   return (
-    <div>
-      {/* change in box marginTop */}
+    <>
       <Grid
         container
         component="main"
@@ -224,7 +113,7 @@ export default function BasicModal() {
               sx={{
                 fontWeight: "Bold",
                 fontSize: "43px",
-                color: "#38b492" ,
+                color: "#38b492",
               }}
             >
               MaxPilot
@@ -266,7 +155,7 @@ export default function BasicModal() {
               We will personalize your trial experience
             </Typography>
 
-            <Grid
+            <Box
               sx={{
                 mt: 2,
                 display: "flex",
@@ -276,7 +165,7 @@ export default function BasicModal() {
                 alignItems: "center",
               }}
             >
-              <Grid
+              <Box
                 sx={{
                   display: "flex",
                   flexDirection: "column",
@@ -290,35 +179,28 @@ export default function BasicModal() {
                     fontWeight: "bold",
                     fontSize: "18px",
                     color: "#332A60",
+                    mb: 1,
                   }}
                 >
                   What is your business?
                 </Typography>
                 <TextField
                   id="business"
-                  required="true"
                   variant="outlined"
-                  {...register("Business", { required: true })}
-                  onChange={(e) => setBusiness(e.target.value)}
                   sx={{
                     width: "90%",
                   }}
+                  name="business"
+                  value={values.business}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
                 />
-                {errors.business?.type === "required" && "Business Required"}
-                <small>
-                  {businessError && (
-                    <div
-                      style={{
-                        color: "red",
-                      }}
-                    >
-                      {businessError}
-                    </div>
-                  )}
-                </small>
-              </Grid>
+                {errors.business && touched.business ? (
+                  <small style={{ color: "red" }}>{errors.business}</small>
+                ) : null}
+              </Box>
 
-              <Grid
+              <Box
                 sx={{
                   display: "flex",
                   flexDirection: "column",
@@ -332,6 +214,7 @@ export default function BasicModal() {
                     fontWeight: "bold",
                     fontSize: "18px",
                     color: "#332A60",
+                    mb: 1,
                   }}
                 >
                   What is your mobile number?
@@ -339,32 +222,26 @@ export default function BasicModal() {
                 <TextField
                   id="mobile-number"
                   variant="outlined"
-                  {...register("Mobile", { required: true })}
                   sx={{
                     width: "90%",
                   }}
-                  onChange={(e) => setMobile(e.target.value)}
+                  name="mobile"
+                  value={values.mobile}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
                 />
-                {errors.mobile?.type === "required" && "Mobile Required"}
-                <small>
-                  {mobileError && (
-                    <div
-                      style={{
-                        color: "red",
-                      }}
-                    >
-                      {mobileError}
-                    </div>
-                  )}
-                </small>
-              </Grid>
-            </Grid>
+                {errors.mobile && touched.mobile ? (
+                  <small style={{ color: "red" }}>{errors.mobile}</small>
+                ) : null}
+              </Box>
+            </Box>
             <Typography
               sx={{
-                mt: 2,
+                mt: 4,
                 fontWeight: "bold",
                 fontSize: "18px",
                 color: "#332A60",
+                mb: 1,
               }}
             >
               What best describes your business?
@@ -383,19 +260,17 @@ export default function BasicModal() {
               {/* Cards Here */}
               <RadioGroup
                 aria-label="platform"
-                defaultValue="Website"
                 overlay
                 name="platform"
                 sx={{
-                  mt: 2,
                   flexWrap: "wrap",
                   flexDirection: "row",
                   gap: 2,
                   [`& .${radioClasses.checked}`]: {
                     [`& .${radioClasses.action}`]: {
-                      inset: -1,
-                      border: "3px solid",
-                      borderColor: "primary.500",
+                      inset: -2,
+                      border: "2px solid #38b492",
+                      borderRadius: "8px",
                     },
                   },
                   [`& .${radioClasses.radio}`]: {
@@ -410,8 +285,8 @@ export default function BasicModal() {
                     },
                   },
                 }}
-                {...register("Business Type", { required: true })}
-                onChange={businessTypeChange}
+                onChange={handleBusinessTypeChange}
+                onBlur={handleBlur}
               >
                 {[
                   "Health Care",
@@ -424,7 +299,8 @@ export default function BasicModal() {
                     key={idx}
                     variant="outlined"
                     sx={{
-                      borderRadius: "md",
+                      borderRadius: "8px",
+                      border: "2px solid #e2e2e2",
                       bgcolor: "background.body",
                       boxShadow: "sm",
                       display: "flex",
@@ -450,80 +326,52 @@ export default function BasicModal() {
                 ))}
               </RadioGroup>
             </Grid>
-            {errors.businesstype?.type === "required" &&
-              "Business Type Required"}
-            <small>
-              {businessTypeError && (
-                <div
-                  style={{
-                    color: "red",
-                  }}
-                >
-                  {businessTypeError}
-                </div>
-              )}
-            </small>
+            {errors.businessType && touched.businessType ? (
+              <small style={{ color: "red" }}>{errors.businessType}</small>
+            ) : null}
             <Typography
               sx={{
-                mt: 2,
+                mt: 4,
                 fontWeight: "bold",
                 fontSize: "18px",
                 color: "#332A60",
+                mb: 1,
               }}
             >
               Select your industry
             </Typography>
-            <FormControl sx={{ width: "30%", mt: 2 }}>
-              <InputLabel id="demo-simple-select-label">Industry</InputLabel>
+            <FormControl sx={{ width: { lg: "30%", sm: "70%" } }}>
+              <InputLabel id="demo-simple-select-label">Select</InputLabel>
 
               <Select
                 labelId="demo-simple-select-label"
                 id="demo-simple-select"
-                value={industry}
                 label="Industry"
-                {...register("Industry", { required: true })}
-                onChange={changeIndustry}
+                name="industry"
+                onChange={handleIndustryChange}
+                onBlur={handleBlur}
               >
-                {businesstype &&
-                  industryData.map((industry, idx) => (
-                    <MenuItem value={idx}>{industry["name"]}</MenuItem>
-                  ))}
+                {industryData?.map((industry, idx) => (
+                  <MenuItem value={idx}>{industry["name"]}</MenuItem>
+                ))}
               </Select>
             </FormControl>
-            {errors.industry?.type === "required" && "Industry Required"}
-            <small>
-              {industryError && (
-                <div
-                  style={{
-                    color: "red",
-                  }}
-                >
-                  {industryError}
-                </div>
-              )}
-            </small>
-
-            {/* changed bottom margin */}
+            {errors.industry && touched.industry ? (
+              <small style={{ color: "red" }}>{errors.industry}</small>
+            ) : null}
 
             <Button
               type="submit"
               variant="contained"
-              className="btn-forgetPwd btn-login"
+              className="all-green-btns"
               sx={{
-                mt: 2,
-                mb: 2,
-                width: "89px",
-                borderRadius: "10px",
-                justifyContent: "center",
+                mt: 5,
+                width: "10%",
+                height: 35,
+                borderRadius: "8px",
+                textTransform: "none",
               }}
-              data={state.data}
-              onClick={() => {
-                businessValidation();
-                mobileValidation();
-                businessTypeValidation();
-                industryValidation();
-                toStep2();
-              }}
+              onClick={handleSubmit}
             >
               Next
             </Button>
@@ -558,6 +406,6 @@ export default function BasicModal() {
           />
         </Grid>
       </Grid>
-    </div>
+    </>
   );
 }

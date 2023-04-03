@@ -9,7 +9,7 @@ import ArchiveTeamMemberModalBody from "../feature/ArchiveTeammembers";
 import SetAgreedHoursModalBody from "../feature/SetAgreedhours";
 import Modal from "@mui/material/Modal";
 
-export default function BulkActions() {
+export default function BulkActions(props) {
   const [people, setPeople] = React.useState("");
 
   const handleChange = (event) => {
@@ -41,11 +41,10 @@ export default function BulkActions() {
       <Modal
         open={openAccess}
         onClose={handleCloseAccess}
-        onClick={handleClose}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
-        <SetAccessLevelModalBody />
+        <SetAccessLevelModalBody handleClose={handleCloseAccess} />
       </Modal>
 
       <Modal
@@ -54,7 +53,10 @@ export default function BulkActions() {
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
-        <ArchiveTeamMemberModalBody />
+        <ArchiveTeamMemberModalBody
+          listOfTeamMembers={props.listOfTeamMembers}
+          handleClose={handleClose}
+        />
       </Modal>
 
       <Modal
@@ -64,7 +66,7 @@ export default function BulkActions() {
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
-        <SetAgreedHoursModalBody />
+        <SetAgreedHoursModalBody handleClose={handleCloseWorkPeriod} />
       </Modal>
 
       <FormControl variant="standard" sx={{ m: 1, minWidth: 120 }}>
@@ -89,7 +91,6 @@ export default function BulkActions() {
           </MenuItem>
 
           <MenuItem>
-            {" "}
             <Link
               sx={{ textDecoration: "none" }}
               onClick={handleOpenAccess}
@@ -99,15 +100,13 @@ export default function BulkActions() {
             </Link>
           </MenuItem>
           <MenuItem>
-            {" "}
             <Link
               sx={{ textDecoration: "none" }}
               onClick={handleOpen}
               color="#38b492"
             >
-              {" "}
-              Archive team{" "}
-            </Link>{" "}
+              Archive team
+            </Link>
           </MenuItem>
         </Select>
       </FormControl>

@@ -1,9 +1,6 @@
 import * as React from "react";
 import Box from "@mui/material/Box";
-import Modal from "@mui/material/Modal";
 import Button from "@mui/material/Button";
-import { useTheme } from "@mui/material/styles";
-import OutlinedInput from "@mui/material/OutlinedInput";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
@@ -11,25 +8,16 @@ import Typography from "@mui/material/Typography";
 import InfoIcon from "@mui/icons-material/Info";
 import CloseIcon from "@mui/icons-material/Close";
 import "../../style/SetStress.css";
-import { useNavigate } from "react-router-dom";
-import { useState } from "react";
-import { useForm } from "react-hook-form";
 import axios from "axios";
-
-const ITEM_HEIGHT = 50;
-const ITEM_PADDING_TOP = 8;
-const MenuProps = {
-  sx: {
-    "&& .Mui-selected": {
-      color: "green",
-    },
-  },
-  PaperProps: {
-    style: {
-      maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
-      width: 300,
-    },
-  },
+import CircularProgress from "@mui/material/CircularProgress";
+import { toast } from "react-toastify";
+import { useFormik } from "formik";
+import * as Yup from "yup";
+const formSchema = Yup.object({
+  stress: Yup.string().required("Please select stress profile"),
+});
+const initialValues = {
+  stress: "",
 };
 
 const names = [
@@ -55,79 +43,45 @@ const style = {
 };
 
 export default function SetStressProfile(props) {
-  const [state, setState] = React.useState({ data: "" });
-  const [stress, setStress] = React.useState("");
-
-  const [stressError, setStressError] = React.useState("");
-  const [selectedValue, setSelectedValue] = useState("");
-  const [error, setError] = React.useState(null);
   const token = localStorage.getItem("token");
+  const userId = localStorage.getItem("userId");
   const url = process.env.REACT_APP_BASE_URL;
+  const [loading, setLoading] = React.useState(false);
 
-  const stressValidation = () => {
-    if (stress == "") {
-      setStressError("Please enter stress profile");
-    } else setStressError("");
-  };
-
-  const {
-    register,
-    formState: { errors },
-  } = useForm();
-
-  const navigate = useNavigate();
-
-  function getStyles(name, personName, theme) {
-    return {
-      fontWeight:
-        personName.indexOf(name) === -1
-          ? theme.typography.fontWeightRegular
-          : theme.typography.fontWeightMedium,
-    };
-  }
-
-  const theme = useTheme();
-  const [personName, setPersonName] = React.useState([]);
-
-  const handleChange = (event) => {
-    const {
-      target: { value },
-    } = event;
-    setPersonName(
-      // On autofill we get a stringified value.
-      typeof value === "string" ? value.split(",") : value
-    );
-    setStress(event.target.value);
-  };
-
-  const toEmployment = (e) => {
-    console.log({ selectedValue });
-    // debugger;
-    axios
-      .patch(
-        url + "/people/6/",
-        {
-          role: 2,
-          is_superuser: false,
-          profile: {},
-          working_hours: {
-            stress_level: selectedValue,
-          },
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-            "Content-Type": "application/json",
-          },
-        }
-      )
-      .then((response) => {
-        console.log(response);
-      })
-      .catch((error) => {
-        console.error(error);
-      });
-  };
+  const { values, errors, touched, handleBlur, handleChange, handleSubmit } =
+    useFormik({
+      initialValues,
+      validationSchema: formSchema,
+      onSubmit: async (values, action) => {
+        setLoading(true);
+        await axios
+          .post(
+            `${url}/people/${userId}/`,
+            {
+              is_superuser: false,
+              profile: {},
+              working_hours: {
+                stress_level: values.stress,
+              },
+            },
+            {
+              headers: {
+                Authorization: `Bearer ${token}`,
+                "Content-Type": "application/json",
+              },
+            }
+          )
+          .then((response) => {
+            console.log("Response", response);
+            setLoading(false);
+            props.handleCloseStress();
+          })
+          .catch((error) => {
+            toast.error("Something went wrong! Please try again");
+            setLoading(false);
+          });
+      },
+    });
 
   return (
     <React.Fragment>
@@ -146,7 +100,7 @@ export default function SetStressProfile(props) {
           ></CloseIcon>
         </Box>
         <Box>
-          <Typography sx={{ color: "#a9a9a9" }}>Team members</Typography>
+          <Typography sx={{ color: "#a9a9a9" }}>2 Team members</Typography>
           <Box
             sx={{
               display: "flex",
@@ -156,7 +110,7 @@ export default function SetStressProfile(props) {
             <InfoIcon
               sx={{
                 fontSize: "large",
-                color: "Gray",
+                color: "#38b492",
                 mt: "10px",
                 ml: "5px",
               }}
@@ -164,7 +118,7 @@ export default function SetStressProfile(props) {
             <Typography
               sx={{
                 fontSize: "15px",
-                ml: "5px",
+                ml: "11px",
                 mt: "9px",
                 color: "wblack",
               }}
@@ -173,22 +127,22 @@ export default function SetStressProfile(props) {
               hours. Use our templates below or
             </Typography>
           </Box>
-          <p className="own">Create your own.</p>
+          <p className="own aTag">Create your own.</p>
 
           <FormControl sx={{ width: 220, mt: 3 }}>
             <Typography sx={{ pb: "10px", fontWeight: "bold" }}>
               Stress Profile
             </Typography>
             <Select
-              //  {...register("Stress Profile", { required: true })}
               sx={{ borderRadius: "10px" }}
               displayEmpty
-              value={selectedValue}
-              onChange={(e) => setSelectedValue(e.target.value)}
+              name="stress"
+              value={values.stress}
+              onChange={handleChange}
+              handleBlur={handleBlur}
             >
-              <MenuItem disabled value=""></MenuItem>
-              <MenuItem value="">
-                <em>None</em>
+              <MenuItem value="" disabled>
+                <em>Select</em>
               </MenuItem>
               <MenuItem value={1}>2 days per week</MenuItem>
               <MenuItem value={2}>24/7</MenuItem>
@@ -197,26 +151,16 @@ export default function SetStressProfile(props) {
               <MenuItem value={5}>Normal 38 hours per week</MenuItem>
               <MenuItem value={6}>Standard 40 hours, 8 hours per day</MenuItem>
             </Select>
-            {error && <FormHelperText>Select a value</FormHelperText>}
           </FormControl>
           <Box sx={{ ml: 1, mt: 1 }}>
-            {errors.Stress?.type === "required" && "Stress Profile Required"}
-            <small>
-              {stressError && (
-                <div
-                  style={{
-                    color: "red",
-                  }}
-                >
-                  {stressError}
-                </div>
-              )}
-            </small>
+            {errors.stress && touched.stress ? (
+              <small style={{ color: "red" }}>{errors.stress}</small>
+            ) : null}
           </Box>
         </Box>
         <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
           <Button
-            className="all-green-btns"
+            className="all-blue-btns"
             variant="contained"
             sx={{
               borderRadius: "7px",
@@ -224,12 +168,13 @@ export default function SetStressProfile(props) {
               height: 35,
               textTransform: "none",
             }}
-            onClick={() => {
-              // stressValidation();
-              toEmployment();
-            }}
+            onClick={handleSubmit}
           >
-            Save
+            {loading ? (
+              <CircularProgress color="inherit" size={25} />
+            ) : (
+              <>Save</>
+            )}
           </Button>
         </Box>
       </Box>

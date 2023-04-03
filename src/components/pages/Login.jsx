@@ -4,8 +4,6 @@ import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
 import InputAdornment from "@mui/material/InputAdornment";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Checkbox from "@mui/material/Checkbox";
 import Link from "@mui/material/Link";
 import Paper from "@mui/material/Paper";
 import Box from "@mui/material/Box";
@@ -15,13 +13,9 @@ import AlternateEmailOutlinedIcon from "@mui/icons-material/AlternateEmailOutlin
 import Typography from "@mui/material/Typography";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import "../../style/Login.css";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import AppleIcon from "@mui/icons-material/Apple";
 import googleIcon from "../../assets/icons/google.png";
 import ManWithGraphs from "../../assets/images/man-with-graphs.png";
-import MaxPilotLogo from "../../assets/logos/maxpilot-logo.svg";
-import { CardMedia } from "@mui/material";
-import Card from "@mui/material/Card";
 import Modal from "@mui/material/Modal";
 import ForgetPasswordModalBody from "./ForgotPassword";
 import SignupModalBody from "./Signup";
@@ -33,6 +27,7 @@ import CircularProgress from "@mui/material/CircularProgress";
 import { toast } from "react-toastify";
 import { useFormik } from "formik";
 import * as Yup from "yup";
+import GlobalContext from "../../context/GlobalContext";
 const LoginSchema = Yup.object({
   email: Yup.string().email().required("Please enter your email"),
   password: Yup.string().required("Please enter your password"),
@@ -45,7 +40,8 @@ const initialValues = {
 const theme = createTheme();
 
 export default function SignInSide() {
-  const navigate = useNavigate();
+  const { setUserInfo } = React.useContext(GlobalContext);
+  const Navigate = useNavigate();
   const url = process.env.REACT_APP_BASE_URL;
   const [loading, setLoading] = useState(false);
 
@@ -66,19 +62,37 @@ export default function SignInSide() {
               toast.success("You have successfully LoggedIn!");
               localStorage.setItem("token", response.data.access_token);
               localStorage.setItem("userId", response.data.user.pk);
-              // navigate("/people");
-              window.location.href = "/people";
+              getLoggedInUserDetails(
+                response.data.user.pk,
+                response.data.access_token
+              );
+              Navigate("/people");
+              // window.location.href = "/people";
               setLoading(false);
               action.resetForm();
             }
           })
           .catch((error) => {
-            // console.log("Login Error", error.response);
-            toast.error(error.response.data.non_field_errors[0]);
+            console.log(error);
+            toast.error("Something went wrong! Please try again");
             setLoading(false);
           });
       },
     });
+
+  const getLoggedInUserDetails = async (id, token) => {
+    await axios
+      .get(`${url}/people/${id}/`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+      })
+      .then((response) => {
+        setUserInfo(response.data);
+      })
+      .catch((error) => console.log("Error", error));
+  };
 
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
@@ -105,7 +119,7 @@ export default function SignInSide() {
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
-        <ForgetPasswordModalBody />
+        <ForgetPasswordModalBody handleClose={handleClose} />
       </Modal>
 
       <Modal
@@ -114,7 +128,7 @@ export default function SignInSide() {
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
-        <SignupModalBody />
+        <SignupModalBody handleCloseSignup={handleCloseSignup} />
       </Modal>
 
       <Modal
@@ -128,13 +142,12 @@ export default function SignInSide() {
         container
         component="main"
         sx={{
-          height: "100vh",
-          width: {
-            xs: 600,
-            sm: 700,
-            md: 900,
-            lg: 1300,
-            xl: 1600,
+          height: {
+            xl: "100vh",
+            lg: "100vh",
+            md: "100vh",
+            sm: "auto",
+            xs: "auto",
           },
         }}
       >
@@ -153,20 +166,10 @@ export default function SignInSide() {
             flexDirection: "column",
             justifyContent: "center",
             alignItems: "center",
+            py: 3,
           }}
         >
-          {/* login image man with graph */}
-          <Grid
-            item
-            sm={12}
-            xs={12}
-            sx={{
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-            }}
-          >
-            {/* Login Avatar Made Responsive */}
+          <Box>
             <Avatar
               src={ManWithGraphs}
               aria-label="Busy Man"
@@ -177,17 +180,24 @@ export default function SignInSide() {
                 margin: "0px",
               }}
             />
-          </Grid>
-          <Grid>
+          </Box>
+          <Box
+            sx={{
+              mt: { lg: 3, md: 2, xs: 2 },
+              px: { lg: "100px", md: "30px", xs: "10px" },
+            }}
+          >
             <Typography
-              sx={{
-                mt: 7,
-                color: "white",
-              }}
+              sx={{ color: "white", fontWeight: "bold", fontSize: "18px" }}
             >
               Lorem Ipsum Doler sit amit
             </Typography>
-          </Grid>
+            <Typography sx={{ color: "white", fontSize: "12px" }}>
+              Lorem Ipsum Doler sit amit.Lorem Ipsum Doler sit amit.,Lorem Ipsum
+              Doler sit amit. Lorem Ipsum Doler sit amit,Lorem Ipsum Doler sit
+              amit,Lorem Ipsum Doler sit amit,Lorem Ipsum Doler sit amit
+            </Typography>
+          </Box>
         </Grid>
         <Grid
           item
@@ -196,14 +206,24 @@ export default function SignInSide() {
           md={6}
           lg={6}
           xl={6}
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
           component={Paper}
           elevation={0}
           square
         >
           <Box
             sx={{
-              mt: "210px",
-              mx: 4,
+              mt: {
+                md: "0px",
+                sm: "50px",
+                xs: "50px",
+                width: "100%",
+              },
               display: "flex",
               flexDirection: "column",
               alignItems: "center",
@@ -219,6 +239,7 @@ export default function SignInSide() {
               sx={{
                 fontWeight: "Bold",
                 mb: 0,
+                fontSize: { sm: "3.75rem", xs: "3rem" },
               }}
             >
               Hello Again!
@@ -229,8 +250,14 @@ export default function SignInSide() {
               className="input-field-container"
               onSubmit={handleSubmit}
               sx={{
-                mt: 7,
-                width: "65%",
+                mt: { xl: 7, lg: 4, md: 3, sm: 3, xs: 3 },
+                width: {
+                  xl: "70%",
+                  lg: "70%",
+                  md: "80%",
+                  sm: "90%",
+                  xs: "95%",
+                },
               }}
             >
               <IconTextField
@@ -240,7 +267,6 @@ export default function SignInSide() {
                 type="email"
                 id="email"
                 autoComplete="email"
-                autoFocus
                 iconEnd={<AlternateEmailOutlinedIcon />}
                 value={values.email}
                 onChange={handleChange}
@@ -284,8 +310,8 @@ export default function SignInSide() {
                 variant="contained"
                 className="btn-login"
                 sx={{
-                  mt: 6,
-                  mb: 2,
+                  mt: 4,
+                  mb: 1,
                   width: "100%",
                   justifyContent: "center",
                 }}

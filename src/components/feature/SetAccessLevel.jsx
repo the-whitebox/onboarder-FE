@@ -7,7 +7,6 @@ import Select from "@mui/material/Select";
 import CloseButton from "@mui/icons-material/Close";
 import Typography from "@mui/material/Typography";
 import "../../style/SetAccesslevel.css";
-import "../../style/General.css";
 import { useState } from "react";
 import CircularProgress from "@mui/material/CircularProgress";
 import axios from "axios";
@@ -44,7 +43,7 @@ export default function SetAccessLevel(props) {
 
   const userId = localStorage.getItem("userId");
   const token = localStorage.getItem("token");
-  const url = process.env.REACT_APP_BASE_URL + `/people/${userId}/`;
+  const url = process.env.REACT_APP_BASE_URL;
   const [loading, setLoading] = useState(false);
 
   const initialValues = {
@@ -59,7 +58,7 @@ export default function SetAccessLevel(props) {
         setLoading(true);
         await axios
           .patch(
-            url,
+            `${url}/people/${userId}/`,
             { role: values.role },
             {
               headers: {
@@ -71,7 +70,7 @@ export default function SetAccessLevel(props) {
           .then((response) => {
             console.log("Response", response);
             setLoading(false);
-            props.handleCloseAccess();
+            props.handleClose();
           })
           .catch((error) => {
             toast.error(error.message);
@@ -100,7 +99,7 @@ export default function SetAccessLevel(props) {
           <CloseButton
             id="child-modal-title"
             sx={{ cursor: "pointer" }}
-            onClick={props.handleCloseAccess}
+            onClick={props.handleClose}
           ></CloseButton>
         </Box>
 
@@ -124,8 +123,8 @@ export default function SetAccessLevel(props) {
               onChange={handleChange}
               handleBlur={handleBlur}
             >
-              <MenuItem value="">
-                <em>None</em>
+              <MenuItem value="" disabled>
+                <em>Select</em>
               </MenuItem>
               {role?.map((data) => (
                 <MenuItem value={data.id}>{data.role}</MenuItem>
@@ -138,27 +137,28 @@ export default function SetAccessLevel(props) {
             </Box>
           </FormControl>
         </Box>
-        <Button
-          variant="contained"
-          className="all-green-btns"
-          sx={{
-            ml: 31,
-            borderRadius: "6px",
-            width: "30%",
-            height: "40px",
-            bgcolor: "#38b492",
-            color: "white",
-            textTransform: "none",
-            mt: 6,
-          }}
-          onClick={handleSubmit}
-        >
-          {loading ? (
-            <CircularProgress color="inherit" size={30} />
-          ) : (
-            <>Update</>
-          )}
-        </Button>
+        <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
+          <Button
+            variant="contained"
+            className="all-green-btns"
+            sx={{
+              borderRadius: "8px",
+              width: "30%",
+              height: 35,
+              bgcolor: "#38b492",
+              color: "white",
+              textTransform: "none",
+              mt: 6,
+            }}
+            onClick={handleSubmit}
+          >
+            {loading ? (
+              <CircularProgress color="inherit" size={30} />
+            ) : (
+              <>Update</>
+            )}
+          </Button>
+        </Box>
       </Box>
     </React.Fragment>
   );
