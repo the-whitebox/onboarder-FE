@@ -44,7 +44,7 @@ export default function SyncPayroll(props) {
 
         <Box>
           <Typography sx={{ color: "#b4b4b4" }}>
-            {props.listOfTeamMembers.length} Team members
+            {props.selectedTeamMembers?.length} Team members
           </Typography>
           <Box
             sx={{
