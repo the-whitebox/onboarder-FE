@@ -105,7 +105,7 @@ export default function SetAgreedhours(props) {
             sx={{ cursor: "pointer" }}
           ></CloseIcon>
         </Box>
-        <div>
+        <Box>
           <Typography
             sx={{
               pt: "10px",
@@ -113,7 +113,7 @@ export default function SetAgreedhours(props) {
               color: "rgba(95, 91, 81, 0.518)",
             }}
           >
-            2 Team members
+            {props.selectedTeamMembers?.length} Team members
           </Typography>
           <Typography
             sx={{
@@ -242,7 +242,7 @@ export default function SetAgreedhours(props) {
               handleBlur={handleBlur}
             />
           </FormControl>
-        </div>
+        </Box>
         <Box sx={{ ml: 3, mt: 1 }}>
           {errors.hours && touched.hours ? (
             <small style={{ color: "red" }}>{errors.hours}</small>

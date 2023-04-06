@@ -9,7 +9,7 @@ import HelpOutlineIcon from "@mui/icons-material/HelpOutline";
 import CircularProgress from "@mui/material/CircularProgress";
 import maxpilot from "../../assets/images/maxpilot-logo-w.png";
 import GlobalContext from "../../context/GlobalContext";
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { TbUsers } from "react-icons/tb";
 import { toast } from "react-toastify";
 import { useFormik } from "formik";
@@ -25,7 +25,7 @@ const initialValues = {
   password: "",
 };
 
-export default function SignInSide() {
+export default function LoginSidebar(props) {
   const { setUserInfo } = React.useContext(GlobalContext);
   const Navigate = useNavigate();
   const url = process.env.REACT_APP_BASE_URL;
@@ -91,6 +91,7 @@ export default function SignInSide() {
           xs: "100vh",
         },
         backgroundColor: "#2bb491",
+        borderRadius: "0px 30px 30px 0px",
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
@@ -104,16 +105,16 @@ export default function SignInSide() {
           justifyContent: "space-between",
           alignItems: "center",
           height: "100%",
-          pt: { xl: 15, lg: 2, xs: 2 },
+          pt: { xl: 10, lg: 2, xs: 2 },
           pb: { xl: 4, lg: 2, xs: 2 },
         }}
         xs={12}
         sm={12}
-        md={6}
-        lg={4}
-        xl={4}
+        md={12}
+        lg={12}
+        xl={12}
       >
-        <Box sx={{ display: "flex", alignItems: "center" }}>
+        <Box>
           <Avatar
             src={maxpilot}
             aria-label="Busy Man"
@@ -124,10 +125,6 @@ export default function SignInSide() {
               margin: "0px",
             }}
           />
-          <Box sx={{ background: "white", width: "1px", height: "60px" }}></Box>
-          <Typography sx={{ color: "white", ml: 2 }}>
-            Effortless Time Management
-          </Typography>
         </Box>
 
         <Box
@@ -201,13 +198,16 @@ export default function SignInSide() {
           <Box
             sx={{ background: "white", width: "220px", height: "1px", mt: 4 }}
           ></Box>
-          <Box sx={{ mt: 1, color: "white", cursor: "pointer" }}>
+          <Box
+            sx={{ mt: 1, color: "white", cursor: "pointer" }}
+            onClick={props.handleOpen}
+          >
             Forgot <sapn style={{ fontWeight: "bold" }}>MAX</sapn>pilot ID or
             password?
           </Box>
-          <Link to="/step1" className="aTag-1">
+          <Box sx={{ color: "white", cursor: "pointer" }}>
             <h4>Sign Up with New ID</h4>
-          </Link>
+          </Box>
         </Box>
         <Box
           sx={{
@@ -220,7 +220,12 @@ export default function SignInSide() {
             <p>Need Help</p>{" "}
             <HelpOutlineIcon sx={{ ml: "5px", fontSize: "20px" }} />
           </Box>
-          <Box sx={{ color: "white", fontSize: "10px" }}>
+          <Box
+            sx={{
+              color: "white",
+              fontSize: "10px",
+            }}
+          >
             Terms & Conditions | Privacy Policy | Copyright &#169; 2023
             <sapn style={{ fontWeight: "bold" }}> MAX</sapn>pilot all rights
             reserved.

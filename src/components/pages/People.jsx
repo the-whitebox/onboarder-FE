@@ -15,7 +15,13 @@ import { useEffect, useState } from "react";
 import BulkActions from "../feature/BulkActions";
 import AddTeammemberModalBody from "../feature/AddTeammember";
 import Modal from "@mui/material/Modal";
+import Menu from "@mui/material/Menu";
+import MenuItem from "@mui/material/MenuItem";
 import Navbar from "../feature/Navbar";
+import GlobalContext from "../../context/GlobalContext";
+import SetAccessLevelModalBody from "../feature/SetAccessLevel";
+import ArchiveTeamMemberModalBody from "../feature/ArchiveTeammembers";
+import SetAgreedHoursModalBody from "../feature/SetAgreedhours";
 const modalWrapper = {
   overflow: "auto",
   display: "flex",
@@ -58,46 +64,114 @@ const columns = [
     width: 100,
 
     renderCell: (params) => {
+      // console.log(params);
+      const [anchorEl, setAnchorEl] = React.useState(null);
+      const open = Boolean(anchorEl);
+      const handleClick = (event) => {
+        setAnchorEl(event.currentTarget);
+      };
+      const handleClose = () => {
+        setAnchorEl(null);
+      };
+
+      const [openAccess, setOpenAccess] = React.useState(false);
+      const handleOpenAccess = (data) => {
+        setOpenAccess(true);
+        console.log("data", data);
+      };
+      const handleCloseAccess = () => setOpenAccess(false);
+
+      const [openArchive, setOpenArchive] = React.useState(false);
+      const handleOpenArchive = () => setOpenArchive(true);
+      const handleCloseArchive = () => setOpenArchive(false);
+
+      const [openWorkPeriod, setOpenWorkPeriod] = React.useState(false);
+      const handleOpenWorkPeriod = () => setOpenWorkPeriod(true);
+      const handleCloseWorkPeriod = () => setOpenWorkPeriod(false);
       return (
-        /*  Circled Icon on Table's last cloumn */
-        <Avatar
-          sx={{
-            backgroundColor: "#38B492",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-          }}
-        >
-          <Button>
-            <MoreVertIcon
-              sx={{ height: "20px", width: "20px", color: "white" }}
-            />
-            {/* <MoreVert/> */}
-          </Button>
-        </Avatar>
+        <>
+          <Modal
+            open={openAccess}
+            onClose={handleCloseAccess}
+            aria-labelledby="modal-modal-title"
+            aria-describedby="modal-modal-description"
+          >
+            <SetAccessLevelModalBody handleClose={handleCloseAccess} />
+          </Modal>
+
+          <Modal
+            open={openArchive}
+            onClose={handleCloseArchive}
+            aria-labelledby="modal-modal-title"
+            aria-describedby="modal-modal-description"
+          >
+            <ArchiveTeamMemberModalBody handleClose={handleCloseArchive} />
+          </Modal>
+
+          <Modal
+            open={openWorkPeriod}
+            sx={modalWrapper}
+            onClose={handleCloseWorkPeriod}
+            aria-labelledby="modal-modal-title"
+            aria-describedby="modal-modal-description"
+          >
+            <SetAgreedHoursModalBody handleClose={handleCloseWorkPeriod} />
+          </Modal>
+
+          <Avatar
+            sx={{
+              backgroundColor: "#38B492",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+            onClick={handleClick}
+          >
+            <Button>
+              <MoreVertIcon
+                sx={{ height: "20px", width: "20px", color: "white" }}
+              />
+            </Button>
+          </Avatar>
+          <Menu
+            id="basic-menu"
+            anchorEl={anchorEl}
+            open={open}
+            onClose={handleClose}
+            MenuListProps={{
+              "aria-labelledby": "basic-button",
+            }}
+          >
+            <MenuItem onClick={handleOpenWorkPeriod}>Agreed Hours</MenuItem>
+            <MenuItem onClick={handleOpenAccess}>Access Level</MenuItem>
+            <MenuItem onClick={handleOpenArchive}>Archive Team</MenuItem>
+          </Menu>
+        </>
       );
     },
   },
 ];
 
 export default function People() {
+  const { userInfo, setUserInfo } = React.useContext(GlobalContext);
   const token = localStorage.getItem("token");
   const userId = localStorage.getItem("userId");
   const url = process.env.REACT_APP_BASE_URL;
-  const [businessId, setBusinessId] = useState();
-  const [selectedModel, setSelectedModel] = useState([]);
+  const [selectedTeamMembers, setSelectedTeamMembers] = useState([]);
   const [listOfTeamMembers, setListOfTeamMembers] = React.useState([]);
-  const [selectedValue, setSelectedValue] = useState("");
+
+  const handleSelectionChange = (newSelection) => {
+    setSelectedTeamMembers(newSelection);
+  };
 
   const bulkAccessUpdate = (e) => {
-    selectedModel.map((id) => {
+    selectedTeamMembers.map((id) => {
       console.log(id);
-
       axios
         .patch(
           url + `/people/${id}/`,
           {
-            role: selectedValue,
+            role: 3,
             is_superuser: false,
             profile: {},
           },
@@ -118,7 +192,7 @@ export default function People() {
   };
 
   const bulkWorkPeriodUpdate = (e) => {
-    selectedModel.map((id) => {
+    selectedTeamMembers.map((id) => {
       axios
         .patch(
           url + `/people/${id}/`,
@@ -147,29 +221,26 @@ export default function People() {
     });
   };
 
-  const handleSelectionModelChange = (newSelection) => {
-    setSelectedModel(newSelection);
-  };
+  useEffect(() => {
+    const getLoggedInUserDetails = async () => {
+      await axios
+        .get(`${url}/people/${userId}/`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        })
+        .then((response) => {
+          setUserInfo(response.data);
+        })
+        .catch((error) => console.log("Error", error));
+    };
+    getLoggedInUserDetails();
+  }, []);
 
   const getBusiness = async () => {
     await axios
-      .get(url + "/business/", {
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "application/json",
-        },
-      })
-      .then((response) => {
-        const ids = response.data.map((obj) => obj.id);
-        setBusinessId(ids[0]);
-        getBusinessById(ids[0]);
-      })
-      .catch((err) => console.log(err));
-  };
-
-  const getBusinessById = async (id) => {
-    await axios
-      .get(`${url}/people/?business_id=${id}`, {
+      .get(`${url}/people/?business_id=${userInfo?.business.id}`, {
         headers: {
           Authorization: `Bearer ${token}`,
           "Content-Type": "application/json",
@@ -182,8 +253,10 @@ export default function People() {
   };
 
   useEffect(() => {
-    getBusiness();
-  }, []);
+    if (userInfo) {
+      getBusiness();
+    }
+  }, [userInfo]);
 
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => {
@@ -245,14 +318,13 @@ export default function People() {
             aria-describedby="modal-modal-description"
           >
             <AddTeammemberModalBody
-              businessId={businessId}
               handleClose={handleClose}
               getBusiness={getBusiness}
             />
           </Modal>
 
           <Box display="flex" alignItems="center" className="pl-2">
-            <BulkActions listOfTeamMembers={listOfTeamMembers} />
+            <BulkActions selectedTeamMembers={selectedTeamMembers} />
           </Box>
 
           <Box sx={{ pt: 3, pb: 2 }}>
@@ -276,8 +348,8 @@ export default function People() {
               rowsPerPageOptions={[5]}
               checkboxSelection
               disableSelectionOnClick
-              selectionModel={selectedModel}
-              onSelectionModelChange={handleSelectionModelChange}
+              selectionModel={selectedTeamMembers}
+              onSelectionModelChange={handleSelectionChange}
               components={{
                 Toolbar: GridToolbar,
               }}

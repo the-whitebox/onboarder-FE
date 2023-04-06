@@ -1,40 +1,38 @@
 import * as React from "react";
-import FormControl from "@mui/material/FormControl";
-import Select from "@mui/material/Select";
-import InputLabel from "@mui/material/InputLabel";
-import MenuItem from "@mui/material/MenuItem";
-import Link from "@mui/material/Link";
 import SetAccessLevelModalBody from "../feature/SetAccessLevel";
 import ArchiveTeamMemberModalBody from "../feature/ArchiveTeammembers";
 import SetAgreedHoursModalBody from "../feature/SetAgreedhours";
+import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import Modal from "@mui/material/Modal";
+import Button from "@mui/material/Button";
+import Menu from "@mui/material/Menu";
+import MenuItem from "@mui/material/MenuItem";
+const modalWrapper = {
+  overflow: "auto",
+  display: "flex",
+};
 
 export default function BulkActions(props) {
-  const [people, setPeople] = React.useState("");
-
-  const handleChange = (event) => {
-    setPeople(event.target.value);
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  const open = Boolean(anchorEl);
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
   };
 
   const [openAccess, setOpenAccess] = React.useState(false);
   const handleOpenAccess = () => setOpenAccess(true);
   const handleCloseAccess = () => setOpenAccess(false);
-  const [open, setOpen] = React.useState(false);
 
-  const handleOpen = () => {
-    setOpen(true);
-  };
-  const handleClose = () => {
-    setOpen(false);
-  };
+  const [openArchive, setOpenArchive] = React.useState(false);
+  const handleOpenArchive = () => setOpenArchive(true);
+  const handleCloseArchive = () => setOpenArchive(false);
 
   const [openWorkPeriod, setOpenWorkPeriod] = React.useState(false);
   const handleOpenWorkPeriod = () => setOpenWorkPeriod(true);
   const handleCloseWorkPeriod = () => setOpenWorkPeriod(false);
-  const modalWrapper = {
-    overflow: "auto",
-    display: "flex",
-  };
 
   return (
     <React.Fragment>
@@ -44,18 +42,21 @@ export default function BulkActions(props) {
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
-        <SetAccessLevelModalBody handleClose={handleCloseAccess} />
+        <SetAccessLevelModalBody
+          selectedTeamMembers={props.selectedTeamMembers}
+          handleClose={handleCloseAccess}
+        />
       </Modal>
 
       <Modal
-        open={open}
-        onClose={handleClose}
+        open={openArchive}
+        onClose={handleCloseArchive}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
         <ArchiveTeamMemberModalBody
-          listOfTeamMembers={props.listOfTeamMembers}
-          handleClose={handleClose}
+          selectedTeamMembers={props.selectedTeamMembers}
+          handleClose={handleCloseArchive}
         />
       </Modal>
 
@@ -66,50 +67,36 @@ export default function BulkActions(props) {
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
-        <SetAgreedHoursModalBody handleClose={handleCloseWorkPeriod} />
+        <SetAgreedHoursModalBody
+          selectedTeamMembers={props.selectedTeamMembers}
+          handleClose={handleCloseWorkPeriod}
+        />
       </Modal>
 
-      <FormControl variant="standard" sx={{ m: 1, minWidth: 120 }}>
-        <InputLabel id="demo-simple-select-standard-label">
-          Bulk Actions
-        </InputLabel>
-        <Select
-          labelId="demo-simple-select-standard-label"
-          id="demo-simple-select-standard"
-          value={people}
-          onChange={handleChange}
-          label="Age"
-        >
-          <MenuItem value="">
-            <Link
-              sx={{ textDecoration: "none" }}
-              onClick={handleOpenWorkPeriod}
-              color="#38b492"
-            >
-              Agreed hours
-            </Link>
-          </MenuItem>
-
-          <MenuItem>
-            <Link
-              sx={{ textDecoration: "none" }}
-              onClick={handleOpenAccess}
-              color="#38b492"
-            >
-              Access level
-            </Link>
-          </MenuItem>
-          <MenuItem>
-            <Link
-              sx={{ textDecoration: "none" }}
-              onClick={handleOpen}
-              color="#38b492"
-            >
-              Archive team
-            </Link>
-          </MenuItem>
-        </Select>
-      </FormControl>
+      <Button
+        id="basic-button"
+        aria-controls={open ? "basic-menu" : undefined}
+        aria-haspopup="true"
+        aria-expanded={open ? "true" : undefined}
+        onClick={handleClick}
+        sx={{ color: "black", textTransform: "none" }}
+        endIcon={<KeyboardArrowDownIcon />}
+      >
+        Bulk actions
+      </Button>
+      <Menu
+        id="basic-menu"
+        anchorEl={anchorEl}
+        open={open}
+        onClose={handleClose}
+        MenuListProps={{
+          "aria-labelledby": "basic-button",
+        }}
+      >
+        <MenuItem onClick={handleOpenWorkPeriod}>Agreed Hours</MenuItem>
+        <MenuItem onClick={handleOpenAccess}>Access Level</MenuItem>
+        <MenuItem onClick={handleOpenArchive}>Archive Team</MenuItem>
+      </Menu>
     </React.Fragment>
   );
 }

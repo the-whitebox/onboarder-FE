@@ -19,6 +19,7 @@ import CircularProgress from "@mui/material/CircularProgress";
 import { toast } from "react-toastify";
 import { useFormik } from "formik";
 import * as Yup from "yup";
+import GlobalContext from "../../context/GlobalContext";
 const formSchema = Yup.object({
   firstname: Yup.string().required("Please enter your firstname"),
   lastname: Yup.string().required("Please enter your lastname"),
@@ -56,6 +57,7 @@ const style = {
 };
 
 export default function Addteammember(props) {
+  const { userInfo } = React.useContext(GlobalContext);
   const theme = useTheme();
   const token = localStorage.getItem("token");
   const url = process.env.REACT_APP_BASE_URL;
@@ -95,7 +97,7 @@ export default function Addteammember(props) {
               is_superuser: false,
               email: values.email,
               role: values.accessLevel,
-              business: props.businessId,
+              business: userInfo?.business.id,
               profile: {
                 phone_number: values.mobile,
               },
@@ -112,6 +114,7 @@ export default function Addteammember(props) {
             props.getBusiness();
             props.handleClose();
             action.resetForm();
+            console.log("add", response);
           })
           .catch((error) => {
             console.log("Error", error.response);

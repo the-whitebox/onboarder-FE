@@ -40,9 +40,8 @@ const role = [
 
 export default function SetAccessLevel(props) {
   const { userInfo } = React.useContext(GlobalContext);
-
-  const userId = localStorage.getItem("userId");
   const token = localStorage.getItem("token");
+  const userId = localStorage.getItem("userId");
   const url = process.env.REACT_APP_BASE_URL;
   const [loading, setLoading] = useState(false);
 
@@ -104,7 +103,9 @@ export default function SetAccessLevel(props) {
         </Box>
 
         <Box>
-          <p className="team">2 Team members </p>
+          <p className="team">
+            {props.selectedTeamMembers?.length} Team members
+          </p>
           <Typography sx={{ fontWeight: "bold", ml: "8px" }}>
             Access level
           </Typography>
