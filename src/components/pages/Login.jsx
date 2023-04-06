@@ -7,10 +7,10 @@ import Typography from "@mui/material/Typography";
 import Checkbox from "@mui/material/Checkbox";
 import HelpOutlineIcon from "@mui/icons-material/HelpOutline";
 import CircularProgress from "@mui/material/CircularProgress";
-import maxpilot from "../../assets/images/maxpilot-logo-w.png";
+import maxpilot from "../../assets/logos/logo.png";
 import GlobalContext from "../../context/GlobalContext";
 import { useNavigate, Link } from "react-router-dom";
-import { TbUsers } from "react-icons/tb";
+import users from "../../assets/icons/users.png";
 import { toast } from "react-toastify";
 import { useFormik } from "formik";
 import axios from "axios";
@@ -118,10 +118,12 @@ export default function SignInSide() {
             src={maxpilot}
             aria-label="Busy Man"
             sx={{
-              width: "200px",
+              width: "auto",
               height: "auto",
               padding: "0px",
               margin: "0px",
+              mr: 2,
+              borderRadius: 0,
             }}
           />
           <Box sx={{ background: "white", width: "1px", height: "60px" }}></Box>
@@ -138,8 +140,18 @@ export default function SignInSide() {
             justifyContent: "center",
           }}
         >
-          <TbUsers
-            style={{ color: "white", fontSize: "40px", marginBottom: "30px" }}
+          <Avatar
+            src={users}
+            aria-label="Busy Man"
+            sx={{
+              width: "60px",
+              height: "60px",
+              padding: "0px",
+              margin: "0px",
+              borderRadius: 0,
+              mb: 2,
+              mt: 1,
+            }}
           />
           <Box sx={{ display: "flex", flexDirection: "column" }}>
             <input

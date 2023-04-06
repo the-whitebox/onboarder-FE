@@ -5,12 +5,13 @@ import CloseIcon from "@mui/icons-material/Close";
 import MarkEmailReadOutlinedIcon from "@mui/icons-material/MarkEmailReadOutlined";
 import ArrowCircleRightIcon from "@mui/icons-material/ArrowCircleRight";
 import RefreshOutlinedIcon from "@mui/icons-material/RefreshOutlined";
+import emailIcon from "../../assets/icons/forgotEmail.png";
 import axios from "axios";
 import CircularProgress from "@mui/material/CircularProgress";
 import { toast } from "react-toastify";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import { Link } from "@mui/material";
+import { Avatar, Link } from "@mui/material";
 const formSchema = Yup.object({
   email: Yup.string().email().required("Please enter your email"),
 });
@@ -118,8 +119,20 @@ export default function ForgotPassword(props) {
               <small style={{ color: "#FF0000" }}>{errors.email}</small>
             ) : null}
           </Box>
-          <MarkEmailReadOutlinedIcon
+          {/* <MarkEmailReadOutlinedIcon
             sx={{ fontSize: "40px", color: "white", mt: 1 }}
+          /> */}
+          <Avatar
+            src={emailIcon}
+            aria-label="Busy Man"
+            sx={{
+              width: "auto",
+              height: "auto",
+              padding: "0px",
+              margin: "0px",
+              borderRadius: 0,
+              mt: 2,
+            }}
           />
           <Typography sx={{ color: "white", fontSize: "12px", mt: 1 }}>
             Verification email has been sent to your mail address

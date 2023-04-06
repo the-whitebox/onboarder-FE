@@ -3,11 +3,12 @@ import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
-import { Modal } from "@mui/material";
+import { Avatar, Modal } from "@mui/material";
 import LoginSidebar from "../feature/LoginSidebar";
 import ForgotPassword from "./ForgotPassword";
-import MarkEmailReadOutlinedIcon from "@mui/icons-material/MarkEmailReadOutlined";
+import emailIcon from "../../assets/icons/email-icon.png";
 import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
+import bg_image2 from "../../assets/images/bg-image2.png";
 
 export default function Step2() {
   const [open, setOpen] = React.useState(false);
@@ -24,13 +25,29 @@ export default function Step2() {
       >
         <ForgotPassword handleClose={handleClose} />
       </Modal>
-      <Grid container>
+      <Grid container sx={{ pb: { xs: 1, md: 0 } }}>
         <Grid item xl={4} lg={4} md={6} sm={12} xs={12}>
           <LoginSidebar handleOpen={handleOpen} />
         </Grid>
-        <Grid item xl={8} lg={8} md={6} sm={12} xs={12}>
+        <Grid
+          item
+          xl={8}
+          lg={8}
+          md={6}
+          sm={12}
+          xs={12}
+          sx={{
+            position: "relative",
+            height: { md: "auto", sm: "70vh", xs: "80vh" },
+          }}
+        >
           <Box
-            sx={{ display: "flex", justifyContent: "flex-end", mt: 5, mr: 10 }}
+            sx={{
+              display: "flex",
+              justifyContent: { md: "flex-end", xs: "center" },
+              mt: 5,
+              mr: { md: 10, xs: 0 },
+            }}
           >
             <Box sx={{ display: "flex", alignItems: "center" }}>
               <Typography sx={{ fontSize: "12px", mr: 2 }}>
@@ -68,7 +85,7 @@ export default function Step2() {
             sx={{
               display: "flex",
               justifyContent: "flex-end",
-              mt: 10,
+              mt: { md: 10, xs: 5 },
             }}
           >
             <Box
@@ -95,10 +112,19 @@ export default function Step2() {
               mt: { xl: 20, lg: 10, md: 8, sm: 5, xs: 5 },
             }}
           >
-            <MarkEmailReadOutlinedIcon
-              sx={{ fontSize: "50px", color: "#2bb491" }}
+            <Avatar
+              src={emailIcon}
+              aria-label="Busy Man"
+              sx={{
+                width: "auto",
+                height: "auto",
+                padding: "0px",
+                margin: "0px",
+                borderRadius: 0,
+                mb: { xs: 1, md: 1 },
+              }}
             />
-            <Typography sx={{ color: "#2bb491" }}>
+            <Typography sx={{ color: "#2bb491", textAlign: "center" }}>
               Verification has been sent to your email address
             </Typography>
             <Typography
@@ -144,6 +170,40 @@ export default function Step2() {
             >
               Next
             </Button>
+          </Box>
+          <Box>
+            <Typography
+              sx={{
+                width: "100%",
+                fontSize: { md: "10px", xs: "5px" },
+                textAlign: "center",
+                zIndex: 9999,
+                position: "absolute",
+                bottom: 0,
+                paddding: "0px 10px",
+              }}
+            >
+              Lorem Ipsum is simply dummy text of the printing and typesetting
+              industry. Lorem Ipsum has been the industry's <br />
+              standard dummy text ever since the 1500s, when an unknown printer
+              took a galley of type and scrambled it to make a type specimen
+              book. <br />
+              It has survived not only five centuries.
+            </Typography>
+            <Avatar
+              src={bg_image2}
+              aria-label="Busy Man"
+              sx={{
+                width: { xl: "400px", md: "250px", xs: "200px" },
+                height: "auto",
+                padding: "0px",
+                margin: "0px",
+                borderRadius: 0,
+                position: "absolute",
+                bottom: "1px",
+                right: "0",
+              }}
+            />
           </Box>
         </Grid>
       </Grid>

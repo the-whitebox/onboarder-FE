@@ -8,6 +8,7 @@ import FormLabel from "@mui/joy/FormLabel";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import maxpilot from "../../assets/images/maxpilot-logo.png";
+import bg_image4 from "../../assets/images/bg-image4.png";
 import Icon1 from "../../assets/icons/health-icon.png";
 import Icon2 from "../../assets/icons/retail-icon.png";
 import Icon3 from "../../assets/icons/services-icon.png";
@@ -89,7 +90,7 @@ export default function Step3_2() {
   };
   return (
     <>
-      <Grid container sx={{ pb: 5 }}>
+      <Grid container sx={{ pb: { xs: 5, md: 0 } }}>
         <Grid item xl={12} lg={12} md={12} sm={12} xs={12}>
           <Box
             sx={{
@@ -111,36 +112,50 @@ export default function Step3_2() {
                 margin: "0px",
               }}
             />
-            <Box sx={{ display: "flex", alignItems: "center" }}>
-              <Typography sx={{ fontSize: "12px", mr: 2 }}>
+            <Box
+              sx={{
+                display: "flex",
+                alignItems: { md: "center", xs: "flex-end" },
+                flexDirection: { xs: "column", md: "row" },
+                justifyContent: "flex-end",
+              }}
+            >
+              <Typography
+                sx={{
+                  fontSize: { md: "12px", xs: "10px" },
+                  mr: { md: 2, xs: 0 },
+                }}
+              >
                 STEP 3 | COMPLETE YOUR PROFILE
               </Typography>
-              <Box
-                sx={{
-                  width: "20px",
-                  height: "20px",
-                  background: "#e6f4eb",
-                  borderRadius: "100%",
-                }}
-              ></Box>
-              <Box
-                sx={{
-                  width: "20px",
-                  height: "20px",
-                  background: "#e6f4eb",
-                  borderRadius: "100%",
-                  ml: 1,
-                }}
-              ></Box>
-              <Box
-                sx={{
-                  width: "20px",
-                  height: "20px",
-                  background: "#2bb491",
-                  borderRadius: "100%",
-                  //   ml: 1,
-                }}
-              ></Box>
+              <Box sx={{ display: "flex", mt: { xs: 1, md: 0 } }}>
+                <Box
+                  sx={{
+                    width: "20px",
+                    height: "20px",
+                    background: "#e6f4eb",
+                    borderRadius: "100%",
+                  }}
+                ></Box>
+                <Box
+                  sx={{
+                    width: "20px",
+                    height: "20px",
+                    background: "#e6f4eb",
+                    borderRadius: "100%",
+                    ml: 1,
+                  }}
+                ></Box>
+                <Box
+                  sx={{
+                    width: "20px",
+                    height: "20px",
+                    background: "#2bb491",
+                    borderRadius: "100%",
+                    ml: 1,
+                  }}
+                ></Box>
+              </Box>
             </Box>
           </Box>
           <Box sx={{ background: "gray", width: "77%", height: "1px" }}></Box>
@@ -183,7 +198,7 @@ export default function Step3_2() {
             <Typography
               sx={{
                 mt: 1,
-                fontSize: "12px",
+                fontSize: { md: "12px", xs: "10px" },
                 color: "#949494",
                 textAlign: "center",
               }}
@@ -416,18 +431,12 @@ export default function Step3_2() {
                     }}
                   >
                     <Radio id={idx} value={value} />
-                    <Avatar
-                      variant="circular"
-                      size="sm"
-                      //   sx={{ zIndex: "99999" }}
-                      src={icons[idx]}
-                    />
+                    <Avatar sx={{ borderRadius: 0 }} src={icons[idx]} />
                     <FormLabel
                       htmlFor={value}
                       sx={{
                         fontSize: "12px",
                         fontWeight: "bold",
-                        // zIndex: "99999",
                       }}
                     >
                       {value}
@@ -562,7 +571,6 @@ export default function Step3_2() {
                           position: "absolute",
                           top: "-8px",
                           right: "-8px",
-                          //   bgcolor: "background.body",
                           borderRadius: "50%",
                         },
                       },
@@ -624,7 +632,7 @@ export default function Step3_2() {
                 sx={{
                   mt: 5,
                   ml: 3,
-                  width: "10%",
+                  width: "20%",
                   height: 35,
                   borderRadius: "8px",
                   textTransform: "none",
@@ -641,10 +649,11 @@ export default function Step3_2() {
           <Box
             sx={{
               display: "flex",
-              flexDirection: "column",
+              flexDirection: { md: "column", xs: "row" },
               alignItems: "flex-end",
-              mt: { xl: 40, lg: 20, xs: 5 },
-              mr: 10,
+              justifyContent: "center",
+              mt: { xl: 25, lg: 20, xs: 3 },
+              mr: { md: 10, xs: 0 },
             }}
           >
             <Box
@@ -662,6 +671,7 @@ export default function Step3_2() {
                 background: "#2bb491",
                 borderRadius: "100%",
                 mt: 1,
+                ml: { xs: 1, md: 0 },
               }}
             ></Box>
             <Box
@@ -671,6 +681,7 @@ export default function Step3_2() {
                 background: "#e6f4eb",
                 borderRadius: "100%",
                 mt: 1,
+                ml: { xs: 1, md: 0 },
               }}
             ></Box>
             <Box
@@ -680,9 +691,51 @@ export default function Step3_2() {
                 background: "#e6f4eb",
                 borderRadius: "100%",
                 mt: 1,
+                ml: { xs: 1, md: 0 },
               }}
             ></Box>
           </Box>
+        </Grid>
+        <Grid
+          item
+          xs={12}
+          sx={{
+            height: { xl: "auto", md: "15vh", xs: "35vh" },
+            position: { xl: "unset", xs: "relative" },
+          }}
+        >
+          <Typography
+            sx={{
+              width: "100%",
+              fontSize: { md: "10px", xs: "5px" },
+              textAlign: "center",
+              zIndex: 9999,
+              position: "absolute",
+              bottom: 0,
+              paddding: "0px 10px",
+            }}
+          >
+            Lorem Ipsum is simply dummy text of the printing and typesetting
+            industry. Lorem Ipsum has been the industry's <br />
+            standard dummy text ever since the 1500s, when an unknown printer
+            took a galley of type and scrambled it to make a type specimen book.{" "}
+            <br />
+            It has survived not only five centuries.
+          </Typography>
+          <Avatar
+            src={bg_image4}
+            aria-label="Busy Man"
+            sx={{
+              width: { xl: "400px", md: "250px", xs: "200px" },
+              height: "auto",
+              padding: "0px",
+              margin: "0px",
+              borderRadius: 0,
+              position: "absolute",
+              bottom: "1px",
+              right: "0",
+            }}
+          />
         </Grid>
       </Grid>
     </>
