@@ -5,7 +5,7 @@ import { BrowserTracing } from "@sentry/tracing";
 import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
-import { GlobalProvider } from "./context/GlobalContext";
+import { BrowserRouter } from "react-router-dom";
 
 Sentry.init({
   dsn: "https://42fe350a1a7147ed877a78ee15666232@o4504565865971712.ingest.sentry.io/4504565875146752",
@@ -20,9 +20,9 @@ Sentry.init({
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
-    <GlobalProvider>
+    <BrowserRouter>
       <App />
-    </GlobalProvider>
+    </BrowserRouter>
   </React.StrictMode>
 );
 
