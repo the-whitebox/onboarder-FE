@@ -16,6 +16,8 @@ import EmploymentDetails from "../components/pages/EmploymentDetails";
 import PersonalDetails from "../components/pages/PersonalDetails";
 import AddNewPeople from "../components/pages/AddNewPeople";
 import PrivateRoute from "./PrivateRoute";
+import WithSidebar from "./WithSidebar";
+import Step3_4 from "../components/pages/Step3-4";
 
 function Routing() {
   const token = localStorage.getItem("token");
@@ -37,10 +39,48 @@ function Routing() {
             </PrivateRoute>
           }
         />
-        <Route path="/step2" element={<Step2 />} />
-        <Route path="/step3-1" element={<Step3_1 />} />
-        <Route path="/step3-2" element={<Step3_2 />} />
-        <Route path="/step3-3" element={<Step3_3 />} />
+        <Route
+          path="/step2"
+          element={
+            <PrivateRoute>
+              <Step2 />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/step3-1"
+          element={
+            <PrivateRoute>
+              <Step3_1 />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/step3-2"
+          element={
+            <PrivateRoute>
+              <Step3_2 />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/step3-3"
+          element={
+            <PrivateRoute>
+              <Step3_3 />
+            </PrivateRoute>
+          }
+        />
+        <Route element={<WithSidebar />}>
+          <Route
+            path="/step3-4"
+            element={
+              <PrivateRoute>
+                <Step3_4 />
+              </PrivateRoute>
+            }
+          />
+        </Route>
         <Route
           path="/about"
           element={
@@ -112,7 +152,7 @@ function Routing() {
           <>
             <Route path="/" element={<Login />} />
             <Route path="/step1" element={<Signup />} />
-            {/* <Route path="*" element={<Login />} /> */}
+            <Route path="*" element={<Login />} />
           </>
         )}
       </Routes>
