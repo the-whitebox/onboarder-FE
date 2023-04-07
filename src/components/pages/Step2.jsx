@@ -9,11 +9,17 @@ import ForgotPassword from "./ForgotPassword";
 import emailIcon from "../../assets/icons/email-icon.png";
 import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
 import bg_image2 from "../../assets/images/bg-image2.png";
+import { useNavigate } from "react-router-dom";
 
 export default function Step2() {
+  const Navigate = useNavigate();
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+
+  const goNext = () => {
+    Navigate("/step3-1");
+  };
 
   return (
     <>
@@ -167,6 +173,7 @@ export default function Step2() {
                 mt: "-30px",
                 textTransform: "none",
               }}
+              onClick={goNext}
             >
               Next
             </Button>

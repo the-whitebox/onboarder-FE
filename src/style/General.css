@@ -29,6 +29,11 @@
   text-decoration-color: #38b492;
 }
 
+.aTag-1 {
+  color: white;
+  text-decoration: none;
+}
+
 .all-green-btns {
   color: white !important;
   background-color: #38b492 !important;
@@ -98,13 +103,51 @@
   padding-left: 15px;
 }
 
-.aTag-1 {
-  color: white;
-  text-decoration: none;
-}
-
 .css-1pqm26d-MuiAvatar-img {
   object-fit: contain !important;
+}
+
+.verticalMenu-aTag {
+  text-decoration: none;
+  color: #5b6462;
+  width: 100%;
+  text-align: center;
+  padding: 12px 0px;
+  transition: 0.3s;
+  position: relative;
+}
+
+.verticalMenu-aTag:hover {
+  background: #23ce99;
+  color: white;
+}
+
+.verticalMenu-aTag:hover::before {
+  content: "";
+  width: 6px;
+  height: 100%;
+  background: white;
+  position: absolute;
+  left: 0;
+  top: 0;
+  border-radius: 0px 5px 5px 0px;
+}
+
+.active::before {
+  content: "";
+  width: 6px;
+  height: 100%;
+  background: white;
+  position: absolute;
+  left: 0;
+  top: 0;
+  border-radius: 0px 5px 5px 0px;
+}
+
+.active {
+  background: #23ce99;
+  color: white;
+  font-weight: bolder;
 }
 
 @media screen and (max-width: 768px) {

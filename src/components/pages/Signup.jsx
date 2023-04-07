@@ -18,7 +18,8 @@ import * as Yup from "yup";
 const formSchema = Yup.object({
   username: Yup.string().required("Please enter your username"),
   email: Yup.string().email().required("Please enter your email"),
-  password: Yup.string().required("Please enter your password"),
+  password: Yup.string(),
+  // password: Yup.string().required("Please enter your password"),
   check: Yup.boolean().oneOf(
     [true],
     "Please accept the terms and privacy policy before get started!"
@@ -45,13 +46,13 @@ export default function Signup() {
           .post(`${url}/auth/user/registration/`, {
             username: values.username,
             email: values.email,
+            // password: values.password,
           })
           .then((response) => {
             console.log("response", response);
-            toast.success("You have successfully Registered!");
-            // localStorage.setItem("token", response.data.access_token);
+            localStorage.setItem("token", response.data.access_token);
             // localStorage.setItem("userId", response.data.user.pk);
-            Navigate("/step1");
+            Navigate("/step2");
             setLoading(false);
             action.resetForm();
           })

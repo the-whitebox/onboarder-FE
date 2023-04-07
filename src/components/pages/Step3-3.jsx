@@ -5,6 +5,7 @@ import Radio, { radioClasses } from "@mui/joy/Radio";
 import RadioGroup from "@mui/joy/RadioGroup";
 import Sheet from "@mui/joy/Sheet";
 import FormLabel from "@mui/joy/FormLabel";
+import CircularProgress from "@mui/material/CircularProgress";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import maxpilot from "../../assets/images/maxpilot-logo.png";
@@ -55,9 +56,10 @@ export default function Step3_3() {
             payroll_type: values.payroll,
           })
           .then((response) => {
-            toast.success("You have successfully registered your business!");
-            // Navigate("/people");
-            setLoading(false);
+            if (response.status === 201) {
+              Navigate("/step3-4");
+              setLoading(false);
+            }
           })
           .catch((error) => {
             console.log("Error", error.response);
@@ -518,7 +520,11 @@ export default function Step3_3() {
                 }}
                 onClick={handleSubmit}
               >
-                Next
+                {loading ? (
+                  <CircularProgress color="inherit" size={25} />
+                ) : (
+                  <>Next</>
+                )}
               </Button>
             </Box>
 
