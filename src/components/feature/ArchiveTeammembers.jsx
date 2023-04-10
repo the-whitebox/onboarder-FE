@@ -1,13 +1,10 @@
 import * as React from "react";
 import Box from "@mui/material/Box";
-import Modal from "@mui/material/Modal";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
-
 import CloseIcon from "@mui/icons-material/Close";
-import "../../style/Archiveteam.css";
 import InfoIcon from "@mui/icons-material/Info";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import axios from "axios";
 
 const style = {
@@ -21,79 +18,33 @@ const style = {
   boxShadow: 24,
   pt: 2,
   px: 4,
-  pb: 3,
+  pb: 4,
 };
 
-export default function SyncPayroll() {
+export default function SyncPayroll(props) {
   const token = localStorage.getItem("token");
   const url = process.env.REACT_APP_BASE_URL;
-  const [listOfTeamMembers, setListOfTeamMembers] = React.useState([]);
-
-  let b_id = "";
-  let team_array = [];
-  const getBusiness = async () => {
-    try {
-      const response = await axios
-        .get(url + "/business/", {
-          headers: {
-            Authorization: `Bearer ${token}`,
-            "Content-Type": "application/json",
-          },
-        })
-        .then((response) => {
-          console.log(response.data);
-          const ids = response.data.map((obj) => obj.id);
-          const firstId = ids[0];
-
-          // setBusinessId(firstId);
-          b_id = firstId;
-          // console.log("First Id: ", firstId);
-        });
-
-      // console.log({ businessId });
-
-      const teamResponse = await axios
-        .get(url + `/people/?business_id=${b_id}`, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-            "Content-Type": "application/json",
-          },
-        })
-        .then((response) => {
-          const teamMembers = response.data;
-          // console.log({ teamMembers });
-          team_array = teamMembers;
-          setListOfTeamMembers(teamMembers);
-          console.log({ team_array });
-        });
-    } catch (error) {
-      console.log("Error", error);
-    }
-  };
-
-  useEffect(() => {
-    getBusiness();
-  }, []);
-
-  const [open, setOpen] = React.useState(false);
-  const handleOpen = () => {
-    setOpen(true);
-  };
-  const handleClose = () => {
-    setOpen(false);
-  };
 
   return (
     <React.Fragment>
-      <Box sx={{ ...style, width: 550, height: 430 }}>
-        <Box className="flex flex-row" sx={{ width: "500px" }}>
+      <Box sx={{ ...style, width: 550, height: "auto" }}>
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+          }}
+        >
           <h2>Archive Team members</h2>
-          <CloseIcon onClick={handleClose} sx={{ mb: 6 }}></CloseIcon>
+          <CloseIcon
+            onClick={props.handleClose}
+            sx={{ cursor: "pointer" }}
+          ></CloseIcon>
         </Box>
 
-        <div>
-          <Typography sx={{ color: "#b4b4b4", ml: 1 }}>
-            {team_array.length} Team members
+        <Box>
+          <Typography sx={{ color: "#b4b4b4" }}>
+            {props.selectedTeamMembers?.length} Team members
           </Typography>
           <Box
             sx={{
@@ -104,7 +55,7 @@ export default function SyncPayroll() {
             <InfoIcon
               sx={{
                 fontSize: "medium",
-                color: "Gray",
+                color: "#38b492",
                 mt: "12px",
                 ml: "12px",
               }}
@@ -112,8 +63,8 @@ export default function SyncPayroll() {
             <Typography
               sx={{
                 ml: "5px",
-                pb: "15px",
                 mt: "10px",
+                color: "#332a60",
               }}
             >
               Archiving these people will revoke their access to this
@@ -121,43 +72,48 @@ export default function SyncPayroll() {
               historical records will be retained.
             </Typography>
           </Box>
-          <Box sx={{ display: "flex", flexDirection: "row" }}>
-            <Typography
-              sx={{ pt: 2, pb: 2, mr: 1, pl: 2, fontWeight: "bold" }}
-            ></Typography>
-
-            <Typography sx={{ pt: 2, pb: 2, ml: 4, fontWeight: "bold" }}>
-              Asher Muneer
-            </Typography>
-            <Typography sx={{ pt: 2, pb: 2, ml: 20, color: "#a1a1a1" }}>
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "space-between",
+              mt: "15px",
+            }}
+          >
+            <Box sx={{ display: "flex", pt: 2, pb: 2, ml: 2 }}>
+              <Typography sx={{ fontWeight: "bold" }}>AM</Typography>
+              <Typography sx={{ ml: 4, fontWeight: "bold" }}>
+                Asher Muneer
+              </Typography>
+            </Box>
+            <Typography sx={{ pt: 2, pb: 2, color: "#a1a1a1" }}>
               Ready to Archive
             </Typography>
           </Box>
-          <Box sx={{ display: "flex", flexDirection: "row" }}>
-            <Typography sx={{ pt: 2, pb: 2, ml: 2, fontWeight: "bold" }}>
-              ss
-            </Typography>
-            <Typography sx={{ pt: 2, pb: 2, ml: 6, fontWeight: "bold" }}>
-              sss sss
-            </Typography>
-            <Typography sx={{ pt: 2, pb: 2, ml: 26, color: "#a1a1a1" }}>
+          <Box sx={{ display: "flex", justifyContent: "space-between" }}>
+            <Box sx={{ display: "flex", pt: 2, pb: 2, ml: 2 }}>
+              <Typography sx={{ fontWeight: "bold" }}>AM</Typography>
+              <Typography sx={{ ml: 4, fontWeight: "bold" }}>ssssss</Typography>
+            </Box>
+            <Typography sx={{ pt: 2, pb: 2, color: "#a1a1a1" }}>
               Ready to Archive
             </Typography>
           </Box>
-        </div>
-
-        <Button
-          className="button"
-          sx={{
-            textTransform: "none",
-            ml: 35,
-            borderRadius: "7px",
-            mt: 4,
-            width: "210px",
-          }}
-        >
-          Archive Team members
-        </Button>
+        </Box>
+        <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
+          <Button
+            className="all-red-btns"
+            variant="contained"
+            sx={{
+              textTransform: "none",
+              borderRadius: "7px",
+              mt: 4,
+              width: "40%",
+              height: 35,
+            }}
+          >
+            Archive Team members
+          </Button>
+        </Box>
       </Box>
     </React.Fragment>
   );

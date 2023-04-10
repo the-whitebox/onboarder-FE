@@ -12,6 +12,7 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import { useLocation } from "react-router-dom";
 import { Grid } from "@mui/material";
+import GlobalContext from "../../context/GlobalContext";
 const formSchema = Yup.object({
   email: Yup.string().email().required("Please enter your email"),
   mobile: Yup.string().required("Please enter your mobile number"),
@@ -25,8 +26,8 @@ const formSchema = Yup.object({
 });
 
 function ContactForm() {
-  const location = useLocation();
-  const userInfo = location.state;
+  const { userInfo } = React.useContext(GlobalContext);
+
   const userId = localStorage.getItem("userId");
   const token = localStorage.getItem("token");
   const url = process.env.REACT_APP_BASE_URL + `/people/${userId}/`;

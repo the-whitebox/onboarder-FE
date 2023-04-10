@@ -24,8 +24,8 @@ import SetpayratesModalBody from "../feature/Setpayrates";
 import SyncPayrollModalBody from "../feature/SyncPayroll";
 import SetAdvisorModalBody from "../feature/SetAccessLevel";
 import Breadcrumbs from "@mui/material/Breadcrumbs";
-import axios from "axios";
 import ChatIcon from "../feature/ChatIcon";
+import GlobalContext from "../../context/GlobalContext";
 const theme = createTheme();
 
 const Item = styled("div")(({ theme }) => ({
@@ -34,10 +34,7 @@ const Item = styled("div")(({ theme }) => ({
 // const drawerWidth = 240;
 
 export default function Employment() {
-  const userId = localStorage.getItem("userId");
-  const token = localStorage.getItem("token");
-  const url = process.env.REACT_APP_BASE_URL + `/people/${userId}/`;
-  const [userInfo, setUserInfo] = React.useState();
+  const { userInfo } = React.useContext(GlobalContext);
 
   const modalWrapper = {
     overflow: "auto",
@@ -56,22 +53,6 @@ export default function Employment() {
   const handleClosePayroll = () => setOpenPayroll(false);
   const indexToHL = 1;
 
-  React.useEffect(() => {
-    const getLoggedInUserDetails = async () => {
-      await axios
-        .get(url, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-            "Content-Type": "application/json",
-          },
-        })
-        .then((response) => {
-          setUserInfo(response.data);
-        })
-        .catch((error) => console.log("Error", error));
-    };
-    getLoggedInUserDetails();
-  }, []);
   return (
     <>
       <ThemeProvider theme={theme}>
@@ -81,10 +62,7 @@ export default function Employment() {
           aria-labelledby="modal-modal-title"
           aria-describedby="modal-modal-description"
         >
-          <SetAdvisorModalBody
-            handleCloseAccess={handleCloseAccess}
-            userInfo={userInfo}
-          />
+          <SetAdvisorModalBody handleClose={handleCloseAccess} />
         </Modal>
 
         <Modal
@@ -102,14 +80,11 @@ export default function Employment() {
           aria-labelledby="modal-modal-title"
           aria-describedby="modal-modal-description"
         >
-          <SetpayratesModalBody
-            userInfo={userInfo}
-            handleClosePayrate={handleClosePayrate}
-          />
+          <SetpayratesModalBody handleClosePayrate={handleClosePayrate} />
         </Modal>
 
         <Box sx={{ display: "flex" }}>
-          <VerticalMenu indexToHL={indexToHL} userInfo={userInfo} />
+          <VerticalMenu indexToHL={indexToHL} />
 
           <Box
             component="main"
@@ -118,7 +93,7 @@ export default function Employment() {
             <Toolbar />
             <Box>
               <Breadcrumbs aria-label="breadcrumb">
-                <Link t="/People" className="aTag">
+                <Link to="/People" className="aTag">
                   Home
                 </Link>
                 <Typography color="text.primary">Employment</Typography>
@@ -131,7 +106,9 @@ export default function Employment() {
                 className="all-green-btns"
                 sx={{
                   bgcolor: "#38b492",
+                  height: 35,
                   color: "#ffffff",
+                  mr: { lg: 15, xs: 0 },
                 }}
               >
                 Save
@@ -295,10 +272,10 @@ export default function Employment() {
               </Box>
             </Box>
             <Box sx={{ mt: 1 }}>
-              <WorkingHours userInfo={userInfo} />
+              <WorkingHours />
             </Box>
             <Box sx={{ mt: 1 }}>
-              <LeaveEntitlement userInfo={userInfo} />
+              <LeaveEntitlement />
             </Box>
           </Box>
         </Box>

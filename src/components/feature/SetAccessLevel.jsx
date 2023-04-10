@@ -7,13 +7,13 @@ import Select from "@mui/material/Select";
 import CloseButton from "@mui/icons-material/Close";
 import Typography from "@mui/material/Typography";
 import "../../style/SetAccesslevel.css";
-import "../../style/General.css";
 import { useState } from "react";
 import CircularProgress from "@mui/material/CircularProgress";
 import axios from "axios";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { toast } from "react-toastify";
+import GlobalContext from "../../context/GlobalContext";
 const formSchema = Yup.object({
   role: Yup.string().required("Please select your role"),
 });
@@ -25,11 +25,9 @@ const style = {
   transform: "translate(-50%, -50%)",
   bgcolor: "background.paper",
   boxShadow: 24,
-  pt: 2,
   px: 4,
-  pb: 3,
+  py: 4,
   borderRadius: "12px",
-  padding: "20px",
 };
 
 const role = [
@@ -41,13 +39,14 @@ const role = [
 ];
 
 export default function SetAccessLevel(props) {
-  const userId = localStorage.getItem("userId");
+  const { userInfo } = React.useContext(GlobalContext);
   const token = localStorage.getItem("token");
-  const url = process.env.REACT_APP_BASE_URL + `/people/${userId}/`;
+  const userId = localStorage.getItem("userId");
+  const url = process.env.REACT_APP_BASE_URL;
   const [loading, setLoading] = useState(false);
 
   const initialValues = {
-    role: props.userInfo?.role.id,
+    role: userInfo?.role.id,
   };
 
   const { values, errors, touched, handleBlur, handleChange, handleSubmit } =
@@ -58,7 +57,7 @@ export default function SetAccessLevel(props) {
         setLoading(true);
         await axios
           .patch(
-            url,
+            `${url}/people/${userId}/`,
             { role: values.role },
             {
               headers: {
@@ -70,7 +69,7 @@ export default function SetAccessLevel(props) {
           .then((response) => {
             console.log("Response", response);
             setLoading(false);
-            props.handleCloseAccess();
+            props.handleClose();
           })
           .catch((error) => {
             toast.error(error.message);
@@ -81,30 +80,40 @@ export default function SetAccessLevel(props) {
 
   return (
     <React.Fragment>
-      <Box sx={{ ...style, width: 370, height: 270 }}>
-        <CloseButton
-          id="child-modal-title"
-          sx={{ float: "right", cursor: "pointer" }}
-          onClick={props.handleCloseAccess}
-        ></CloseButton>
-        <Typography
-          variant="h5"
-          sx={{ mt: 2, fontWeight: "bold", paddingBottom: 1 }}
-          id="child-modal-title"
+      <Box sx={{ ...style, width: 350, height: "auto" }}>
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+          }}
         >
-          Set Access level
-        </Typography>
+          <Typography
+            variant="h5"
+            sx={{ fontWeight: "bold" }}
+            id="child-modal-title"
+          >
+            Set Access level
+          </Typography>
+          <CloseButton
+            id="child-modal-title"
+            sx={{ cursor: "pointer" }}
+            onClick={props.handleClose}
+          ></CloseButton>
+        </Box>
 
-        <div>
-          <p className="team">2 Team members </p>
+        <Box>
+          <p className="team">
+            {props.selectedTeamMembers?.length} Team members
+          </p>
           <Typography sx={{ fontWeight: "bold", ml: "8px" }}>
             Access level
           </Typography>
           <FormControl
             sx={{
-              width: 200,
+              width: 250,
               height: 5,
-              padding: "5px  ",
+              padding: "5px",
             }}
           >
             <Select
@@ -115,8 +124,8 @@ export default function SetAccessLevel(props) {
               onChange={handleChange}
               handleBlur={handleBlur}
             >
-              <MenuItem value="">
-                <em>None</em>
+              <MenuItem value="" disabled>
+                <em>Select</em>
               </MenuItem>
               {role?.map((data) => (
                 <MenuItem value={data.id}>{data.role}</MenuItem>
@@ -128,28 +137,29 @@ export default function SetAccessLevel(props) {
               ) : null}
             </Box>
           </FormControl>
-        </div>
-        <Button
-          variant="primary"
-          className="all-green-btns"
-          sx={{
-            ml: 30,
-            borderRadius: "6px",
-            width: "30%",
-            height: "40px",
-            bgcolor: "#38b492",
-            color: "white",
-            textTransform: "none",
-            mt: 6,
-          }}
-          onClick={handleSubmit}
-        >
-          {loading ? (
-            <CircularProgress color="inherit" size={30} />
-          ) : (
-            <>Update</>
-          )}
-        </Button>
+        </Box>
+        <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
+          <Button
+            variant="contained"
+            className="all-green-btns"
+            sx={{
+              borderRadius: "8px",
+              width: "30%",
+              height: 35,
+              bgcolor: "#38b492",
+              color: "white",
+              textTransform: "none",
+              mt: 6,
+            }}
+            onClick={handleSubmit}
+          >
+            {loading ? (
+              <CircularProgress color="inherit" size={30} />
+            ) : (
+              <>Update</>
+            )}
+          </Button>
+        </Box>
       </Box>
     </React.Fragment>
   );

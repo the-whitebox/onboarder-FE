@@ -10,6 +10,7 @@ import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import "../../style/General.css";
 import { useNavigate } from "react-router-dom";
+import GlobalContext from "../../context/GlobalContext";
 
 const StyledList = styled(List)({
   // selected and (selected + hover) states
@@ -31,6 +32,7 @@ const StyledList = styled(List)({
 });
 
 export default function VerticalMenu(props) {
+  const { userInfo } = React.useContext(GlobalContext);
   const [selectedIndex] = React.useState(props.indexToHL);
   // const handleListItemClick = (index: number) => {
   //   setSelectedIndex(index);
@@ -77,9 +79,7 @@ export default function VerticalMenu(props) {
           <Avatar
             className="avatar-size"
             // sx={{ width: "120px !important", height: 120 }}
-            {...stringAvatar(
-              `${props.userInfo?.first_name} ${props.userInfo?.last_name}`
-            )}
+            {...stringAvatar(`${userInfo?.first_name} ${userInfo?.last_name}`)}
           />
           <Typography
             component="h3"
@@ -91,7 +91,7 @@ export default function VerticalMenu(props) {
               mt: 2,
             }}
           >
-            {props.userInfo?.first_name} {props.userInfo?.last_name}
+            {userInfo?.first_name} {userInfo?.last_name}
           </Typography>
           <Typography
             component="h3"
@@ -102,7 +102,7 @@ export default function VerticalMenu(props) {
               color: "#ffffff",
             }}
           >
-            {props.userInfo?.role.role}
+            {userInfo?.role.role}
           </Typography>
           <Button
             type="submit"

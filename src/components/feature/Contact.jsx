@@ -5,14 +5,17 @@ import Grid from "@mui/system/Unstable_Grid";
 import styled from "@mui/system/styled";
 import Typography from "@mui/material/Typography";
 import { useNavigate } from "react-router-dom";
+import GlobalContext from "../../context/GlobalContext";
 const Item = styled("div")(({ theme }) => ({
   border: "none",
 }));
 
 export default function Contact(props) {
+  const { userInfo } = React.useContext(GlobalContext);
+
   const Navigate = useNavigate();
-  const routeToNextPage = (userInfo) => {
-    Navigate("/personal_details", { state: userInfo });
+  const routeToNextPage = () => {
+    Navigate("/personal_details");
   };
   return (
     <>
@@ -42,13 +45,13 @@ export default function Contact(props) {
                   >
                     <li>Email</li>
                     <li>
-                      {props.userInfo?.profile.email ? (
-                        props.userInfo?.profile.email
+                      {userInfo?.profile.email ? (
+                        userInfo?.profile.email
                       ) : (
                         <Typography
                           component="p"
                           className="aTag"
-                          onClick={() => routeToNextPage(props.userInfo)}
+                          onClick={routeToNextPage}
                         >
                           Add an email
                         </Typography>
@@ -56,13 +59,13 @@ export default function Contact(props) {
                     </li>
                     <li>Emergency contact</li>
                     <li>
-                      {props.userInfo?.profile.emergency_contact_name ? (
-                        props.userInfo?.profile.emergency_contact_name
+                      {userInfo?.profile.emergency_contact_name ? (
+                        userInfo?.profile.emergency_contact_name
                       ) : (
                         <Typography
                           component="p"
                           className="aTag"
-                          onClick={() => routeToNextPage(props.userInfo)}
+                          onClick={routeToNextPage}
                         >
                           Add an emergency contact
                         </Typography>
@@ -80,13 +83,13 @@ export default function Contact(props) {
                   >
                     <li>Mobile</li>
                     <li>
-                      {props.userInfo?.profile.phone_number ? (
-                        props.userInfo?.profile.phone_number
+                      {userInfo?.profile.phone_number ? (
+                        userInfo?.profile.phone_number
                       ) : (
                         <Typography
                           component="p"
                           className="aTag"
-                          onClick={() => routeToNextPage(props.userInfo)}
+                          onClick={routeToNextPage}
                         >
                           Add a mobile
                         </Typography>
@@ -97,7 +100,7 @@ export default function Contact(props) {
                       <Typography
                         component="p"
                         className="aTag"
-                        onClick={() => routeToNextPage(props.userInfo)}
+                        onClick={routeToNextPage}
                       >
                         Add contact details
                       </Typography>
@@ -114,13 +117,13 @@ export default function Contact(props) {
                   >
                     <li>Address</li>
                     <li>
-                      {props.userInfo?.profile.address ? (
-                        props.userInfo?.profile.address
+                      {userInfo?.profile.address ? (
+                        userInfo?.profile.address
                       ) : (
                         <Typography
                           component="p"
                           className="aTag"
-                          onClick={() => routeToNextPage(props.userInfo)}
+                          onClick={routeToNextPage}
                         >
                           Add an address
                         </Typography>

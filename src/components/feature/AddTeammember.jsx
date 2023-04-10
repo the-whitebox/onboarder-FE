@@ -1,6 +1,5 @@
 import * as React from "react";
 import Box from "@mui/material/Box";
-import Modal from "@mui/material/Modal";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import TextField from "@mui/material/TextField";
@@ -16,25 +15,25 @@ import CloseIcon from "@mui/icons-material/Close";
 import Capture from "../../assets/images/Capture.png";
 import "../../style/Addteam.css";
 import axios from "axios";
-
-const ITEM_HEIGHT = 48;
-const ITEM_PADDING_TOP = 8;
-const MenuProps = {
-  PaperProps: {
-    style: {
-      maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
-      width: 250,
-    },
-  },
+import CircularProgress from "@mui/material/CircularProgress";
+import { toast } from "react-toastify";
+import { useFormik } from "formik";
+import * as Yup from "yup";
+import GlobalContext from "../../context/GlobalContext";
+const formSchema = Yup.object({
+  firstname: Yup.string().required("Please enter your firstname"),
+  lastname: Yup.string().required("Please enter your lastname"),
+  mobile: Yup.string().required("Please enter your mobile number"),
+  email: Yup.string().email().required("Please enter your email"),
+  accessLevel: Yup.string().required("Please select access level"),
+});
+const initialValues = {
+  firstname: "",
+  lastname: "",
+  mobile: "",
+  email: "",
+  accessLevel: "",
 };
-function getStyles(name, personName, theme) {
-  return {
-    fontWeight:
-      personName.indexOf(name) === -1
-        ? theme.typography.fontWeightRegular
-        : theme.typography.fontWeightMedium,
-  };
-}
 
 const names = ["Location 1", "Location 2"];
 const access = [
@@ -58,104 +57,95 @@ const style = {
 };
 
 export default function Addteammember(props) {
+  const { userInfo } = React.useContext(GlobalContext);
   const theme = useTheme();
-  const [personName, setPersonName] = React.useState([]);
-  const [mainLocation, setMainLocation] = React.useState([]);
-  const [otherLocation, setOtherLocation] = React.useState([]);
-  const [employeeType, setEmployeeType] = React.useState([]);
-  const [inputs, setInputs] = React.useState([]);
-  const [inviteLink, setInviteLink] = React.useState("");
   const token = localStorage.getItem("token");
   const url = process.env.REACT_APP_BASE_URL;
-
-  console.log(props);
-  axios
-    .get(url + "/invitation_link/", {
-      headers: {
-        Authorization: `Bearer ${token}`,
-        "Content-Type": "application/json",
-      },
-    })
-    .then((response) => {
-      // console.log(response.data.invitation_link);
-      setInviteLink(response.data.invitation_link);
-    })
-    .catch((error) => {
-      console.error(error);
-    });
-
-  const handleMainLocation = (event) => {
-    setMainLocation(event.target.value);
-  };
-  const handleOtherLocation = (event) => {
-    setOtherLocation(event.target.value);
-  };
-  const handleEmployeeType = (event) => {
-    setEmployeeType(event.target.value);
-  };
-
-  const [open, setOpen] = React.useState(false);
-  const handleOpen = () => {
-    setOpen(true);
-  };
-  const handleClose = () => {
-    setOpen(false);
-  };
-  const handleChange = (event) => {
-    const name = event.target.name;
-    const value = event.target.value;
-    setInputs((values) => ({ ...values, [name]: value }));
-  };
-
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    console.log(
-      { inputs },
-      { mainLocation },
-      { otherLocation },
-      { employeeType }
-    );
-    axios
-      .post(
-        url + "/people/",
-        {
-          first_name: inputs.firstname,
-          last_name: inputs.lastname,
-          is_superuser: false,
-          email: inputs.email,
-          role: employeeType,
-          business: props.businessId,
-          profile: {
-            phone_number: inputs.phoneNumber,
-          },
-        },
-        {
+  const [loading, setLoading] = React.useState(false);
+  const [inviteLink, setInviteLink] = React.useState("");
+  React.useEffect(() => {
+    const getIniviteLink = async () => {
+      await axios
+        .get(url + "/invitation_link/", {
           headers: {
             Authorization: `Bearer ${token}`,
             "Content-Type": "application/json",
           },
-        }
-      )
-      .then((response) => {
-        console.log(response);
-      })
-      .catch((error) => {
-        console.error(error);
-      });
-  };
+        })
+        .then((response) => {
+          setInviteLink(response.data.invitation_link);
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    };
+    getIniviteLink();
+  }, []);
+
+  const { values, errors, touched, handleBlur, handleChange, handleSubmit } =
+    useFormik({
+      initialValues,
+      validationSchema: formSchema,
+      onSubmit: async (values, action) => {
+        setLoading(true);
+        await axios
+          .post(
+            `${url}/people/`,
+            {
+              first_name: values.firstname,
+              last_name: values.lastname,
+              is_superuser: false,
+              email: values.email,
+              role: values.accessLevel,
+              business: userInfo?.business.id,
+              profile: {
+                phone_number: values.mobile,
+              },
+            },
+            {
+              headers: {
+                Authorization: `Bearer ${token}`,
+                "Content-Type": "application/json",
+              },
+            }
+          )
+          .then((response) => {
+            setLoading(false);
+            props.getBusiness();
+            props.handleClose();
+            action.resetForm();
+            console.log("add", response);
+          })
+          .catch((error) => {
+            console.log("Error", error.response);
+            toast.error(error.response.data.non_field_errors[0]);
+            setLoading(false);
+          });
+      },
+    });
 
   return (
-    <React.Fragment>
+    <>
       <Box
         sx={{
           ...style,
-          mt: 20,
+          mt: 15,
           width: 660,
-          height: 930,
+          height: "auto",
         }}
       >
-        <Box className="flex flex-row" sx={{ width: "620px" }}>
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+          }}
+        >
           <h2 className="set">Add Team member</h2>
+          <CloseIcon
+            onClick={props.handleClose}
+            sx={{ cursor: "pointer" }}
+          ></CloseIcon>
         </Box>
         <Grid sx={{ display: "flex", flexDirection: "row", pt: "20px" }}>
           <Avatar
@@ -175,19 +165,17 @@ export default function Addteammember(props) {
                 pt: "20px",
               }}
             >
-              {" "}
-              Invite with a unique link{" "}
+              Invite with a unique link
             </Typography>
-            <Typography sx={{ mt: "20px" }}>
-              {" "}
+            <Typography sx={{ mt: "5px", fontSize: "14px" }}>
               Don't know your team's email addresses? Share the unique link
               below to get your team onto your uRoaster workplace faster. To
-              keep things secured, you will need to approve each request.{" "}
+              keep things secured, you will need to approve each request.
             </Typography>
           </Box>
         </Grid>
 
-        <div>
+        <Box>
           <Box sx={{ display: "flex", flexDirection: "row" }}>
             <TextField
               size="small"
@@ -202,7 +190,8 @@ export default function Addteammember(props) {
               {inviteLink}
             </TextField>
             <Button
-              className="btn btn-primary"
+              className="all-green-btns"
+              variant="contained"
               size="small"
               sx={{
                 borderRadius: "5px",
@@ -216,270 +205,242 @@ export default function Addteammember(props) {
               Copy link
             </Button>
           </Box>
-          <Typography sx={{ color: "green", ml: 18, pt: "5px" }}>
+          <Typography className="aTag" sx={{ ml: 18, pt: "5px" }}>
             How invite links work
           </Typography>
           <Box sx={{ pt: 2 }}>
-            <Box sx={{ display: "flex", flexDirection: "row" }}>
-              <Typography
-                sx={{
-                  ml: "2px",
-                  pt: "15px",
-                  width: "100px",
-                }}
-              >
-                First name
-              </Typography>
-              <TextField
-                name="firstname"
-                size="small"
-                sx={{
-                  width: 530,
-                  ml: "46px",
-                  pt: "10px",
-                  borderRadius: 20,
-                }}
-                placeholder="Please input"
-                onChange={handleChange}
-              ></TextField>
+            <Box sx={{ display: "flex", alignItems: "center", mt: 2 }}>
+              <Typography sx={{ width: 140 }}>First name</Typography>
+              <Box sx={{ width: 450 }}>
+                <TextField
+                  name="firstname"
+                  size="small"
+                  sx={{
+                    font: "inherit",
+                    width: "100%",
+                    borderRadius: "8px",
+                  }}
+                  placeholder="Please input"
+                  value={values.firstname}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                />
+                {errors.firstname && touched.firstname ? (
+                  <small style={{ color: "red" }}>{errors.firstname}</small>
+                ) : null}
+              </Box>
             </Box>
 
-            <Box sx={{ display: "flex", flexDirection: "row" }}>
-              <Typography
-                sx={{
-                  ml: "2px",
-                  pt: "30px",
-                  width: "100px",
-                }}
-              >
-                Last name
-              </Typography>
-              <TextField
-                name="lastname"
-                size="small"
-                sx={{
-                  width: 530,
-                  ml: "46px",
-                  pt: "30px",
-                }}
-                placeholder="Please input "
-                onChange={handleChange}
-              ></TextField>
+            <Box sx={{ display: "flex", alignItems: "center", mt: 2 }}>
+              <Typography sx={{ width: 140 }}>Last name</Typography>
+              <Box sx={{ width: 450 }}>
+                <TextField
+                  name="lastname"
+                  size="small"
+                  sx={{
+                    font: "inherit",
+                    width: "100%",
+                    borderRadius: "8px",
+                  }}
+                  placeholder="Please input "
+                  value={values.lastname}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                />
+                {errors.lastname && touched.lastname ? (
+                  <small style={{ color: "red" }}>{errors.lastname}</small>
+                ) : null}
+              </Box>
             </Box>
 
-            <Box sx={{ display: "flex", flexDirection: "row" }}>
-              <Typography sx={{ mt: "40px", width: "350px", ml: 1 }}>
-                Main Location{" "}
-              </Typography>
-              <FormControl
-                size="small"
-                sx={{
-                  mt: 4,
-                }}
-              >
+            <Box sx={{ display: "flex", alignItems: "center", mt: 2 }}>
+              <Typography sx={{ width: 140 }}>Main Location</Typography>
+              <FormControl size="small">
                 <Select
                   name="mainLocation"
                   sx={{
-                    mb: "5px",
                     font: "inherit",
-                    width: 460,
-                    mr: 98,
+                    width: 450,
                     borderRadius: "8px",
                   }}
                   displayEmpty
                   label="Location"
-                  value={mainLocation}
-                  onChange={handleMainLocation}
                   input={<OutlinedInput />}
-                  MenuProps={MenuProps}
                   inputProps={{ "aria-label": "Without label" }}
+                  value=""
+                  handleBlur={handleBlur}
+                  onChange={handleChange}
                 >
-                  <MenuItem disabled value=""></MenuItem>
-                  <MenuItem value="">
-                    <em>None</em>
+                  <MenuItem value="" disabled>
+                    <em>Select</em>
                   </MenuItem>
                   {names.map((name, idx) => (
-                    <MenuItem
-                      key={name}
-                      value={idx}
-                      style={getStyles(name, personName, theme)}
-                    >
-                      {name}
-                    </MenuItem>
-                  ))}
-                </Select>
-              </FormControl>{" "}
-            </Box>
-
-            <FormControl
-              size="small"
-              sx={{
-                m: 1,
-                mt: 3,
-                pt: "5px",
-                display: "flex",
-                flexDirection: "row",
-              }}
-            >
-              <Typography sx={{ width: "400px", mt: "10px" }}>
-                {" "}
-                Other Location{" "}
-              </Typography>
-              <Select
-                name="otherLocation"
-                sx={{
-                  mr: 32,
-                  mb: "5px",
-                  font: "inherit",
-                  width: "620px",
-                }}
-                displayEmpty
-                value={otherLocation}
-                onChange={handleOtherLocation}
-                label="Other Location"
-                input={<OutlinedInput />}
-                MenuProps={MenuProps}
-                inputProps={{ "aria-label": "Without label" }}
-              >
-                <MenuItem value="">
-                  <em>None</em>
-                </MenuItem>
-                {names.map((name, idx) => (
-                  <MenuItem
-                    key={name}
-                    value={idx}
-                    style={getStyles(name, personName, theme)}
-                  >
-                    {name}
-                  </MenuItem>
-                ))}
-              </Select>
-            </FormControl>
-
-            <Box sx={{ display: "flex", flexDirection: "row", mt: "25px" }}>
-              <Typography
-                sx={{
-                  ml: "2px",
-                  pt: "15px",
-                  pb: "20px",
-                }}
-              >
-                Mobile
-              </Typography>
-              <TextField
-                name="mobile"
-                size="small"
-                sx={{
-                  width: 520,
-                  ml: "87px",
-                  pt: "10px",
-                }}
-                placeholder="Please input "
-                onChange={handleChange}
-              ></TextField>
-            </Box>
-
-            <Box sx={{ display: "flex", flexDirection: "row" }}>
-              <Typography
-                sx={{
-                  ml: "2px",
-                  pt: "15px",
-                }}
-              >
-                Email
-              </Typography>
-              <TextField
-                name="email"
-                size="small"
-                sx={{
-                  width: 530,
-                  ml: "95px",
-                  pt: "10px",
-                }}
-                placeholder="Please input "
-                onChange={handleChange}
-              ></TextField>
-            </Box>
-            <Box sx={{ display: "flex", flexDirection: "row" }}>
-              <Typography sx={{ mt: "40px", width: "350px" }}>
-                Access level{" "}
-              </Typography>
-              <FormControl
-                size="small"
-                sx={{
-                  mt: 4,
-                }}
-              >
-                <Select
-                  name="accessLevel"
-                  sx={{
-                    pb: "5px",
-                    font: "inherit",
-                    width: 460,
-                    mr: 88,
-                    borderRadius: "8px",
-                  }}
-                  displayEmpty
-                  value={employeeType}
-                  onChange={handleEmployeeType}
-                  input={<OutlinedInput />}
-                  label="Employee type"
-                  MenuProps={MenuProps}
-                  inputProps={{ "aria-label": "Without label" }}
-                >
-                  <MenuItem disabled value=""></MenuItem>
-                  <MenuItem value="">
-                    <em>None</em>
-                  </MenuItem>
-                  {access.map((name, idx) => (
-                    <MenuItem
-                      key={name}
-                      value={idx}
-                      style={getStyles(name, personName, theme)}
-                    >
+                    <MenuItem key={name} value={idx}>
                       {name}
                     </MenuItem>
                   ))}
                 </Select>
               </FormControl>
             </Box>
+
+            <Box sx={{ display: "flex", alignItems: "center", mt: 2 }}>
+              <Typography sx={{ width: 140 }}>Other Location</Typography>
+              <FormControl size="small">
+                <Select
+                  name="otherLocation"
+                  sx={{
+                    font: "inherit",
+                    width: "300px",
+                    borderRadius: "8px",
+                  }}
+                  displayEmpty
+                  input={<OutlinedInput />}
+                  label="Other Location"
+                  inputProps={{ "aria-label": "Without label" }}
+                  value=""
+                  handleBlur={handleBlur}
+                  onChange={handleChange}
+                >
+                  <MenuItem value="" disabled>
+                    <em>Select</em>
+                  </MenuItem>
+                  {names.map((name, idx) => (
+                    <MenuItem key={name} value={idx}>
+                      {name}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
+            </Box>
+
+            <Box sx={{ display: "flex", alignItems: "center", mt: 2 }}>
+              <Typography sx={{ width: 140 }}>Mobile</Typography>
+              <FormControl size="small">
+                <Box sx={{ width: 450 }}>
+                  <TextField
+                    name="mobile"
+                    size="small"
+                    sx={{
+                      font: "inherit",
+                      width: "100%",
+                      borderRadius: "8px",
+                    }}
+                    placeholder="Please input"
+                    value={values.mobile}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                  />
+                  {errors.mobile && touched.mobile ? (
+                    <small style={{ color: "red" }}>{errors.mobile}</small>
+                  ) : null}
+                </Box>
+              </FormControl>
+            </Box>
+
+            <Box sx={{ display: "flex", alignItems: "center", mt: 2 }}>
+              <Typography sx={{ width: 140 }}>Email</Typography>
+              <FormControl size="small">
+                <Box sx={{ width: 450 }}>
+                  <TextField
+                    name="email"
+                    size="small"
+                    sx={{
+                      font: "inherit",
+                      width: "100%",
+                      borderRadius: "8px",
+                    }}
+                    placeholder="Please input"
+                    value={values.email}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                  />
+                  {errors.email && touched.email ? (
+                    <small style={{ color: "red" }}>{errors.email}</small>
+                  ) : null}
+                </Box>
+              </FormControl>
+            </Box>
+
+            <Box sx={{ display: "flex", alignItems: "center", mt: 2 }}>
+              <Typography sx={{ width: 140 }}>Access level</Typography>
+              <FormControl size="small">
+                <Box sx={{ width: 450 }}>
+                  <Select
+                    name="accessLevel"
+                    sx={{
+                      font: "inherit",
+                      width: "100%",
+                      borderRadius: "8px",
+                    }}
+                    displayEmpty
+                    value={values.accessLevel}
+                    handleBlur={handleBlur}
+                    onChange={handleChange}
+                    input={<OutlinedInput />}
+                    label="Access Level"
+                    inputProps={{ "aria-label": "Without label" }}
+                  >
+                    <MenuItem value="" disabled>
+                      <em>Select</em>
+                    </MenuItem>
+                    {access.map((name, idx) => (
+                      <MenuItem key={name} value={idx}>
+                        {name}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                </Box>
+                {errors.accessLevel && touched.accessLevel ? (
+                  <small style={{ color: "red" }}>{errors.accessLevel}</small>
+                ) : null}
+              </FormControl>
+            </Box>
           </Box>
-        </div>
+        </Box>
         <Box
           sx={{
             display: "flex",
-            flexDirection: "row",
-
-            ml: 30,
+            alignItems: "center",
+            justifyContent: "flex-end",
           }}
         >
-          <Checkbox
-            name="inviteCheckbox"
-            size="small"
-            sx={{ mt: "23px", pr: "5px", color: "rgba(95, 91, 81, 0.518)" }}
-            onChange={handleChange}
-          />
-          <Typography
-            sx={{ width: 400, mt: 4, color: "rgba(95, 91, 81, 0.518)" }}
+          <Box
+            sx={{
+              display: "flex",
+              alignItems: "center",
+              mr: 2,
+              mt: 4,
+            }}
           >
-            {" "}
-            Invite to use Maxpilot{" "}
-          </Typography>
+            <Checkbox
+              name="inviteCheckbox"
+              size="small"
+              sx={{ pr: "5px", color: "rgba(95, 91, 81, 0.518)" }}
+            />
+            <Typography sx={{ color: "rgba(95, 91, 81, 0.518)" }}>
+              Invite to use Maxpilot
+            </Typography>
+          </Box>
           <Button
             sx={{
               textTransform: "capitalize",
-              width: 350,
-              height: 30,
+              width: "30%",
+              height: 35,
               mt: 4,
               borderRadius: 2,
             }}
-            className="bttn"
+            className="all-green-btns"
+            variant="contained"
             onClick={handleSubmit}
           >
-            Add Team member
+            {loading ? (
+              <CircularProgress color="inherit" size={25} />
+            ) : (
+              <>Add Team member</>
+            )}
           </Button>
         </Box>
       </Box>
-    </React.Fragment>
+    </>
   );
 }

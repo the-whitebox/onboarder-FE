@@ -14,6 +14,14 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import axios from "axios";
 import "../../style/SetStress.css";
+import CircularProgress from "@mui/material/CircularProgress";
+import { toast } from "react-toastify";
+import { useFormik } from "formik";
+import * as Yup from "yup";
+const formSchema = Yup.object({
+  leave: Yup.string().required("Please select leave entitlement"),
+});
+const initialValues = { leave: "" };
 
 const ITEM_HEIGHT = 40;
 const ITEM_PADDING_TOP = 45;
@@ -50,113 +58,72 @@ const style = {
   padding: "20px",
 };
 
-export default function Addleaveentitlement() {
-  const [state, setState] = React.useState({ data: "" });
-  const [leave, setLeave] = React.useState("");
-
-  const [error, setError] = React.useState(null);
-  const [leaveError, setLeaveError] = useState("");
-  const token = localStorage.getItem("token");
-  const url = process.env.REACT_APP_BASE_URL;
-
-  function getStyles(name, personName, theme) {
-    return {
-      fontWeight:
-        personName.indexOf(name) === -1
-          ? theme.typography.fontWeightRegular
-          : theme.typography.fontWeightMedium,
-    };
-  }
-
+export default function Addleaveentitlement(props) {
   const theme = useTheme();
-  const [personName, setPersonName] = React.useState([]);
+  const token = localStorage.getItem("token");
+  const userId = localStorage.getItem("userId");
+  const url = process.env.REACT_APP_BASE_URL;
+  const [loading, setLoading] = React.useState(false);
 
-  const handleChange = (event) => {
-    const {
-      target: { value },
-    } = event;
-    setPersonName(
-      // On autofill we get a stringified value.
-      typeof value === "string" ? value.split(",") : value
-    );
-    setLeave(event.target.value)
-  };
-
-  const leaveValidation = () => {
-    if (leave == "") {
-      setLeaveError("Please enter leave entitlement");
-    } else setLeaveError("");
-  };
-
-  const {
-    register,
-    formState: { errors },
-  } = useForm();
-
-  const navigate = useNavigate();
-
-  const toEmployment = (e) => {
-  //   if (leave !== "") {
-  //     console.log("Data Found");
-  //     setError(false);
-  //     console.log(leave);
-
-  //     navigate("/employment", {
-  //       state: {
-  //         leave: leave,
-  //       },
-  //     });
-  //   } else {
-  //     setError(true);
-  //     setState({ data: e.target.value });
-  //   }
-  // };
-  console.log(
-    { leave }
-  );
-
-  axios
-    .patch(
-      url + "/people/6/",
-      {
-        role: 3,
-        profile:{},
-        work_detail:{},
-        pay_detail:{
-            employment_type: 1,
-            per_day_pay_rate:{}
-        },
-        leave_entitlements: [],
+  const { values, errors, touched, handleBlur, handleChange, handleSubmit } =
+    useFormik({
+      initialValues,
+      validationSchema: formSchema,
+      onSubmit: async (values, action) => {
+        setLoading(true);
+        await axios
+          .post(
+            `${url}/people/${userId}/`,
+            {
+              profile: {},
+              leave_entitlements: [
+                { id: 6, leave_entitlement: parseInt(values.leave) + 1 },
+              ],
+            },
+            {
+              headers: {
+                Authorization: `Bearer ${token}`,
+                "Content-Type": "application/json",
+              },
+            }
+          )
+          .then((response) => {
+            console.log("Response", response);
+            setLoading(false);
+            props.handleCloseStress();
+          })
+          .catch((error) => {
+            toast.error("Something went wrong! Please try again");
+            setLoading(false);
+          });
       },
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "application/json",
-        },
-      }
-    )
-    .then((response) => {
-      console.log(response);
-    })
-    .catch((error) => {
-      console.error(error);
     });
-};
-
 
   return (
     <React.Fragment>
-      <Box sx={{ ...style, width: 430, height: 380 }}>
-        <Typography
-          variant="h5"
-          sx={{ fontWeight: "bold", paddingBottom: 1 }}
-          id="child-modal-title"
+      <Box sx={{ ...style, width: 430, height: "auto" }}>
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+          }}
         >
-          Add leave entitlement
-        </Typography>
+          <Typography
+            variant="h5"
+            sx={{ fontWeight: "bold" }}
+            id="child-modal-title"
+          >
+            Add leave entitlement
+          </Typography>
+          <CloseIcon
+            onClick={props.handleCloseLeaveEntitlement}
+            sx={{ cursor: "pointer" }}
+          ></CloseIcon>
+        </Box>
 
-        <div>
-          <Typography sx={{ fontSize: "14px" }}>
+        <Box>
+          <Typography sx={{ fontSize: "14px", mt: 2 }}>
             Adding leave entitlement for 0 team members. 2 team members wil not
             assigned the leave entitlement because they don't have a pay rate.
           </Typography>
@@ -165,73 +132,57 @@ export default function Addleaveentitlement() {
           </Typography>
           <FormControl
             sx={{
-              width: 200,
+              width: 300,
               borderRadius: "2px",
-              ml: "5px",
             }}
           >
             <Select
-            {...register("Leave Entitlement", { required: true })}
-            onChange={handleChange}
               sx={{ borderRadius: "7px" }}
               size="small"
               displayEmpty
-              value={personName}
               input={<OutlinedInput />}
-              renderValue={(selected) => {
-                if (selected.length === 0) {
-                  return <em>Select</em>;
-                }
-
-                return selected.join(", ");
-              }}
-              MenuProps={MenuProps}
               inputProps={{ "aria-label": "Without label" }}
+              name="leave"
+              value={values.leave}
+              onChange={handleChange}
+              handleBlur={handleBlur}
             >
-              {names.map((name) => (
-                <MenuItem
-                  key={name}
-                  value={name}
-                  style={getStyles(name, personName, theme)}
-                >
+              <MenuItem value="" disabled>
+                Select
+              </MenuItem>
+              {names.map((name, idx) => (
+                <MenuItem key={name} value={idx}>
                   {name}
                 </MenuItem>
               ))}
             </Select>
           </FormControl>
           <Box sx={{ ml: 1, mt: 1 }}>
-        {errors.LeaveEntitlement?.type === "required" && "Leave Entitlement Required"}
-        <small>
-          {leaveError && (
-            <div
-              style={{
-                color: "red",
-              }}
-            >
-              {leaveError}
-            </div>
-          )}
-        </small>
+            {errors.leave && touched.leave ? (
+              <small style={{ color: "red" }}>{errors.leave}</small>
+            ) : null}
+          </Box>
         </Box>
-        </div>
-        <Button
-          variant="primary"
-          className="btn btn-primary"
-          sx={{
-            ml: 40,
-            borderRadius: "5px",
-            width: "18%",
-            mt: "90px",
-            textTransform: "none",
-          }}
-          onClick={() => {
-           
-            leaveValidation();
-            toEmployment();
-          }}
-        >
-          Add
-        </Button>
+        <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
+          <Button
+            variant="contained"
+            className="all-green-btns"
+            sx={{
+              borderRadius: "5px",
+              width: "25%",
+              height: 35,
+              mt: 4,
+              textTransform: "none",
+            }}
+            onClick={handleSubmit}
+          >
+            {loading ? (
+              <CircularProgress color="inherit" size={25} />
+            ) : (
+              <>Add</>
+            )}
+          </Button>
+        </Box>
       </Box>
     </React.Fragment>
   );

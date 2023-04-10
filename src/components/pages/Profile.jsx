@@ -18,15 +18,16 @@ import ProfileDetails from "../feature/ProfileDetails";
 import Contact from "../feature/Contact";
 import LoginInfo from "../feature/LoginInfo";
 import { Link } from "react-router-dom";
+import GlobalContext from "../../context/GlobalContext";
 
 const drawerWidth = 240;
 
 export default function Profile() {
   const theme = useTheme();
+  const { setUserInfo } = React.useContext(GlobalContext);
   const userId = localStorage.getItem("userId");
   const token = localStorage.getItem("token");
   const url = process.env.REACT_APP_BASE_URL + `/people/${userId}/`;
-  const [userInfo, setUserInfo] = React.useState();
 
   React.useEffect(() => {
     const getLoggedInUserDetails = async () => {
@@ -64,7 +65,7 @@ export default function Profile() {
           aria-labelledby="modal-modal-title"
           aria-describedby="modal-modal-description"
         >
-          <ArchiveTeamMemberModalBody />
+          <ArchiveTeamMemberModalBody handleClose={handleClose} />
         </Modal>
         <Box sx={{ display: "flex" }}>
           <CssBaseline />
@@ -75,7 +76,7 @@ export default function Profile() {
               ml: `${drawerWidth}px`,
             }}
           ></AppBar>
-          <VerticalMenu indexToHL={indexToHL} userInfo={userInfo} />
+          <VerticalMenu indexToHL={indexToHL} />
           <Box component="main" sx={{ flexGrow: 1, bgcolor: "#fcfcfc", p: 3 }}>
             <Toolbar />
             <Box sx={{ display: "flex", justifyContent: "space-between" }}>
@@ -93,14 +94,16 @@ export default function Profile() {
                 sx={{
                   bgcolor: "#38b492",
                   color: "#ffffff",
+                  height: 35,
+                  mr: { lg: 15, xs: 0 },
                 }}
               >
                 Save
               </Button>
             </Box>
             <Box>
-              <Button sx={{ color: "#38b492" }}>Message</Button>
-              <Button onClick={handleOpen} sx={{ color: "#38b492" }}>
+              <Button sx={{ color: "#3d1cba" }}>Message</Button>
+              <Button onClick={handleOpen} sx={{ color: "#f2665b" }}>
                 Archive Team member
               </Button>
             </Box>
@@ -108,10 +111,10 @@ export default function Profile() {
               <Typography variant="h5">Personal Details</Typography>
             </Box>
             <Box>
-              <ProfileDetails userInfo={userInfo} />
+              <ProfileDetails />
             </Box>
             <Box sx={{ pt: 3 }}>
-              <Contact userInfo={userInfo} />
+              <Contact />
             </Box>
             <Box sx={{ pt: 3 }}>
               <LoginInfo />

@@ -11,63 +11,64 @@ const style = {
   top: "50%",
   left: "50%",
   transform: "translate(-50%, -50%)",
-  width: 400,
   bgcolor: "background.paper",
   borderRadius: "10px ",
   boxShadow: 24,
-  pt: 2,
   px: 4,
-  pb: 3,
+  py: 4,
+  borderRadius: "12px",
 };
 
 export default function SyncPayroll(props) {
   return (
     <React.Fragment>
-      <Box sx={{ ...style, width: 490, height: 280 }}>
-        <Box className="flex flex-row" sx={{ width: "500px" }}>
-          <h2>Sync Team member with payroll</h2>
+      <Box sx={{ ...style, width: 490, height: "auto" }}>
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+          }}
+        >
+          <Typography
+            variant="h5"
+            sx={{ fontWeight: "bold" }}
+            id="child-modal-title"
+          >
+            Sync Team member with payroll
+          </Typography>
           <CloseIcon
             onClick={props.handleClosePayroll}
-            sx={{ pb: "45px", cursor: "pointer" }}
+            sx={{ cursor: "pointer" }}
           ></CloseIcon>
         </Box>
 
-        <div>
-          <Typography sx={{ color: "#b4b4b4", ml: 1 }}>Team members</Typography>
-          <Box
-            sx={{
-              display: "flex",
-              flexDirection: "row",
-            }}
-          >
-            <Checkbox
-              size=""
-              sx={{
-                pr: "8px",
-                pt: "14px",
-                color: "rgba(95, 91, 81, 0.518)",
-              }}
-            />
-            <Typography sx={{ pt: "10px" }}>
-              Refresh the mapping of Team members between MaxPilot
+        <Box sx={{ color: "#342b61" }}>
+          <Typography sx={{ color: "#b4b4b4" }}>Team members</Typography>
+          <Box sx={{ display: "flex", alignItems: "center" }}>
+            <Checkbox size="small" sx={{ color: "rgba(95, 91, 81, 0.518)" }} />
+            <Typography>
+              Refresh the mapping of team members between MaxPilot
             </Typography>
           </Box>
-          <Typography sx={{ pt: 2, pb: 2, ml: 4 }}>Asher Muneer</Typography>
-          <Typography sx={{ ml: 4 }}>sssss sss</Typography>
-        </div>
-
-        <Button
-          className="Btn"
-          sx={{
-            textTransform: "none",
-            ml: 42,
-            borderRadius: "8px",
-            mt: 3,
-            width: "170px",
-          }}
-        >
-          Sync Team member
-        </Button>
+          <Typography sx={{ mt: 2, mb: 1, ml: 2 }}>Asher Muneer</Typography>
+          <Typography sx={{ ml: 2 }}>30 Team members</Typography>
+        </Box>
+        <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
+          <Button
+            className="all-blue-btns"
+            variant="contained"
+            sx={{
+              textTransform: "none",
+              borderRadius: "8px",
+              mt: 3,
+              width: "40%",
+              height: 35,
+            }}
+          >
+            Sync Team member
+          </Button>
+        </Box>
       </Box>
     </React.Fragment>
   );
