@@ -11,6 +11,7 @@ export default function VerticalMenu(props) {
 
   return (
     <Box
+      className="vertical-menu"
       sx={{
         width: "25%",
         bgcolor: "#2bb491",
@@ -49,7 +50,7 @@ export default function VerticalMenu(props) {
           <NavLink to="/step3-4" className="verticalMenu-aTag">
             Profile
           </NavLink>
-          <NavLink to="/personal" className="verticalMenu-aTag">
+          <NavLink to="/personal/details" className="verticalMenu-aTag">
             Personal
           </NavLink>
           <NavLink to="/employment" className="verticalMenu-aTag">

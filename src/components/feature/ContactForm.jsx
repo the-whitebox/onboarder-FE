@@ -3,14 +3,11 @@ import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
-import "../../style/General.css";
-import { useState } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
 import CircularProgress from "@mui/material/CircularProgress";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import { useLocation } from "react-router-dom";
 import { Grid } from "@mui/material";
 import GlobalContext from "../../context/GlobalContext";
 const formSchema = Yup.object({
@@ -27,11 +24,10 @@ const formSchema = Yup.object({
 
 function ContactForm() {
   const { userInfo } = React.useContext(GlobalContext);
-
   const userId = localStorage.getItem("userId");
   const token = localStorage.getItem("token");
   const url = process.env.REACT_APP_BASE_URL + `/people/${userId}/`;
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = React.useState(false);
 
   const initialValues = {
     email: userInfo?.profile.email,

@@ -13,7 +13,6 @@ import Avatar from "@mui/material/Avatar";
 import Grid from "@mui/material/Grid";
 import CloseIcon from "@mui/icons-material/Close";
 import Capture from "../../assets/images/Capture.png";
-import "../../style/Addteam.css";
 import axios from "axios";
 import CircularProgress from "@mui/material/CircularProgress";
 import { toast } from "react-toastify";

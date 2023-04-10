@@ -3,7 +3,6 @@ import { Routes, Route } from "react-router-dom";
 import Login from "../components/pages/Login";
 import Signup from "../components/pages/Signup";
 import Welcome from "../components/pages/Welcome";
-import About from "../components/pages/About";
 import Step2 from "../components/pages/Step2";
 import Step3_1 from "../components/pages/Step3-1";
 import Step3_2 from "../components/pages/Step3-2";
@@ -14,11 +13,9 @@ import Profile from "../components/pages/Profile";
 import Employment from "../components/pages/Employment";
 import EmploymentDetails from "../components/pages/EmploymentDetails";
 import PersonalDetails from "../components/pages/PersonalDetails";
-import AddNewPeople from "../components/pages/AddNewPeople";
 import PrivateRoute from "./PrivateRoute";
-import WithSidebar from "./WithSidebar";
+import WithVerticalMenu from "./WithVerticalMenu";
 import Step3_4 from "../components/pages/Step3-4";
-
 function Routing() {
   const token = localStorage.getItem("token");
   React.useEffect(() => {
@@ -71,7 +68,7 @@ function Routing() {
             </PrivateRoute>
           }
         />
-        <Route element={<WithSidebar />}>
+        <Route element={<WithVerticalMenu />}>
           <Route
             path="/step3-4"
             element={
@@ -80,55 +77,39 @@ function Routing() {
               </PrivateRoute>
             }
           />
+          <Route
+            path="/employment"
+            element={
+              <PrivateRoute>
+                <Employment />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/employment/details"
+            element={
+              <PrivateRoute>
+                <EmploymentDetails />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/profile"
+            element={
+              <PrivateRoute>
+                <Profile />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/personal/details"
+            element={
+              <PrivateRoute>
+                <PersonalDetails />
+              </PrivateRoute>
+            }
+          />
         </Route>
-        <Route
-          path="/about"
-          element={
-            <PrivateRoute>
-              <About />
-            </PrivateRoute>
-          }
-        />
-        <Route
-          path="/profile"
-          element={
-            <PrivateRoute>
-              <Profile />
-            </PrivateRoute>
-          }
-        />
-        <Route
-          path="/employment"
-          element={
-            <PrivateRoute>
-              <Employment />
-            </PrivateRoute>
-          }
-        />
-        <Route
-          path="/employment_details"
-          element={
-            <PrivateRoute>
-              <EmploymentDetails />
-            </PrivateRoute>
-          }
-        />
-        <Route
-          path="/personal_details"
-          element={
-            <PrivateRoute>
-              <PersonalDetails />
-            </PrivateRoute>
-          }
-        />
-        <Route
-          path="/add"
-          element={
-            <PrivateRoute>
-              <AddNewPeople />
-            </PrivateRoute>
-          }
-        />
         <Route
           path="/people"
           element={

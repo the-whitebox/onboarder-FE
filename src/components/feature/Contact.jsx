@@ -1,5 +1,4 @@
 import * as React from "react";
-import "../../style/General.css";
 import Box from "@mui/system/Box";
 import Grid from "@mui/system/Unstable_Grid";
 import styled from "@mui/system/styled";

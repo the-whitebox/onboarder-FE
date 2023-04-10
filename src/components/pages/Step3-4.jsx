@@ -1,9 +1,10 @@
 import React from "react";
 import { Avatar, Box, Grid, Typography } from "@mui/material";
-import users from "../../assets/icons/Group 515.png";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
+import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 import { Link } from "react-router-dom";
+import users from "../../assets/icons/Group 515.png";
 import bg_image6 from "../../assets/images/bg-image6.png";
 
 function Step3_4() {
@@ -124,7 +125,12 @@ function Step3_4() {
             />
             <Box
               sx={{
-                width: { md: "80%", xs: "95%", display: "flex" },
+                width: {
+                  md: "80%",
+                  xs: "95%",
+                  display: "flex",
+                  position: "relative",
+                },
                 mt: 2,
               }}
             >
@@ -132,6 +138,9 @@ function Step3_4() {
                 Birthday
               </Typography>
               <Typography>none</Typography>
+              <CalendarMonthIcon
+                sx={{ position: "absolute", right: 10, cursor: "pointer" }}
+              />
             </Box>
             <Box
               sx={{

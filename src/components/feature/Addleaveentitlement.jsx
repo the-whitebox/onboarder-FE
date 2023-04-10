@@ -1,6 +1,5 @@
 import * as React from "react";
 import Box from "@mui/material/Box";
-
 import Button from "@mui/material/Button";
 import { useTheme } from "@mui/material/styles";
 import OutlinedInput from "@mui/material/OutlinedInput";
@@ -13,7 +12,6 @@ import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import axios from "axios";
-import "../../style/SetStress.css";
 import CircularProgress from "@mui/material/CircularProgress";
 import { toast } from "react-toastify";
 import { useFormik } from "formik";

@@ -51,6 +51,9 @@ export default function Signup() {
           .then((response) => {
             console.log("response", response);
             localStorage.setItem("token", response.data.access_token);
+            toast.success(
+              "You have successfully registered, Please check your email for verification."
+            );
             // localStorage.setItem("userId", response.data.user.pk);
             Navigate("/step2");
             setLoading(false);

@@ -1,13 +1,13 @@
 import React from "react";
-import { Box, Grid } from "@mui/material";
+import { Grid } from "@mui/material";
 import { Outlet } from "react-router-dom";
-import SideBar from "../components/feature/VerticalMenu";
+import VerticalMenu from "../components/feature/VerticalMenu";
 
-function WithSidebar() {
+function WithVerticalMenu() {
   return (
     <Grid container>
       <Grid item xl={3} lg={3} md={3} sm={4} xs={5}>
-        <SideBar />
+        <VerticalMenu />
       </Grid>
       <Grid item xl={9} lg={9} md={9} sm={8} xs={7}>
         <Outlet />
@@ -16,4 +16,4 @@ function WithSidebar() {
   );
 }
 
-export default WithSidebar;
+export default WithVerticalMenu;

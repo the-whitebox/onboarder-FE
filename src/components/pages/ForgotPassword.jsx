@@ -2,7 +2,6 @@ import * as React from "react";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import CloseIcon from "@mui/icons-material/Close";
-import MarkEmailReadOutlinedIcon from "@mui/icons-material/MarkEmailReadOutlined";
 import ArrowCircleRightIcon from "@mui/icons-material/ArrowCircleRight";
 import RefreshOutlinedIcon from "@mui/icons-material/RefreshOutlined";
 import emailIcon from "../../assets/icons/forgotEmail.png";

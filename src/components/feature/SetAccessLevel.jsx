@@ -6,7 +6,6 @@ import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import CloseButton from "@mui/icons-material/Close";
 import Typography from "@mui/material/Typography";
-import "../../style/SetAccesslevel.css";
 import { useState } from "react";
 import CircularProgress from "@mui/material/CircularProgress";
 import axios from "axios";

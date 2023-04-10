@@ -1,12 +1,5 @@
 import * as React from "react";
 import Box from "@mui/material/Box";
-// import Drawer from "@mui/material/Drawer";
-// import CssBaseline from "@mui/material/CssBaseline";
-// import AppBar from "@mui/material/AppBar";
-// import List from "@mui/material/List";
-// import ListItem from "@mui/material/ListItem";
-// import ListItemButton from "@mui/material/ListItemButton";
-// import ListItemText from "@mui/material/ListItemText";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
@@ -16,8 +9,6 @@ import LeaveEntitlement from "../feature/LeaveEntitlement";
 import Grid from "@mui/system/Unstable_Grid";
 import styled from "@mui/system/styled";
 import { Link } from "react-router-dom";
-import "../../style/General.css";
-import "../../style/Employment.css";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import Modal from "@mui/material/Modal";
 import SetpayratesModalBody from "../feature/Setpayrates";
@@ -31,7 +22,6 @@ const theme = createTheme();
 const Item = styled("div")(({ theme }) => ({
   border: "none",
 }));
-// const drawerWidth = 240;
 
 export default function Employment() {
   const { userInfo } = React.useContext(GlobalContext);
