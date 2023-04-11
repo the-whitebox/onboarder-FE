@@ -240,6 +240,7 @@ export default function LoginSidebar(props) {
               color: "white",
               fontSize: "10px",
               textAlign: "center",
+              padding: { xl: 0, sm: "0px 5px" },
             }}
           >
             Terms & Conditions | Privacy Policy | Copyright &#169; 2023

@@ -20,11 +20,18 @@
         flex-direction: column;
         justify-content: space-between;
         align-items: center;
+        overflow: hidden;
       }
+
+      .mainDiv .imageBox{
+        width: 400px;
+        height: 170px;
+        margin-top: 15%;
+      }
+
       .mainDiv img{
-        width: 250px;
+        width: 100%;
         height: auto;
-        padding-top: 15%;
       }
 
       .mainDiv .box{
@@ -42,7 +49,9 @@
     <noscript>You need to enable JavaScript to run this app.</noscript>
     <div id="root">
       <div class="mainDiv">
-        <img src="MP-W-1 copy@2x.png" alt="">
+        <div class="imageBox">
+          <img src="MP-W-1 copy@2x.png" alt="">
+        </div>
         <div class="box">Effortless Time Management</div>
       </div>
     </div>

@@ -92,13 +92,13 @@ export default function Step3_3() {
   ];
   const payrollArr = [
     {
-      name: "SOME TEXT HERE",
-      des: "TEXT HERE...",
+      name: "XERO",
+      des: "XERO",
     },
   ];
   return (
     <>
-      <Grid container sx={{ pb: { xs: 5, md: 0 } }}>
+      <Grid container sx={{ pb: { xs: 5, md: 0 }, minHeight: "100vh" }}>
         <Grid item xl={12} lg={12} md={12} sm={12} xs={12}>
           <Box
             sx={{
@@ -170,9 +170,9 @@ export default function Step3_3() {
         </Grid>
         <Grid
           item
-          xl={8}
-          lg={8}
-          md={8}
+          xl={7}
+          lg={9}
+          md={9}
           sm={12}
           xs={12}
           sx={{
@@ -181,6 +181,7 @@ export default function Step3_3() {
         >
           <Box
             sx={{
+              width: "100%",
               display: "flex",
               flexDirection: "column",
               alignItems: "center",
@@ -197,7 +198,7 @@ export default function Step3_3() {
                 borderRadius: "30px",
                 padding: "5px 20px",
                 textAlign: "center",
-                letterSpacing: { xs: 0, lg: 2 },
+                letterSpacing: { xs: 0, lg: 1 },
                 fontSize: { md: "18px", xs: "10px" },
               }}
             >
@@ -230,26 +231,33 @@ export default function Step3_3() {
                   background: "#2bb491",
                   borderRadius: "100%",
                 }}
-              ></Box>
+              />
               <Box
                 sx={{ background: "gray", width: "100%", height: "1px", ml: 1 }}
-              ></Box>
+              />
             </Box>
 
-            <Box sx={{ pl: 3, mt: 2 }}>
+            <Box
+              sx={{
+                mt: 2,
+                width: "100%",
+                pl: { md: 8, xs: 0, sm: 0 },
+                boxSizing: "border-box",
+              }}
+            >
               <Box
                 sx={{
                   display: "flex",
                   justifyContent: "space-between",
                   alignItems: "center",
                   width: "100%",
+                  mb: 2,
                 }}
               >
                 <Typography
                   sx={{
                     fontWeight: "bold",
                     fontSize: "16px",
-                    mb: 2,
                   }}
                 >
                   What's bring You to MAXpilot!
@@ -261,7 +269,7 @@ export default function Step3_3() {
                     background: "#2bb491",
                     borderRadius: "30px",
                   }}
-                ></Box>
+                />
               </Box>
               {/*Business Type Cards Here */}
               <RadioGroup
@@ -310,16 +318,19 @@ export default function Step3_3() {
                       justifyContent: "center",
                       gap: 1.5,
                       p: 2,
-                      width: { md: "150px", xs: "100%" },
+                      width: { md: "180px", xs: "100%" },
                       height: "150px",
                     }}
                   >
                     <Radio id={idx} value={value.name} />
-                    <Avatar sx={{ borderRadius: 0 }} src={icons[idx]} />
+                    <Avatar
+                      sx={{ borderRadius: 0, width: "30px", height: "30px" }}
+                      src={icons[idx]}
+                    />
                     <FormLabel htmlFor={value}>
                       <Typography
                         sx={{
-                          fontSize: "15px",
+                          fontSize: "14px",
                           fontWeight: "bold",
                         }}
                       >
@@ -327,7 +338,7 @@ export default function Step3_3() {
                       </Typography>
                       <Typography
                         sx={{
-                          fontSize: "12px",
+                          fontSize: "15px",
                         }}
                       >
                         {value.des}
@@ -359,7 +370,7 @@ export default function Step3_3() {
                   background: "#2bb491",
                   borderRadius: "100%",
                 }}
-              ></Box>
+              />
               <Box
                 sx={{
                   background: "gray",
@@ -367,7 +378,7 @@ export default function Step3_3() {
                   height: "1px",
                   ml: 1,
                 }}
-              ></Box>
+              />
             </Box>
             <Box
               sx={{
@@ -386,7 +397,7 @@ export default function Step3_3() {
                   position: "absolute",
                   top: { md: "20px", xs: "40px" },
                 }}
-              ></Box>
+              />
             </Box>
 
             <Box
@@ -397,7 +408,13 @@ export default function Step3_3() {
                 mt: 2,
               }}
             >
-              <Box sx={{ pl: 3 }}>
+              <Box
+                sx={{
+                  width: "100%",
+                  boxSizing: "border-box",
+                  pl: { md: 8, xs: 0, sm: 0 },
+                }}
+              >
                 <Box>
                   <Typography
                     sx={{
@@ -459,12 +476,11 @@ export default function Step3_3() {
                         bgcolor: "background.body",
                         boxShadow: "sm",
                         display: "flex",
-                        flexDirection: "row",
                         alignItems: "center",
-                        justifyContent: "center",
+                        justifyContent: "flex-start",
                         padding: "0px 20px",
-                        width: "200px",
-                        height: "80px",
+                        width: "150px",
+                        height: "60px",
                       }}
                     >
                       <Avatar
@@ -474,7 +490,10 @@ export default function Step3_3() {
                         sx={{ mr: 1 }}
                       />
                       <Radio id={idx} value={value.name} />
-                      <FormLabel htmlFor={value}>
+                      <FormLabel
+                        htmlFor={value}
+                        sx={{ display: "flex", flexDirection: "column" }}
+                      >
                         <Typography
                           sx={{
                             fontSize: "15px",
@@ -504,28 +523,26 @@ export default function Step3_3() {
                     {errors.payroll}
                   </small>
                 ) : null}
+                <Button
+                  type="submit"
+                  variant="contained"
+                  className="all-green-btns"
+                  sx={{
+                    mt: 3,
+                    width: "12%",
+                    height: 35,
+                    borderRadius: "8px",
+                    textTransform: "none",
+                  }}
+                  onClick={handleSubmit}
+                >
+                  {loading ? (
+                    <CircularProgress color="inherit" size={25} />
+                  ) : (
+                    <>Next</>
+                  )}
+                </Button>
               </Box>
-
-              <Button
-                type="submit"
-                variant="contained"
-                className="all-green-btns"
-                sx={{
-                  mt: 5,
-                  ml: 3,
-                  width: "20%",
-                  height: 35,
-                  borderRadius: "8px",
-                  textTransform: "none",
-                }}
-                onClick={handleSubmit}
-              >
-                {loading ? (
-                  <CircularProgress color="inherit" size={25} />
-                ) : (
-                  <>Next</>
-                )}
-              </Button>
             </Box>
 
             <Box
@@ -567,7 +584,7 @@ export default function Step3_3() {
           </Box>
         </Grid>
 
-        <Grid item xl={4} lg={4} md={4} sm={12} xs={12}>
+        <Grid item xl={5} lg={3} md={3} sm={12} xs={12}>
           <Box
             sx={{
               display: "flex",
@@ -622,8 +639,8 @@ export default function Step3_3() {
           item
           xs={12}
           sx={{
-            height: { xl: "auto", md: "15vh", xs: "25vh" },
-            position: { xl: "unset", xs: "relative" },
+            position: "relative",
+            mt: 8,
           }}
         >
           <Avatar

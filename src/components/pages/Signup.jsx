@@ -18,8 +18,13 @@ import * as Yup from "yup";
 const formSchema = Yup.object({
   username: Yup.string().required("Please enter your username"),
   email: Yup.string().email().required("Please enter your email"),
-  password: Yup.string(),
-  // password: Yup.string().required("Please enter your password"),
+  password: Yup.string().required("Please enter your password"),
+  // password: Yup.string()
+  //   .required("Please enter your password")
+  //   .matches(
+  //     "^(?=.*[A-Za-z])(?=.*d)(?=.*[@$!%*#?&])[A-Za-zd@$!%*#?&]{8,}$",
+  //     "Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and one special case Character"
+  //   ),
   check: Yup.boolean().oneOf(
     [true],
     "Please accept the terms and privacy policy before get started!"
@@ -46,7 +51,7 @@ export default function Signup() {
           .post(`${url}/auth/user/registration/`, {
             username: values.username,
             email: values.email,
-            // password: values.password,
+            password: values.password,
           })
           .then((response) => {
             console.log("response", response);
@@ -81,19 +86,20 @@ export default function Signup() {
         <ForgotPassword handleClose={handleClose} />
       </Modal>
       <Grid container sx={{ pb: { xs: 5, md: 0 } }}>
-        <Grid item xl={4} lg={4} md={6} sm={12} xs={12}>
+        <Grid item xl={3} lg={3} md={6} sm={12} xs={12}>
           <LoginSidebar handleOpen={handleOpen} />
         </Grid>
         <Grid
           item
-          xl={8}
-          lg={8}
+          xl={9}
+          lg={9}
           md={6}
           sm={12}
           xs={12}
           sx={{
             position: "relative",
-            height: { md: "auto", sm: "70vh", xs: "80vh" },
+            // height: { md: "auto", sm: "70vh", xs: "80vh" },
+            minHeight: "100vh",
           }}
         >
           <Box
@@ -202,6 +208,7 @@ export default function Signup() {
                 className="input-fields-2"
                 placeholder="Create password"
                 name="password"
+                type="password"
                 value={values.password}
                 onChange={handleChange}
                 onBlur={handleBlur}

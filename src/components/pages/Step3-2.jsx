@@ -90,7 +90,7 @@ export default function Step3_2() {
   };
   return (
     <>
-      <Grid container sx={{ pb: { xs: 5, md: 0 } }}>
+      <Grid container sx={{ pb: { xs: 5, md: 0 }, minHeight: "100vh" }}>
         <Grid item xl={12} lg={12} md={12} sm={12} xs={12}>
           <Box
             sx={{
@@ -183,6 +183,7 @@ export default function Step3_2() {
           >
             <Typography
               sx={{
+                width: "95%",
                 background: "#2bb491",
                 color: "white",
                 fontWeight: "bold",
@@ -201,6 +202,7 @@ export default function Step3_2() {
                 fontSize: { md: "12px", xs: "10px" },
                 color: "#949494",
                 textAlign: "center",
+                mb: 2,
               }}
             >
               Your trial experience will be customized according to your
@@ -221,10 +223,10 @@ export default function Step3_2() {
                   background: "#2bb491",
                   borderRadius: "100%",
                 }}
-              ></Box>
+              />
               <Box
                 sx={{ background: "gray", width: "100%", height: "1px", ml: 1 }}
-              ></Box>
+              />
             </Box>
             <Box
               sx={{
@@ -243,7 +245,7 @@ export default function Step3_2() {
                   position: "absolute",
                   top: "20px",
                 }}
-              ></Box>
+              />
             </Box>
             <Box
               sx={{
@@ -339,10 +341,10 @@ export default function Step3_2() {
                   background: "#2bb491",
                   borderRadius: "100%",
                 }}
-              ></Box>
+              />
               <Box
                 sx={{ background: "gray", width: "100%", height: "1px", ml: 1 }}
-              ></Box>
+              />
             </Box>
 
             <Box sx={{ pl: 3, mt: 2 }}>
@@ -352,13 +354,13 @@ export default function Step3_2() {
                   justifyContent: "space-between",
                   alignItems: "center",
                   width: "100%",
+                  mb: 2,
                 }}
               >
                 <Typography
                   sx={{
                     fontWeight: "bold",
                     fontSize: "16px",
-                    mb: 2,
                   }}
                 >
                   Select your business type?
@@ -370,7 +372,7 @@ export default function Step3_2() {
                     background: "#2bb491",
                     borderRadius: "30px",
                   }}
-                ></Box>
+                />
               </Box>
               {/*Business Type Cards Here */}
               <RadioGroup
@@ -378,6 +380,7 @@ export default function Step3_2() {
                 overlay
                 name="platform"
                 sx={{
+                  mr: { xl: 30, xs: 0 },
                   flexWrap: "wrap",
                   flexDirection: "row",
                   gap: 2,
@@ -385,7 +388,7 @@ export default function Step3_2() {
                     [`& .${radioClasses.action}`]: {
                       inset: -1,
                       border: "1px solid #38b492",
-                      borderRadius: "8px",
+                      borderRadius: "15px",
                       background: "#e6f4eb",
                       zIndex: "-1",
                     },
@@ -416,7 +419,7 @@ export default function Step3_2() {
                     key={idx}
                     variant="outlined"
                     sx={{
-                      borderRadius: "8px",
+                      borderRadius: "15px",
                       border: "1px solid #38b492",
                       bgcolor: "background.body",
                       boxShadow: "sm",
@@ -426,12 +429,28 @@ export default function Step3_2() {
                       justifyContent: "center",
                       gap: 1.5,
                       p: 2,
-                      width: { md: "120px", xs: "110px" },
-                      height: "100px",
+                      width: {
+                        xl: "170px",
+                        lg: "140px",
+                        md: "120px",
+                        xs: "110px",
+                      },
+                      height: "auto",
                     }}
                   >
                     <Radio id={idx} value={value} />
-                    <Avatar sx={{ borderRadius: 0 }} src={icons[idx]} />
+                    <Box
+                      sx={{
+                        background: "#e6f4eb",
+                        padding: "15px",
+                        borderRadius: "100%",
+                      }}
+                    >
+                      <Avatar
+                        sx={{ borderRadius: 0, width: "25px", height: "25px" }}
+                        src={icons[idx]}
+                      />
+                    </Box>
                     <FormLabel
                       htmlFor={value}
                       sx={{
@@ -467,10 +486,10 @@ export default function Step3_2() {
                   background: "#2bb491",
                   borderRadius: "100%",
                 }}
-              ></Box>
+              />
               <Box
                 sx={{ background: "gray", width: "100%", height: "1px", ml: 1 }}
-              ></Box>
+              />
             </Box>
             <Box
               sx={{
@@ -489,7 +508,7 @@ export default function Step3_2() {
                   position: "absolute",
                   top: "20px",
                 }}
-              ></Box>
+              />
             </Box>
 
             <Box
@@ -559,7 +578,7 @@ export default function Step3_2() {
                         [`& .${radioClasses.action}`]: {
                           inset: -1,
                           border: "1px solid gray",
-                          borderRadius: "8px",
+                          borderRadius: "10px",
                           background: "#e6f4eb",
                           zIndex: "-1",
                         },
@@ -584,7 +603,7 @@ export default function Step3_2() {
                           key={idx}
                           variant="outlined"
                           sx={{
-                            borderRadius: "8px",
+                            borderRadius: "10px",
                             border: "1px solid gray",
                             bgcolor: "background.body",
                             boxShadow: "sm",
@@ -594,7 +613,7 @@ export default function Step3_2() {
                             flexWrap: "wrap",
                             justifyContent: "center",
                             padding: "0",
-                            width: "60px",
+                            width: "80px",
                             height: "36px",
                           }}
                         >
@@ -630,9 +649,9 @@ export default function Step3_2() {
                 variant="contained"
                 className="all-green-btns"
                 sx={{
-                  mt: 5,
+                  mt: 3,
                   ml: 3,
-                  width: "20%",
+                  width: "12%",
                   height: 35,
                   borderRadius: "8px",
                   textTransform: "none",
@@ -663,7 +682,7 @@ export default function Step3_2() {
                 background: "#e6f4eb",
                 borderRadius: "100%",
               }}
-            ></Box>
+            />
             <Box
               sx={{
                 width: "20px",
@@ -673,7 +692,7 @@ export default function Step3_2() {
                 mt: 1,
                 ml: { xs: 1, md: 0 },
               }}
-            ></Box>
+            />
             <Box
               sx={{
                 width: "20px",
@@ -683,7 +702,7 @@ export default function Step3_2() {
                 mt: 1,
                 ml: { xs: 1, md: 0 },
               }}
-            ></Box>
+            />
             <Box
               sx={{
                 width: "20px",
@@ -693,15 +712,15 @@ export default function Step3_2() {
                 mt: 1,
                 ml: { xs: 1, md: 0 },
               }}
-            ></Box>
+            />
           </Box>
         </Grid>
         <Grid
           item
           xs={12}
           sx={{
-            height: { xl: "auto", md: "15vh", xs: "35vh" },
-            position: { xl: "unset", xs: "relative" },
+            position: "relative",
+            mt: 8,
           }}
         >
           <Typography

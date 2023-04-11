@@ -1,21 +1,22 @@
 import React from "react";
 import { Routes, Route } from "react-router-dom";
+import WebFont from "webfontloader";
+import PrivateRoute from "./PrivateRoute";
+import WithVerticalMenu from "./WithVerticalMenu";
 import Login from "../components/pages/Login";
 import Signup from "../components/pages/Signup";
-import Welcome from "../components/pages/Welcome";
 import Step2 from "../components/pages/Step2";
 import Step3_1 from "../components/pages/Step3-1";
 import Step3_2 from "../components/pages/Step3-2";
 import Step3_3 from "../components/pages/Step3-3";
+import Step3_4 from "../components/pages/Step3-4";
+import Welcome from "../components/pages/Welcome";
 import People from "../components/pages/People";
-import WebFont from "webfontloader";
 import Profile from "../components/pages/Profile";
 import Employment from "../components/pages/Employment";
-import EmploymentDetails from "../components/pages/EmploymentDetails";
 import PersonalDetails from "../components/pages/PersonalDetails";
-import PrivateRoute from "./PrivateRoute";
-import WithVerticalMenu from "./WithVerticalMenu";
-import Step3_4 from "../components/pages/Step3-4";
+import EmploymentDetails from "../components/pages/EmploymentDetails";
+
 function Routing() {
   const token = localStorage.getItem("token");
   React.useEffect(() => {

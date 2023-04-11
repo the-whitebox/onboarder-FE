@@ -9,7 +9,14 @@ import bg_image6 from "../../assets/images/bg-image6.png";
 
 function Step3_4() {
   return (
-    <>
+    <Grid
+      container
+      sx={{
+        minHeight: "100vh",
+        display: "flex",
+        flexDirection: "column",
+      }}
+    >
       <Box
         sx={{
           display: "flex",
@@ -322,8 +329,9 @@ function Step3_4() {
         item
         xs={12}
         sx={{
-          height: { xl: "auto", md: "15vh", xs: "25vh" },
-          position: { xl: "unset", xs: "relative" },
+          position: "relative",
+          mt: { xl: 17, lg: 8 },
+          bgcolor: "red",
         }}
       >
         <Avatar
@@ -336,12 +344,12 @@ function Step3_4() {
             margin: "0px",
             borderRadius: 0,
             position: "absolute",
-            bottom: "1px",
+            bottom: "1px !important",
             right: "0",
           }}
         />
       </Grid>
-    </>
+    </Grid>
   );
 }
 

@@ -63,7 +63,7 @@ ul {
   border-radius: 10px;
   border: none;
   outline: none;
-  width: 370px;
+  width: 300px;
   background: white;
   padding: 20px 10px 20px 20px;
   margin-top: 10px;
@@ -85,7 +85,7 @@ ul {
   border-radius: 10px;
   border: 1px solid gray;
   outline: none;
-  width: 250px;
+  width: 280px;
   background: transparent;
   padding: 10px 10px 10px 20px;
   margin-top: 10px;
@@ -96,7 +96,7 @@ ul {
   border-radius: 0px 10px 10px 0px;
   border: 1px solid gray;
   outline: none;
-  width: 200px;
+  width: 230px;
 }
 
 .PhoneInputCountry {
@@ -168,6 +168,20 @@ ul {
 
 .navbar .active {
   color: #23ce99;
+}
+
+@media screen and (max-width: 1400px) {
+  .input-fields {
+    width: 250px;
+  }
+
+  .input-fields-3 {
+    width: 250px;
+  }
+
+  .PhoneInputInput {
+    width: 200px;
+  }
 }
 
 @media screen and (max-width: 768px) {

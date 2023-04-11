@@ -22,9 +22,10 @@ export default function Step2() {
         container
         sx={{
           pb: {
-            xs: 1,
+            xs: 2,
             md: 0,
           },
+          minHeight: "100vh",
         }}
       >
         <Grid item xl={12} lg={12} md={12} sm={12} xs={12}>
@@ -108,8 +109,10 @@ export default function Step2() {
           >
             <Typography sx={{ fontWeight: "bold", fontSize: "25px" }}>
               <span style={{ color: "#2bb491" }}>Welcome to </span>
-              <span>MAX</span>
-              <span style={{ color: "#555555" }}>pilot, </span>
+              <i>
+                <span>MAX</span>
+                <span style={{ color: "#555555" }}>pilot, </span>
+              </i>
               <span>(Name)</span>
             </Typography>
             <Box
@@ -241,7 +244,7 @@ export default function Step2() {
               sx={{
                 width: "20px",
                 height: "20px",
-                background: "#e6f4eb",
+                background: "#2bb491",
                 borderRadius: "100%",
               }}
             ></Box>
@@ -249,7 +252,7 @@ export default function Step2() {
               sx={{
                 width: "20px",
                 height: "20px",
-                background: "#2bb491",
+                background: "#e6f4eb",
                 borderRadius: "100%",
                 mt: 1,
                 ml: { xs: 1, md: 0 },
@@ -281,8 +284,8 @@ export default function Step2() {
           item
           xs={12}
           sx={{
-            height: { md: "auto", xs: "35vh" },
-            position: { md: "unset", xs: "relative" },
+            position: "relative",
+            mt: 8,
           }}
         >
           <Typography
@@ -312,7 +315,7 @@ export default function Step2() {
               padding: "0px",
               margin: "0px",
               borderRadius: 0,
-              position: "fixed",
+              position: "absolute",
               bottom: "1px",
               right: "0",
             }}

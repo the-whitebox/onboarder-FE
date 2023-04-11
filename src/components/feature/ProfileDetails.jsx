@@ -14,7 +14,7 @@ function ProfileDetails() {
   const { userInfo } = React.useContext(GlobalContext);
   const Navigate = useNavigate();
   const routeToNextPage = () => {
-    Navigate("/personal_details");
+    Navigate("/personal/details");
   };
   return (
     <>

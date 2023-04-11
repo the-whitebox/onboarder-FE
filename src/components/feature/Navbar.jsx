@@ -11,6 +11,17 @@ import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
 import GlobalContext from "../../context/GlobalContext";
 import { NavLink, useNavigate } from "react-router-dom";
 
+const navLinksArr = [
+  { title: "Home", url: "/home" },
+  { title: "News Feed", url: "/news-feed" },
+  { title: "Task", url: "/task" },
+  { title: "Locations", url: "/locations" },
+  { title: "People", url: "/people" },
+  { title: "Schedule", url: "/schedule" },
+  { title: "TimeSheets", url: "/timesheets" },
+  { title: "Reports", url: "/reports" },
+  { title: "Enterprise", url: "/enterprise" },
+];
 export default function Navbar() {
   const { userInfo } = React.useContext(GlobalContext);
   const token = localStorage.getItem("token");
@@ -52,43 +63,30 @@ export default function Navbar() {
             alignItems: "center",
           }}
         >
-          <NavLink to="/me" className="navbar-aTag">
-            Me
-          </NavLink>
-          <NavLink to="/news-feed" className="navbar-aTag">
-            News Feed
-          </NavLink>
-          <NavLink to="/task" className="navbar-aTag">
-            Task
-          </NavLink>
-          <NavLink to="/locations" className="navbar-aTag">
-            Locations
-          </NavLink>
-          <NavLink to="/people" className="navbar-aTag">
-            People
-          </NavLink>
-          <NavLink to="/schedule" className="navbar-aTag">
-            Schedule
-          </NavLink>
-          <NavLink to="/timesheets" className="navbar-aTag">
-            TimeSheets
-          </NavLink>
-          <NavLink to="/reports" className="navbar-aTag">
-            Reports
-          </NavLink>
-          <NavLink to="/enterprise" className="navbar-aTag">
-            Enterprise
-          </NavLink>
+          {navLinksArr?.map((data, index) => (
+            <NavLink to={data.url} className="navbar-aTag">
+              {data.title}
+            </NavLink>
+          ))}
         </Box>
         <Box sx={{ display: "flex", alignItems: "center" }}>
-          <Box sx={{ display: "flex", flexDirection: "column", mr: 1 }}>
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: "column",
+              mr: 1,
+              alignItems: "flex-end",
+            }}
+          >
             <Typography sx={{ fontSize: "0.9rem" }}>
               {userInfo?.first_name} {userInfo?.last_name}
             </Typography>
-            <Typography sx={{ ml: 5, fontSize: "0.8rem" }}>@Danish</Typography>
+            <Typography sx={{ fontSize: "0.8rem", fontWeight: "600" }}>
+              @Danish
+            </Typography>
           </Box>
           <Avatar alt="Remy Sharp" />
-          <Box sx={{ ml: 2, bgcolor: "black", width: 2, height: 25 }} />
+          <Box sx={{ ml: 2, mr: 1, bgcolor: "black", width: 2, height: 25 }} />
           <IconButton
             size="medium"
             aria-label="show 17 new notifications"
