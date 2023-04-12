@@ -10,12 +10,13 @@ import Step3_1 from "../components/pages/Step3-1";
 import Step3_2 from "../components/pages/Step3-2";
 import Step3_3 from "../components/pages/Step3-3";
 import Step3_4 from "../components/pages/Step3-4";
-import Welcome from "../components/pages/Welcome";
 import People from "../components/pages/People";
 import Profile from "../components/pages/Profile";
 import Employment from "../components/pages/Employment";
 import PersonalDetails from "../components/pages/PersonalDetails";
 import EmploymentDetails from "../components/pages/EmploymentDetails";
+import Dashboard from "../components/pages/Dashboard";
+import Sidebar from "../components/feature/Sidebar";
 
 function Routing() {
   const token = localStorage.getItem("token");
@@ -29,14 +30,6 @@ function Routing() {
   return (
     <>
       <Routes>
-        <Route
-          path="/welcome"
-          element={
-            <PrivateRoute>
-              <Welcome />
-            </PrivateRoute>
-          }
-        />
         <Route
           path="/step2"
           element={
@@ -116,6 +109,16 @@ function Routing() {
           element={
             <PrivateRoute>
               <People />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/dashboard"
+          element={
+            <PrivateRoute>
+              <Sidebar>
+                <Dashboard />
+              </Sidebar>
             </PrivateRoute>
           }
         />

@@ -154,22 +154,6 @@ ul {
   font-weight: bolder;
 }
 
-.navbar .navbar-aTag {
-  text-decoration: none;
-  color: black;
-  text-align: center;
-  padding: 12px 10px;
-  transition: 0.3s;
-}
-
-.navbar .navbar-aTag:hover {
-  color: #23ce99;
-}
-
-.navbar .active {
-  color: #23ce99;
-}
-
 @media screen and (max-width: 1400px) {
   .input-fields {
     width: 250px;

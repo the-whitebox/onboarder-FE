@@ -52,7 +52,7 @@ export default function LoginSidebar(props) {
                 response.data.user.pk,
                 response.data.access_token
               );
-              Navigate("/people");
+              Navigate("/dashboard");
               setLoading(false);
               action.resetForm();
             }
