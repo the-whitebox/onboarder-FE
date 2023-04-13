@@ -1,0 +1,447 @@
+import React, { useState } from "react";
+import { Avatar, Box, Checkbox, TextField, Typography } from "@mui/material";
+import Button from "@mui/material/Button";
+import Menu from "@mui/material/Menu";
+import MenuItem from "@mui/material/MenuItem";
+import SearchIcon from "@mui/icons-material/Search";
+import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
+import { HiOutlineFilter, HiCube } from "react-icons/hi";
+import { BiEdit } from "react-icons/bi";
+import Table from "@mui/material/Table";
+import TableBody from "@mui/material/TableBody";
+import TableCell from "@mui/material/TableCell";
+import TableContainer from "@mui/material/TableContainer";
+import TableHead from "@mui/material/TableHead";
+import TableRow from "@mui/material/TableRow";
+import Paper from "@mui/material/Paper";
+import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
+
+const rows = [
+  {
+    id: "1",
+    name: "Username",
+    connect: "Connected",
+    access: "Access",
+    main_location: "Main Location",
+    status: "Status",
+    email: "Email",
+    mobile: "Mobile",
+  },
+  {
+    id: "2",
+    name: "Username",
+    connect: "Connected",
+    access: "Access",
+    main_location: "Main Location",
+    status: "Status",
+    email: "Email",
+    mobile: "Mobile",
+  },
+  {
+    id: "3",
+    name: "Username",
+    connect: "Connected",
+    access: "Access",
+    main_location: "Main Location",
+    status: "Status",
+    email: "Email",
+    mobile: "Mobile",
+  },
+  {
+    id: "4",
+    name: "Username",
+    connect: "Connected",
+    access: "Access",
+    main_location: "Main Location",
+    status: "Status",
+    email: "Email",
+    mobile: "Mobile",
+  },
+  {
+    id: "5",
+    name: "Username",
+    connect: "Connected",
+    access: "Access",
+    main_location: "Main Location",
+    status: "Status",
+    email: "Email",
+    mobile: "Mobile",
+  },
+];
+
+const listItems = [
+  { id: "1", name: "Main Location" },
+  { id: "2", name: "Status" },
+  { id: "3", name: "Email" },
+  { id: "4", name: "Mobile" },
+  { id: "5", name: "Stress Profile" },
+  { id: "6", name: "Training" },
+  { id: "7", name: "Pay Rates" },
+  { id: "8", name: "Payroll ID" },
+  { id: "9", name: "Leave Balance" },
+  { id: "10", name: "Connected to" },
+];
+
+function TeamMembersTable() {
+  const [isCheckAll, setIsCheckAll] = useState(false);
+  const [isCheck, setIsCheck] = useState([]);
+  const handleSelectAll = (e) => {
+    setIsCheckAll(!isCheckAll);
+    setIsCheck(rows.map((data) => data.id));
+    if (isCheckAll) {
+      setIsCheck([]);
+    }
+  };
+  const handleCheckClick = (e) => {
+    const { id, checked } = e.target;
+    setIsCheck([...isCheck, id]);
+    if (!checked) {
+      setIsCheck(isCheck.filter((item) => item !== id));
+    }
+  };
+  const [checkListItems, setCheckListItems] = useState([
+    { id: "1", value: true },
+    { id: "2", value: true },
+    { id: "3", value: true },
+    { id: "4", value: true },
+    { id: "5", value: true },
+    { id: "6", value: true },
+    { id: "7", value: true },
+    { id: "8", value: true },
+    { id: "9", value: true },
+    { id: "10", value: true },
+  ]);
+  const handleCheckListItems = (e) => {
+    const { id, checked } = e.target;
+    setCheckListItems((prevItems) =>
+      prevItems.map((item) =>
+        item.id === id ? { ...item, value: checked } : item
+      )
+    );
+  };
+  const [filteredItems, setFilteredItems] = useState();
+  React.useEffect(() => {
+    const filtered = checkListItems.filter((items) => items.value === true);
+    setFilteredItems(filtered);
+  }, [checkListItems]);
+
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  const open = Boolean(anchorEl);
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+  return (
+    <>
+      <Box
+        sx={{
+          mt: 2,
+          bgcolor: "white",
+          width: "90%",
+          boxShadow: 3,
+          //   filter: "drop-shadow(0px 6px 3px rgba(21,34,50,0.08 ))",
+          border: "0.5px solid #e4e4e4",
+          borderRadius: "8px",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "space-between",
+          px: 2,
+          py: 2,
+          boxSizing: "border-box",
+        }}
+      >
+        <Box sx={{ display: "flex", alignItems: "center" }}>
+          <TextField
+            type="search"
+            size="small"
+            className="search-field"
+            placeholder="search team member..."
+            variant="standard"
+            InputProps={{
+              startAdornment: <SearchIcon sx={{ color: "#2BB491" }} />,
+              disableUnderline: true,
+            }}
+            sx={{
+              p: "5px 10px 2px 10px",
+              borderRadius: "25px",
+              border: "none",
+              outline: "none ",
+              width: "270px",
+              background: "#e6f4eb",
+            }}
+          />
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              flexDirection: "column",
+              ml: "20px",
+              cursor: "pointer",
+            }}
+          >
+            <HiOutlineFilter
+              style={{
+                fontSize: "20px",
+                background: "#e6f4eb",
+                color: "#2BB491",
+                padding: "5px",
+              }}
+            />
+            <Typography sx={{ fontSize: "10px", color: "#A2A2A2", mt: "2px" }}>
+              Filters
+            </Typography>
+          </Box>
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              flexDirection: "column",
+              ml: "20px",
+              cursor: "pointer",
+            }}
+          >
+            <HiCube
+              style={{
+                fontSize: "20px",
+                color: "#2BB491",
+                padding: "5px",
+              }}
+            />
+            <Typography sx={{ fontSize: "10px", color: "#A2A2A2", mt: "2px" }}>
+              Bulk Action
+            </Typography>
+          </Box>
+        </Box>
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            flexDirection: "column",
+            ml: "20px",
+            cursor: "pointer",
+          }}
+        >
+          <Button
+            id="basic-button"
+            aria-controls={open ? "basic-menu" : undefined}
+            aria-haspopup="true"
+            aria-expanded={open ? "true" : undefined}
+            onClick={handleClick}
+            endIcon={<ArrowDropDownIcon />}
+            sx={{
+              color: "#a2a2a2",
+              textTransform: "none",
+              ml: 1,
+              borderRadius: "5px",
+              border: "1px solid #a2a2a2",
+            }}
+          >
+            <BiEdit
+              style={{
+                fontSize: "20px",
+                color: "#2BB491",
+              }}
+            />
+          </Button>
+          <Typography sx={{ color: "#A2A2A2", fontSize: "10px", mt: "2px" }}>
+            List items
+          </Typography>
+          <Menu
+            id="basic-menu"
+            anchorEl={anchorEl}
+            open={open}
+            onClose={handleClose}
+            MenuListProps={{
+              "aria-labelledby": "basic-button",
+            }}
+            PaperProps={{
+              elevation: 0,
+              sx: {
+                overflow: "visible",
+                width: "180px",
+                mt: 2,
+                borderRadius: "10px",
+                boxShadow: 3,
+                filter: "drop-shadow(0px 6px 3px rgba(21,34,50,0.08 ))",
+              },
+            }}
+            transformOrigin={{ horizontal: "right", vertical: "top" }}
+            anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
+          >
+            {listItems?.map((data) => (
+              <MenuItem sx={{ p: 0 }} key={data.id}>
+                <Checkbox
+                  size="small"
+                  sx={{
+                    "&.Mui-checked": {
+                      color: "#2BB491",
+                    },
+                  }}
+                  id={data.id}
+                  name={data.name}
+                  onChange={(e) => handleCheckListItems(e)}
+                  checked={
+                    filteredItems?.find((item) => item.id === data.id)
+                      ? true
+                      : false
+                  }
+                />
+                {data.name}
+              </MenuItem>
+            ))}
+          </Menu>
+        </Box>
+      </Box>
+      <Box sx={{ width: "90%", mt: 2 }}>
+        <TableContainer component={Paper}>
+          <Table sx={{}}>
+            <TableHead>
+              <TableRow>
+                <TableCell>
+                  <Checkbox
+                    sx={{
+                      "&.Mui-checked": {
+                        color: "#2BB491",
+                      },
+                    }}
+                    name="selectAll"
+                    id="selectAll"
+                    onChange={handleSelectAll}
+                    checked={isCheckAll}
+                  />
+                </TableCell>
+                <TableCell align="start" sx={{ fontWeight: "bold" }}>
+                  Name
+                </TableCell>
+                {checkListItems[9].value === true ? (
+                  <TableCell align="start" sx={{ fontWeight: "bold" }}>
+                    Connect to
+                  </TableCell>
+                ) : null}
+                <TableCell align="start" sx={{ fontWeight: "bold" }}>
+                  Access
+                </TableCell>
+                {checkListItems[0].value === true ? (
+                  <TableCell align="start" sx={{ fontWeight: "bold" }}>
+                    Main Location
+                  </TableCell>
+                ) : null}
+                {checkListItems[1].value === true ? (
+                  <TableCell align="start" sx={{ fontWeight: "bold" }}>
+                    Status
+                  </TableCell>
+                ) : null}
+                {checkListItems[2].value === true ? (
+                  <TableCell align="start" sx={{ fontWeight: "bold" }}>
+                    Email
+                  </TableCell>
+                ) : null}
+                {checkListItems[3].value === true ? (
+                  <TableCell align="start" sx={{ fontWeight: "bold" }}>
+                    Mobile
+                  </TableCell>
+                ) : null}
+                {checkListItems[4].value === true ? (
+                  <TableCell align="start" sx={{ fontWeight: "bold" }}>
+                    Stress Profile
+                  </TableCell>
+                ) : null}
+                {checkListItems[5].value === true ? (
+                  <TableCell align="start" sx={{ fontWeight: "bold" }}>
+                    Training
+                  </TableCell>
+                ) : null}
+                {checkListItems[6].value === true ? (
+                  <TableCell align="start" sx={{ fontWeight: "bold" }}>
+                    Pay Rates
+                  </TableCell>
+                ) : null}
+                {checkListItems[7].value === true ? (
+                  <TableCell align="start" sx={{ fontWeight: "bold" }}>
+                    Payroll ID
+                  </TableCell>
+                ) : null}
+                {checkListItems[8].value === true ? (
+                  <TableCell align="start" sx={{ fontWeight: "bold" }}>
+                    Leave Balance
+                  </TableCell>
+                ) : null}
+                <TableCell align="start"></TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {rows?.map((row) => (
+                <TableRow
+                  key={row.id}
+                  sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                >
+                  <TableCell>
+                    <Checkbox
+                      sx={{
+                        "&.Mui-checked": {
+                          color: "#2BB491",
+                        },
+                      }}
+                      id={row.id}
+                      name={row.name}
+                      onChange={handleCheckClick}
+                      checked={isCheck.includes(row.id)}
+                    />
+                  </TableCell>
+                  <TableCell align="start">
+                    <Box sx={{ display: "flex", alignItems: "center" }}>
+                      <Avatar sx={{ width: "30px", height: "30px", mr: 1 }} />
+                      <Typography>{row.name}</Typography>
+                    </Box>
+                  </TableCell>
+                  {checkListItems[9].value === true ? (
+                    <TableCell align="start">Connect to</TableCell>
+                  ) : null}
+                  <TableCell align="start">Access</TableCell>
+                  {checkListItems[0].value === true ? (
+                    <TableCell align="start">Main Location</TableCell>
+                  ) : null}
+                  {checkListItems[1].value === true ? (
+                    <TableCell align="start">Status</TableCell>
+                  ) : null}
+                  {checkListItems[2].value === true ? (
+                    <TableCell align="start">Email</TableCell>
+                  ) : null}
+                  {checkListItems[3].value === true ? (
+                    <TableCell align="start">Mobile</TableCell>
+                  ) : null}
+                  {checkListItems[4].value === true ? (
+                    <TableCell align="start">Stress Profile</TableCell>
+                  ) : null}
+                  {checkListItems[5].value === true ? (
+                    <TableCell align="start">Training</TableCell>
+                  ) : null}
+                  {checkListItems[6].value === true ? (
+                    <TableCell align="start">Pay Rates</TableCell>
+                  ) : null}
+                  {checkListItems[7].value === true ? (
+                    <TableCell align="start">Payroll ID</TableCell>
+                  ) : null}
+                  {checkListItems[8].value === true ? (
+                    <TableCell align="start">Leave Balance</TableCell>
+                  ) : null}
+                  <TableCell align="start">
+                    <MoreHorizIcon sx={{ cursor: "pointer" }} />
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
+      </Box>
+    </>
+  );
+}
+
+export default TeamMembersTable;

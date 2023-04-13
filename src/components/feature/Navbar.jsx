@@ -202,7 +202,7 @@ export default function Navbar() {
                     textTransform: "none",
                     width: "60%",
                     height: 35,
-                    borderRadius: "7px",
+                    borderRadius: "8px",
                   }}
                   onClick={handleLogout}
                 >
