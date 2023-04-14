@@ -137,7 +137,9 @@ function Routing() {
           path="*"
           element={
             <PrivateRoute>
-              <People />
+              <Sidebar>
+                <Dashboard />
+              </Sidebar>
             </PrivateRoute>
           }
         />

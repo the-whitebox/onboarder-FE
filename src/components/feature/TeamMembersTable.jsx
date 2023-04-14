@@ -15,11 +15,12 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
+import Pagination from "./Pagination";
 
 const rows = [
   {
     id: "1",
-    name: "Username",
+    name: "Username1",
     connect: "Connected",
     access: "Access",
     main_location: "Main Location",
@@ -29,7 +30,7 @@ const rows = [
   },
   {
     id: "2",
-    name: "Username",
+    name: "Username2",
     connect: "Connected",
     access: "Access",
     main_location: "Main Location",
@@ -39,7 +40,7 @@ const rows = [
   },
   {
     id: "3",
-    name: "Username",
+    name: "Username3",
     connect: "Connected",
     access: "Access",
     main_location: "Main Location",
@@ -49,7 +50,7 @@ const rows = [
   },
   {
     id: "4",
-    name: "Username",
+    name: "Username4",
     connect: "Connected",
     access: "Access",
     main_location: "Main Location",
@@ -59,7 +60,57 @@ const rows = [
   },
   {
     id: "5",
-    name: "Username",
+    name: "Username5",
+    connect: "Connected",
+    access: "Access",
+    main_location: "Main Location",
+    status: "Status",
+    email: "Email",
+    mobile: "Mobile",
+  },
+  {
+    id: "6",
+    name: "Username6",
+    connect: "Connected",
+    access: "Access",
+    main_location: "Main Location",
+    status: "Status",
+    email: "Email",
+    mobile: "Mobile",
+  },
+  {
+    id: "7",
+    name: "Username7",
+    connect: "Connected",
+    access: "Access",
+    main_location: "Main Location",
+    status: "Status",
+    email: "Email",
+    mobile: "Mobile",
+  },
+  {
+    id: "8",
+    name: "Username8",
+    connect: "Connected",
+    access: "Access",
+    main_location: "Main Location",
+    status: "Status",
+    email: "Email",
+    mobile: "Mobile",
+  },
+  {
+    id: "9",
+    name: "Username9",
+    connect: "Connected",
+    access: "Access",
+    main_location: "Main Location",
+    status: "Status",
+    email: "Email",
+    mobile: "Mobile",
+  },
+  {
+    id: "10",
+    name: "Username10",
     connect: "Connected",
     access: "Access",
     main_location: "Main Location",
@@ -134,13 +185,19 @@ function TeamMembersTable() {
     setAnchorEl(null);
   };
 
+  const itemsPerPage = 5;
+  const [currentPage, setCurrentPage] = useState(1);
+  const totalPages = Math.ceil(rows.length / itemsPerPage);
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const endIndex = startIndex + itemsPerPage;
+  const currentData = rows.slice(startIndex, endIndex);
+
   return (
-    <>
+    <Box sx={{ width: "90%" }}>
       <Box
         sx={{
-          mt: 2,
+          mt: { xl: 0, xs: 2 },
           bgcolor: "white",
-          width: "90%",
           boxShadow: 3,
           //   filter: "drop-shadow(0px 6px 3px rgba(21,34,50,0.08 ))",
           border: "0.5px solid #e4e4e4",
@@ -157,7 +214,6 @@ function TeamMembersTable() {
           <TextField
             type="search"
             size="small"
-            className="search-field"
             placeholder="search team member..."
             variant="standard"
             InputProps={{
@@ -298,9 +354,17 @@ function TeamMembersTable() {
           </Menu>
         </Box>
       </Box>
-      <Box sx={{ width: "90%", mt: 2 }}>
-        <TableContainer component={Paper}>
-          <Table sx={{}}>
+      <Box
+        sx={{
+          width: "100%",
+          mt: 2,
+        }}
+      >
+        <TableContainer
+          component={Paper}
+          sx={{ maxWidth: "100%", maxHeight: 460, overflow: "scroll" }}
+        >
+          <Table stickyHeader>
             <TableHead>
               <TableRow>
                 <TableCell>
@@ -320,7 +384,12 @@ function TeamMembersTable() {
                   Name
                 </TableCell>
                 {checkListItems[9].value === true ? (
-                  <TableCell align="start" sx={{ fontWeight: "bold" }}>
+                  <TableCell
+                    align="start"
+                    sx={{
+                      fontWeight: "bold",
+                    }}
+                  >
                     Connect to
                   </TableCell>
                 ) : null}
@@ -376,7 +445,7 @@ function TeamMembersTable() {
               </TableRow>
             </TableHead>
             <TableBody>
-              {rows?.map((row) => (
+              {currentData?.map((row) => (
                 <TableRow
                   key={row.id}
                   sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
@@ -440,7 +509,22 @@ function TeamMembersTable() {
           </Table>
         </TableContainer>
       </Box>
-    </>
+      <Box
+        sx={{
+          width: "100%",
+          mt: 3,
+          display: "flex",
+          justifyContent: "flex-end",
+          alignItems: "center",
+        }}
+      >
+        <Pagination
+          currentPage={currentPage}
+          setCurrentPage={setCurrentPage}
+          totalPages={totalPages}
+        />
+      </Box>
+    </Box>
   );
 }
 
