@@ -7,7 +7,6 @@ import Select from "@mui/material/Select";
 import Typography from "@mui/material/Typography";
 import InfoIcon from "@mui/icons-material/Info";
 import CloseIcon from "@mui/icons-material/Close";
-import "../../style/SetStress.css";
 import axios from "axios";
 import CircularProgress from "@mui/material/CircularProgress";
 import { toast } from "react-toastify";

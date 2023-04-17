@@ -7,10 +7,10 @@ import Typography from "@mui/material/Typography";
 import Checkbox from "@mui/material/Checkbox";
 import HelpOutlineIcon from "@mui/icons-material/HelpOutline";
 import CircularProgress from "@mui/material/CircularProgress";
-import maxpilot from "../../assets/images/maxpilot-logo-w.png";
+import maxpilot from "../../assets/logos/logo.png";
+import users from "../../assets/icons/users.png";
 import GlobalContext from "../../context/GlobalContext";
 import { useNavigate } from "react-router-dom";
-import { TbUsers } from "react-icons/tb";
 import { toast } from "react-toastify";
 import { useFormik } from "formik";
 import axios from "axios";
@@ -52,7 +52,7 @@ export default function LoginSidebar(props) {
                 response.data.user.pk,
                 response.data.access_token
               );
-              Navigate("/people");
+              Navigate("/dashboard");
               setLoading(false);
               action.resetForm();
             }
@@ -79,6 +79,10 @@ export default function LoginSidebar(props) {
       .catch((error) => console.log("Error", error));
   };
 
+  const goToSignup = () => {
+    Navigate("/step1");
+  };
+
   return (
     <Grid
       container
@@ -87,8 +91,8 @@ export default function LoginSidebar(props) {
           xl: "100vh",
           lg: "100vh",
           md: "100vh",
-          sm: "100vh",
-          xs: "100vh",
+          sm: "auto",
+          xs: "auto",
         },
         backgroundColor: "#2bb491",
         borderRadius: "0px 30px 30px 0px",
@@ -119,10 +123,11 @@ export default function LoginSidebar(props) {
             src={maxpilot}
             aria-label="Busy Man"
             sx={{
-              width: "200px",
+              width: "auto",
               height: "auto",
               padding: "0px",
               margin: "0px",
+              borderRadius: 0,
             }}
           />
         </Box>
@@ -133,10 +138,20 @@ export default function LoginSidebar(props) {
             flexDirection: "column",
             alignItems: "center",
             justifyContent: "center",
+            mt: 2,
           }}
         >
-          <TbUsers
-            style={{ color: "white", fontSize: "40px", marginBottom: "30px" }}
+          <Avatar
+            src={users}
+            aria-label="Busy Man"
+            sx={{
+              width: "50px",
+              height: "50px",
+              padding: "0px",
+              margin: "0px",
+              borderRadius: 0,
+              mb: { xs: 0, xl: 2 },
+            }}
           />
           <Box sx={{ display: "flex", flexDirection: "column" }}>
             <input
@@ -205,7 +220,7 @@ export default function LoginSidebar(props) {
             Forgot <sapn style={{ fontWeight: "bold" }}>MAX</sapn>pilot ID or
             password?
           </Box>
-          <Box sx={{ color: "white", cursor: "pointer" }}>
+          <Box sx={{ color: "white", cursor: "pointer" }} onClick={goToSignup}>
             <h4>Sign Up with New ID</h4>
           </Box>
         </Box>
@@ -224,6 +239,8 @@ export default function LoginSidebar(props) {
             sx={{
               color: "white",
               fontSize: "10px",
+              textAlign: "center",
+              padding: { xl: 0, sm: "0px 5px" },
             }}
           >
             Terms & Conditions | Privacy Policy | Copyright &#169; 2023

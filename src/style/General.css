@@ -15,6 +15,10 @@
   justify-content: space-between;
 }
 
+ul {
+  list-style-type: none !important;
+}
+
 .aTag {
   margin: 0;
   color: #38b492;
@@ -27,6 +31,11 @@
 
 .aTag:hover {
   text-decoration-color: #38b492;
+}
+
+.aTag-1 {
+  color: white;
+  text-decoration: none;
 }
 
 .all-green-btns {
@@ -54,7 +63,7 @@
   border-radius: 10px;
   border: none;
   outline: none;
-  width: 370px;
+  width: 300px;
   background: white;
   padding: 20px 10px 20px 20px;
   margin-top: 10px;
@@ -76,7 +85,7 @@
   border-radius: 10px;
   border: 1px solid gray;
   outline: none;
-  width: 250px;
+  width: 280px;
   background: transparent;
   padding: 10px 10px 10px 20px;
   margin-top: 10px;
@@ -87,7 +96,7 @@
   border-radius: 0px 10px 10px 0px;
   border: 1px solid gray;
   outline: none;
-  width: 200px;
+  width: 230px;
 }
 
 .PhoneInputCountry {
@@ -98,9 +107,65 @@
   padding-left: 15px;
 }
 
-.aTag-1 {
-  color: white;
+.css-1pqm26d-MuiAvatar-img {
+  object-fit: contain !important;
+}
+
+.vertical-menu .verticalMenu-aTag {
   text-decoration: none;
+  color: #5b6462;
+  width: 100%;
+  text-align: center;
+  padding: 12px 0px;
+  transition: 0.3s;
+  position: relative;
+}
+
+.vertical-menu .verticalMenu-aTag:hover {
+  background: #23ce99;
+  color: white;
+}
+
+.vertical-menu .verticalMenu-aTag:hover::before {
+  content: "";
+  width: 6px;
+  height: 100%;
+  background: white;
+  position: absolute;
+  left: 0;
+  top: 0;
+  border-radius: 0px 5px 5px 0px;
+}
+
+.vertical-menu .active::before {
+  content: "";
+  width: 6px;
+  height: 100%;
+  background: white;
+  position: absolute;
+  left: 0;
+  top: 0;
+  border-radius: 0px 5px 5px 0px;
+}
+
+.vertical-menu .active {
+  background: #23ce99;
+  color: white;
+  font-weight: bolder;
+}
+
+@media screen and (max-width: 1400px) {
+  .input-fields {
+    width: 250px;
+  }
+
+  .input-fields-3 {
+    width: 250px;
+  }
+
+  .PhoneInputInput {
+    width: 200px;
+  }
 }
 
 @media screen and (max-width: 768px) {

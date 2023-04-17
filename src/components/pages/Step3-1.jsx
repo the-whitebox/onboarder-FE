@@ -7,6 +7,9 @@ import maxpilot from "../../assets/images/maxpilot-logo.png";
 import { Avatar } from "@mui/material";
 import RecentActorsIcon from "@mui/icons-material/RecentActors";
 import { useNavigate } from "react-router-dom";
+import image1 from "../../assets/images/welcome1.png";
+import image2 from "../../assets/images/welcome2.png";
+import bg_image3 from "../../assets/images/bg-image3.png";
 
 export default function Step2() {
   const Navigate = useNavigate();
@@ -15,14 +18,23 @@ export default function Step2() {
   };
   return (
     <>
-      <Grid container>
+      <Grid
+        container
+        sx={{
+          pb: {
+            xs: 2,
+            md: 0,
+          },
+          minHeight: "100vh",
+        }}
+      >
         <Grid item xl={12} lg={12} md={12} sm={12} xs={12}>
           <Box
             sx={{
               display: "flex",
               justifyContent: "space-between",
               alignItems: "center",
-              mr: 10,
+              mr: { xl: 10, lg: 10, md: 5, sm: 1, xs: 1 },
               ml: 2,
               py: 2,
             }}
@@ -37,54 +49,85 @@ export default function Step2() {
                 margin: "0px",
               }}
             />
-            <Box sx={{ display: "flex", alignItems: "center" }}>
-              <Typography sx={{ fontSize: "12px", mr: 2 }}>
+            <Box
+              sx={{
+                display: "flex",
+                alignItems: { md: "center", xs: "flex-end" },
+                flexDirection: { xs: "column", md: "row" },
+                justifyContent: "flex-end",
+              }}
+            >
+              <Typography
+                sx={{
+                  fontSize: { md: "12px", xs: "10px" },
+                  mr: { md: 2, xs: 0 },
+                }}
+              >
                 STEP 3 | COMPLETE YOUR PROFILE
               </Typography>
-              <Box
-                sx={{
-                  width: "20px",
-                  height: "20px",
-                  background: "#e6f4eb",
-                  borderRadius: "100%",
-                }}
-              ></Box>
-              <Box
-                sx={{
-                  width: "20px",
-                  height: "20px",
-                  background: "#e6f4eb",
-                  borderRadius: "100%",
-                  ml: 1,
-                }}
-              ></Box>
-              <Box
-                sx={{
-                  width: "20px",
-                  height: "20px",
-                  background: "#2bb491",
-                  borderRadius: "100%",
-                  ml: 1,
-                }}
-              ></Box>
+              <Box sx={{ display: "flex", mt: { xs: 1, md: 0 } }}>
+                <Box
+                  sx={{
+                    width: "20px",
+                    height: "20px",
+                    background: "#e6f4eb",
+                    borderRadius: "100%",
+                  }}
+                ></Box>
+                <Box
+                  sx={{
+                    width: "20px",
+                    height: "20px",
+                    background: "#e6f4eb",
+                    borderRadius: "100%",
+                    ml: 1,
+                  }}
+                ></Box>
+                <Box
+                  sx={{
+                    width: "20px",
+                    height: "20px",
+                    background: "#2bb491",
+                    borderRadius: "100%",
+                    ml: 1,
+                  }}
+                ></Box>
+              </Box>
             </Box>
           </Box>
           <Box sx={{ background: "gray", width: "77%", height: "1px" }}></Box>
         </Grid>
+
         <Grid item xl={8} lg={8} md={8} sm={12} xs={12}>
-          <Box sx={{ display: "flex", flexDirection: "column", mt: 5, ml: 14 }}>
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: "column",
+              mt: 5,
+              ml: { md: 14, xs: 1 },
+            }}
+          >
             <Typography sx={{ fontWeight: "bold", fontSize: "25px" }}>
               <span style={{ color: "#2bb491" }}>Welcome to </span>
-              <span>MAX</span>
-              <span style={{ color: "#555555" }}>pilot, </span>
+              <i>
+                <span>MAX</span>
+                <span style={{ color: "#555555" }}>pilot, </span>
+              </i>
               <span>(Name)</span>
             </Typography>
-            <Box sx={{ display: "flex", mt: 2 }}>
+            <Box
+              sx={{
+                display: "flex",
+                flexDirection: { md: "row", xs: "column" },
+                alignItems: "center",
+                mt: 2,
+              }}
+            >
               <Box
                 sx={{
                   border: "1px solid #2bb491",
                   borderRadius: "10px",
-                  padding: "60px 40px",
+                  padding: "40px 40px",
                   display: "flex",
                   flexDirection: "column",
                   justifyContent: "center",
@@ -92,11 +135,11 @@ export default function Step2() {
                 }}
               >
                 <Avatar
-                  src={maxpilot}
+                  src={image1}
                   aria-label="Busy Man"
                   sx={{
-                    width: "100px",
-                    height: "auto",
+                    width: "150px",
+                    height: "150px",
                     padding: "0px",
                     margin: "0px",
                   }}
@@ -124,22 +167,25 @@ export default function Step2() {
                 sx={{
                   border: "1px solid #2bb491",
                   borderRadius: "10px",
-                  padding: "60px 40px",
+                  padding: "40px 40px",
                   display: "flex",
                   flexDirection: "column",
                   justifyContent: "center",
                   alignItems: "center",
-                  ml: 2,
+                  ml: { md: 2, xs: 0 },
+                  mt: { md: 0, xs: 2 },
                 }}
               >
                 <Avatar
-                  src={maxpilot}
+                  src={image2}
                   aria-label="Busy Man"
                   sx={{
-                    width: "100px",
-                    height: "auto",
+                    width: "150px",
+                    height: "150px",
                     padding: "0px",
                     margin: "0px",
+                    backgroundSize: "100% 100%",
+                    objectFit: "contain",
                   }}
                 />
                 <Typography
@@ -160,6 +206,7 @@ export default function Step2() {
             </Box>
           </Box>
         </Grid>
+
         <Grid item xl={4} lg={4} md={4} sm={12} xs={12}>
           <Box
             sx={{
@@ -186,10 +233,11 @@ export default function Step2() {
           <Box
             sx={{
               display: "flex",
-              flexDirection: "column",
+              flexDirection: { md: "column", xs: "row" },
               alignItems: "flex-end",
-              mt: 15,
-              mr: 10,
+              justifyContent: "center",
+              mt: { xl: 20, lg: 5, xs: 3 },
+              mr: { md: 5, xs: 0 },
             }}
           >
             <Box
@@ -207,6 +255,7 @@ export default function Step2() {
                 background: "#e6f4eb",
                 borderRadius: "100%",
                 mt: 1,
+                ml: { xs: 1, md: 0 },
               }}
             ></Box>
             <Box
@@ -216,6 +265,7 @@ export default function Step2() {
                 background: "#e6f4eb",
                 borderRadius: "100%",
                 mt: 1,
+                ml: { xs: 1, md: 0 },
               }}
             ></Box>
             <Box
@@ -225,9 +275,51 @@ export default function Step2() {
                 background: "#e6f4eb",
                 borderRadius: "100%",
                 mt: 1,
+                ml: { xs: 1, md: 0 },
               }}
             ></Box>
           </Box>
+        </Grid>
+        <Grid
+          item
+          xs={12}
+          sx={{
+            position: "relative",
+            mt: 8,
+          }}
+        >
+          <Typography
+            sx={{
+              width: "100%",
+              fontSize: { md: "10px", xs: "5px" },
+              textAlign: "center",
+              zIndex: 9999,
+              position: "absolute",
+              bottom: 0,
+              paddding: "0px 10px",
+            }}
+          >
+            Lorem Ipsum is simply dummy text of the printing and typesetting
+            industry. Lorem Ipsum has been the industry's <br />
+            standard dummy text ever since the 1500s, when an unknown printer
+            took a galley of type and scrambled it to make a type specimen book.{" "}
+            <br />
+            It has survived not only five centuries.
+          </Typography>
+          <Avatar
+            src={bg_image3}
+            aria-label="Busy Man"
+            sx={{
+              width: { xl: "400px", md: "250px", xs: "200px" },
+              height: "auto",
+              padding: "0px",
+              margin: "0px",
+              borderRadius: 0,
+              position: "absolute",
+              bottom: "1px",
+              right: "0",
+            }}
+          />
         </Grid>
       </Grid>
     </>

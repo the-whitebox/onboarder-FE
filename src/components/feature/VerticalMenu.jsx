@@ -1,180 +1,107 @@
 import * as React from "react";
 import Box from "@mui/material/Box";
 import List from "@mui/material/List";
-import ListItemButton from "@mui/material/ListItemButton";
-import ListItemText from "@mui/material/ListItemText";
-import Divider from "@mui/material/Divider";
-import { styled } from "@mui/material/styles";
 import Avatar from "@mui/material/Avatar";
-import Typography from "@mui/material/Typography";
-import Button from "@mui/material/Button";
-import "../../style/General.css";
-import { useNavigate } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import GlobalContext from "../../context/GlobalContext";
-
-const StyledList = styled(List)({
-  // selected and (selected + hover) states
-  "&& .Mui-selected, && .Mui-selected:hover": {
-    backgroundColor: "white",
-    borderRadius: "12px 0px 0px 12px",
-    "&, & .MuiListItemIcon-root": {
-      color: "#38B492",
-    },
-  },
-  // hover states
-  "& .MuiListItemButton-root:hover": {
-    backgroundColor: "white",
-    // borderRadius: "12px 0px 0px 12px",
-    "&, & .MuiListItemIcon-root": {
-      color: "#38B492",
-    },
-  },
-});
+import logo from "../../assets/logos/logo.png";
 
 export default function VerticalMenu(props) {
   const { userInfo } = React.useContext(GlobalContext);
-  const [selectedIndex] = React.useState(props.indexToHL);
-  // const handleListItemClick = (index: number) => {
-  //   setSelectedIndex(index);
-  // };
-
-  // setSelectedIndex(props.indexToHL);
-
-  const navigate = useNavigate();
-
-  function stringAvatar(name) {
-    return {
-      sx: {
-        bgcolor: "white",
-        color: "black",
-      },
-      children: `${name.split(" ")[0][0]}${name.split(" ")[1][0]}`,
-    };
-  }
 
   return (
     <Box
+      className="vertical-menu"
       sx={{
-        width: "100%",
-        maxWidth: 240,
-        bgcolor: "#38B492",
+        width: "25%",
+        bgcolor: "#2bb491",
         minHeight: "100vh",
         color: "#ffffff",
+        borderRadius: "0px 30px 30px 0px",
+        position: "fixed",
+        top: 0,
+        left: 0,
       }}
     >
-      <StyledList
-        sx={{
-          pl: "10px",
-        }}
-      >
+      <Box sx={{ display: "flex", justifyContent: "center" }}>
+        <Avatar
+          src={logo}
+          aria-label="Busy Man"
+          sx={{
+            width: "200px",
+            height: "auto",
+            padding: "0px",
+            margin: "0px",
+            borderRadius: 0,
+            mt: 3,
+          }}
+        />
+      </Box>
+      <Box sx={{}}>
+        <Box
+          sx={{
+            background: "#86d3bd",
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            mt: { xl: 5, sm: 3 },
+          }}
+        >
+          <NavLink to="/step3-4" className="verticalMenu-aTag">
+            Profile
+          </NavLink>
+          <NavLink to="/personal/details" className="verticalMenu-aTag">
+            Personal
+          </NavLink>
+          <NavLink to="/employment" className="verticalMenu-aTag">
+            Employment
+          </NavLink>
+          <NavLink to="/journals" className="verticalMenu-aTag">
+            Journals
+          </NavLink>
+        </Box>
         <Box
           sx={{
             display: "flex",
             flexDirection: "column",
-            justifyContent: "center",
             alignItems: "center",
-            height: 250,
+            width: "100%",
           }}
         >
-          <Avatar
-            className="avatar-size"
-            // sx={{ width: "120px !important", height: 120 }}
-            {...stringAvatar(`${userInfo?.first_name} ${userInfo?.last_name}`)}
-          />
-          <Typography
-            component="h3"
-            variant="body1"
-            sx={{
-              fontWeight: "Semi-Bold",
-              fontSize: "20px",
-              color: "#ffffff",
-              mt: 2,
-            }}
+          <List sx={{ fontWeight: "900 !important", mt: "5px" }}>
+            Scheduling
+          </List>
+          <NavLink
+            to="/shifts"
+            className="verticalMenu-aTag"
+            style={{ color: "white" }}
           >
-            {userInfo?.first_name} {userInfo?.last_name}
-          </Typography>
-          <Typography
-            component="h3"
-            variant="body1"
-            sx={{
-              fontWeight: "Regular",
-              fontSize: "16px",
-              color: "#ffffff",
-            }}
+            Shifts
+          </NavLink>
+          <NavLink
+            to="/leave"
+            className="verticalMenu-aTag"
+            style={{ color: "white" }}
           >
-            {userInfo?.role.role}
-          </Typography>
-          <Button
-            type="submit"
-            variant="contained"
-            className="all-white-btns"
-            sx={{
-              borderRadius: "5px",
-              justifyContent: "center",
-              backgroundColor: "#ffffff",
-              color: "#38B492",
-              fontSize: "12px",
-              mt: 0.5,
-            }}
+            Leave
+          </NavLink>
+          <NavLink
+            to="/unavailability"
+            className="verticalMenu-aTag"
+            style={{ color: "white" }}
           >
-            Start unscheduled shift
-          </Button>
+            Unavailability
+          </NavLink>
+          <List sx={{ fontWeight: "900 !important", mt: "5px" }}>Activity</List>
+          <NavLink
+            to="/news-feed"
+            className="verticalMenu-aTag"
+            style={{ color: "white" }}
+          >
+            News feed
+          </NavLink>
         </Box>
-        <Divider />
-        <List sx={{ fontWeight: "900 !important", pl: "10px", mt: "5px" }}>
-          Profile
-        </List>
-        <ListItemButton
-          selected={selectedIndex === 0}
-          onClick={() => navigate("/profile")}
-        >
-          <ListItemText primary="Personal" />
-        </ListItemButton>
-        <ListItemButton
-          selected={selectedIndex === 1}
-          onClick={() => navigate("/employment")}
-        >
-          <ListItemText primary="Employment" />
-        </ListItemButton>
-
-        <ListItemButton
-          selected={selectedIndex === 2}
-          // onClick={() => handleListItemClick(2)}
-        >
-          <ListItemText primary="Journals" />
-        </ListItemButton>
-        <List sx={{ fontWeight: "900 !important", pl: "10px", mt: "5px" }}>
-          Scheduling
-        </List>
-        <ListItemButton
-          selected={selectedIndex === 3}
-          // onClick={() => handleListItemClick(3)}
-        >
-          <ListItemText primary="Shifts" />
-        </ListItemButton>
-        <ListItemButton
-          selected={selectedIndex === 4}
-          // onClick={() => handleListItemClick(4)}
-        >
-          <ListItemText primary="Leave" />
-        </ListItemButton>
-        <ListItemButton
-          selected={selectedIndex === 5}
-          // onClick={() => handleListItemClick(5)}
-        >
-          <ListItemText primary="Unavailability" />
-        </ListItemButton>
-        <List sx={{ fontWeight: "900 !important", pl: "10px", mt: "5px" }}>
-          {" "}
-          Activity
-        </List>
-        <ListItemButton
-          selected={selectedIndex === 6}
-          // onClick={() => handleListItemClick(6)}
-        >
-          <ListItemText primary="News feed" />
-        </ListItemButton>
-      </StyledList>
+      </Box>
     </Box>
   );
 }

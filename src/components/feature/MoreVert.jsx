@@ -1,7 +1,5 @@
 import * as React from "react";
-import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
-import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import Link from "@mui/material/Link";
 import SetAccessLevelModalBody from "../feature/SetAccessLevel";
@@ -37,7 +35,7 @@ export const MoreVert = () => {
   };
   return (
     <React.Fragment>
-<Modal
+      <Modal
         open={openAccess}
         onClose={handleCloseAccess}
         onClick={handleClose}
@@ -67,44 +65,43 @@ export const MoreVert = () => {
       </Modal>
 
       <Select
-          labelId="demo-simple-select-standard-label"
-          id="demo-simple-select-standard"
-          value={people}
-          onChange={handleChange}
-          label="Age"
-        >
-          <MenuItem value="">
-            <Link
-              sx={{ textDecoration: "none" }}
-              onClick={handleOpenWorkPeriod}
-              color="#38b492"
-            >
-              Agreed hours
-            </Link>
-          </MenuItem>
+        labelId="demo-simple-select-standard-label"
+        id="demo-simple-select-standard"
+        value={people}
+        onChange={handleChange}
+        label="Age"
+      >
+        <MenuItem value="">
+          <Link
+            sx={{ textDecoration: "none" }}
+            onClick={handleOpenWorkPeriod}
+            color="#38b492"
+          >
+            Agreed hours
+          </Link>
+        </MenuItem>
 
-          <MenuItem>
-            {" "}
-            <Link
-              sx={{ textDecoration: "none" }}
-              onClick={handleOpenAccess}
-              color="#38b492"
-            >
-              Access level
-            </Link>
-          </MenuItem>
-          <MenuItem>
-            {" "}
-            <Link
-              sx={{ textDecoration: "none" }}
-              onClick={handleOpen}
-              color="#38b492"
-            >
-              
-              Archive team
-            </Link>
-          </MenuItem>
-        </Select>
-              </React.Fragment>
+        <MenuItem>
+          {" "}
+          <Link
+            sx={{ textDecoration: "none" }}
+            onClick={handleOpenAccess}
+            color="#38b492"
+          >
+            Access level
+          </Link>
+        </MenuItem>
+        <MenuItem>
+          {" "}
+          <Link
+            sx={{ textDecoration: "none" }}
+            onClick={handleOpen}
+            color="#38b492"
+          >
+            Archive team
+          </Link>
+        </MenuItem>
+      </Select>
+    </React.Fragment>
   );
 };

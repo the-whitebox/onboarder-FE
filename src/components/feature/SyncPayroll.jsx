@@ -4,7 +4,6 @@ import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import Checkbox from "@mui/material/Checkbox";
 import CloseIcon from "@mui/icons-material/Close";
-import "../../style/Syncpayroll.css";
 
 const style = {
   position: "absolute",

@@ -10,7 +10,6 @@ import InputAdornment from "@mui/material/InputAdornment";
 import Select from "@mui/material/Select";
 import { useTheme } from "@mui/material/styles";
 import CloseIcon from "@mui/icons-material/Close";
-import "../../style/Setpayrates.css";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";

@@ -3,14 +3,14 @@ import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
-import { Checkbox } from "@mui/material";
-import { Link } from "react-router-dom";
+import { Avatar, Checkbox } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { Modal } from "@mui/material";
 import { useFormik } from "formik";
 import axios from "axios";
 import CircularProgress from "@mui/material/CircularProgress";
-import { TbUsers } from "react-icons/tb";
+import users from "../../assets/icons/users.png";
+import bg_image1 from "../../assets/images/bg-image1.png";
 import { toast } from "react-toastify";
 import LoginSidebar from "../feature/LoginSidebar";
 import ForgotPassword from "./ForgotPassword";
@@ -19,6 +19,12 @@ const formSchema = Yup.object({
   username: Yup.string().required("Please enter your username"),
   email: Yup.string().email().required("Please enter your email"),
   password: Yup.string().required("Please enter your password"),
+  // password: Yup.string()
+  //   .required("Please enter your password")
+  //   .matches(
+  //     "^(?=.*[A-Za-z])(?=.*d)(?=.*[@$!%*#?&])[A-Za-zd@$!%*#?&]{8,}$",
+  //     "Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and one special case Character"
+  //   ),
   check: Yup.boolean().oneOf(
     [true],
     "Please accept the terms and privacy policy before get started!"
@@ -45,13 +51,16 @@ export default function Signup() {
           .post(`${url}/auth/user/registration/`, {
             username: values.username,
             email: values.email,
+            password: values.password,
           })
           .then((response) => {
             console.log("response", response);
-            toast.success("You have successfully Registered!");
-            // localStorage.setItem("token", response.data.access_token);
+            localStorage.setItem("token", response.data.access_token);
+            toast.success(
+              "You have successfully registered, Please check your email for verification."
+            );
             // localStorage.setItem("userId", response.data.user.pk);
-            Navigate("/step1");
+            Navigate("/step2");
             setLoading(false);
             action.resetForm();
           })
@@ -76,13 +85,30 @@ export default function Signup() {
       >
         <ForgotPassword handleClose={handleClose} />
       </Modal>
-      <Grid container>
-        <Grid item xl={4} lg={4} md={6} sm={12} xs={12}>
+      <Grid container sx={{ pb: { xs: 5, md: 0 } }}>
+        <Grid item xl={3} lg={3} md={6} sm={12} xs={12}>
           <LoginSidebar handleOpen={handleOpen} />
         </Grid>
-        <Grid item xl={8} lg={8} md={6} sm={12} xs={12}>
+        <Grid
+          item
+          xl={9}
+          lg={9}
+          md={6}
+          sm={12}
+          xs={12}
+          sx={{
+            position: "relative",
+            // height: { md: "auto", sm: "70vh", xs: "80vh" },
+            minHeight: "100vh",
+          }}
+        >
           <Box
-            sx={{ display: "flex", justifyContent: "flex-end", mt: 5, mr: 10 }}
+            sx={{
+              display: "flex",
+              justifyContent: { md: "flex-end", xs: "center" },
+              mt: 5,
+              mr: { md: 10, xs: 0 },
+            }}
           >
             <Box sx={{ display: "flex", alignItems: "center" }}>
               <Typography sx={{ fontSize: "12px", mr: 2 }}>
@@ -123,18 +149,31 @@ export default function Signup() {
               flexDirection: "column",
               alignItems: "center",
               justifyContent: "center",
-              mt: { xl: 20, lg: 5, xs: 2 },
+              mt: { xl: 20, lg: 5, xs: 5 },
             }}
           >
-            <TbUsers
-              style={{
-                color: "white",
-                fontSize: "40px",
+            <Box
+              sx={{
+                width: "50px",
+                height: "50px",
                 background: "#2bb491",
                 padding: "10px",
                 borderRadius: "100%",
               }}
-            />
+            >
+              <Avatar
+                src={users}
+                aria-label="Busy Man"
+                sx={{
+                  width: "50px",
+                  height: "50px",
+                  padding: "0px",
+                  margin: "0px",
+                  borderRadius: 0,
+                  mb: { xs: 0, xl: 2 },
+                }}
+              />
+            </Box>
             <Typography sx={{ fontWeight: "bold", mt: 1 }}>
               Create New Sign in ID
             </Typography>
@@ -169,6 +208,7 @@ export default function Signup() {
                 className="input-fields-2"
                 placeholder="Create password"
                 name="password"
+                type="password"
                 value={values.password}
                 onChange={handleChange}
                 onBlur={handleBlur}
@@ -213,6 +253,40 @@ export default function Signup() {
                 <>Next</>
               )}
             </Button>
+          </Box>
+          <Box>
+            <Typography
+              sx={{
+                width: "100%",
+                fontSize: { md: "10px", xs: "5px" },
+                textAlign: "center",
+                zIndex: 9999,
+                position: "absolute",
+                bottom: 0,
+                paddding: "0px 10px",
+              }}
+            >
+              Lorem Ipsum is simply dummy text of the printing and typesetting
+              industry. Lorem Ipsum has been the industry's <br />
+              standard dummy text ever since the 1500s, when an unknown printer
+              took a galley of type and scrambled it to make a type specimen
+              book. <br />
+              It has survived not only five centuries.
+            </Typography>
+            <Avatar
+              src={bg_image1}
+              aria-label="Busy Man"
+              sx={{
+                width: { xl: "400px", md: "250px", xs: "200px" },
+                height: "auto",
+                padding: "0px",
+                margin: "0px",
+                borderRadius: 0,
+                position: "absolute",
+                bottom: "1px",
+                right: "0",
+              }}
+            />
           </Box>
         </Grid>
       </Grid>

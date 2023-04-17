@@ -300,7 +300,7 @@ export default function People() {
               <Button
                 onClick={handleOpen}
                 variant="contained"
-                className="btn-color"
+                className="all-green-btns"
                 sx={{
                   mr: 2,
                 }}

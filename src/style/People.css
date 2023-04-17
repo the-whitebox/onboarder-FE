@@ -1,13 +1,3 @@
-/* .css-1jbbcbn-MuiDataGrid-columnHeaderTitle {
-  font-weight: 900 !important;
-}
-.css-1q4vcqy {
-  border-bottom: 1px solid rgb(85, 85, 85) !important;
-  border-top: 0;
-  border-left: 0;
-  border-right: 0;
-} */
-
 .css-1j9kmqg-MuiDataGrid-toolbarContainer > button {
   color: rgba(0, 0, 0, 0.87);
   padding-left: 25px;
@@ -16,9 +6,6 @@
   min-height: 70vh !important;
 }
 
-/* .header {
-  background-color: #38b49270;
-} */
 .MuiDataGrid-columnHeaders {
   background-color: #38b49270;
 }

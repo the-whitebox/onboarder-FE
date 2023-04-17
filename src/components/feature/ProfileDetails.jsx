@@ -2,7 +2,6 @@ import * as React from "react";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Grid from "@mui/system/Unstable_Grid";
-import "../../style/General.css";
 import { useNavigate } from "react-router-dom";
 import styled from "@mui/system/styled";
 import GlobalContext from "../../context/GlobalContext";
@@ -15,7 +14,7 @@ function ProfileDetails() {
   const { userInfo } = React.useContext(GlobalContext);
   const Navigate = useNavigate();
   const routeToNextPage = () => {
-    Navigate("/personal_details");
+    Navigate("/personal/details");
   };
   return (
     <>

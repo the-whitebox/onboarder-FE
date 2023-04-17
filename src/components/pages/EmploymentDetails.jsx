@@ -1,36 +1,29 @@
 import * as React from "react";
 import Box from "@mui/material/Box";
+import { MenuItem } from "@mui/material";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import { useTheme } from "@mui/material/styles";
-import OutlinedInput from "@mui/material/OutlinedInput";
-import MenuItem from "@mui/material/MenuItem";
 import EmploymentType from "../feature/EmploymentType";
 import PayRate from "../feature/PayRate";
 import { Avatar } from "@mui/material";
 import Grid from "@mui/material/Grid";
-import CssBaseline from "@mui/material/CssBaseline";
-import MaxPilotLogo from "../../assets/images/maxpilot-logo-w.png";
 import dayjs from "dayjs";
 import Stack from "@mui/material/Stack";
 import TextField from "@mui/material/TextField";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { DesktopDatePicker } from "@mui/x-date-pickers/DesktopDatePicker";
-import "../../style/EmploymentDetails.css";
 import { TbMessageCircle } from "react-icons/tb";
 import Link from "@mui/material/Link";
-import { createTheme, ThemeProvider } from "@mui/material/styles";
+import { ThemeProvider } from "@mui/material/styles";
 import Modal from "@mui/material/Modal";
 import AddLeaveEntitlementModalBody from "../feature/Addleaveentitlement";
 import AddLocationModalBody from "../feature/Addlocation";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
-import { useForm } from "react-hook-form";
-import { FormHelperText } from "@mui/material";
-
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -53,23 +46,21 @@ const names = [
 
 export default function EmploymentDetails() {
   const [state, setState] = React.useState({ data: "" });
-  const [selectedValue, setSelectedValue] = useState('');
+  const [selectedValue, setSelectedValue] = useState("");
   const [access, setAccess] = React.useState("");
   // const [payRate, setPayRate] = useState("");
 
   function handleEmploymentData(employment) {
     // handle employment data here
 
-    console.log("Employment from employment details: ",employment);
+    console.log("Employment from employment details: ", employment);
   }
 
-  
   const [open, setOpen] = React.useState(false);
 
   const [error, setError] = React.useState(null);
   // const [accessError, setAccessError] = useState("");
   // const [payRateError, setPayRateError] = useState("");
- 
 
   // const accessValidation = () => {
   //   if (access == "") {
@@ -82,8 +73,6 @@ export default function EmploymentDetails() {
   //     setPayRateError("Please enter pay rates");
   //   } else setPayRateError("");
   // };
-
-  
 
   const handleOpen = () => {
     setOpen(true);
@@ -131,12 +120,12 @@ export default function EmploymentDetails() {
   const handleSubmit = (event) => {
     event.preventDefault();
     console.log(selectedValue); // do something with the selected value
-  }
+  };
 
   const navigate = useNavigate();
 
   const toEmployment = (e) => {
-    if (access !== "" && handleEmploymentData !== ""  ) {
+    if (access !== "" && handleEmploymentData !== "") {
       console.log("Data Found");
       setError(false);
       console.log(access);
@@ -173,32 +162,6 @@ export default function EmploymentDetails() {
           <AddLocationModalBody />
         </Modal>
         <Grid sx={{ display: "flex" }}>
-          <CssBaseline />
-          <Grid
-            className="max-width"
-            item
-            xs={false}
-            sx={{
-              minHeight: "100vh",
-              backgroundColor: "#38b492",
-              display: "flex",
-              flexDirection: "column",
-              justifyContent: "start",
-              alignItems: "center",
-            }}
-          >
-            <Grid>
-              <Avatar
-                src={MaxPilotLogo}
-                aria-label="Busy Man"
-                sx={{
-                  height: "16vh",
-                  width: "230px",
-                }}
-              />
-            </Grid>
-          </Grid>
-
           <Grid>
             <Box
               sx={{
@@ -232,7 +195,7 @@ export default function EmploymentDetails() {
                 onClick={() => {
                   // handleSubmit();
                   // accessValidation();
-                  toEmployment();          
+                  toEmployment();
                 }}
               >
                 Save
@@ -245,7 +208,6 @@ export default function EmploymentDetails() {
             </Box>
             <Box>
               <Button
-                className="btn-font-padding"
                 variant="outlined"
                 sx={{
                   ml: 2,
@@ -269,7 +231,7 @@ export default function EmploymentDetails() {
                 Leave Entitlements
               </Button>
             </Box>
-            <hr className="line" />
+            <hr />
             <Box sx={{ pt: 2, pb: 2, pl: 2 }}>
               <Typography variant="h6" fontWeight="Bold">
                 Work Details
@@ -314,7 +276,7 @@ export default function EmploymentDetails() {
                       {name}
                     </MenuItem>
                   ))}
-                </Select> 
+                </Select>
               </FormControl>
             </Box>
             {/* <Box sx={{ ml: 24, mt: 1 }}>
@@ -395,7 +357,11 @@ export default function EmploymentDetails() {
               <Typography inline variant="h6" fontWeight="Bold">
                 Pay Details
               </Typography>
-              <EmploymentType employmentData={handleEmploymentData} value={selectedValue} onChange={setSelectedValue}/>
+              <EmploymentType
+                employmentData={handleEmploymentData}
+                value={selectedValue}
+                onChange={setSelectedValue}
+              />
             </Box>
             <Box
               sx={{
@@ -405,7 +371,6 @@ export default function EmploymentDetails() {
               }}
             >
               <PayRate />
-             
               <Grid
                 container
                 sx={{
