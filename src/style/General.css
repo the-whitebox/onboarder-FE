@@ -70,6 +70,10 @@ ul {
   margin-bottom: 5px;
 }
 
+.input-fields:focus {
+  background: rgb(247, 247, 247);
+}
+
 .input-fields-2 {
   border-radius: 10px;
   border: 1px solid gray;
@@ -156,7 +160,7 @@ ul {
 
 @media screen and (max-width: 1400px) {
   .input-fields {
-    width: 250px;
+    width: 350px;
   }
 
   .input-fields-3 {

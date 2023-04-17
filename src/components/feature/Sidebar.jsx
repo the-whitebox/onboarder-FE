@@ -52,7 +52,7 @@ const Sidebar = ({ children }) => {
       icon: <RiUserLocationLine />,
     },
     {
-      path: "/add-people",
+      path: "/team-members",
       name: "Add People",
       icon: <HiUserAdd />,
     },

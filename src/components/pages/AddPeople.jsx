@@ -1,5 +1,5 @@
-import React from "react";
-import { Grid, Typography, Box } from "@mui/material";
+import React, { useEffect, useState } from "react";
+import { Grid, Typography, Box, Modal } from "@mui/material";
 import PeopleAltIcon from "@mui/icons-material/PeopleAlt";
 import Button from "@mui/material/Button";
 import Menu from "@mui/material/Menu";
@@ -11,18 +11,86 @@ import { FaUserPlus } from "react-icons/fa";
 import { CgUserList } from "react-icons/cg";
 import { MdImportExport, MdCloudUpload } from "react-icons/md";
 import TeamMembersTable from "../feature/TeamMembersTable";
+import AddTeammemberModalBody from "../feature/AddTeammember";
+import GlobalContext from "../../context/GlobalContext";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
+const modalWrapper = {
+  overflow: "auto",
+  display: "flex",
+};
 
 function AddPeople() {
+  const Navigate = useNavigate();
+  const { userInfo, setUserInfo } = React.useContext(GlobalContext);
+  const token = localStorage.getItem("token");
+  const userId = localStorage.getItem("userId");
+  const url = process.env.REACT_APP_BASE_URL;
+
+  useEffect(() => {
+    const getLoggedInUserDetails = async () => {
+      await axios
+        .get(`${url}/people/${userId}/`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        })
+        .then((response) => {
+          setUserInfo(response.data);
+        })
+        .catch((error) => console.log("Error", error));
+    };
+    getLoggedInUserDetails();
+  }, []);
+
+  const getBusiness = async () => {
+    await axios
+      .get(`${url}/people/?business_id=${userInfo?.business.id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+      })
+      .then((response) => {
+        console.log(response);
+      })
+      .catch((err) => console.log(err));
+  };
+
+  useEffect(() => {
+    if (userInfo) {
+      getBusiness();
+    }
+  }, [userInfo]);
+
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
-  const handleClick = (event) => {
-    setAnchorEl(event.currentTarget);
+  const handleClick = (event) => setAnchorEl(event.currentTarget);
+  const handleClose = () => setAnchorEl(null);
+  const [openAddTeam, setOpenAddTeam] = React.useState(false);
+  const handleOpenAddTeam = () => setOpenAddTeam(true);
+  const handleCloseAddTeam = () => setOpenAddTeam(false);
+
+  const routeToManuallyAdd = () => {
+    Navigate("/team-members/add-people-manually");
+    handleClose();
   };
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
+
   return (
     <>
+      <Modal
+        open={openAddTeam}
+        onClose={handleCloseAddTeam}
+        sx={modalWrapper}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <AddTeammemberModalBody
+          handleCloseAddTeam={handleCloseAddTeam}
+          getBusiness={getBusiness}
+        />
+      </Modal>
       <Grid container sx={{ overflowY: "scroll", height: "91vh", pb: 10 }}>
         <Grid item xs={12}>
           <Box
@@ -81,14 +149,14 @@ function AddPeople() {
                 transformOrigin={{ horizontal: "right", vertical: "top" }}
                 anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
               >
-                <Box sx={{ mt: 2, mb: 10 }}>
+                <Box sx={{ mt: 2, mb: 2 }}>
                   <MenuItem onClick={handleClose}>
                     <ListItemIcon>
                       <FaUserPlus
                         style={{ color: "#2BB491", fontSize: "22px" }}
                       />
                     </ListItemIcon>
-                    <Box>
+                    <Box onClick={handleOpenAddTeam}>
                       <Typography sx={{ color: "#555555", fontSize: "15px" }}>
                         Add New Team Member
                       </Typography>
@@ -98,7 +166,7 @@ function AddPeople() {
                     </Box>
                   </MenuItem>
                   <Divider />
-                  <MenuItem onClick={handleClose} sx={{ mt: 2 }}>
+                  <MenuItem onClick={routeToManuallyAdd} sx={{ mt: 2 }}>
                     <ListItemIcon>
                       <CgUserList
                         style={{ color: "black", fontSize: "22px" }}
