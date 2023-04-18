@@ -104,7 +104,7 @@ export default function SignInSide() {
             sm: "100vh",
             xs: "100vh",
           },
-          backgroundColor: "#2bb491",
+          backgroundColor: "#2BB491",
           display: "flex",
           justifyContent: "center",
           alignItems: "center",
@@ -124,7 +124,7 @@ export default function SignInSide() {
           xs={12}
           sm={12}
           md={6}
-          lg={4}
+          lg={6}
           xl={4}
         >
           <Box sx={{ display: "flex", alignItems: "center" }}>
@@ -165,7 +165,7 @@ export default function SignInSide() {
                 padding: "0px",
                 margin: "0px",
                 borderRadius: 0,
-                mb: 2,
+                mb: 1,
                 mt: 1,
               }}
             />
@@ -202,7 +202,7 @@ export default function SignInSide() {
                 display: "flex",
                 alignItems: "center",
                 color: "white",
-                mt: 2,
+                mt: { xl: 2, lg: 1, xs: 1 },
               }}
             >
               <Checkbox sx={{ color: "white" }} size="small" />
@@ -215,9 +215,9 @@ export default function SignInSide() {
               className="all-white-btns"
               sx={{
                 color: "#2bb491",
-                padding: "8px 30px",
+                padding: "8px 40px",
                 borderRadius: "10px",
-                mt: 2,
+                mt: { xl: 2, lg: 1, xs: 1 },
                 textTransform: "none",
               }}
               onClick={handleSubmit}
@@ -229,17 +229,29 @@ export default function SignInSide() {
               )}
             </Button>
             <Box
-              sx={{ background: "white", width: "220px", height: "1px", mt: 4 }}
-            ></Box>
+              sx={{
+                background: "white",
+                width: "220px",
+                height: "1px",
+                mt: { xl: 4, lg: 3, xs: 1 },
+              }}
+            />
             <Box
-              sx={{ mt: 1, color: "white", cursor: "pointer" }}
+              sx={{
+                mt: 1,
+                color: "white",
+                cursor: "pointer",
+                fontSize: "15px",
+              }}
               onClick={handleOpen}
             >
               Forgot <sapn style={{ fontWeight: "bold" }}>MAX</sapn>pilot ID or
               password?
             </Box>
             <Link to="/step1" className="aTag-1">
-              <h4>Sign Up with New ID</h4>
+              <Typography sx={{ fontSize: "15px", fontWeight: 600, mt: 2 }}>
+                Sign Up with New ID
+              </Typography>
             </Link>
           </Box>
           <Box
@@ -249,7 +261,14 @@ export default function SignInSide() {
               alignItems: "center",
             }}
           >
-            <Box sx={{ display: "flex", alignItems: "center", color: "white" }}>
+            <Box
+              sx={{
+                display: "flex",
+                alignItems: "center",
+                color: "white",
+                mb: 2,
+              }}
+            >
               <p>Need Help</p>{" "}
               <HelpOutlineIcon sx={{ ml: "5px", fontSize: "20px" }} />
             </Box>

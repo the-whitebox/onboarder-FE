@@ -18,6 +18,7 @@ import EmploymentDetails from "../components/pages/EmploymentDetails";
 import Dashboard from "../components/pages/Dashboard";
 import Sidebar from "../components/feature/Sidebar";
 import AddPeople from "../components/pages/AddPeople";
+import AddPeopleManually from "../components/pages/AddPeopleManually";
 
 function Routing() {
   const token = localStorage.getItem("token");
@@ -34,103 +35,113 @@ function Routing() {
         <Route
           path="/step2"
           element={
-            <PrivateRoute>
-              <Step2 />
-            </PrivateRoute>
+            // <PrivateRoute>
+            <Step2 />
+            // </PrivateRoute>
           }
         />
         <Route
           path="/step3-1"
           element={
-            <PrivateRoute>
-              <Step3_1 />
-            </PrivateRoute>
+            // <PrivateRoute>
+            <Step3_1 />
+            // </PrivateRoute>
           }
         />
         <Route
           path="/step3-2"
           element={
-            <PrivateRoute>
-              <Step3_2 />
-            </PrivateRoute>
+            // <PrivateRoute>
+            <Step3_2 />
+            // </PrivateRoute>
           }
         />
         <Route
           path="/step3-3"
           element={
-            <PrivateRoute>
-              <Step3_3 />
-            </PrivateRoute>
+            // <PrivateRoute>
+            <Step3_3 />
+            // </PrivateRoute>
           }
         />
         <Route element={<WithVerticalMenu />}>
           <Route
             path="/step3-4"
             element={
-              <PrivateRoute>
-                <Step3_4 />
-              </PrivateRoute>
+              // <PrivateRoute>
+              <Step3_4 />
+              // </PrivateRoute>
             }
           />
           <Route
             path="/employment"
             element={
-              <PrivateRoute>
-                <Employment />
-              </PrivateRoute>
+              // <PrivateRoute>
+              <Employment />
+              // </PrivateRoute>
             }
           />
           <Route
             path="/employment/details"
             element={
-              <PrivateRoute>
-                <EmploymentDetails />
-              </PrivateRoute>
+              // <PrivateRoute>
+              <EmploymentDetails />
+              // </PrivateRoute>
             }
           />
           <Route
             path="/profile"
             element={
-              <PrivateRoute>
-                <Profile />
-              </PrivateRoute>
+              // <PrivateRoute>
+              <Profile />
+              // </PrivateRoute>
             }
           />
           <Route
             path="/personal/details"
             element={
-              <PrivateRoute>
-                <PersonalDetails />
-              </PrivateRoute>
+              // <PrivateRoute>
+              <PersonalDetails />
+              // </PrivateRoute>
             }
           />
         </Route>
         <Route
           path="/people"
           element={
-            <PrivateRoute>
-              <People />
-            </PrivateRoute>
+            // <PrivateRoute>
+            <People />
+            // </PrivateRoute>
           }
         />
         <Route
           path="/dashboard"
           element={
-            <PrivateRoute>
-              <Sidebar>
-                <Dashboard />
-              </Sidebar>
-            </PrivateRoute>
+            // <PrivateRoute>
+            <Sidebar>
+              <Dashboard />
+            </Sidebar>
+            // </PrivateRoute>
           }
         />
         <Route
-          path="/add-people"
+          path="/team-members"
           element={
-            <PrivateRoute>
-              <Sidebar>
-                <AddPeople />
-              </Sidebar>
-            </PrivateRoute>
+            // <PrivateRoute>
+            <Sidebar>
+              <AddPeople />
+            </Sidebar>
+            // </PrivateRoute>
+          }
+        />
+        <Route
+          path="/team-members/add-people-manually"
+          element={
+            // <PrivateRoute>
+            <Sidebar>
+              <AddPeopleManually />
+            </Sidebar>
+            // </PrivateRoute>
           }
         />
         <Route
