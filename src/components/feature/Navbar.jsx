@@ -39,7 +39,7 @@ export default function Navbar() {
 
   return (
     <AppBar
-      className="navbar"
+      id="navbar"
       position="fixed"
       sx={{
         width: "100%",
@@ -120,8 +120,7 @@ export default function Navbar() {
                   mt: "30px",
                   borderRadius: "11px",
                   filter: "drop-shadow(0px 6px 3px rgba(21,34,50,0.08 ))",
-                  width: "320px",
-                  px: 2,
+                  width: { md: "350px", xs: "300px" },
                 },
               }}
               transformOrigin={{ horizontal: "right", vertical: "top" }}
@@ -139,12 +138,12 @@ export default function Navbar() {
               >
                 Manage Profile
               </Typography>
-              <Divider />
+              <Divider sx={{ mx: 2 }} />
               <Box sx={{ mt: 2, mb: 10 }}>
-                <Typography sx={{ color: "#707070", ml: 2 }}>
+                <Typography sx={{ color: "#707070", ml: 2, px: 5 }}>
                   {userInfo?.first_name} {userInfo?.last_name}
                 </Typography>
-                <MenuItem onClick={handleClose}>
+                <MenuItem onClick={handleClose} sx={{ px: 5 }}>
                   <ListItemIcon>
                     <TextSnippetOutlinedIcon sx={{ color: "black" }} />
                   </ListItemIcon>
@@ -157,10 +156,10 @@ export default function Navbar() {
                     </Typography>
                   </Box>
                 </MenuItem>
-                <Typography sx={{ color: "#707070", mt: 3, ml: 2 }}>
+                <Typography sx={{ color: "#707070", mt: 3, ml: 5 }}>
                   Business Name
                 </Typography>
-                <MenuItem onClick={handleClose}>
+                <MenuItem onClick={handleClose} sx={{ px: 5 }}>
                   <ListItemIcon>
                     <Person2Icon fontSize="small" sx={{ color: "black" }} />
                   </ListItemIcon>
@@ -168,7 +167,7 @@ export default function Navbar() {
                     Profile
                   </Typography>
                 </MenuItem>
-                <MenuItem onClick={handleClose}>
+                <MenuItem onClick={handleClose} sx={{ px: 5 }}>
                   <ListItemIcon>
                     <CorporateFareIcon
                       fontSize="small"
@@ -179,7 +178,7 @@ export default function Navbar() {
                     Business
                   </Typography>
                 </MenuItem>
-                <MenuItem onClick={handleClose}>
+                <MenuItem onClick={handleClose} sx={{ px: 5 }}>
                   <ListItemIcon>
                     <CorporateFareIcon
                       fontSize="small"
@@ -191,7 +190,7 @@ export default function Navbar() {
                   </Typography>
                 </MenuItem>
               </Box>
-              <Divider />
+              <Divider sx={{ mx: 2 }} />
               <Box sx={{ display: "flex", justifyContent: "center" }}>
                 <Button
                   variant="contained"

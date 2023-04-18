@@ -142,6 +142,7 @@ function AddPeopleManually() {
                       p: "5px 15px 5px 15px",
                       background: "none",
                     },
+                    "& .MuiSelect-icon": { right: "5px" },
                     borderRadius: "25px",
                     border: "none !important",
                     outline: "none !important",

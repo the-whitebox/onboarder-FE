@@ -43,9 +43,9 @@ const style = {
   width: "auto",
   height: "auto",
   position: "absolute",
-  top: "80%",
+  top: "5%",
   left: "50%",
-  transform: "translate(-50%, -50%)",
+  transform: "translate(-50%, 0%)",
   bgcolor: "background.paper",
   borderRadius: "8px ",
   boxShadow: 24,
@@ -285,7 +285,11 @@ export default function Addteammember(props) {
                 variant="standard"
                 disableUnderline
                 sx={{
-                  p: "5px 10px 2px 10px",
+                  "& .MuiSelect-select": {
+                    p: "5px 15px 5px 15px",
+                    background: "none",
+                  },
+                  "& .MuiSelect-icon": { right: "5px" },
                   borderRadius: "25px",
                   border: "none !important",
                   outline: "none !important",
@@ -324,7 +328,11 @@ export default function Addteammember(props) {
                 variant="standard"
                 disableUnderline
                 sx={{
-                  p: "5px 10px 2px 10px",
+                  "& .MuiSelect-select": {
+                    p: "5px 15px 5px 15px",
+                    background: "none",
+                  },
+                  "& .MuiSelect-icon": { right: "5px" },
                   borderRadius: "25px",
                   border: "none !important",
                   outline: "none !important",
@@ -429,7 +437,11 @@ export default function Addteammember(props) {
                 variant="standard"
                 disableUnderline
                 sx={{
-                  p: "5px 10px 2px 10px",
+                  "& .MuiSelect-select": {
+                    p: "5px 15px 5px 15px",
+                    background: "none",
+                  },
+                  "& .MuiSelect-icon": { right: "5px" },
                   borderRadius: "25px",
                   border: "none !important",
                   outline: "none !important",
@@ -480,7 +492,11 @@ export default function Addteammember(props) {
                 variant="standard"
                 disableUnderline
                 sx={{
-                  p: "5px 10px 2px 10px",
+                  "& .MuiSelect-select": {
+                    p: "5px 15px 5px 15px",
+                    background: "none",
+                  },
+                  "& .MuiSelect-icon": { right: "5px" },
                   borderRadius: "25px",
                   border: "none !important",
                   outline: "none !important",
@@ -516,7 +532,11 @@ export default function Addteammember(props) {
                 variant="standard"
                 disableUnderline
                 sx={{
-                  p: "5px 10px 2px 10px",
+                  "& .MuiSelect-select": {
+                    p: "5px 15px 5px 15px",
+                    background: "none",
+                  },
+                  "& .MuiSelect-icon": { right: "5px" },
                   borderRadius: "25px",
                   border: "none !important",
                   outline: "none !important",
@@ -552,7 +572,11 @@ export default function Addteammember(props) {
                 variant="standard"
                 disableUnderline
                 sx={{
-                  p: "5px 10px 2px 10px",
+                  "& .MuiSelect-select": {
+                    p: "5px 15px 5px 15px",
+                    background: "none",
+                  },
+                  "& .MuiSelect-icon": { right: "5px" },
                   borderRadius: "25px",
                   border: "none !important",
                   outline: "none !important",
@@ -588,7 +612,11 @@ export default function Addteammember(props) {
                 variant="standard"
                 disableUnderline
                 sx={{
-                  p: "5px 10px 2px 10px",
+                  "& .MuiSelect-select": {
+                    p: "5px 15px 5px 15px",
+                    background: "none",
+                  },
+                  "& .MuiSelect-icon": { right: "5px" },
                   borderRadius: "25px",
                   border: "none !important",
                   outline: "none !important",

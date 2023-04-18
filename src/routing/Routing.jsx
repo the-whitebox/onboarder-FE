@@ -10,15 +10,11 @@ import Step3_1 from "../components/pages/Step3-1";
 import Step3_2 from "../components/pages/Step3-2";
 import Step3_3 from "../components/pages/Step3-3";
 import Step3_4 from "../components/pages/Step3-4";
-import People from "../components/pages/People";
-import Profile from "../components/pages/Profile";
-import Employment from "../components/pages/Employment";
-import PersonalDetails from "../components/pages/PersonalDetails";
-import EmploymentDetails from "../components/pages/EmploymentDetails";
 import Dashboard from "../components/pages/Dashboard";
 import Sidebar from "../components/feature/Sidebar";
 import AddPeople from "../components/pages/AddPeople";
 import AddPeopleManually from "../components/pages/AddPeopleManually";
+import PersonalDetails from "../components/pages/PersonalDetails";
 
 function Routing() {
   const token = localStorage.getItem("token");
@@ -73,47 +69,7 @@ function Routing() {
               // </PrivateRoute>
             }
           />
-          <Route
-            path="/employment"
-            element={
-              // <PrivateRoute>
-              <Employment />
-              // </PrivateRoute>
-            }
-          />
-          <Route
-            path="/employment/details"
-            element={
-              // <PrivateRoute>
-              <EmploymentDetails />
-              // </PrivateRoute>
-            }
-          />
-          <Route
-            path="/profile"
-            element={
-              // <PrivateRoute>
-              <Profile />
-              // </PrivateRoute>
-            }
-          />
-          <Route
-            path="/personal/details"
-            element={
-              // <PrivateRoute>
-              <PersonalDetails />
-              // </PrivateRoute>
-            }
-          />
         </Route>
-        <Route
-          path="/people"
-          element={
-            // <PrivateRoute>
-            <People />
-            // </PrivateRoute>
-          }
-        />
         <Route
           path="/dashboard"
           element={
@@ -145,13 +101,23 @@ function Routing() {
           }
         />
         <Route
+          path="/personal/details"
+          element={
+            // <PrivateRoute>
+            <Sidebar>
+              <PersonalDetails />
+            </Sidebar>
+            // </PrivateRoute>
+          }
+        />
+        <Route
           path="*"
           element={
-            <PrivateRoute>
-              <Sidebar>
-                <Dashboard />
-              </Sidebar>
-            </PrivateRoute>
+            // <PrivateRoute>
+            <Sidebar>
+              <Dashboard />
+            </Sidebar>
+            // </PrivateRoute>
           }
         />
 

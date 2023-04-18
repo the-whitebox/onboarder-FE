@@ -10,7 +10,7 @@ import CircularProgress from "@mui/material/CircularProgress";
 import maxpilot from "../../assets/logos/logo.png";
 import users from "../../assets/icons/users.png";
 import GlobalContext from "../../context/GlobalContext";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { useFormik } from "formik";
 import axios from "axios";
@@ -79,10 +79,6 @@ export default function LoginSidebar(props) {
       .catch((error) => console.log("Error", error));
   };
 
-  const goToSignup = () => {
-    Navigate("/step1");
-  };
-
   return (
     <Grid
       container
@@ -94,7 +90,7 @@ export default function LoginSidebar(props) {
           sm: "auto",
           xs: "auto",
         },
-        backgroundColor: "#2bb491",
+        backgroundColor: "#2BB491",
         borderRadius: "0px 30px 30px 0px",
         display: "flex",
         justifyContent: "center",
@@ -110,7 +106,7 @@ export default function LoginSidebar(props) {
           alignItems: "center",
           height: "100%",
           pt: { xl: 10, lg: 2, xs: 2 },
-          pb: { xl: 4, lg: 2, xs: 2 },
+          pb: { xl: 4, lg: 1, xs: 2 },
         }}
         xs={12}
         sm={12}
@@ -155,7 +151,7 @@ export default function LoginSidebar(props) {
           />
           <Box sx={{ display: "flex", flexDirection: "column" }}>
             <input
-              className="input-fields"
+              className="input-fields-4"
               placeholder="Enter your email address"
               type="text"
               name="email"
@@ -169,7 +165,7 @@ export default function LoginSidebar(props) {
           </Box>
           <Box sx={{ display: "flex", flexDirection: "column" }}>
             <input
-              className="input-fields"
+              className="input-fields-4"
               placeholder="Please enter your password"
               type="password"
               name="password"
@@ -212,17 +208,19 @@ export default function LoginSidebar(props) {
           </Button>
           <Box
             sx={{ background: "white", width: "220px", height: "1px", mt: 4 }}
-          ></Box>
+          />
           <Box
-            sx={{ mt: 1, color: "white", cursor: "pointer" }}
+            sx={{ mt: 1, color: "white", cursor: "pointer", fontSize: "15px" }}
             onClick={props.handleOpen}
           >
             Forgot <sapn style={{ fontWeight: "bold" }}>MAX</sapn>pilot ID or
             password?
           </Box>
-          <Box sx={{ color: "white", cursor: "pointer" }} onClick={goToSignup}>
-            <h4>Sign Up with New ID</h4>
-          </Box>
+          <Link to="/step1" className="aTag-1">
+            <Typography sx={{ fontSize: "15px", fontWeight: 600, mt: 2 }}>
+              Sign Up with New ID
+            </Typography>
+          </Link>
         </Box>
         <Box
           sx={{
@@ -231,7 +229,14 @@ export default function LoginSidebar(props) {
             alignItems: "center",
           }}
         >
-          <Box sx={{ display: "flex", alignItems: "center", color: "white" }}>
+          <Box
+            sx={{
+              display: "flex",
+              alignItems: "center",
+              color: "white",
+              mb: 1,
+            }}
+          >
             <p>Need Help</p>{" "}
             <HelpOutlineIcon sx={{ ml: "5px", fontSize: "20px" }} />
           </Box>

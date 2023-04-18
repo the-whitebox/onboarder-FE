@@ -321,7 +321,8 @@ function TeamMembersTable() {
                 textTransform: "none",
                 ml: 1,
                 borderRadius: "5px",
-                border: "1px solid #a2a2a2",
+                border: "0.10000000149011612px solid rgb(162, 162, 162,0.5)",
+                py: "5px",
               }}
             >
               <BiEdit

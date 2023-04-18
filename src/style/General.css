@@ -40,7 +40,7 @@ ul {
 
 .all-green-btns {
   color: white !important;
-  background-color: #38b492 !important;
+  background-color: #2bb491 !important;
 }
 
 .all-white-btns {
@@ -93,6 +93,17 @@ ul {
   background: transparent;
   padding: 10px 10px 10px 20px;
   margin-top: 10px;
+}
+
+.input-fields-4 {
+  border-radius: 10px;
+  border: none;
+  outline: none;
+  width: 260px;
+  background: white;
+  padding: 20px 10px 20px 20px;
+  margin-top: 10px;
+  margin-bottom: 5px;
 }
 
 .PhoneInputInput {
@@ -191,6 +202,9 @@ ul {
     width: 300px;
   }
   .input-fields-2 {
+    width: 300px;
+  }
+  .input-fields-4 {
     width: 300px;
   }
 }
