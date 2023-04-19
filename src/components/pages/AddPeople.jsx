@@ -106,7 +106,15 @@ function AddPeople() {
       >
         <BulkImportUpdateModal setShowModal1={setShowModal1} />
       </Modal>
-      <Grid container sx={{ overflowY: "scroll", height: "91vh", pb: 10 }}>
+      <Grid
+        container
+        sx={{
+          overflowY: "scroll",
+          maxHeight: "91vh",
+          p: "30px 0px 30px 30px",
+          boxSizing: "border-box",
+        }}
+      >
         <Grid item xs={12}>
           <Box
             sx={{

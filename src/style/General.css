@@ -169,6 +169,27 @@ ul {
   font-weight: bolder;
 }
 
+#employment .typo {
+  background: #fafafa;
+  color: #131523;
+  font-weight: 500;
+  width: 100%;
+  text-align: center;
+  padding: 20px 0px;
+  cursor: pointer;
+  transition: 0.3s all ease;
+}
+
+#employment .typo:hover {
+  background: #2bb491;
+  color: white;
+}
+
+#employment .active {
+  background: #2bb491;
+  color: white;
+}
+
 @media screen and (max-width: 1400px) {
   .input-fields {
     width: 350px;

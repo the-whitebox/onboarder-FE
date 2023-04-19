@@ -32,8 +32,9 @@ function AddPeopleManually() {
         sx={{
           justifyContent: "center",
           overflowY: "scroll",
-          height: "91vh",
-          pb: 10,
+          maxHeight: "91vh",
+          p: "30px 0px 30px 0px",
+          boxSizing: "border-box",
         }}
       >
         <Grid item xl={9} lg={9} md={10} sm={12} xs={12}>

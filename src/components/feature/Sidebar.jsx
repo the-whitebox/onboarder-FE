@@ -32,7 +32,7 @@ const Sidebar = ({ children }) => {
       icon: <FaTh />,
     },
     {
-      path: "/personal/details",
+      path: "/my-account",
       name: "My Account",
       icon: <FaRegUserCircle />,
     },

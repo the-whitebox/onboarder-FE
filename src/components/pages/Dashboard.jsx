@@ -39,8 +39,16 @@ function Dashboard() {
   }, []);
 
   return (
-    <Grid container sx={{ overflowY: "scroll", height: "91vh" }}>
-      <Grid item xl={8} lg={8} md={8} sm={8} xs={12} sx={{ pb: 8 }}>
+    <Grid
+      container
+      sx={{
+        overflowY: "scroll",
+        maxHeight: "91vh",
+        p: "30px 0px 30px 30px",
+        boxSizing: "border-box",
+      }}
+    >
+      <Grid item xl={8} lg={8} md={8} sm={8} xs={12}>
         <Box sx={{ display: "flex", flexDirection: "column", mb: 4 }}>
           <Box sx={{ display: "flex", mb: 2, color: "#2BB491" }}>
             <DashboardCustomizeOutlinedIcon />

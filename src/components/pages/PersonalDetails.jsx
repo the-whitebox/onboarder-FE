@@ -24,8 +24,7 @@ export default function PersonalDetails() {
         container
         sx={{
           overflowY: "scroll",
-          height: "91vh",
-          pb: 10,
+          maxHeight: "91vh",
           boxSizing: "border-box",
         }}
       >
@@ -40,7 +39,8 @@ export default function PersonalDetails() {
             border: "1px solid rgb(0, 0, 0,0.1)",
             borderRadius: "0px 45px 45px 0px",
             pt: 2,
-            pb: 5,
+            pb: 0,
+            boxSizing: "border-box",
           }}
         >
           <ProfileSidebar />
@@ -52,7 +52,7 @@ export default function PersonalDetails() {
           md={9}
           sm={9}
           xs={9}
-          sx={{ pl: 3, boxSizing: "border-box" }}
+          sx={{ p: "30px 0px 20px 30px", boxSizing: "border-box" }}
         >
           <Box sx={{ display: "flex", flexDirection: "column" }}>
             <Typography
@@ -403,7 +403,7 @@ export default function PersonalDetails() {
                   authentication
                 </Typography>
                 <Avatar
-                  src={icon6}
+                  src={icon8}
                   sx={{ width: "25px", height: "25px", borderRadius: 0 }}
                 />
               </Box>
@@ -436,7 +436,7 @@ export default function PersonalDetails() {
                   Kiosk PIN
                 </Typography>
                 <Avatar
-                  src={icon6}
+                  src={icon9}
                   sx={{ width: "25px", height: "25px", borderRadius: 0 }}
                 />
               </Box>

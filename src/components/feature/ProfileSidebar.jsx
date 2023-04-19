@@ -73,9 +73,13 @@ function ProfileSidebar() {
             width: "100%",
           }}
         >
-          <NavLink to="/personal/details">Personal</NavLink>
-          <NavLink to="/employment">Employment</NavLink>
-          <NavLink to="/forms&documents">Forms & Documents</NavLink>
+          <NavLink end to="/my-account">
+            Personal
+          </NavLink>
+          <NavLink to="/my-account/employment/details">Employment</NavLink>
+          <NavLink to="/my-account/forms&documents/details">
+            Forms & Documents
+          </NavLink>
         </Box>
 
         <Typography

@@ -15,6 +15,7 @@ import Sidebar from "../components/feature/Sidebar";
 import AddPeople from "../components/pages/AddPeople";
 import AddPeopleManually from "../components/pages/AddPeopleManually";
 import PersonalDetails from "../components/pages/PersonalDetails";
+import EmploymentDetails from "../components/pages/EmploymentDetails";
 
 function Routing() {
   const token = localStorage.getItem("token");
@@ -101,11 +102,21 @@ function Routing() {
           }
         />
         <Route
-          path="/personal/details"
+          path="/my-account"
           element={
             // <PrivateRoute>
             <Sidebar>
               <PersonalDetails />
+            </Sidebar>
+            // </PrivateRoute>
+          }
+        />
+        <Route
+          path="/my-account/employment/details"
+          element={
+            // <PrivateRoute>
+            <Sidebar>
+              <EmploymentDetails />
             </Sidebar>
             // </PrivateRoute>
           }
