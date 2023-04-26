@@ -17,6 +17,7 @@ import icon from "../../assets/icons/Path 1061.png";
 import icon1 from "../../assets/icons/Group 696.png";
 import icon2 from "../../assets/icons/Group 697.png";
 import DeleteOutlinedIcon from "@mui/icons-material/DeleteOutlined";
+import Setuptask from "../feature/Setuptask";
 
 const rows = [
   { id: 1, name: "Name", email: "Optional", phone: "Optional" },
@@ -390,6 +391,13 @@ function AddPeopleManually() {
             </Grid>
           </Box>
           <Divider sx={{ mt: 3, mb: 2 }} />
+        </Grid>
+        <Grid
+          item
+          xs={12}
+          sx={{ display: "flex", justifyContent: "flex-end", mr: { sm: 2 } }}
+        >
+          <Setuptask />
         </Grid>
       </Grid>
     </>

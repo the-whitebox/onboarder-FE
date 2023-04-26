@@ -43,6 +43,7 @@ export default function Navbar() {
       sx={{
         width: "100%",
         height: "9vh",
+        boxSizing: "border-box",
         px: 3,
         background: "#ffffff",
         color: "black",
@@ -68,7 +69,7 @@ export default function Navbar() {
           <Box
             sx={{ width: "1px", height: "40px", bgcolor: "#707070", ml: 2 }}
           />
-          <Typography sx={{ color: "#707070", ml: 2 }}>
+          <Typography sx={{ color: "#707070", ml: 2, fontSize: "12px" }}>
             Effortless Time Management
           </Typography>
         </Box>
@@ -85,11 +86,12 @@ export default function Navbar() {
             }}
             sx={{
               boxSizing: "border-box",
-              p: "5px 10px 2px 10px",
+              p: "1px 10px 2px 10px",
               display: { md: "block", xs: "none" },
               borderRadius: "25px !important",
               border: "1px solid #2bb491 !important",
               outline: "none !important",
+              height: "30px",
             }}
           />
           <Badge color="error" badgeContent={2} sx={{ mx: 3 }}>
