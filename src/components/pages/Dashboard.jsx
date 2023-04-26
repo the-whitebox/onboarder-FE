@@ -48,7 +48,7 @@ function Dashboard() {
         boxSizing: "border-box",
       }}
     >
-      <Grid item xl={8} lg={8} md={8} sm={8} xs={12}>
+      <Grid item xl={8} lg={8} md={9} sm={12} xs={12}>
         <Box sx={{ display: "flex", flexDirection: "column", mb: 4 }}>
           <Box sx={{ display: "flex", mb: 2, color: "#2BB491" }}>
             <DashboardCustomizeOutlinedIcon />
@@ -420,8 +420,8 @@ function Dashboard() {
         item
         xl={4}
         lg={4}
-        md={4}
-        sm={4}
+        md={3}
+        sm={12}
         xs={12}
         sx={{
           display: "flex",
@@ -431,7 +431,11 @@ function Dashboard() {
       >
         <Avatar
           src={bg_image7}
-          sx={{ width: "363px", height: "438px", borderRadius: 0 }}
+          sx={{
+            width: { lg: "363px", md: "200px", sm: "363px" },
+            height: { lg: "438px", md: "200px", sm: "438px" },
+            borderRadius: 0,
+          }}
         />
       </Grid>
     </Grid>

@@ -118,20 +118,21 @@ export default function Step3_3() {
                 height: "auto",
                 padding: "0px",
                 margin: "0px",
+                borderRadius: 0,
               }}
             />
             <Box
               sx={{
                 display: "flex",
                 alignItems: { md: "center", xs: "flex-end" },
-                flexDirection: { xs: "column", md: "row" },
+                flexDirection: { xs: "column", sm: "row" },
                 justifyContent: "flex-end",
               }}
             >
               <Typography
                 sx={{
                   fontSize: { md: "12px", xs: "10px" },
-                  mr: { md: 2, xs: 0 },
+                  mr: { sm: 2, xs: 0 },
                 }}
               >
                 STEP 3 | COMPLETE YOUR PROFILE
@@ -144,7 +145,7 @@ export default function Step3_3() {
                     background: "#e6f4eb",
                     borderRadius: "100%",
                   }}
-                ></Box>
+                />
                 <Box
                   sx={{
                     width: "20px",
@@ -153,7 +154,7 @@ export default function Step3_3() {
                     borderRadius: "100%",
                     ml: 1,
                   }}
-                ></Box>
+                />
                 <Box
                   sx={{
                     width: "20px",
@@ -162,18 +163,18 @@ export default function Step3_3() {
                     borderRadius: "100%",
                     ml: 1,
                   }}
-                ></Box>
+                />
               </Box>
             </Box>
           </Box>
-          <Box sx={{ background: "gray", width: "77%", height: "1px" }}></Box>
+          <Box sx={{ background: "gray", width: "77%", height: "1px" }} />
         </Grid>
         <Grid
           item
           xl={7}
           lg={9}
           md={9}
-          sm={12}
+          sm={10}
           xs={12}
           sx={{
             display: "flex",
@@ -584,15 +585,26 @@ export default function Step3_3() {
           </Box>
         </Grid>
 
-        <Grid item xl={5} lg={3} md={3} sm={12} xs={12}>
+        <Grid
+          item
+          xl={5}
+          lg={3}
+          md={3}
+          sm={2}
+          xs={12}
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "flex-end",
+          }}
+        >
           <Box
             sx={{
               display: "flex",
-              flexDirection: { md: "column", xs: "row" },
+              flexDirection: { sm: "column", xs: "row" },
               alignItems: "flex-end",
               justifyContent: "center",
-              mt: { xl: 40, lg: 20, xs: 3 },
-              mr: { md: 10, xs: 0 },
+              mr: { lg: 10, md: 5, sm: 1, xs: 0 },
             }}
           >
             <Box
@@ -602,7 +614,7 @@ export default function Step3_3() {
                 background: "#e6f4eb",
                 borderRadius: "100%",
               }}
-            ></Box>
+            />
             <Box
               sx={{
                 width: "20px",
@@ -612,7 +624,7 @@ export default function Step3_3() {
                 mt: 1,
                 ml: { xs: 1, md: 0 },
               }}
-            ></Box>
+            />
             <Box
               sx={{
                 width: "20px",
@@ -622,7 +634,7 @@ export default function Step3_3() {
                 mt: 1,
                 ml: { xs: 1, md: 0 },
               }}
-            ></Box>
+            />
             <Box
               sx={{
                 width: "20px",
@@ -632,7 +644,7 @@ export default function Step3_3() {
                 mt: 1,
                 ml: { xs: 1, md: 0 },
               }}
-            ></Box>
+            />
           </Box>
         </Grid>
         <Grid

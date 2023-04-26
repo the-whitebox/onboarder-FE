@@ -40,7 +40,7 @@ const access = [
   "Advisor",
 ];
 const style = {
-  width: "auto",
+  width: { md: "auto", sm: "550px" },
   height: "auto",
   position: "absolute",
   top: "5%",

@@ -47,6 +47,7 @@ export default function Step2() {
                 height: "auto",
                 padding: "0px",
                 margin: "0px",
+                borderRadius: 0,
               }}
             />
             <Box
@@ -73,7 +74,7 @@ export default function Step2() {
                     background: "#e6f4eb",
                     borderRadius: "100%",
                   }}
-                ></Box>
+                />
                 <Box
                   sx={{
                     width: "20px",
@@ -82,7 +83,7 @@ export default function Step2() {
                     borderRadius: "100%",
                     ml: 1,
                   }}
-                ></Box>
+                />
                 <Box
                   sx={{
                     width: "20px",
@@ -91,20 +92,20 @@ export default function Step2() {
                     borderRadius: "100%",
                     ml: 1,
                   }}
-                ></Box>
+                />
               </Box>
             </Box>
           </Box>
-          <Box sx={{ background: "gray", width: "77%", height: "1px" }}></Box>
+          <Box sx={{ background: "gray", width: "77%", height: "1px" }} />
         </Grid>
 
-        <Grid item xl={8} lg={8} md={8} sm={12} xs={12}>
+        <Grid item xl={8} lg={8} md={8} sm={8} xs={12}>
           <Box
             sx={{
               display: "flex",
               flexDirection: "column",
-              mt: 5,
-              ml: { md: 14, xs: 1 },
+              mt: { md: 5, sm: 2 },
+              ml: { lg: 14, md: 5, xs: 1 },
             }}
           >
             <Typography sx={{ fontWeight: "bold", fontSize: "25px" }}>
@@ -118,7 +119,7 @@ export default function Step2() {
             <Box
               sx={{
                 display: "flex",
-                flexDirection: { md: "row", xs: "column" },
+                flexDirection: { sm: "row", xs: "column" },
                 alignItems: "center",
                 mt: 2,
               }}
@@ -145,7 +146,12 @@ export default function Step2() {
                   }}
                 />
                 <Typography
-                  sx={{ textAlign: "center", fontWeight: "bold", mt: 2 }}
+                  sx={{
+                    textAlign: "center",
+                    fontSize: { sm: "12px", md: "15px" },
+                    fontWeight: "bold",
+                    mt: 2,
+                  }}
                 >
                   Are you a business owner <br />
                   or team manager?
@@ -153,7 +159,11 @@ export default function Step2() {
                 <Button
                   className="all-green-btns"
                   variant="contained"
-                  sx={{ mt: 8, textTransform: "none", borderRadius: "10px" }}
+                  sx={{
+                    mt: { md: 8, sm: 5 },
+                    textTransform: "none",
+                    borderRadius: "10px",
+                  }}
                   onClick={nextpage}
                 >
                   Discover
@@ -172,8 +182,8 @@ export default function Step2() {
                   flexDirection: "column",
                   justifyContent: "center",
                   alignItems: "center",
-                  ml: { md: 2, xs: 0 },
-                  mt: { md: 0, xs: 2 },
+                  ml: { sm: 2, xs: 0 },
+                  mt: { sm: 0, xs: 2 },
                 }}
               >
                 <Avatar
@@ -189,7 +199,12 @@ export default function Step2() {
                   }}
                 />
                 <Typography
-                  sx={{ textAlign: "center", fontWeight: "bold", mt: 2 }}
+                  sx={{
+                    textAlign: "center",
+                    fontSize: { sm: "12px", md: "15px" },
+                    fontWeight: "bold",
+                    mt: 2,
+                  }}
                 >
                   Is your team already using
                   <br />
@@ -198,7 +213,11 @@ export default function Step2() {
                 <Button
                   className="all-green-btns"
                   variant="contained"
-                  sx={{ mt: 8, textTransform: "none", borderRadius: "10px" }}
+                  sx={{
+                    mt: { md: 8, sm: 5 },
+                    textTransform: "none",
+                    borderRadius: "10px",
+                  }}
                 >
                   Join Your Team
                 </Button>
@@ -207,12 +226,12 @@ export default function Step2() {
           </Box>
         </Grid>
 
-        <Grid item xl={4} lg={4} md={4} sm={12} xs={12}>
+        <Grid item xl={4} lg={4} md={4} sm={4} xs={12}>
           <Box
             sx={{
               display: "flex",
               justifyContent: "flex-end",
-              mt: 8,
+              mt: { lg: 8, sm: 4 },
             }}
           >
             <Box
@@ -220,12 +239,19 @@ export default function Step2() {
                 background: "#e6f4eb",
                 display: "flex",
                 alignItems: "center",
-                padding: "20px 20px",
+                boxSizing: "border-box",
+                padding: { lg: "20px", sm: "10px 15px" },
                 borderRadius: "40px 0px 0px 40px",
               }}
             >
               <RecentActorsIcon sx={{ color: "#2bb491" }} />
-              <Typography sx={{ color: "#2bb491", fontSize: "12px", ml: 1 }}>
+              <Typography
+                sx={{
+                  color: "#2bb491",
+                  fontSize: { md: "12px", sm: "10px" },
+                  ml: 1,
+                }}
+              >
                 COMPLETE BY ADDING YOUR PROFILE INFORMATION
               </Typography>
             </Box>
@@ -233,11 +259,11 @@ export default function Step2() {
           <Box
             sx={{
               display: "flex",
-              flexDirection: { md: "column", xs: "row" },
+              flexDirection: { sm: "column" },
               alignItems: "flex-end",
               justifyContent: "center",
-              mt: { xl: 20, lg: 5, xs: 3 },
-              mr: { md: 5, xs: 0 },
+              mt: { xl: 20, sm: 5, xs: 3 },
+              mr: { sm: 5, xs: 0 },
             }}
           >
             <Box
@@ -247,7 +273,7 @@ export default function Step2() {
                 background: "#2bb491",
                 borderRadius: "100%",
               }}
-            ></Box>
+            />
             <Box
               sx={{
                 width: "20px",
@@ -257,7 +283,7 @@ export default function Step2() {
                 mt: 1,
                 ml: { xs: 1, md: 0 },
               }}
-            ></Box>
+            />
             <Box
               sx={{
                 width: "20px",
@@ -267,7 +293,7 @@ export default function Step2() {
                 mt: 1,
                 ml: { xs: 1, md: 0 },
               }}
-            ></Box>
+            />
             <Box
               sx={{
                 width: "20px",
@@ -277,7 +303,7 @@ export default function Step2() {
                 mt: 1,
                 ml: { xs: 1, md: 0 },
               }}
-            ></Box>
+            />
           </Box>
         </Grid>
         <Grid

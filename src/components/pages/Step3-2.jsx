@@ -110,6 +110,7 @@ export default function Step3_2() {
                 height: "auto",
                 padding: "0px",
                 margin: "0px",
+                borderRadius: 0,
               }}
             />
             <Box
@@ -136,7 +137,7 @@ export default function Step3_2() {
                     background: "#e6f4eb",
                     borderRadius: "100%",
                   }}
-                ></Box>
+                />
                 <Box
                   sx={{
                     width: "20px",
@@ -145,7 +146,7 @@ export default function Step3_2() {
                     borderRadius: "100%",
                     ml: 1,
                   }}
-                ></Box>
+                />
                 <Box
                   sx={{
                     width: "20px",
@@ -154,18 +155,18 @@ export default function Step3_2() {
                     borderRadius: "100%",
                     ml: 1,
                   }}
-                ></Box>
+                />
               </Box>
             </Box>
           </Box>
-          <Box sx={{ background: "gray", width: "77%", height: "1px" }}></Box>
+          <Box sx={{ background: "gray", width: "77%", height: "1px" }} />
         </Grid>
         <Grid
           item
           xl={8}
           lg={8}
           md={8}
-          sm={12}
+          sm={11}
           xs={12}
           sx={{
             display: "flex",
@@ -297,8 +298,8 @@ export default function Step3_2() {
                   flexDirection: "column",
                   justifyContent: "center",
                   alignItems: "flex-start",
-                  mt: { xs: 2, md: 0 },
-                  pl: { md: 0, xs: 3 },
+                  mt: { xs: 2, sm: 0 },
+                  pl: { sm: 0, xs: 3 },
                 }}
               >
                 <Typography
@@ -555,7 +556,7 @@ export default function Step3_2() {
                     ) : null}
                   </Box>
                 </Box>
-                <Box sx={{ ml: { md: 2, xs: 0 }, mt: { md: 0, xs: 2 } }}>
+                <Box sx={{ ml: { lg: 2, xs: 0 }, mt: { lg: 0, xs: 2 } }}>
                   <Typography
                     sx={{
                       fontWeight: "bold",
@@ -664,15 +665,27 @@ export default function Step3_2() {
           </Box>
         </Grid>
 
-        <Grid item xl={4} lg={4} md={4} sm={12} xs={12}>
+        <Grid
+          item
+          xl={4}
+          lg={4}
+          md={4}
+          sm={1}
+          xs={12}
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "flex-end",
+          }}
+        >
           <Box
             sx={{
               display: "flex",
-              flexDirection: { md: "column", xs: "row" },
+              flexDirection: { sm: "column", xs: "row" },
               alignItems: "flex-end",
               justifyContent: "center",
-              mt: { xl: 25, lg: 20, xs: 3 },
-              mr: { md: 10, xs: 0 },
+              // mt: { xl: 25, lg: 20, sm: 10, xs: 3 },
+              mr: { lg: 10, md: 5, sm: 1, xs: 0 },
             }}
           >
             <Box

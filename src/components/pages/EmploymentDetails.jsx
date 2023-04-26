@@ -20,10 +20,10 @@ function EmploymentDetails() {
         <Grid
           item
           xl={3}
-          lg={3}
-          md={3}
-          sm={3}
-          xs={3}
+          lg={2.5}
+          md={2.5}
+          sm={2.5}
+          xs={2.5}
           sx={{
             border: "1px solid rgb(0, 0, 0,0.1)",
             borderRadius: "0px 45px 45px 0px",
@@ -37,11 +37,14 @@ function EmploymentDetails() {
         <Grid
           item
           xl={9}
-          lg={9}
-          md={9}
-          sm={9}
-          xs={9}
-          sx={{ p: "30px 30px 20px 30px", boxSizing: "border-box" }}
+          lg={9.5}
+          md={9.5}
+          sm={9.5}
+          xs={9.5}
+          sx={{
+            p: { md: "30px 30px 20px 30px", sm: "30px 10px 20px 10px" },
+            boxSizing: "border-box",
+          }}
         >
           <Box
             sx={{

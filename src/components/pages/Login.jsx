@@ -97,7 +97,7 @@ export default function SignInSide() {
       <Grid
         container
         sx={{
-          height: {
+          minHeight: {
             xl: "100vh",
             lg: "100vh",
             md: "100vh",
@@ -117,7 +117,7 @@ export default function SignInSide() {
             flexDirection: "column",
             justifyContent: "space-between",
             alignItems: "center",
-            height: "100%",
+            minHeight: "100vh",
             pt: { xl: 15, lg: 2, xs: 2 },
             pb: { xl: 4, lg: 2, xs: 2 },
           }}
@@ -143,7 +143,13 @@ export default function SignInSide() {
             <Box
               sx={{ background: "white", width: "1px", height: "60px" }}
             ></Box>
-            <Typography sx={{ color: "white", ml: 2 }}>
+            <Typography
+              sx={{
+                color: "white",
+                ml: 2,
+                fontSize: { xl: "24px", sm: "15px" },
+              }}
+            >
               Effortless Time Management
             </Typography>
           </Box>
@@ -160,8 +166,8 @@ export default function SignInSide() {
               src={users}
               aria-label="Busy Man"
               sx={{
-                width: "60px",
-                height: "60px",
+                width: "65px",
+                height: "65px",
                 padding: "0px",
                 margin: "0px",
                 borderRadius: 0,

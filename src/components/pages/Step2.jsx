@@ -32,14 +32,14 @@ export default function Step2() {
         <ForgotPassword handleClose={handleClose} />
       </Modal>
       <Grid container sx={{ pb: { xs: 1, md: 0 } }}>
-        <Grid item xl={3} lg={3} md={6} sm={12} xs={12}>
+        <Grid item xl={3} lg={3} md={4} sm={12} xs={12}>
           <LoginSidebar handleOpen={handleOpen} />
         </Grid>
         <Grid
           item
           xl={9}
           lg={9}
-          md={6}
+          md={8}
           sm={12}
           xs={12}
           sx={{

@@ -83,7 +83,7 @@ export default function LoginSidebar(props) {
     <Grid
       container
       sx={{
-        height: {
+        minHeight: {
           xl: "100vh",
           lg: "100vh",
           md: "100vh",
@@ -104,7 +104,7 @@ export default function LoginSidebar(props) {
           flexDirection: "column",
           justifyContent: "space-between",
           alignItems: "center",
-          height: "100%",
+          minHeight: "100vh",
           pt: { xl: 10, lg: 2, xs: 2 },
           pb: { xl: 4, lg: 1, xs: 2 },
         }}

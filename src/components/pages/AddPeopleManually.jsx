@@ -33,7 +33,7 @@ function AddPeopleManually() {
           justifyContent: "center",
           overflowY: "scroll",
           maxHeight: "91vh",
-          p: "30px 0px 30px 0px",
+          p: "30px 10px 30px 10px",
           boxSizing: "border-box",
         }}
       >

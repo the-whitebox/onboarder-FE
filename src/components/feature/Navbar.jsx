@@ -1,5 +1,4 @@
 import * as React from "react";
-import "../../style/Navbar.css";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
@@ -85,8 +84,12 @@ export default function Navbar() {
               disableUnderline: true,
             }}
             sx={{
+              boxSizing: "border-box",
               p: "5px 10px 2px 10px",
               display: { md: "block", xs: "none" },
+              borderRadius: "25px !important",
+              border: "1px solid #2bb491 !important",
+              outline: "none !important",
             }}
           />
           <Badge color="error" badgeContent={2} sx={{ mx: 3 }}>
