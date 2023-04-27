@@ -171,7 +171,7 @@ export default function SignInSide() {
                 padding: "0px",
                 margin: "0px",
                 borderRadius: 0,
-                mb: 1,
+                mb: { xl: 3, sm: 1 },
                 mt: 1,
               }}
             />
@@ -255,7 +255,9 @@ export default function SignInSide() {
               password?
             </Box>
             <Link to="/step1" className="aTag-1">
-              <Typography sx={{ fontSize: "15px", fontWeight: 600, mt: 2 }}>
+              <Typography
+                sx={{ fontSize: "15px", fontWeight: 600, mt: { xl: 4, sm: 2 } }}
+              >
                 Sign Up with New ID
               </Typography>
             </Link>
@@ -272,7 +274,7 @@ export default function SignInSide() {
                 display: "flex",
                 alignItems: "center",
                 color: "white",
-                mb: 2,
+                mb: { xl: 5, sm: 1 },
               }}
             >
               <p>Need Help</p>{" "}

@@ -9,7 +9,7 @@ const style = {
   width: { lg: "600px", sm: "500px", xs: "300px" },
   height: "auto",
   position: "absolute",
-  top: "5%",
+  top: { xl: "20%", sm: "5%" },
   left: "50%",
   transform: "translate(-50%, 0%)",
   bgcolor: "background.paper",

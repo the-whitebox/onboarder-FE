@@ -121,7 +121,7 @@ export default function Signup() {
                   background: "#2bb491",
                   borderRadius: "100%",
                 }}
-              ></Box>
+              />
               <Box
                 sx={{
                   width: "20px",
@@ -130,7 +130,7 @@ export default function Signup() {
                   borderRadius: "100%",
                   ml: 1,
                 }}
-              ></Box>
+              />
               <Box
                 sx={{
                   width: "20px",
@@ -139,7 +139,7 @@ export default function Signup() {
                   borderRadius: "100%",
                   ml: 1,
                 }}
-              ></Box>
+              />
             </Box>
           </Box>
 
@@ -149,7 +149,7 @@ export default function Signup() {
               flexDirection: "column",
               alignItems: "center",
               justifyContent: "center",
-              mt: { xl: 20, lg: 5, xs: 5 },
+              mt: { xl: 30, lg: 5, xs: 5 },
             }}
           >
             <Box

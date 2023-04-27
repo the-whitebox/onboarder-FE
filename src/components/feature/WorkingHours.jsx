@@ -27,7 +27,7 @@ export default function WorkingHours() {
             borderRadius: "13px",
             py: 2,
             px: 3,
-            mt: { md: 5, xs: 2 },
+            mt: { xl: 10, sm: 3 },
             width: "80%",
           }}
         >
@@ -53,7 +53,7 @@ export default function WorkingHours() {
             display: "flex",
             justifyContent: "space-between",
             alignItems: "center",
-            mt: 3,
+            mt: { sm: 3, xl: 5 },
             width: "100%",
           }}
         >
@@ -104,13 +104,15 @@ export default function WorkingHours() {
             <MenuItem>Select</MenuItem>
           </Select>
         </Box>
-        <Divider sx={{ mt: 3, width: "100%", boxSizing: "border-box" }} />
+        <Divider
+          sx={{ mt: { sm: 3, xl: 5 }, width: "100%", boxSizing: "border-box" }}
+        />
         <Box
           sx={{
             display: "flex",
             justifyContent: "space-between",
             alignItems: "center",
-            mt: 3,
+            mt: { sm: 3, xl: 5 },
             width: "100%",
           }}
         >
@@ -276,13 +278,15 @@ export default function WorkingHours() {
             </Box>
           </Box>
         </Box>
-        <Divider sx={{ mt: 3, width: "100%", boxSizing: "border-box" }} />
+        <Divider
+          sx={{ mt: { xl: 5, sm: 3 }, width: "100%", boxSizing: "border-box" }}
+        />
         <Box
           sx={{
             display: "flex",
             justifyContent: "space-between",
             alignItems: "center",
-            mt: 3,
+            mt: { sm: 3, xl: 5 },
             width: "100%",
           }}
         >

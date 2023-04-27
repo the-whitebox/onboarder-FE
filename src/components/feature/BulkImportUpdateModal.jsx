@@ -9,7 +9,7 @@ const style = {
   width: { md: "80%", xs: "95%" },
   height: "auto",
   position: "absolute",
-  top: "5%",
+  top: { sm: "5%", xl: "12%" },
   left: "50%",
   transform: "translate(-50%, 0%)",
   bgcolor: "background.paper",
@@ -17,6 +17,7 @@ const style = {
   boxShadow: 24,
   py: 3,
   px: 3,
+  pb: { xl: 15, sm: 5 },
   borderRadius: "39px",
   boxSizing: "border-box",
 };
@@ -61,7 +62,9 @@ function BulkImportUpdateModal({ setShowModal1 }) {
                 mr: 1,
               }}
             />
-            <Typography sx={{ color: "#131523", fontWeight: 700 }}>
+            <Typography
+              sx={{ color: "#131523", fontWeight: 700, fontSize: "24px" }}
+            >
               Import or update team members via file
             </Typography>
           </Box>

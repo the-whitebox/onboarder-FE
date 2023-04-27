@@ -310,28 +310,34 @@ export default function Step3_3() {
                     key={idx}
                     variant="outlined"
                     sx={{
-                      borderRadius: "8px",
+                      borderRadius: "15px",
                       border: "1px solid #38b492",
                       bgcolor: "background.body",
                       boxShadow: "sm",
                       display: "flex",
                       flexDirection: "column",
-                      justifyContent: "center",
+                      justifyContent: "flex-start",
                       gap: 1.5,
-                      p: 2,
-                      width: { md: "180px", xs: "100%" },
-                      height: "150px",
+                      px: 2,
+                      width: { sm: "180px", xs: "100%" },
+                      height: { xl: "175px", sm: "150px" },
                     }}
                   >
                     <Radio id={idx} value={value.name} />
                     <Avatar
-                      sx={{ borderRadius: 0, width: "30px", height: "30px" }}
+                      sx={{
+                        borderRadius: 0,
+                        width: "30px",
+                        height: "30px",
+                        mt: 1,
+                        mb: { xl: 2, sm: 1 },
+                      }}
                       src={icons[idx]}
                     />
                     <FormLabel htmlFor={value}>
                       <Typography
                         sx={{
-                          fontSize: "14px",
+                          fontSize: "12px",
                           fontWeight: "bold",
                         }}
                       >
@@ -339,7 +345,7 @@ export default function Step3_3() {
                       </Typography>
                       <Typography
                         sx={{
-                          fontSize: "15px",
+                          fontSize: "11px",
                         }}
                       >
                         {value.des}
@@ -472,7 +478,7 @@ export default function Step3_3() {
                       key={idx}
                       variant="outlined"
                       sx={{
-                        borderRadius: "8px",
+                        borderRadius: "15px",
                         border: "1px solid #2bb491",
                         bgcolor: "background.body",
                         boxShadow: "sm",
@@ -551,7 +557,7 @@ export default function Step3_3() {
                 width: "100%",
                 display: "flex",
                 justifyContent: { md: "flex-end", xs: "center" },
-                mt: { xs: 2, xl: 15 },
+                mt: { xs: 2, sm: 15, xl: 30 },
               }}
             >
               <Link to="/step3-2">

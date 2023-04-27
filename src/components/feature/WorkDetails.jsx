@@ -25,7 +25,7 @@ function WorkDetails() {
             display: "flex",
             justifyContent: "space-between",
             alignItems: "center",
-            mt: 3,
+            mt: { xl: 10, sm: 3 },
             width: "100%",
           }}
         >

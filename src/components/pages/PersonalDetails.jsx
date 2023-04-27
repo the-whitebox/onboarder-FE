@@ -24,17 +24,18 @@ export default function PersonalDetails() {
         container
         sx={{
           overflowY: "scroll",
-          maxHeight: "91vh",
+          maxHeight: { xs: "91vh" },
+          minHeight: { xl: "91vh" },
           boxSizing: "border-box",
         }}
       >
         <Grid
           item
-          xl={3}
-          lg={2.5}
-          md={2.5}
-          sm={2.5}
-          xs={2.5}
+          xl={2}
+          lg={2}
+          md={2}
+          sm={2}
+          xs={2}
           sx={{
             border: "1px solid rgb(0, 0, 0,0.1)",
             borderRadius: "0px 45px 45px 0px",
@@ -47,479 +48,504 @@ export default function PersonalDetails() {
         </Grid>
         <Grid
           item
-          xl={9}
-          lg={9.5}
-          md={9.5}
-          sm={9.5}
-          xs={9.5}
+          xl={10}
+          lg={10}
+          md={10}
+          sm={10}
+          xs={10}
           sx={{
             p: { md: "30px 0px 20px 30px", sm: "30px 10px 20px 10px" },
             boxSizing: "border-box",
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "space-between",
           }}
         >
-          <Box sx={{ display: "flex", flexDirection: "column" }}>
-            <Typography
-              sx={{ color: "#131523", fontSize: "20px", fontWeight: 500 }}
-            >
-              Personal Details
-            </Typography>
-            <Box
-              sx={{
-                bgcolor: "#E6F4EB",
-                borderRadius: "12px",
-                width: { md: "50%", xs: "100%" },
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "space-evenly",
-                mt: 2,
-                py: 2,
-              }}
-            >
+          <Box>
+            <Box sx={{ display: "flex", flexDirection: "column" }}>
+              <Typography
+                sx={{ color: "#131523", fontSize: "20px", fontWeight: 500 }}
+              >
+                Personal Details
+              </Typography>
               <Box
                 sx={{
+                  bgcolor: "#E6F4EB",
+                  borderRadius: "12px",
+                  width: { xl: "40%", md: "50%", xs: "100%" },
                   display: "flex",
-                  flexDirection: "column",
                   alignItems: "center",
-                  cursor: "pointer",
+                  justifyContent: "space-evenly",
+                  mt: 2,
+                  py: 2,
                 }}
               >
-                <Avatar
-                  src={path1131}
-                  sx={{ borderRadius: 0, width: "22px", height: "20px" }}
-                />
-                <Typography sx={{ color: "#555555", fontSize: "9px", mt: 1 }}>
-                  Message
-                </Typography>
-              </Box>
-              <Box
-                sx={{
-                  display: "flex",
-                  flexDirection: "column",
-                  alignItems: "center",
-                  cursor: "pointer",
-                }}
-              >
-                <Avatar
-                  src={path1132}
-                  sx={{ borderRadius: 0, width: "22px", height: "20px" }}
-                />
-                <Typography sx={{ color: "#555555", fontSize: "9px", mt: 1 }}>
-                  Manage Login Issues
-                </Typography>
-              </Box>
-              <Box
-                sx={{
-                  display: "flex",
-                  flexDirection: "column",
-                  alignItems: "center",
-                  cursor: "pointer",
-                }}
-              >
-                <Avatar
-                  src={archive}
-                  sx={{ borderRadius: 0, width: "22px", height: "20px" }}
-                />
-                <Typography sx={{ color: "#F0142F", fontSize: "9px", mt: 1 }}>
-                  Archive Team Member
-                </Typography>
+                <Box
+                  sx={{
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "center",
+                    cursor: "pointer",
+                  }}
+                >
+                  <Avatar
+                    src={path1131}
+                    sx={{ borderRadius: 0, width: "22px", height: "20px" }}
+                  />
+                  <Typography sx={{ color: "#555555", fontSize: "9px", mt: 1 }}>
+                    Message
+                  </Typography>
+                </Box>
+                <Box
+                  sx={{
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "center",
+                    cursor: "pointer",
+                  }}
+                >
+                  <Avatar
+                    src={path1132}
+                    sx={{ borderRadius: 0, width: "22px", height: "20px" }}
+                  />
+                  <Typography sx={{ color: "#555555", fontSize: "9px", mt: 1 }}>
+                    Manage Login Issues
+                  </Typography>
+                </Box>
+                <Box
+                  sx={{
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "center",
+                    cursor: "pointer",
+                  }}
+                >
+                  <Avatar
+                    src={archive}
+                    sx={{ borderRadius: 0, width: "22px", height: "20px" }}
+                  />
+                  <Typography sx={{ color: "#F0142F", fontSize: "9px", mt: 1 }}>
+                    Archive Team Member
+                  </Typography>
+                </Box>
               </Box>
             </Box>
-          </Box>
 
-          <Box sx={{ display: "flex", flexWrap: "wrap", gap: 1, mt: 2 }}>
-            {/* Box 1 */}
             <Box
               sx={{
-                border: "1px solid rgb(33, 213, 155,0.5)",
-                width: { md: "260px", sm: "250px" },
-                height: "130px",
-                borderRadius: "15px",
-                px: 3,
-                py: 3,
-                boxSizing: "border-box",
+                display: "flex",
+                flexWrap: "wrap",
+                rowGap: 2.5,
+                columnGap: 1.5,
+                mt: { xl: 5, sm: 2 },
+                width: { xl: "80%", sm: "100%" },
               }}
             >
+              {/* Box 1 */}
               <Box
                 sx={{
-                  display: "flex",
-                  justifyContent: "space-between",
-                  alignItems: "center",
+                  border: "1px solid rgb(33, 213, 155,0.5)",
+                  width: { md: "260px", sm: "250px" },
+                  height: "130px",
+                  borderRadius: "15px",
+                  px: 3,
+                  py: 3,
+                  boxSizing: "border-box",
                 }}
               >
-                <Typography
-                  sx={{ color: "#131523", fontSize: "18px", fontWeight: 500 }}
+                <Box
+                  sx={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    alignItems: "center",
+                  }}
                 >
-                  Name
+                  <Typography
+                    sx={{ color: "#131523", fontSize: "18px", fontWeight: 500 }}
+                  >
+                    Name
+                  </Typography>
+                  <Avatar
+                    src={icon1}
+                    sx={{ width: "25px", height: "25px", borderRadius: 0 }}
+                  />
+                </Box>
+                <Typography sx={{ fontSize: "12px", color: "#131523", mt: 1 }}>
+                  Steve Holland
                 </Typography>
-                <Avatar
-                  src={icon1}
-                  sx={{ width: "25px", height: "25px", borderRadius: 0 }}
-                />
+                <Box
+                  sx={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    mt: 1,
+                  }}
+                >
+                  <Typography sx={{ color: "#555555", fontSize: "11px" }}>
+                    Preferred name
+                  </Typography>
+                  <Typography sx={{ color: "#38A57D", fontSize: "11px" }}>
+                    Steve
+                  </Typography>
+                </Box>
               </Box>
-              <Typography sx={{ fontSize: "12px", color: "#131523", mt: 1 }}>
-                Steve Holland
-              </Typography>
-              <Box
-                sx={{ display: "flex", justifyContent: "space-between", mt: 1 }}
-              >
-                <Typography sx={{ color: "#555555", fontSize: "11px" }}>
-                  Preferred name
-                </Typography>
-                <Typography sx={{ color: "#38A57D", fontSize: "11px" }}>
-                  Steve
-                </Typography>
-              </Box>
-            </Box>
-            {/* Box 2 */}
-            <Box
-              sx={{
-                border: "1px solid rgb(33, 213, 155,0.5)",
-                width: { md: "260px", sm: "250px" },
-                height: "130px",
-                borderRadius: "15px",
-                px: 3,
-                py: 3,
-                boxSizing: "border-box",
-              }}
-            >
+              {/* Box 2 */}
               <Box
                 sx={{
-                  display: "flex",
-                  justifyContent: "space-between",
-                  alignItems: "center",
+                  border: "1px solid rgb(33, 213, 155,0.5)",
+                  width: { md: "260px", sm: "250px" },
+                  height: "130px",
+                  borderRadius: "15px",
+                  px: 3,
+                  py: 3,
+                  boxSizing: "border-box",
                 }}
               >
-                <Typography
-                  sx={{ color: "#131523", fontSize: "18px", fontWeight: 500 }}
+                <Box
+                  sx={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    alignItems: "center",
+                  }}
                 >
-                  Birthday
+                  <Typography
+                    sx={{ color: "#131523", fontSize: "18px", fontWeight: 500 }}
+                  >
+                    Birthday
+                  </Typography>
+                  <Avatar
+                    src={icon2}
+                    sx={{ width: "25px", height: "25px", borderRadius: 0 }}
+                  />
+                </Box>
+                <Typography sx={{ fontSize: "12px", color: "#131523", mt: 2 }}>
+                  27 July, 1995
                 </Typography>
-                <Avatar
-                  src={icon2}
-                  sx={{ width: "25px", height: "25px", borderRadius: 0 }}
-                />
               </Box>
-              <Typography sx={{ fontSize: "12px", color: "#131523", mt: 2 }}>
-                27 July, 1995
-              </Typography>
-            </Box>
-            {/* Box 3 */}
-            <Box
-              sx={{
-                border: "1px solid rgb(33, 213, 155,0.5)",
-                width: { md: "260px", sm: "250px" },
-                height: "130px",
-                borderRadius: "15px",
-                px: 3,
-                py: 3,
-                boxSizing: "border-box",
-              }}
-            >
+              {/* Box 3 */}
               <Box
                 sx={{
-                  display: "flex",
-                  justifyContent: "space-between",
-                  alignItems: "center",
+                  border: "1px solid rgb(33, 213, 155,0.5)",
+                  width: { md: "260px", sm: "250px" },
+                  height: "130px",
+                  borderRadius: "15px",
+                  px: 3,
+                  py: 3,
+                  boxSizing: "border-box",
                 }}
               >
-                <Typography
-                  sx={{ color: "#131523", fontSize: "18px", fontWeight: 500 }}
+                <Box
+                  sx={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    alignItems: "center",
+                  }}
                 >
-                  Gender
+                  <Typography
+                    sx={{ color: "#131523", fontSize: "18px", fontWeight: 500 }}
+                  >
+                    Gender
+                  </Typography>
+                  <Avatar
+                    src={icon3}
+                    sx={{ width: "25px", height: "25px", borderRadius: 0 }}
+                  />
+                </Box>
+                <Typography sx={{ fontSize: "12px", color: "#131523", mt: 2 }}>
+                  Male
                 </Typography>
-                <Avatar
-                  src={icon3}
-                  sx={{ width: "25px", height: "25px", borderRadius: 0 }}
-                />
               </Box>
-              <Typography sx={{ fontSize: "12px", color: "#131523", mt: 2 }}>
-                Male
-              </Typography>
-            </Box>
-            {/* Box 4 */}
-            <Box
-              sx={{
-                border: "1px solid rgb(33, 213, 155,0.5)",
-                width: { md: "260px", sm: "250px" },
-                height: "130px",
-                borderRadius: "15px",
-                px: 3,
-                py: 3,
-                boxSizing: "border-box",
-              }}
-            >
+              {/* Box 4 */}
               <Box
                 sx={{
-                  display: "flex",
-                  justifyContent: "space-between",
-                  alignItems: "center",
+                  border: "1px solid rgb(33, 213, 155,0.5)",
+                  width: { md: "260px", sm: "250px" },
+                  height: "130px",
+                  borderRadius: "15px",
+                  px: 3,
+                  py: 3,
+                  boxSizing: "border-box",
                 }}
               >
-                <Typography
-                  sx={{ color: "#131523", fontSize: "18px", fontWeight: 500 }}
+                <Box
+                  sx={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    alignItems: "center",
+                  }}
                 >
-                  Mobile
-                </Typography>
-                <Avatar
-                  src={icon4}
-                  sx={{ width: "25px", height: "25px", borderRadius: 0 }}
-                />
-              </Box>
-              <Typography sx={{ fontSize: "12px", color: "#131523", mt: 2 }}>
-                +92001234567
-              </Typography>
-            </Box>
-            {/* Box 5 */}
-            <Box
-              sx={{
-                border: "1px solid rgb(33, 213, 155,0.5)",
-                width: { md: "260px", sm: "250px" },
-                height: "130px",
-                borderRadius: "15px",
-                px: 3,
-                py: 3,
-                boxSizing: "border-box",
-              }}
-            >
-              <Box
-                sx={{
-                  display: "flex",
-                  justifyContent: "space-between",
-                  alignItems: "center",
-                }}
-              >
-                <Typography
-                  sx={{ color: "#131523", fontSize: "18px", fontWeight: 500 }}
-                >
-                  Email
-                </Typography>
-                <Avatar
-                  src={icon5}
-                  sx={{ width: "25px", height: "25px", borderRadius: 0 }}
-                />
-              </Box>
-              <Typography sx={{ fontSize: "12px", color: "#131523", mt: 2 }}>
-                steve111@gmail.com
-              </Typography>
-            </Box>
-            {/* Box 6 */}
-            <Box
-              sx={{
-                border: "1px solid rgb(33, 213, 155,0.5)",
-                width: { md: "260px", sm: "250px" },
-                height: "130px",
-                borderRadius: "15px",
-                px: 3,
-                py: 3,
-                boxSizing: "border-box",
-              }}
-            >
-              <Box
-                sx={{
-                  display: "flex",
-                  justifyContent: "space-between",
-                  alignItems: "center",
-                }}
-              >
-                <Typography
-                  sx={{ color: "#131523", fontSize: "18px", fontWeight: 500 }}
-                >
-                  Country Region
-                </Typography>
-                <Avatar
-                  src={icon6}
-                  sx={{ width: "25px", height: "25px", borderRadius: 0 }}
-                />
-              </Box>
-              <Typography sx={{ fontSize: "12px", color: "#131523", mt: 2 }}>
-                19 Millstream Place,
-                <br /> Pimpama 4209, Queensland, Australia
-              </Typography>
-            </Box>
-            {/* Box 7 */}
-            <Box
-              sx={{
-                border: "1px solid rgb(33, 213, 155,0.5)",
-                width: { md: "260px", sm: "250px" },
-                height: "130px",
-                borderRadius: "15px",
-                px: 3,
-                py: 3,
-                boxSizing: "border-box",
-              }}
-            >
-              <Box
-                sx={{
-                  display: "flex",
-                  justifyContent: "space-between",
-                  alignItems: "center",
-                }}
-              >
-                <Typography
-                  sx={{ color: "#131523", fontSize: "18px", fontWeight: 500 }}
-                >
-                  Emergency contact
-                </Typography>
-                <Avatar
-                  src={icon7}
-                  sx={{ width: "25px", height: "25px", borderRadius: 0 }}
-                />
-              </Box>
-              <Typography sx={{ fontSize: "12px", color: "#131523", mt: 2 }}>
-                Mr. Someone Special
-              </Typography>
-              <Box
-                sx={{ display: "flex", justifyContent: "space-between", mt: 1 }}
-              >
-                <Typography sx={{ color: "#555555", fontSize: "11px" }}>
-                  Contact details
-                </Typography>
-                <Typography sx={{ color: "#555555", fontSize: "11px" }}>
+                  <Typography
+                    sx={{ color: "#131523", fontSize: "18px", fontWeight: 500 }}
+                  >
+                    Mobile
+                  </Typography>
+                  <Avatar
+                    src={icon4}
+                    sx={{ width: "25px", height: "25px", borderRadius: 0 }}
+                  />
+                </Box>
+                <Typography sx={{ fontSize: "12px", color: "#131523", mt: 2 }}>
                   +92001234567
                 </Typography>
               </Box>
-            </Box>
-            {/* Box 8 */}
-            <Box
-              sx={{
-                border: "1px solid rgb(33, 213, 155,0.5)",
-                width: { md: "260px", sm: "250px" },
-                height: "130px",
-                borderRadius: "15px",
-                px: 3,
-                py: 3,
-                boxSizing: "border-box",
-              }}
-            >
+              {/* Box 5 */}
               <Box
                 sx={{
-                  display: "flex",
-                  justifyContent: "space-between",
-                  alignItems: "center",
+                  border: "1px solid rgb(33, 213, 155,0.5)",
+                  width: { md: "260px", sm: "250px" },
+                  height: "130px",
+                  borderRadius: "15px",
+                  px: 3,
+                  py: 3,
+                  boxSizing: "border-box",
                 }}
               >
-                <Typography
-                  sx={{ color: "#131523", fontSize: "18px", fontWeight: 500 }}
+                <Box
+                  sx={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    alignItems: "center",
+                  }}
                 >
-                  2-Factor
-                  <br />
-                  authentication
+                  <Typography
+                    sx={{ color: "#131523", fontSize: "18px", fontWeight: 500 }}
+                  >
+                    Email
+                  </Typography>
+                  <Avatar
+                    src={icon5}
+                    sx={{ width: "25px", height: "25px", borderRadius: 0 }}
+                  />
+                </Box>
+                <Typography sx={{ fontSize: "12px", color: "#131523", mt: 2 }}>
+                  steve111@gmail.com
                 </Typography>
-                <Avatar
-                  src={icon8}
-                  sx={{ width: "25px", height: "25px", borderRadius: 0 }}
-                />
               </Box>
-              <Typography sx={{ fontSize: "12px", color: "#131523", mt: 2 }}>
-                Not Set up
-              </Typography>
-            </Box>
-            {/* Box 9 */}
-            <Box
-              sx={{
-                border: "1px solid rgb(33, 213, 155,0.5)",
-                width: { md: "260px", sm: "250px" },
-                height: "130px",
-                borderRadius: "15px",
-                px: 3,
-                py: 3,
-                boxSizing: "border-box",
-              }}
-            >
+              {/* Box 6 */}
               <Box
                 sx={{
-                  display: "flex",
-                  justifyContent: "space-between",
-                  alignItems: "center",
+                  border: "1px solid rgb(33, 213, 155,0.5)",
+                  width: { md: "260px", sm: "250px" },
+                  height: "130px",
+                  borderRadius: "15px",
+                  px: 3,
+                  py: 3,
+                  boxSizing: "border-box",
                 }}
               >
-                <Typography
-                  sx={{ color: "#131523", fontSize: "18px", fontWeight: 500 }}
+                <Box
+                  sx={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    alignItems: "center",
+                  }}
                 >
-                  Kiosk PIN
+                  <Typography
+                    sx={{ color: "#131523", fontSize: "18px", fontWeight: 500 }}
+                  >
+                    Country Region
+                  </Typography>
+                  <Avatar
+                    src={icon6}
+                    sx={{ width: "25px", height: "25px", borderRadius: 0 }}
+                  />
+                </Box>
+                <Typography sx={{ fontSize: "12px", color: "#131523", mt: 2 }}>
+                  19 Millstream Place,
+                  <br /> Pimpama 4209, Queensland, Australia
                 </Typography>
-                <Avatar
-                  src={icon9}
-                  sx={{ width: "25px", height: "25px", borderRadius: 0 }}
-                />
               </Box>
-              <Typography sx={{ fontSize: "12px", color: "#2BB491", mt: 2 }}>
-                Show
-              </Typography>
-            </Box>
-            {/* Box 10 */}
-            <Box
-              sx={{
-                border: "1px solid rgb(33, 213, 155,0.5)",
-                width: { md: "260px", sm: "250px" },
-                height: "130px",
-                borderRadius: "15px",
-                px: 3,
-                py: 3,
-                boxSizing: "border-box",
-              }}
-            >
+              {/* Box 7 */}
               <Box
                 sx={{
-                  display: "flex",
-                  justifyContent: "space-between",
-                  alignItems: "center",
+                  border: "1px solid rgb(33, 213, 155,0.5)",
+                  width: { md: "260px", sm: "250px" },
+                  height: "130px",
+                  borderRadius: "15px",
+                  px: 3,
+                  py: 3,
+                  boxSizing: "border-box",
                 }}
               >
-                <Typography
-                  sx={{ color: "#131523", fontSize: "18px", fontWeight: 500 }}
+                <Box
+                  sx={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    alignItems: "center",
+                  }}
                 >
-                  Login username
+                  <Typography
+                    sx={{ color: "#131523", fontSize: "18px", fontWeight: 500 }}
+                  >
+                    Emergency contact
+                  </Typography>
+                  <Avatar
+                    src={icon7}
+                    sx={{ width: "25px", height: "25px", borderRadius: 0 }}
+                  />
+                </Box>
+                <Typography sx={{ fontSize: "12px", color: "#131523", mt: 2 }}>
+                  Mr. Someone Special
                 </Typography>
-                <Avatar
-                  src={icon10}
-                  sx={{ width: "25px", height: "25px", borderRadius: 0 }}
-                />
+                <Box
+                  sx={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    mt: 1,
+                  }}
+                >
+                  <Typography sx={{ color: "#555555", fontSize: "11px" }}>
+                    Contact details
+                  </Typography>
+                  <Typography sx={{ color: "#555555", fontSize: "11px" }}>
+                    +92001234567
+                  </Typography>
+                </Box>
               </Box>
-              <Typography sx={{ fontSize: "12px", color: "#131523", mt: 2 }}>
-                steveholland247
-              </Typography>
-            </Box>
-            {/* Box 11 */}
-            <Box
-              sx={{
-                border: "1px solid rgb(33, 213, 155,0.5)",
-                width: { md: "260px", sm: "250px" },
-                height: "130px",
-                borderRadius: "15px",
-                px: 3,
-                py: 3,
-                boxSizing: "border-box",
-              }}
-            >
+              {/* Box 8 */}
               <Box
                 sx={{
-                  display: "flex",
-                  justifyContent: "space-between",
-                  alignItems: "center",
+                  border: "1px solid rgb(33, 213, 155,0.5)",
+                  width: { md: "260px", sm: "250px" },
+                  height: "130px",
+                  borderRadius: "15px",
+                  px: 3,
+                  py: 3,
+                  boxSizing: "border-box",
                 }}
               >
-                <Typography
-                  sx={{ color: "#131523", fontSize: "18px", fontWeight: 500 }}
+                <Box
+                  sx={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    alignItems: "center",
+                  }}
                 >
-                  Device info
+                  <Typography
+                    sx={{ color: "#131523", fontSize: "18px", fontWeight: 500 }}
+                  >
+                    2-Factor
+                    <br />
+                    authentication
+                  </Typography>
+                  <Avatar
+                    src={icon8}
+                    sx={{ width: "25px", height: "25px", borderRadius: 0 }}
+                  />
+                </Box>
+                <Typography sx={{ fontSize: "12px", color: "#131523", mt: 2 }}>
+                  Not Set up
                 </Typography>
-                <Avatar
-                  src={icon11}
-                  sx={{ width: "25px", height: "25px", borderRadius: 0 }}
-                />
               </Box>
-              <Typography sx={{ fontSize: "12px", color: "#131523", mt: 2 }}>
-                Not Installed
-              </Typography>
+              {/* Box 9 */}
+              <Box
+                sx={{
+                  border: "1px solid rgb(33, 213, 155,0.5)",
+                  width: { md: "260px", sm: "250px" },
+                  height: "130px",
+                  borderRadius: "15px",
+                  px: 3,
+                  py: 3,
+                  boxSizing: "border-box",
+                }}
+              >
+                <Box
+                  sx={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    alignItems: "center",
+                  }}
+                >
+                  <Typography
+                    sx={{ color: "#131523", fontSize: "18px", fontWeight: 500 }}
+                  >
+                    Kiosk PIN
+                  </Typography>
+                  <Avatar
+                    src={icon9}
+                    sx={{ width: "25px", height: "25px", borderRadius: 0 }}
+                  />
+                </Box>
+                <Typography sx={{ fontSize: "12px", color: "#2BB491", mt: 2 }}>
+                  Show
+                </Typography>
+              </Box>
+              {/* Box 10 */}
+              <Box
+                sx={{
+                  border: "1px solid rgb(33, 213, 155,0.5)",
+                  width: { md: "260px", sm: "250px" },
+                  height: "130px",
+                  borderRadius: "15px",
+                  px: 3,
+                  py: 3,
+                  boxSizing: "border-box",
+                }}
+              >
+                <Box
+                  sx={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    alignItems: "center",
+                  }}
+                >
+                  <Typography
+                    sx={{ color: "#131523", fontSize: "18px", fontWeight: 500 }}
+                  >
+                    Login username
+                  </Typography>
+                  <Avatar
+                    src={icon10}
+                    sx={{ width: "25px", height: "25px", borderRadius: 0 }}
+                  />
+                </Box>
+                <Typography sx={{ fontSize: "12px", color: "#131523", mt: 2 }}>
+                  steveholland247
+                </Typography>
+              </Box>
+              {/* Box 11 */}
+              <Box
+                sx={{
+                  border: "1px solid rgb(33, 213, 155,0.5)",
+                  width: { md: "260px", sm: "250px" },
+                  height: "130px",
+                  borderRadius: "15px",
+                  px: 3,
+                  py: 3,
+                  boxSizing: "border-box",
+                }}
+              >
+                <Box
+                  sx={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    alignItems: "center",
+                  }}
+                >
+                  <Typography
+                    sx={{ color: "#131523", fontSize: "18px", fontWeight: 500 }}
+                  >
+                    Device info
+                  </Typography>
+                  <Avatar
+                    src={icon11}
+                    sx={{ width: "25px", height: "25px", borderRadius: 0 }}
+                  />
+                </Box>
+                <Typography sx={{ fontSize: "12px", color: "#131523", mt: 2 }}>
+                  Not Installed
+                </Typography>
+              </Box>
             </Box>
           </Box>
           <Box
             sx={{
-              width: { md: "95%", sm: "100%" },
+              width: "100%",
               display: "flex",
               justifyContent: "flex-end",
               alignItems: "flex-end",
+              boxSizing: "border-box",
+              pr: { xl: 6, sm: 5 },
+              mb: { xl: 4 },
             }}
           >
             <Setuptask />

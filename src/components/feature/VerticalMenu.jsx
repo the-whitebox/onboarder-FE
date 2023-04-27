@@ -13,7 +13,7 @@ export default function VerticalMenu(props) {
     <Box
       className="vertical-menu"
       sx={{
-        width: "25%",
+        width: { xl: "22%", sm: "25%" },
         bgcolor: "#2bb491",
         minHeight: "100vh",
         color: "#ffffff",
@@ -28,23 +28,22 @@ export default function VerticalMenu(props) {
           src={logo}
           aria-label="Busy Man"
           sx={{
-            width: "200px",
-            height: "auto",
+            width: { xl: "220px", sm: "180px" },
+            height: { xl: "120px", sm: "auto" },
             padding: "0px",
             margin: "0px",
             borderRadius: 0,
-            mt: 3,
+            mt: { xl: 10, sm: 5 },
           }}
         />
       </Box>
-      <Box sx={{}}>
+      <Box sx={{ mt: { xl: 8, lg: 5, sm: 3 } }}>
         <Box
           sx={{
             background: "#86d3bd",
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
-            mt: { xl: 5, sm: 3 },
           }}
         >
           <NavLink to="/step3-4" className="verticalMenu-aTag">
@@ -68,7 +67,13 @@ export default function VerticalMenu(props) {
             width: "100%",
           }}
         >
-          <List sx={{ fontWeight: "900 !important", mt: "5px" }}>
+          <List
+            sx={{
+              fontWeight: "900 !important",
+              mt: "5px",
+              fontSize: { xl: "30px", sm: "18px" },
+            }}
+          >
             Scheduling
           </List>
           <NavLink
@@ -92,13 +97,21 @@ export default function VerticalMenu(props) {
           >
             Unavailability
           </NavLink>
-          <List sx={{ fontWeight: "900 !important", mt: "5px" }}>Activity</List>
+          <List
+            sx={{
+              fontWeight: "900 !important",
+              mt: "5px",
+              fontSize: { xl: "30px", sm: "18px" },
+            }}
+          >
+            Activity
+          </List>
           <NavLink
             to="/news-feed"
             className="verticalMenu-aTag"
             style={{ color: "white" }}
           >
-            News feed
+            News Feed
           </NavLink>
         </Box>
       </Box>

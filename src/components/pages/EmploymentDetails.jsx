@@ -13,17 +13,18 @@ function EmploymentDetails() {
         container
         sx={{
           overflowY: "scroll",
-          maxHeight: "91vh",
+          maxHeight: { xs: "91vh" },
+          minHeight: { xl: "91vh" },
           boxSizing: "border-box",
         }}
       >
         <Grid
           item
-          xl={3}
-          lg={2.5}
-          md={2.5}
-          sm={2.5}
-          xs={2.5}
+          xl={2}
+          lg={2}
+          md={2}
+          sm={2}
+          xs={2}
           sx={{
             border: "1px solid rgb(0, 0, 0,0.1)",
             borderRadius: "0px 45px 45px 0px",
@@ -37,10 +38,10 @@ function EmploymentDetails() {
         <Grid
           item
           xl={9}
-          lg={9.5}
-          md={9.5}
-          sm={9.5}
-          xs={9.5}
+          lg={10}
+          md={10}
+          sm={10}
+          xs={10}
           sx={{
             p: { md: "30px 30px 20px 30px", sm: "30px 10px 20px 10px" },
             boxSizing: "border-box",
@@ -61,7 +62,7 @@ function EmploymentDetails() {
             <Button
               variant="contained"
               className="all-green-btns"
-              sx={{ textTransform: "none" }}
+              sx={{ textTransform: "none", mr: 3 }}
             >
               Save
             </Button>
@@ -70,7 +71,7 @@ function EmploymentDetails() {
             sx={{
               mt: 2,
               bgcolor: "#F6F6F6",
-              minHeight: "90%",
+              minHeight: "80%",
               borderRadius: "28px",
               display: "flex",
             }}

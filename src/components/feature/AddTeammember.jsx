@@ -40,10 +40,10 @@ const access = [
   "Advisor",
 ];
 const style = {
-  width: { md: "auto", sm: "550px" },
+  width: { xl: "700px", md: "auto", sm: "550px" },
   height: "auto",
   position: "absolute",
-  top: "5%",
+  top: { xl: "2%", sm: "5%" },
   left: "50%",
   transform: "translate(-50%, 0%)",
   bgcolor: "background.paper",
@@ -205,7 +205,7 @@ export default function Addteammember(props) {
             variant="rounded"
           />
         </Box>
-        <Box sx={{ px: 5, mt: 5 }}>
+        <Box sx={{ px: { sm: 5, xl: 8 }, mt: 5 }}>
           <Grid container sx={{ display: "flex", alignItems: "center" }}>
             <Grid item xs={12} sm={12} md={3} lg={3} xl={3}>
               <Typography>First Name</Typography>

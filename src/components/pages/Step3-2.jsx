@@ -604,7 +604,7 @@ export default function Step3_2() {
                           key={idx}
                           variant="outlined"
                           sx={{
-                            borderRadius: "10px",
+                            borderRadius: "7px",
                             border: "1px solid gray",
                             bgcolor: "background.body",
                             boxShadow: "sm",

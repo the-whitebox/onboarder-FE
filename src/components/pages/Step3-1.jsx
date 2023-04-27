@@ -104,7 +104,7 @@ export default function Step2() {
             sx={{
               display: "flex",
               flexDirection: "column",
-              mt: { md: 5, sm: 2 },
+              mt: { xl: 0, md: 5, sm: 2 },
               ml: { lg: 14, md: 5, xs: 1 },
             }}
           >

@@ -217,7 +217,9 @@ export default function LoginSidebar(props) {
             password?
           </Box>
           <Link to="/step1" className="aTag-1">
-            <Typography sx={{ fontSize: "15px", fontWeight: 600, mt: 2 }}>
+            <Typography
+              sx={{ fontSize: "15px", fontWeight: 600, mt: { xl: 4, sm: 2 } }}
+            >
               Sign Up with New ID
             </Typography>
           </Link>
@@ -234,10 +236,10 @@ export default function LoginSidebar(props) {
               display: "flex",
               alignItems: "center",
               color: "white",
-              mb: 1,
+              mb: { xl: 5, sm: 1 },
             }}
           >
-            <p>Need Help</p>{" "}
+            <p>Need Help</p>
             <HelpOutlineIcon sx={{ ml: "5px", fontSize: "20px" }} />
           </Box>
           <Box

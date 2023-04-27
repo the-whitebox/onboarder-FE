@@ -40,7 +40,11 @@ function AddPeopleManually() {
       >
         <Grid item xl={9} lg={9} md={10} sm={12} xs={12}>
           <Typography
-            sx={{ color: "#354052", fontSize: "20px", textAlign: "center" }}
+            sx={{
+              color: "#354052",
+              fontSize: { xl: "26px", sm: "20px" },
+              textAlign: "center",
+            }}
           >
             Add New Team Members
           </Typography>
@@ -48,7 +52,7 @@ function AddPeopleManually() {
             sx={{
               display: "flex",
               alignItems: "center",
-              justifyContent: "center",
+              justifyContent: { sm: "center", xl: "space-evenly" },
               mt: 2,
               background: "#E6F4EB",
               py: 2,
@@ -98,7 +102,7 @@ function AddPeopleManually() {
               sx={{
                 height: "150px",
                 width: "150px",
-                ml: 5,
+                ml: { sm: 5 },
               }}
               variant="rounded"
             />

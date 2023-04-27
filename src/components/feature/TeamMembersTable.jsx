@@ -131,6 +131,56 @@ const rows = [
     email: "Email",
     mobile: "Mobile",
   },
+  {
+    id: "11",
+    name: "Username11",
+    connect: "Connected",
+    access: "Access",
+    main_location: "Main Location",
+    status: "Status",
+    email: "Email",
+    mobile: "Mobile",
+  },
+  {
+    id: "12",
+    name: "Username12",
+    connect: "Connected",
+    access: "Access",
+    main_location: "Main Location",
+    status: "Status",
+    email: "Email",
+    mobile: "Mobile",
+  },
+  {
+    id: "13",
+    name: "Username13",
+    connect: "Connected",
+    access: "Access",
+    main_location: "Main Location",
+    status: "Status",
+    email: "Email",
+    mobile: "Mobile",
+  },
+  {
+    id: "14",
+    name: "Username14",
+    connect: "Connected",
+    access: "Access",
+    main_location: "Main Location",
+    status: "Status",
+    email: "Email",
+    mobile: "Mobile",
+  },
+  {
+    id: "15",
+    name: "Username15",
+    connect: "Connected",
+    access: "Access",
+    main_location: "Main Location",
+    status: "Status",
+    email: "Email",
+    mobile: "Mobile",
+  },
 ];
 
 const listItems = [
@@ -197,7 +247,7 @@ function TeamMembersTable() {
   const handleOpenTeamFilter = () => setOpenTeamFilter(true);
   const handleCloseTeamFilter = () => setOpenTeamFilter(false);
 
-  const itemsPerPage = 5;
+  const itemsPerPage = 10;
   const [currentPage, setCurrentPage] = useState(1);
   const totalPages = Math.ceil(rows.length / itemsPerPage);
   const startIndex = (currentPage - 1) * itemsPerPage;
@@ -215,10 +265,10 @@ function TeamMembersTable() {
       >
         <TeammemberFiltersModal />
       </Modal>
-      <Box sx={{ width: "90%" }}>
+      <Box sx={{ width: "100%", boxSizing: "border-box", pr: 3 }}>
         <Box
           sx={{
-            mt: { xl: 0, xs: 2 },
+            mt: { xl: 2, xs: 2 },
             bgcolor: "white",
             boxShadow: 3,
             border: "0.5px solid #e4e4e4",
@@ -384,13 +434,14 @@ function TeamMembersTable() {
         <Box
           sx={{
             mt: 2,
+            height: { xl: "680px" },
           }}
         >
           <TableContainer
             component={Paper}
             sx={{
               maxWidth: "100%",
-              maxHeight: 460,
+              maxHeight: { xl: 690, sm: 560 },
               overflow: "scroll",
             }}
           >
