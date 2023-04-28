@@ -131,6 +131,56 @@ const rows = [
     email: "Email",
     mobile: "Mobile",
   },
+  {
+    id: "11",
+    name: "Username11",
+    connect: "Connected",
+    access: "Access",
+    main_location: "Main Location",
+    status: "Status",
+    email: "Email",
+    mobile: "Mobile",
+  },
+  {
+    id: "12",
+    name: "Username12",
+    connect: "Connected",
+    access: "Access",
+    main_location: "Main Location",
+    status: "Status",
+    email: "Email",
+    mobile: "Mobile",
+  },
+  {
+    id: "13",
+    name: "Username13",
+    connect: "Connected",
+    access: "Access",
+    main_location: "Main Location",
+    status: "Status",
+    email: "Email",
+    mobile: "Mobile",
+  },
+  {
+    id: "14",
+    name: "Username14",
+    connect: "Connected",
+    access: "Access",
+    main_location: "Main Location",
+    status: "Status",
+    email: "Email",
+    mobile: "Mobile",
+  },
+  {
+    id: "15",
+    name: "Username15",
+    connect: "Connected",
+    access: "Access",
+    main_location: "Main Location",
+    status: "Status",
+    email: "Email",
+    mobile: "Mobile",
+  },
 ];
 
 const listItems = [
@@ -147,11 +197,13 @@ const listItems = [
 ];
 
 function TeamMembersTable() {
+  const [data, setData] = useState(rows);
+  const [query, setQuery] = useState("");
   const [isCheckAll, setIsCheckAll] = useState(false);
   const [isCheck, setIsCheck] = useState([]);
   const handleSelectAll = (e) => {
     setIsCheckAll(!isCheckAll);
-    setIsCheck(rows?.map((data) => data.id));
+    setIsCheck(data?.map((data) => data.id));
     if (isCheckAll) {
       setIsCheck([]);
     }
@@ -197,12 +249,23 @@ function TeamMembersTable() {
   const handleOpenTeamFilter = () => setOpenTeamFilter(true);
   const handleCloseTeamFilter = () => setOpenTeamFilter(false);
 
-  const itemsPerPage = 5;
+  const itemsPerPage = 10;
   const [currentPage, setCurrentPage] = useState(1);
-  const totalPages = Math.ceil(rows.length / itemsPerPage);
+  const totalPages = Math.ceil(data.length / itemsPerPage);
   const startIndex = (currentPage - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
-  const currentData = rows?.slice(startIndex, endIndex);
+  const currentData = data?.slice(startIndex, endIndex);
+
+  React.useEffect(() => {
+    if (query === "") {
+      setData(rows);
+    } else {
+      const afterFilter = rows?.filter((items) =>
+        items.name.toLowerCase().includes(query.toLowerCase())
+      );
+      setData(afterFilter);
+    }
+  }, [query]);
 
   return (
     <>
@@ -215,10 +278,10 @@ function TeamMembersTable() {
       >
         <TeammemberFiltersModal />
       </Modal>
-      <Box sx={{ width: "90%" }}>
+      <Box sx={{ width: "100%", boxSizing: "border-box", pr: 3 }}>
         <Box
           sx={{
-            mt: { xl: 0, xs: 2 },
+            mt: { xl: 2, xs: 2 },
             bgcolor: "white",
             boxShadow: 3,
             border: "0.5px solid #e4e4e4",
@@ -249,6 +312,7 @@ function TeamMembersTable() {
                 width: "270px",
                 background: "#e6f4eb",
               }}
+              onChange={(e) => setQuery(e.target.value)}
             />
             <Box
               sx={{
@@ -321,7 +385,8 @@ function TeamMembersTable() {
                 textTransform: "none",
                 ml: 1,
                 borderRadius: "5px",
-                border: "1px solid #a2a2a2",
+                border: "0.10000000149011612px solid rgb(162, 162, 162,0.5)",
+                py: "5px",
               }}
             >
               <BiEdit
@@ -383,13 +448,14 @@ function TeamMembersTable() {
         <Box
           sx={{
             mt: 2,
+            height: { xl: "680px" },
           }}
         >
           <TableContainer
             component={Paper}
             sx={{
               maxWidth: "100%",
-              maxHeight: 460,
+              maxHeight: { xl: 690, sm: 560 },
               overflow: "scroll",
             }}
           >
@@ -559,7 +625,7 @@ function TeamMembersTable() {
             setCurrentPage={setCurrentPage}
             totalPages={totalPages}
             currentData={currentData}
-            rows={rows}
+            rows={data}
           />
         </Box>
       </Box>

@@ -39,8 +39,17 @@ function Dashboard() {
   }, []);
 
   return (
-    <Grid container sx={{ overflowY: "scroll", height: "91vh" }}>
-      <Grid item xl={8} lg={8} md={8} sm={8} xs={12} sx={{ pb: 8 }}>
+    <Grid
+      container
+      sx={{
+        overflowY: "scroll",
+        maxHeight: { xs: "91vh" },
+        minHeight: { xl: "91vh" },
+        p: "30px 0px 0px 30px",
+        boxSizing: "border-box",
+      }}
+    >
+      <Grid item xl={8} lg={8} md={9} sm={12} xs={12}>
         <Box sx={{ display: "flex", flexDirection: "column", mb: 4 }}>
           <Box sx={{ display: "flex", mb: 2, color: "#2BB491" }}>
             <DashboardCustomizeOutlinedIcon />
@@ -52,7 +61,9 @@ function Dashboard() {
           sx={{
             display: "flex",
             flexWrap: "wrap",
-            gap: 1,
+            rowGap: { xl: 3, sm: 1 },
+            columnGap: 1,
+            pb: { xl: 0, sm: 3 },
           }}
         >
           <Box
@@ -61,8 +72,9 @@ function Dashboard() {
               height: "175px",
               borderRadius: "15px",
               background: "#ffffff",
-              border: "1px solid #21d59b",
+              border: "0.5px solid #21d59b",
               filter: "drop-shadow(0px 1px 2px rgba(21,34,50,0.08 ))",
+              // boxShadow: "0px 1px 2px rgba(21,34,50,0.08 )",
               boxSizing: "border-box",
             }}
           ></Box>
@@ -412,8 +424,8 @@ function Dashboard() {
         item
         xl={4}
         lg={4}
-        md={4}
-        sm={4}
+        md={3}
+        sm={12}
         xs={12}
         sx={{
           display: "flex",
@@ -423,7 +435,11 @@ function Dashboard() {
       >
         <Avatar
           src={bg_image7}
-          sx={{ width: "363px", height: "438px", borderRadius: 0 }}
+          sx={{
+            width: { lg: "363px", md: "200px", sm: "363px" },
+            height: { lg: "438px", md: "200px", sm: "438px" },
+            borderRadius: 0,
+          }}
         />
       </Grid>
     </Grid>

@@ -32,14 +32,14 @@ export default function Step2() {
         <ForgotPassword handleClose={handleClose} />
       </Modal>
       <Grid container sx={{ pb: { xs: 1, md: 0 } }}>
-        <Grid item xl={3} lg={3} md={6} sm={12} xs={12}>
+        <Grid item xl={3} lg={3} md={4} sm={12} xs={12}>
           <LoginSidebar handleOpen={handleOpen} />
         </Grid>
         <Grid
           item
           xl={9}
           lg={9}
-          md={6}
+          md={8}
           sm={12}
           xs={12}
           sx={{
@@ -67,7 +67,7 @@ export default function Step2() {
                   background: "#e6f4eb",
                   borderRadius: "100%",
                 }}
-              ></Box>
+              />
               <Box
                 sx={{
                   width: "20px",
@@ -76,7 +76,7 @@ export default function Step2() {
                   borderRadius: "100%",
                   ml: 1,
                 }}
-              ></Box>
+              />
               <Box
                 sx={{
                   width: "20px",
@@ -85,14 +85,14 @@ export default function Step2() {
                   borderRadius: "100%",
                   ml: 1,
                 }}
-              ></Box>
+              />
             </Box>
           </Box>
           <Box
             sx={{
               display: "flex",
               justifyContent: "flex-end",
-              mt: { md: 10, xs: 5 },
+              mt: { xl: 15, sm: 8, xs: 5 },
             }}
           >
             <Box
@@ -100,7 +100,7 @@ export default function Step2() {
                 background: "#e6f4eb",
                 display: "flex",
                 alignItems: "center",
-                padding: "20px 20px",
+                padding: "20px 50px 20px 20px",
                 borderRadius: "40px 0px 0px 40px",
               }}
             >
@@ -116,7 +116,7 @@ export default function Step2() {
               flexDirection: "column",
               alignItems: "center",
               justifyContent: "center",
-              mt: { xl: 20, lg: 10, md: 8, sm: 5, xs: 5 },
+              mt: { xl: 20, lg: 5, md: 5, sm: 5, xs: 5 },
             }}
           >
             <Avatar
@@ -131,7 +131,9 @@ export default function Step2() {
                 mb: { xs: 1, md: 1 },
               }}
             />
-            <Typography sx={{ color: "#2bb491", textAlign: "center" }}>
+            <Typography
+              sx={{ color: "#2bb491", textAlign: "center", fontSize: "18px" }}
+            >
               Verification has been sent to your email address
             </Typography>
             <Typography

@@ -1,5 +1,4 @@
 import * as React from "react";
-import "../../style/Navbar.css";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
@@ -39,11 +38,12 @@ export default function Navbar() {
 
   return (
     <AppBar
-      className="navbar"
+      id="navbar"
       position="fixed"
       sx={{
         width: "100%",
         height: "9vh",
+        boxSizing: "border-box",
         px: 3,
         background: "#ffffff",
         color: "black",
@@ -69,7 +69,7 @@ export default function Navbar() {
           <Box
             sx={{ width: "1px", height: "40px", bgcolor: "#707070", ml: 2 }}
           />
-          <Typography sx={{ color: "#707070", ml: 2 }}>
+          <Typography sx={{ color: "#707070", ml: 2, fontSize: "12px" }}>
             Effortless Time Management
           </Typography>
         </Box>
@@ -85,8 +85,13 @@ export default function Navbar() {
               disableUnderline: true,
             }}
             sx={{
-              p: "5px 10px 2px 10px",
+              boxSizing: "border-box",
+              p: "1px 10px 2px 10px",
               display: { md: "block", xs: "none" },
+              borderRadius: "25px !important",
+              border: "1px solid #2bb491 !important",
+              outline: "none !important",
+              height: "30px",
             }}
           />
           <Badge color="error" badgeContent={2} sx={{ mx: 3 }}>
@@ -104,6 +109,7 @@ export default function Navbar() {
               sx={{ color: "#131523", textTransform: "none", ml: 1 }}
             >
               {userInfo?.first_name} {userInfo?.last_name}
+              Username
             </Button>
             <Menu
               id="basic-menu"
@@ -120,8 +126,7 @@ export default function Navbar() {
                   mt: "30px",
                   borderRadius: "11px",
                   filter: "drop-shadow(0px 6px 3px rgba(21,34,50,0.08 ))",
-                  width: "320px",
-                  px: 2,
+                  width: { md: "350px", xs: "300px" },
                 },
               }}
               transformOrigin={{ horizontal: "right", vertical: "top" }}
@@ -139,12 +144,12 @@ export default function Navbar() {
               >
                 Manage Profile
               </Typography>
-              <Divider />
+              <Divider sx={{ mx: 2 }} />
               <Box sx={{ mt: 2, mb: 10 }}>
-                <Typography sx={{ color: "#707070", ml: 2 }}>
+                <Typography sx={{ color: "#707070", ml: 2, px: 5 }}>
                   {userInfo?.first_name} {userInfo?.last_name}
                 </Typography>
-                <MenuItem onClick={handleClose}>
+                <MenuItem onClick={handleClose} sx={{ px: 5 }}>
                   <ListItemIcon>
                     <TextSnippetOutlinedIcon sx={{ color: "black" }} />
                   </ListItemIcon>
@@ -157,10 +162,10 @@ export default function Navbar() {
                     </Typography>
                   </Box>
                 </MenuItem>
-                <Typography sx={{ color: "#707070", mt: 3, ml: 2 }}>
+                <Typography sx={{ color: "#707070", mt: 3, ml: 5 }}>
                   Business Name
                 </Typography>
-                <MenuItem onClick={handleClose}>
+                <MenuItem onClick={handleClose} sx={{ px: 5 }}>
                   <ListItemIcon>
                     <Person2Icon fontSize="small" sx={{ color: "black" }} />
                   </ListItemIcon>
@@ -168,7 +173,7 @@ export default function Navbar() {
                     Profile
                   </Typography>
                 </MenuItem>
-                <MenuItem onClick={handleClose}>
+                <MenuItem onClick={handleClose} sx={{ px: 5 }}>
                   <ListItemIcon>
                     <CorporateFareIcon
                       fontSize="small"
@@ -179,7 +184,7 @@ export default function Navbar() {
                     Business
                   </Typography>
                 </MenuItem>
-                <MenuItem onClick={handleClose}>
+                <MenuItem onClick={handleClose} sx={{ px: 5 }}>
                   <ListItemIcon>
                     <CorporateFareIcon
                       fontSize="small"
@@ -191,7 +196,7 @@ export default function Navbar() {
                   </Typography>
                 </MenuItem>
               </Box>
-              <Divider />
+              <Divider sx={{ mx: 2 }} />
               <Box sx={{ display: "flex", justifyContent: "center" }}>
                 <Button
                   variant="contained"

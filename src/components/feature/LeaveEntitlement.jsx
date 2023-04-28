@@ -1,89 +1,134 @@
 import * as React from "react";
-import Box from "@mui/system/Box";
-import Grid from "@mui/system/Unstable_Grid";
-import styled from "@mui/system/styled";
-import Typography from "@mui/material/Typography";
-import { Link } from "react-router-dom";
-import { createTheme, ThemeProvider } from "@mui/material/styles";
-import Modal from "@mui/material/Modal";
-import AddLeaveEntitlementModalBody from "../feature/Addleaveentitlement";
+import { Box, Avatar, Typography } from "@mui/material";
+import Group919 from "../../assets/images/Group 919.png";
 
-const Item = styled("div")(({ theme }) => ({
-  border: "none",
-}));
-const theme = createTheme();
-
-export default function LeaveEntitlement(props) {
-  const [openLeaveEntitlement, setOpenLeaveEntitlement] = React.useState(false);
-  const handleOpenLeaveEntitlement = () => setOpenLeaveEntitlement(true);
-  const handleCloseLeaveEntitlement = () => setOpenLeaveEntitlement(false);
-
+export default function LeaveEntitlement() {
   return (
     <>
-      <ThemeProvider theme={theme}>
-        <Modal
-          open={openLeaveEntitlement}
-          onClose={handleCloseLeaveEntitlement}
-          aria-labelledby="modal-modal-title"
-          aria-describedby="modal-modal-description"
+      <Box
+        sx={{ display: "flex", flexDirection: "column", px: { md: 5, xs: 1 } }}
+      >
+        <Box
+          sx={{
+            bgcolor: "#FFFFFF",
+            borderRadius: "24px",
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+            py: 2,
+            px: 3,
+            mt: { md: 8, xs: 2 },
+          }}
         >
-          <AddLeaveEntitlementModalBody
-            handleCloseLeaveEntitlement={handleCloseLeaveEntitlement}
+          <Box>
+            <Typography
+              sx={{ color: "#131523", fontSize: "18px", fontWeight: 500 }}
+            >
+              Leave entitlements
+            </Typography>
+            <Typography sx={{ color: "#131523", fontSize: "12px", mt: "2px" }}>
+              Leave types a team member is entitled to.
+              <br /> This is determined by the leave conditions set in by the
+              leave default pay detail.
+            </Typography>
+            <Typography
+              sx={{
+                color: "#2BB491",
+                fontSize: "12px",
+                cursor: "pointer",
+                mt: "5px",
+              }}
+            >
+              About leave entitlements
+            </Typography>
+          </Box>
+          <Avatar
+            src={Group919}
+            sx={{ width: "181px", height: "140px", borderRadius: 0 }}
           />
-        </Modal>
-        <Grid>
-          <Box
-            sx={{
-              pt: 3,
-              pb: 2,
-              display: "flex",
-              justifyContent: "space-between",
-            }}
-          >
-            <Typography variant="h6">Leave Entitlements</Typography>
+        </Box>
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+            mt: 3,
+          }}
+        >
+          <Box sx={{ px: 3 }}>
+            <Typography
+              sx={{ color: "#131523", fontSize: "18px", fontWeight: 500 }}
+            >
+              Leave
+            </Typography>
+            <Typography sx={{ color: "#131523", fontSize: "12px", mt: "2px" }}>
+              You've 1 leaves in this month
+            </Typography>
+            <Typography
+              sx={{
+                color: "#2BB491",
+                fontSize: "12px",
+                cursor: "pointer",
+                mt: "5px",
+              }}
+            >
+              Check schedule
+            </Typography>
           </Box>
           <Box
             sx={{
-              mt: 0,
-              ml: { xl: 2, lg: 2, md: 0, sm: 0, xs: 0 },
-              maxWidth: {
-                xl: "80%",
-                lg: "80%",
-                md: "100%",
-                sm: "100%",
-                xs: "100%",
-              },
-              border: "1px solid",
-              borderColor: "#ced7e0",
-              borderRadius: "10px",
-              bgcolor: "#ffffff",
-              flexGrow: 1,
+              bgcolor: "#E6F4EB",
+              borderRadius: "19px",
+              p: "10px 0px",
+              width: "90px",
+              textAlign: "center",
             }}
           >
-            <Grid container xs={12} md={7} lg={12} spacing={2}>
-              <Grid xs={6} lg={3}>
-                <Item>
-                  <Box
-                    component="ul"
-                    aria-labelledby="category-a"
-                    sx={{ pl: 2 }}
-                  >
-                    <li>Leave Entitlements</li>
-                    <li>
-                      <Link
-                        onClick={handleOpenLeaveEntitlement}
-                        className="aTag"
-                      >
-                        Add leave entitlements
-                      </Link>
-                    </li>
-                  </Box>
-                </Item>
-              </Grid>
-            </Grid>
+            1
           </Box>
-        </Grid>
-      </ThemeProvider>
+        </Box>
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+            mt: 3,
+          }}
+        >
+          <Box sx={{ px: 3 }}>
+            <Typography
+              sx={{ color: "#131523", fontSize: "18px", fontWeight: 500 }}
+            >
+              Leaves limit exceed
+            </Typography>
+            <Typography sx={{ color: "#131523", fontSize: "12px", mt: "2px" }}>
+              You've more then 2 leaves in this month.
+            </Typography>
+            <Typography
+              sx={{
+                color: "#2BB491",
+                fontSize: "12px",
+                cursor: "pointer",
+                mt: "5px",
+              }}
+            >
+              Check leave policy
+            </Typography>
+          </Box>
+          <Box
+            sx={{
+              bgcolor: "#F0142F",
+              color: "white",
+              borderRadius: "19px",
+              p: "10px 0px",
+              width: "90px",
+              textAlign: "center",
+            }}
+          >
+            12
+          </Box>
+        </Box>
+      </Box>
     </>
   );
 }

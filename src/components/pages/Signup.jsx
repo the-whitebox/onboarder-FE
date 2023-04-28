@@ -86,14 +86,14 @@ export default function Signup() {
         <ForgotPassword handleClose={handleClose} />
       </Modal>
       <Grid container sx={{ pb: { xs: 5, md: 0 } }}>
-        <Grid item xl={3} lg={3} md={6} sm={12} xs={12}>
+        <Grid item xl={3} lg={3} md={4} sm={12} xs={12}>
           <LoginSidebar handleOpen={handleOpen} />
         </Grid>
         <Grid
           item
           xl={9}
           lg={9}
-          md={6}
+          md={8}
           sm={12}
           xs={12}
           sx={{
@@ -121,7 +121,7 @@ export default function Signup() {
                   background: "#2bb491",
                   borderRadius: "100%",
                 }}
-              ></Box>
+              />
               <Box
                 sx={{
                   width: "20px",
@@ -130,7 +130,7 @@ export default function Signup() {
                   borderRadius: "100%",
                   ml: 1,
                 }}
-              ></Box>
+              />
               <Box
                 sx={{
                   width: "20px",
@@ -139,7 +139,7 @@ export default function Signup() {
                   borderRadius: "100%",
                   ml: 1,
                 }}
-              ></Box>
+              />
             </Box>
           </Box>
 
@@ -149,7 +149,7 @@ export default function Signup() {
               flexDirection: "column",
               alignItems: "center",
               justifyContent: "center",
-              mt: { xl: 20, lg: 5, xs: 5 },
+              mt: { xl: 30, lg: 5, xs: 5 },
             }}
           >
             <Box

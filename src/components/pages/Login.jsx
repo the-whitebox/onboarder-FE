@@ -97,7 +97,7 @@ export default function SignInSide() {
       <Grid
         container
         sx={{
-          height: {
+          minHeight: {
             xl: "100vh",
             lg: "100vh",
             md: "100vh",
@@ -117,7 +117,7 @@ export default function SignInSide() {
             flexDirection: "column",
             justifyContent: "space-between",
             alignItems: "center",
-            height: "100%",
+            minHeight: "100vh",
             pt: { xl: 15, lg: 2, xs: 2 },
             pb: { xl: 4, lg: 2, xs: 2 },
           }}
@@ -143,7 +143,13 @@ export default function SignInSide() {
             <Box
               sx={{ background: "white", width: "1px", height: "60px" }}
             ></Box>
-            <Typography sx={{ color: "white", ml: 2 }}>
+            <Typography
+              sx={{
+                color: "white",
+                ml: 2,
+                fontSize: { xl: "24px", sm: "15px" },
+              }}
+            >
               Effortless Time Management
             </Typography>
           </Box>
@@ -160,12 +166,12 @@ export default function SignInSide() {
               src={users}
               aria-label="Busy Man"
               sx={{
-                width: "60px",
-                height: "60px",
+                width: "65px",
+                height: "65px",
                 padding: "0px",
                 margin: "0px",
                 borderRadius: 0,
-                mb: 1,
+                mb: { xl: 3, sm: 1 },
                 mt: 1,
               }}
             />
@@ -249,7 +255,9 @@ export default function SignInSide() {
               password?
             </Box>
             <Link to="/step1" className="aTag-1">
-              <Typography sx={{ fontSize: "15px", fontWeight: 600, mt: 2 }}>
+              <Typography
+                sx={{ fontSize: "15px", fontWeight: 600, mt: { xl: 4, sm: 2 } }}
+              >
                 Sign Up with New ID
               </Typography>
             </Link>
@@ -266,7 +274,7 @@ export default function SignInSide() {
                 display: "flex",
                 alignItems: "center",
                 color: "white",
-                mb: 2,
+                mb: { xl: 5, sm: 1 },
               }}
             >
               <p>Need Help</p>{" "}

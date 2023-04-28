@@ -36,7 +36,7 @@ function Step3_4() {
               background: "#e6f4eb",
               borderRadius: "100%",
             }}
-          ></Box>
+          />
           <Box
             sx={{
               width: "20px",
@@ -45,7 +45,7 @@ function Step3_4() {
               borderRadius: "100%",
               ml: 1,
             }}
-          ></Box>
+          />
           <Box
             sx={{
               width: "20px",
@@ -54,7 +54,7 @@ function Step3_4() {
               borderRadius: "100%",
               ml: 1,
             }}
-          ></Box>
+          />
         </Box>
       </Box>
 
@@ -62,7 +62,11 @@ function Step3_4() {
         <Grid
           item
           xs={11}
-          sx={{ mt: 5, display: "flex", justifyContent: "center" }}
+          sx={{
+            mt: { xl: 10, sm: 5 },
+            display: "flex",
+            justifyContent: "center",
+          }}
         >
           <Box
             sx={{
@@ -239,7 +243,7 @@ function Step3_4() {
                 width: "100%",
                 display: "flex",
                 justifyContent: { md: "center", xs: "center" },
-                mt: { xs: 2, lg: 5, xl: 5 },
+                mt: { xs: 2, lg: 5, xl: 10 },
               }}
             >
               <Link to="/step3-3">
@@ -291,7 +295,7 @@ function Step3_4() {
                 background: "#e6f4eb",
                 borderRadius: "100%",
               }}
-            ></Box>
+            />
             <Box
               sx={{
                 width: "20px",
@@ -301,7 +305,7 @@ function Step3_4() {
                 mt: 1,
                 ml: { xs: 1, md: 0 },
               }}
-            ></Box>
+            />
             <Box
               sx={{
                 width: "20px",
@@ -311,7 +315,7 @@ function Step3_4() {
                 mt: 1,
                 ml: { xs: 1, md: 0 },
               }}
-            ></Box>
+            />
             <Box
               sx={{
                 width: "20px",
@@ -321,7 +325,7 @@ function Step3_4() {
                 mt: 1,
                 ml: { xs: 1, md: 0 },
               }}
-            ></Box>
+            />
           </Box>
         </Grid>
       </Box>
@@ -330,8 +334,7 @@ function Step3_4() {
         xs={12}
         sx={{
           position: "relative",
-          mt: { xl: 17, lg: 8 },
-          bgcolor: "red",
+          mt: { xl: 25, lg: 8 },
         }}
       >
         <Avatar

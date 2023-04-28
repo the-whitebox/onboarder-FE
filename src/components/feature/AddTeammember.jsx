@@ -40,12 +40,12 @@ const access = [
   "Advisor",
 ];
 const style = {
-  width: "auto",
+  width: { xl: "700px", md: "auto", sm: "550px" },
   height: "auto",
   position: "absolute",
-  top: "80%",
+  top: { xl: "2%", sm: "5%" },
   left: "50%",
-  transform: "translate(-50%, -50%)",
+  transform: "translate(-50%, 0%)",
   bgcolor: "background.paper",
   borderRadius: "8px ",
   boxShadow: 24,
@@ -205,7 +205,7 @@ export default function Addteammember(props) {
             variant="rounded"
           />
         </Box>
-        <Box sx={{ px: 5, mt: 5 }}>
+        <Box sx={{ px: { sm: 5, xl: 8 }, mt: 5 }}>
           <Grid container sx={{ display: "flex", alignItems: "center" }}>
             <Grid item xs={12} sm={12} md={3} lg={3} xl={3}>
               <Typography>First Name</Typography>
@@ -285,7 +285,11 @@ export default function Addteammember(props) {
                 variant="standard"
                 disableUnderline
                 sx={{
-                  p: "5px 10px 2px 10px",
+                  "& .MuiSelect-select": {
+                    p: "5px 15px 5px 15px",
+                    background: "none",
+                  },
+                  "& .MuiSelect-icon": { right: "5px" },
                   borderRadius: "25px",
                   border: "none !important",
                   outline: "none !important",
@@ -317,14 +321,19 @@ export default function Addteammember(props) {
             </Grid>
             <Grid item xs={12} sm={12} md={9} lg={9} xl={9}>
               <Select
-                fullWidth
+                // fullWidth
                 name="otherLocation"
                 displayEmpty
                 size="small"
                 variant="standard"
                 disableUnderline
                 sx={{
-                  p: "5px 10px 2px 10px",
+                  "& .MuiSelect-select": {
+                    p: "5px 15px 5px 15px",
+                    background: "none",
+                    width: "100px",
+                  },
+                  "& .MuiSelect-icon": { right: "5px" },
                   borderRadius: "25px",
                   border: "none !important",
                   outline: "none !important",
@@ -429,7 +438,11 @@ export default function Addteammember(props) {
                 variant="standard"
                 disableUnderline
                 sx={{
-                  p: "5px 10px 2px 10px",
+                  "& .MuiSelect-select": {
+                    p: "5px 15px 5px 15px",
+                    background: "none",
+                  },
+                  "& .MuiSelect-icon": { right: "5px" },
                   borderRadius: "25px",
                   border: "none !important",
                   outline: "none !important",
@@ -480,7 +493,11 @@ export default function Addteammember(props) {
                 variant="standard"
                 disableUnderline
                 sx={{
-                  p: "5px 10px 2px 10px",
+                  "& .MuiSelect-select": {
+                    p: "5px 15px 5px 15px",
+                    background: "none",
+                  },
+                  "& .MuiSelect-icon": { right: "5px" },
                   borderRadius: "25px",
                   border: "none !important",
                   outline: "none !important",
@@ -516,7 +533,11 @@ export default function Addteammember(props) {
                 variant="standard"
                 disableUnderline
                 sx={{
-                  p: "5px 10px 2px 10px",
+                  "& .MuiSelect-select": {
+                    p: "5px 15px 5px 15px",
+                    background: "none",
+                  },
+                  "& .MuiSelect-icon": { right: "5px" },
                   borderRadius: "25px",
                   border: "none !important",
                   outline: "none !important",
@@ -552,7 +573,11 @@ export default function Addteammember(props) {
                 variant="standard"
                 disableUnderline
                 sx={{
-                  p: "5px 10px 2px 10px",
+                  "& .MuiSelect-select": {
+                    p: "5px 15px 5px 15px",
+                    background: "none",
+                  },
+                  "& .MuiSelect-icon": { right: "5px" },
                   borderRadius: "25px",
                   border: "none !important",
                   outline: "none !important",
@@ -588,7 +613,11 @@ export default function Addteammember(props) {
                 variant="standard"
                 disableUnderline
                 sx={{
-                  p: "5px 10px 2px 10px",
+                  "& .MuiSelect-select": {
+                    p: "5px 15px 5px 15px",
+                    background: "none",
+                  },
+                  "& .MuiSelect-icon": { right: "5px" },
                   borderRadius: "25px",
                   border: "none !important",
                   outline: "none !important",

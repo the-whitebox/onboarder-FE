@@ -15,6 +15,7 @@ import AddTeammemberModalBody from "../feature/AddTeammember";
 import GlobalContext from "../../context/GlobalContext";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import BulkImportUpdateModal from "../feature/BulkImportUpdateModal";
 const modalWrapper = {
   overflow: "auto",
   display: "flex",
@@ -71,6 +72,11 @@ function AddPeople() {
   const [openAddTeam, setOpenAddTeam] = React.useState(false);
   const handleOpenAddTeam = () => setOpenAddTeam(true);
   const handleCloseAddTeam = () => setOpenAddTeam(false);
+  const [showModal1, setShowModal1] = useState(false);
+  const modal1Click = () => {
+    setShowModal1(true);
+    handleClose();
+  };
 
   const routeToManuallyAdd = () => {
     Navigate("/team-members/add-people-manually");
@@ -91,7 +97,24 @@ function AddPeople() {
           getBusiness={getBusiness}
         />
       </Modal>
-      <Grid container sx={{ overflowY: "scroll", height: "91vh", pb: 10 }}>
+      <Modal
+        open={showModal1}
+        onClose={() => setShowModal1(false)}
+        sx={modalWrapper}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <BulkImportUpdateModal setShowModal1={setShowModal1} />
+      </Modal>
+      <Grid
+        container
+        sx={{
+          overflowY: "scroll",
+          maxHeight: "91vh",
+          p: "30px 0px 30px 30px",
+          boxSizing: "border-box",
+        }}
+      >
         <Grid item xs={12}>
           <Box
             sx={{
@@ -138,18 +161,18 @@ function AddPeople() {
                   elevation: 0,
                   sx: {
                     overflow: "visible",
-                    width: "300px",
-                    px: 2,
+                    width: "320px",
                     mt: "5px",
                     borderRadius: "11px",
-                    border: "0.5px solid #707070",
+                    border:
+                      "0.10000000149011612px solid rgb(112, 112, 112,0.5)",
                     filter: "drop-shadow(0px 6px 3px rgba(21,34,50,0.08 ))",
                   },
                 }}
                 transformOrigin={{ horizontal: "right", vertical: "top" }}
                 anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
               >
-                <Box sx={{ mt: 2, mb: 2 }}>
+                <Box sx={{ mt: 1, mb: 2 }}>
                   <MenuItem onClick={handleClose}>
                     <ListItemIcon>
                       <FaUserPlus
@@ -165,7 +188,7 @@ function AddPeople() {
                       </Typography>
                     </Box>
                   </MenuItem>
-                  <Divider />
+                  <Divider sx={{ mx: 2 }} />
                   <MenuItem onClick={routeToManuallyAdd} sx={{ mt: 2 }}>
                     <ListItemIcon>
                       <CgUserList
@@ -186,7 +209,7 @@ function AddPeople() {
                       Import via integration
                     </Typography>
                   </MenuItem>
-                  <MenuItem onClick={handleClose}>
+                  <MenuItem onClick={modal1Click}>
                     <ListItemIcon>
                       <MdCloudUpload
                         style={{ color: "black", fontSize: "22px" }}

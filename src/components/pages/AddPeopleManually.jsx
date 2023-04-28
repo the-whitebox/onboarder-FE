@@ -17,6 +17,7 @@ import icon from "../../assets/icons/Path 1061.png";
 import icon1 from "../../assets/icons/Group 696.png";
 import icon2 from "../../assets/icons/Group 697.png";
 import DeleteOutlinedIcon from "@mui/icons-material/DeleteOutlined";
+import Setuptask from "../feature/Setuptask";
 
 const rows = [
   { id: 1, name: "Name", email: "Optional", phone: "Optional" },
@@ -32,13 +33,18 @@ function AddPeopleManually() {
         sx={{
           justifyContent: "center",
           overflowY: "scroll",
-          height: "91vh",
-          pb: 10,
+          maxHeight: "91vh",
+          p: "30px 10px 30px 10px",
+          boxSizing: "border-box",
         }}
       >
         <Grid item xl={9} lg={9} md={10} sm={12} xs={12}>
           <Typography
-            sx={{ color: "#354052", fontSize: "20px", textAlign: "center" }}
+            sx={{
+              color: "#354052",
+              fontSize: { xl: "26px", sm: "20px" },
+              textAlign: "center",
+            }}
           >
             Add New Team Members
           </Typography>
@@ -46,7 +52,7 @@ function AddPeopleManually() {
             sx={{
               display: "flex",
               alignItems: "center",
-              justifyContent: "center",
+              justifyContent: { sm: "center", xl: "space-evenly" },
               mt: 2,
               background: "#E6F4EB",
               py: 2,
@@ -96,7 +102,7 @@ function AddPeopleManually() {
               sx={{
                 height: "150px",
                 width: "150px",
-                ml: 5,
+                ml: { sm: 5 },
               }}
               variant="rounded"
             />
@@ -142,6 +148,7 @@ function AddPeopleManually() {
                       p: "5px 15px 5px 15px",
                       background: "none",
                     },
+                    "& .MuiSelect-icon": { right: "5px" },
                     borderRadius: "25px",
                     border: "none !important",
                     outline: "none !important",
@@ -388,6 +395,13 @@ function AddPeopleManually() {
             </Grid>
           </Box>
           <Divider sx={{ mt: 3, mb: 2 }} />
+        </Grid>
+        <Grid
+          item
+          xs={12}
+          sx={{ display: "flex", justifyContent: "flex-end", mr: { sm: 2 } }}
+        >
+          <Setuptask />
         </Grid>
       </Grid>
     </>

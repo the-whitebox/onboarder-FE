@@ -40,7 +40,7 @@ ul {
 
 .all-green-btns {
   color: white !important;
-  background-color: #38b492 !important;
+  background-color: #2bb491 !important;
 }
 
 .all-white-btns {
@@ -60,10 +60,10 @@ ul {
 }
 
 .input-fields {
-  border-radius: 10px;
+  border-radius: 12px;
   border: none;
   outline: none;
-  width: 300px;
+  width: 400px;
   background: white;
   padding: 20px 10px 20px 20px;
   margin-top: 10px;
@@ -71,22 +71,22 @@ ul {
 }
 
 .input-fields:focus {
-  background: rgb(247, 247, 247);
+  opacity: 0.8;
 }
 
 .input-fields-2 {
-  border-radius: 10px;
+  border-radius: 12px;
   border: 1px solid gray;
   outline: none;
-  width: 350px;
+  width: 430px;
   background: transparent;
-  padding: 20px 10px 20px 20px;
+  padding: 25px 10px 25px 20px;
   margin-top: 10px;
   margin-bottom: 5px;
 }
 
 .input-fields-3 {
-  border-radius: 10px;
+  border-radius: 7px;
   border: 1px solid gray;
   outline: none;
   width: 280px;
@@ -95,16 +95,31 @@ ul {
   margin-top: 10px;
 }
 
+.input-fields-4 {
+  border-radius: 12px;
+  border: none;
+  outline: none;
+  width: 320px;
+  background: white;
+  padding: 20px 10px 20px 20px;
+  margin-top: 10px;
+  margin-bottom: 5px;
+}
+
+.input-fields-4:focus {
+  opacity: 0.8;
+}
+
 .PhoneInputInput {
   padding: 10px 10px 10px 10px;
-  border-radius: 0px 10px 10px 0px;
+  border-radius: 0px 7px 7px 0px;
   border: 1px solid gray;
   outline: none;
   width: 230px;
 }
 
 .PhoneInputCountry {
-  border-radius: 10px 0px 0px 10px;
+  border-radius: 7px 0px 0px 7px;
   background: #f3f3f3;
   margin-right: 0 !important;
   padding-right: 10px;
@@ -123,6 +138,7 @@ ul {
   padding: 12px 0px;
   transition: 0.3s;
   position: relative;
+  font-size: 28px;
 }
 
 .vertical-menu .verticalMenu-aTag:hover {
@@ -158,9 +174,35 @@ ul {
   font-weight: bolder;
 }
 
+#employment .typo {
+  background: #fafafa;
+  color: #131523;
+  font-weight: 500;
+  width: 100%;
+  text-align: center;
+  padding: 20px 0px;
+  cursor: pointer;
+  transition: 0.3s all ease;
+}
+
+#employment .typo:hover {
+  background: #2bb491;
+  color: white;
+}
+
+#employment .active {
+  background: #2bb491;
+  color: white;
+}
+
 @media screen and (max-width: 1400px) {
   .input-fields {
     width: 350px;
+  }
+
+  .input-fields-2 {
+    width: 350px;
+    padding: 20px 10px 20px 20px;
   }
 
   .input-fields-3 {
@@ -169,6 +211,13 @@ ul {
 
   .PhoneInputInput {
     width: 200px;
+  }
+  .input-fields-4 {
+    width: 250px;
+    padding: 15px 10px 15px 20px;
+  }
+  .vertical-menu .verticalMenu-aTag {
+    font-size: 15px;
   }
 }
 
@@ -191,6 +240,9 @@ ul {
     width: 300px;
   }
   .input-fields-2 {
+    width: 300px;
+  }
+  .input-fields-4 {
     width: 300px;
   }
 }

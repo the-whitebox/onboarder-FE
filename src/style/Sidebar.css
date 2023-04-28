@@ -7,29 +7,25 @@
 #container {
   display: flex;
   height: 91vh;
-  margin-top: 9vh;
   overflow-y: hidden !important;
+  padding-top: 9vh;
 }
 
 #container main {
   width: 100%;
-  padding: 30px 0px 0px 30px;
 }
 
 #container .sidebar {
-  /* margin-top: 9vh; */
-  /* height: 91vh; */
   background: #e6f4eb;
   color: black;
   transition: all 0.5s;
-  /* position: sticky; */
   padding: 20px 0px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
 }
 
-#container a {
+#container .sidebar a {
   display: flex;
   align-items: center;
   padding: 10px 15px;
@@ -40,13 +36,13 @@
   position: relative;
 }
 
-#container a:hover {
+#container .sidebar a:hover {
   background: #ffffff;
   color: #2bb491;
   transition: all 0.5s;
 }
 
-#container a:hover::before {
+#container .sidebar a:hover::before {
   content: "";
   width: 6px;
   height: 100%;
@@ -57,12 +53,12 @@
   border-radius: 0px 5px 5px 0px;
 }
 
-#container .active {
+#container .sidebar .active {
   background: #ffffff;
   color: #2bb491 !important;
 }
 
-#container .active::before {
+#container .sidebar .active::before {
   content: "";
   width: 6px;
   height: 100%;
@@ -76,4 +72,24 @@
 #container .icon {
   font-size: 20px;
   color: #2bb491;
+}
+
+#personal-details a {
+  width: 100%;
+  background: #e6f4eb;
+  transition: all 0.5s;
+  font-size: 12px;
+  color: #131523;
+  text-align: center;
+  padding: 5px 0px;
+}
+
+#personal-details a:hover {
+  background: rgb(43, 180, 145, 0.3);
+  transition: all 0.5s;
+}
+
+#personal-details .active {
+  background: rgb(43, 180, 145, 0.3);
+  color: #131523;
 }
