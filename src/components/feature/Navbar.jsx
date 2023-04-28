@@ -109,6 +109,7 @@ export default function Navbar() {
               sx={{ color: "#131523", textTransform: "none", ml: 1 }}
             >
               {userInfo?.first_name} {userInfo?.last_name}
+              Username
             </Button>
             <Menu
               id="basic-menu"

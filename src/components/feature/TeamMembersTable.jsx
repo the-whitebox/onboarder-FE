@@ -197,11 +197,13 @@ const listItems = [
 ];
 
 function TeamMembersTable() {
+  const [data, setData] = useState(rows);
+  const [query, setQuery] = useState("");
   const [isCheckAll, setIsCheckAll] = useState(false);
   const [isCheck, setIsCheck] = useState([]);
   const handleSelectAll = (e) => {
     setIsCheckAll(!isCheckAll);
-    setIsCheck(rows?.map((data) => data.id));
+    setIsCheck(data?.map((data) => data.id));
     if (isCheckAll) {
       setIsCheck([]);
     }
@@ -249,10 +251,21 @@ function TeamMembersTable() {
 
   const itemsPerPage = 10;
   const [currentPage, setCurrentPage] = useState(1);
-  const totalPages = Math.ceil(rows.length / itemsPerPage);
+  const totalPages = Math.ceil(data.length / itemsPerPage);
   const startIndex = (currentPage - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
-  const currentData = rows?.slice(startIndex, endIndex);
+  const currentData = data?.slice(startIndex, endIndex);
+
+  React.useEffect(() => {
+    if (query === "") {
+      setData(rows);
+    } else {
+      const afterFilter = rows?.filter((items) =>
+        items.name.toLowerCase().includes(query.toLowerCase())
+      );
+      setData(afterFilter);
+    }
+  }, [query]);
 
   return (
     <>
@@ -299,6 +312,7 @@ function TeamMembersTable() {
                 width: "270px",
                 background: "#e6f4eb",
               }}
+              onChange={(e) => setQuery(e.target.value)}
             />
             <Box
               sx={{
@@ -611,7 +625,7 @@ function TeamMembersTable() {
             setCurrentPage={setCurrentPage}
             totalPages={totalPages}
             currentData={currentData}
-            rows={rows}
+            rows={data}
           />
         </Box>
       </Box>

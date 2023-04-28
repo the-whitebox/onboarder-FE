@@ -321,7 +321,7 @@ export default function Addteammember(props) {
             </Grid>
             <Grid item xs={12} sm={12} md={9} lg={9} xl={9}>
               <Select
-                fullWidth
+                // fullWidth
                 name="otherLocation"
                 displayEmpty
                 size="small"
@@ -331,6 +331,7 @@ export default function Addteammember(props) {
                   "& .MuiSelect-select": {
                     p: "5px 15px 5px 15px",
                     background: "none",
+                    width: "100px",
                   },
                   "& .MuiSelect-icon": { right: "5px" },
                   borderRadius: "25px",

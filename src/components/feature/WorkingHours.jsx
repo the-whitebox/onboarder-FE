@@ -143,10 +143,9 @@ export default function WorkingHours() {
               display: "flex",
               flexWrap: "wrap",
               justifyContent: "flex-end",
-              alignItems: "center",
             }}
           >
-            <Box>
+            <Box sx={{ mr: { xl: 2, sm: 0 } }}>
               <Typography
                 sx={{
                   color: "#131523",

@@ -28,7 +28,15 @@ export default function Step2() {
           minHeight: "100vh",
         }}
       >
-        <Grid item xl={12} lg={12} md={12} sm={12} xs={12}>
+        <Grid
+          item
+          xl={12}
+          lg={12}
+          md={12}
+          sm={12}
+          xs={12}
+          sx={{ height: { xl: 0 } }}
+        >
           <Box
             sx={{
               display: "flex",
@@ -231,7 +239,7 @@ export default function Step2() {
             sx={{
               display: "flex",
               justifyContent: "flex-end",
-              mt: { lg: 8, sm: 4 },
+              mt: { xl: 5, lg: 8, sm: 4 },
             }}
           >
             <Box

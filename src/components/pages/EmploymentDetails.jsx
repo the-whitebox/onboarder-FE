@@ -20,7 +20,7 @@ function EmploymentDetails() {
       >
         <Grid
           item
-          xl={2}
+          xl={1.5}
           lg={2}
           md={2}
           sm={2}
@@ -37,7 +37,7 @@ function EmploymentDetails() {
         </Grid>
         <Grid
           item
-          xl={9}
+          xl={10}
           lg={10}
           md={10}
           sm={10}
@@ -79,7 +79,7 @@ function EmploymentDetails() {
             <Box
               sx={{
                 bgcolor: "#E6F4EB",
-                width: "25%",
+                width: "17%",
                 minHeight: "100%",
                 borderRadius: "28px 0px 0px 28px",
                 display: "flex",
@@ -108,7 +108,7 @@ function EmploymentDetails() {
                 Leave entitlements
               </Typography>
             </Box>
-            <Box sx={{ width: "75%" }}>
+            <Box sx={{ width: "83%" }}>
               {tabs === "Work details" ? <WorkDetails /> : <></>}
               {tabs === "Working hours" ? <WorkingHours /> : <></>}
               {tabs === "Leave entitlements" ? <LeaveEntitlement /> : <></>}

@@ -530,6 +530,8 @@ export default function Step3_3() {
                     {errors.payroll}
                   </small>
                 ) : null}
+              </Box>
+              <Box sx={{ pl: { md: 8, xs: 0, sm: 0 } }}>
                 <Button
                   type="submit"
                   variant="contained"

@@ -31,7 +31,7 @@ export default function PersonalDetails() {
       >
         <Grid
           item
-          xl={2}
+          xl={1.5}
           lg={2}
           md={2}
           sm={2}
@@ -72,7 +72,7 @@ export default function PersonalDetails() {
                 sx={{
                   bgcolor: "#E6F4EB",
                   borderRadius: "12px",
-                  width: { xl: "40%", md: "50%", xs: "100%" },
+                  width: { xl: "30%", sm: "45%", xs: "100%" },
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "space-evenly",
