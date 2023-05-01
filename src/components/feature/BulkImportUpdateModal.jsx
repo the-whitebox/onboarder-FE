@@ -1,5 +1,13 @@
 import React from "react";
-import { Avatar, Box, Button, Grid, Radio, Typography } from "@mui/material";
+import {
+  Avatar,
+  Box,
+  Button,
+  Grid,
+  Radio,
+  RadioGroup,
+  Typography,
+} from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import FileOpenIcon from "@mui/icons-material/FileOpen";
 import groud808 from "../../assets/icons/Group 808.png";
@@ -75,52 +83,68 @@ function BulkImportUpdateModal({ setShowModal1 }) {
           <Typography sx={{ color: "#354052", mt: 2 }}>
             What would you like to upload?
           </Typography>
-          <Box
-            sx={{
-              mt: 1,
-              bgcolor: "#E6F4EB",
-              borderRadius: "15px",
-              width: { sm: "350px", xs: "300px" },
-              py: 3,
-              px: 1,
-              boxSizing: "border-box",
-              display: "flex",
-              alignItems: "flex-end",
-            }}
-          >
-            <Radio />
-            <Box>
-              <Typography sx={{ color: "#354052", fontSize: "12px" }}>
-                Team Members Profile
-              </Typography>
-              <Typography sx={{ color: "#555555", fontSize: "11px" }}>
-                Add new team members, update existing team members
-              </Typography>
+          <RadioGroup name="use-radio-group" defaultValue="">
+            <Box
+              sx={{
+                mt: 1,
+                bgcolor: "#E6F4EB",
+                borderRadius: "15px",
+                width: { sm: "350px", xs: "300px" },
+                py: 3,
+                px: 1,
+                boxSizing: "border-box",
+                display: "flex",
+                alignItems: "flex-end",
+              }}
+            >
+              <Radio
+                sx={{
+                  "& .MuiSvgIcon-root": {
+                    color: "#2BB491",
+                  },
+                }}
+                value="a"
+              />
+              <Box>
+                <Typography sx={{ color: "#354052", fontSize: "12px" }}>
+                  Team Members Profile
+                </Typography>
+                <Typography sx={{ color: "#555555", fontSize: "11px" }}>
+                  Add new team members, update existing team members
+                </Typography>
+              </Box>
             </Box>
-          </Box>
-          <Box
-            sx={{
-              mt: 1,
-              bgcolor: "#E6F4EB",
-              borderRadius: "15px",
-              width: { sm: "350px", xs: "300px" },
-              py: 3,
-              px: 1,
-              boxSizing: "border-box",
-              display: "flex",
-              alignItems: "flex-end",
-            }}
-          >
-            <Radio />
-            <Box>
-              <Typography sx={{ color: "#354052", fontSize: "12px" }}>
-                Training
-              </Typography>
-              <Typography sx={{ color: "#555555", fontSize: "11px" }}>
-                Add new training, assign/update team member's training
-              </Typography>
+            <Box
+              sx={{
+                mt: 1,
+                bgcolor: "#E6F4EB",
+                borderRadius: "15px",
+                width: { sm: "350px", xs: "300px" },
+                py: 3,
+                px: 1,
+                boxSizing: "border-box",
+                display: "flex",
+                alignItems: "flex-end",
+              }}
+            >
+              <Radio
+                sx={{
+                  "& .MuiSvgIcon-root": {
+                    color: "#2BB491",
+                  },
+                }}
+                value="b"
+              />
+              <Box>
+                <Typography sx={{ color: "#354052", fontSize: "12px" }}>
+                  Training
+                </Typography>
+                <Typography sx={{ color: "#555555", fontSize: "11px" }}>
+                  Add new training, assign/update team member's training
+                </Typography>
+              </Box>
             </Box>
-          </Box>
+          </RadioGroup>
           <Box
             sx={{
               width: "100%",
