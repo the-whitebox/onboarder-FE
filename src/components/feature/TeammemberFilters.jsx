@@ -55,6 +55,9 @@ export default function TeammemberFilters() {
                   p: "5px 15px 5px 15px",
                   background: "none",
                 },
+                "& .MuiSelect-select:focus": {
+                  background: "none",
+                },
                 "& .MuiSelect-icon": { right: "5px" },
                 borderRadius: "25px",
                 border: "none !important",
@@ -80,6 +83,9 @@ export default function TeammemberFilters() {
               sx={{
                 "& .MuiSelect-select": {
                   p: "5px 15px 5px 15px",
+                  background: "none",
+                },
+                "& .MuiSelect-select:focus": {
                   background: "none",
                 },
                 "& .MuiSelect-icon": { right: "5px" },
@@ -117,6 +123,9 @@ export default function TeammemberFilters() {
               sx={{
                 "& .MuiSelect-select": {
                   p: "5px 15px 5px 15px",
+                  background: "none",
+                },
+                "& .MuiSelect-select:focus": {
                   background: "none",
                 },
                 "& .MuiSelect-icon": { right: "5px" },
@@ -165,6 +174,9 @@ export default function TeammemberFilters() {
                   p: "5px 15px 5px 15px",
                   background: "none",
                 },
+                "& .MuiSelect-select:focus": {
+                  background: "none",
+                },
                 "& .MuiSelect-icon": { right: "5px" },
                 borderRadius: "25px",
                 border: "none !important",
@@ -190,6 +202,9 @@ export default function TeammemberFilters() {
               sx={{
                 "& .MuiSelect-select": {
                   p: "5px 15px 5px 15px",
+                  background: "none",
+                },
+                "& .MuiSelect-select:focus": {
                   background: "none",
                 },
                 "& .MuiSelect-icon": { right: "5px" },
@@ -228,6 +243,9 @@ export default function TeammemberFilters() {
                   p: "5px 15px 5px 15px",
                   background: "none",
                 },
+                "& .MuiSelect-select:focus": {
+                  background: "none",
+                },
                 "& .MuiSelect-icon": { right: "5px" },
                 borderRadius: "25px",
                 border: "none !important",
@@ -253,6 +271,9 @@ export default function TeammemberFilters() {
               sx={{
                 "& .MuiSelect-select": {
                   p: "5px 15px 5px 15px",
+                  background: "none",
+                },
+                "& .MuiSelect-select:focus": {
                   background: "none",
                 },
                 "& .MuiSelect-icon": { right: "5px" },
@@ -291,6 +312,9 @@ export default function TeammemberFilters() {
                   p: "5px 15px 5px 15px",
                   background: "none",
                 },
+                "& .MuiSelect-select:focus": {
+                  background: "none",
+                },
                 "& .MuiSelect-icon": { right: "5px" },
                 borderRadius: "25px",
                 border: "none !important",
@@ -314,6 +338,9 @@ export default function TeammemberFilters() {
               sx={{
                 "& .MuiSelect-select": {
                   p: "5px 15px 5px 15px",
+                  background: "none",
+                },
+                "& .MuiSelect-select:focus": {
                   background: "none",
                 },
                 "& .MuiSelect-icon": { right: "5px" },
@@ -352,6 +379,9 @@ export default function TeammemberFilters() {
                   p: "5px 15px 5px 15px",
                   background: "none",
                 },
+                "& .MuiSelect-select:focus": {
+                  background: "none",
+                },
                 "& .MuiSelect-icon": { right: "5px" },
                 borderRadius: "25px",
                 border: "none !important",
@@ -377,6 +407,9 @@ export default function TeammemberFilters() {
               sx={{
                 "& .MuiSelect-select": {
                   p: "5px 15px 5px 15px",
+                  background: "none",
+                },
+                "& .MuiSelect-select:focus": {
                   background: "none",
                 },
                 "& .MuiSelect-icon": { right: "5px" },
@@ -413,6 +446,9 @@ export default function TeammemberFilters() {
               sx={{
                 "& .MuiSelect-select": {
                   p: "5px 15px 5px 15px",
+                  background: "none",
+                },
+                "& .MuiSelect-select:focus": {
                   background: "none",
                 },
                 "& .MuiSelect-icon": { right: "5px" },

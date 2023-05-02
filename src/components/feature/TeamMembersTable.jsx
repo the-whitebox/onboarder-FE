@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Avatar,
   Box,
@@ -30,159 +30,6 @@ const modalWrapper = {
   display: "flex",
 };
 
-const rows = [
-  {
-    id: "1",
-    name: "Username1",
-    connect: "Connected",
-    access: "Access",
-    main_location: "Main Location",
-    status: "Status",
-    email: "Email",
-    mobile: "Mobile",
-  },
-  {
-    id: "2",
-    name: "Username2",
-    connect: "Connected",
-    access: "Access",
-    main_location: "Main Location",
-    status: "Status",
-    email: "Email",
-    mobile: "Mobile",
-  },
-  {
-    id: "3",
-    name: "Username3",
-    connect: "Connected",
-    access: "Access",
-    main_location: "Main Location",
-    status: "Status",
-    email: "Email",
-    mobile: "Mobile",
-  },
-  {
-    id: "4",
-    name: "Username4",
-    connect: "Connected",
-    access: "Access",
-    main_location: "Main Location",
-    status: "Status",
-    email: "Email",
-    mobile: "Mobile",
-  },
-  {
-    id: "5",
-    name: "Username5",
-    connect: "Connected",
-    access: "Access",
-    main_location: "Main Location",
-    status: "Status",
-    email: "Email",
-    mobile: "Mobile",
-  },
-  {
-    id: "6",
-    name: "Username6",
-    connect: "Connected",
-    access: "Access",
-    main_location: "Main Location",
-    status: "Status",
-    email: "Email",
-    mobile: "Mobile",
-  },
-  {
-    id: "7",
-    name: "Username7",
-    connect: "Connected",
-    access: "Access",
-    main_location: "Main Location",
-    status: "Status",
-    email: "Email",
-    mobile: "Mobile",
-  },
-  {
-    id: "8",
-    name: "Username8",
-    connect: "Connected",
-    access: "Access",
-    main_location: "Main Location",
-    status: "Status",
-    email: "Email",
-    mobile: "Mobile",
-  },
-  {
-    id: "9",
-    name: "Username9",
-    connect: "Connected",
-    access: "Access",
-    main_location: "Main Location",
-    status: "Status",
-    email: "Email",
-    mobile: "Mobile",
-  },
-  {
-    id: "10",
-    name: "Username10",
-    connect: "Connected",
-    access: "Access",
-    main_location: "Main Location",
-    status: "Status",
-    email: "Email",
-    mobile: "Mobile",
-  },
-  {
-    id: "11",
-    name: "Username11",
-    connect: "Connected",
-    access: "Access",
-    main_location: "Main Location",
-    status: "Status",
-    email: "Email",
-    mobile: "Mobile",
-  },
-  {
-    id: "12",
-    name: "Username12",
-    connect: "Connected",
-    access: "Access",
-    main_location: "Main Location",
-    status: "Status",
-    email: "Email",
-    mobile: "Mobile",
-  },
-  {
-    id: "13",
-    name: "Username13",
-    connect: "Connected",
-    access: "Access",
-    main_location: "Main Location",
-    status: "Status",
-    email: "Email",
-    mobile: "Mobile",
-  },
-  {
-    id: "14",
-    name: "Username14",
-    connect: "Connected",
-    access: "Access",
-    main_location: "Main Location",
-    status: "Status",
-    email: "Email",
-    mobile: "Mobile",
-  },
-  {
-    id: "15",
-    name: "Username15",
-    connect: "Connected",
-    access: "Access",
-    main_location: "Main Location",
-    status: "Status",
-    email: "Email",
-    mobile: "Mobile",
-  },
-];
-
 const listItems = [
   { id: "1", name: "Main Location" },
   { id: "2", name: "Status" },
@@ -196,8 +43,12 @@ const listItems = [
   { id: "10", name: "Connected to" },
 ];
 
-function TeamMembersTable() {
-  const [data, setData] = useState(rows);
+function TeamMembersTable({ tableData }) {
+  const [data, setData] = useState([]);
+  React.useEffect(() => {
+    setData(tableData);
+  }, [tableData]);
+
   const [query, setQuery] = useState("");
   const [isCheckAll, setIsCheckAll] = useState(false);
   const [isCheck, setIsCheck] = useState([]);
@@ -210,9 +61,9 @@ function TeamMembersTable() {
   };
   const handleCheckClick = (e) => {
     const { id, checked } = e.target;
-    setIsCheck([...isCheck, id]);
+    setIsCheck([...isCheck, parseInt(id)]);
     if (!checked) {
-      setIsCheck(isCheck.filter((item) => item !== id));
+      setIsCheck(isCheck.filter((item) => item !== parseInt(id)));
     }
   };
   const [checkListItems, setCheckListItems] = useState([
@@ -258,9 +109,9 @@ function TeamMembersTable() {
 
   React.useEffect(() => {
     if (query === "") {
-      setData(rows);
+      setData(tableData);
     } else {
-      const afterFilter = rows?.filter((items) =>
+      const afterFilter = tableData?.filter((items) =>
         Object.keys(items).some((k) =>
           String(items[k]).toLowerCase().includes(query.toLowerCase())
         )

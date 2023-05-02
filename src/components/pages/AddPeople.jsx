@@ -27,6 +27,7 @@ function AddPeople() {
   const token = localStorage.getItem("token");
   const userId = localStorage.getItem("userId");
   const url = process.env.REACT_APP_BASE_URL;
+  const [rows, setRows] = useState([]);
 
   useEffect(() => {
     const getLoggedInUserDetails = async () => {
@@ -47,14 +48,14 @@ function AddPeople() {
 
   const getBusiness = async () => {
     await axios
-      .get(`${url}/people/?business_id=${userInfo?.business.id}`, {
+      .get(`${url}/people/?business_id=${userInfo?.id}`, {
         headers: {
           Authorization: `Bearer ${token}`,
           "Content-Type": "application/json",
         },
       })
       .then((response) => {
-        console.log(response);
+        setRows(response.data);
       })
       .catch((err) => console.log(err));
   };
@@ -225,7 +226,7 @@ function AddPeople() {
           </Box>
         </Grid>
         <Grid item xs={12}>
-          <TeamMembersTable />
+          <TeamMembersTable tableData={rows} />
         </Grid>
       </Grid>
     </>

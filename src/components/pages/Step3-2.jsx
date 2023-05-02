@@ -68,12 +68,13 @@ export default function Step3_2() {
   });
 
   const handleBusinessTypeChange = (e) => {
-    setFieldValue("businessType", parseInt(e.target.id));
-    getIndustries(parseInt(e.target.id));
+    console.log(e.target.value);
+    setFieldValue("businessType", e.target.value);
+    getIndustries(e.target.value);
   };
 
   const handleIndustryChange = (e) => {
-    setFieldValue("industry", parseInt(e.target.id));
+    setFieldValue("industry", e.target.value);
   };
 
   const handleNumber = (e) => {
@@ -388,7 +389,7 @@ export default function Step3_2() {
                   [`& .${radioClasses.checked}`]: {
                     [`& .${radioClasses.action}`]: {
                       inset: -1,
-                      border: "1px solid #38b492",
+                      border: "1px solid rgba(33, 213, 155, 0.5)",
                       borderRadius: "15px",
                       background: "#e6f4eb",
                       zIndex: "-1",
@@ -410,20 +411,20 @@ export default function Step3_2() {
                 onBlur={handleBlur}
               >
                 {[
-                  "Health Care",
-                  "Retail & Hospitality",
-                  "Services",
-                  "Charity",
-                  "Other",
-                ].map((value, idx) => (
+                  { id: 1, name: "Health Care" },
+                  { id: 2, name: "Retail & Hospitality" },
+                  { id: 3, name: "Services" },
+                  { id: 4, name: "Charity" },
+                  { id: 5, name: "Other" },
+                ].map((data, index) => (
                   <Sheet
-                    key={idx}
+                    key={index}
                     variant="outlined"
                     sx={{
                       borderRadius: "15px",
-                      border: "1px solid #38b492",
+                      border: "1px solid rgba(33, 213, 155, 0.5)",
+                      boxShadow: "0px 1px 2px rgba(21,34,50,0.08 )",
                       bgcolor: "background.body",
-                      boxShadow: "sm",
                       display: "flex",
                       flexDirection: "column",
                       alignItems: "center",
@@ -439,7 +440,7 @@ export default function Step3_2() {
                       height: "auto",
                     }}
                   >
-                    <Radio id={idx} value={value} />
+                    <Radio id={data.id} value={data.id} />
                     <Box
                       sx={{
                         background: "#e6f4eb",
@@ -449,17 +450,17 @@ export default function Step3_2() {
                     >
                       <Avatar
                         sx={{ borderRadius: 0, width: "25px", height: "25px" }}
-                        src={icons[idx]}
+                        src={icons[index]}
                       />
                     </Box>
                     <FormLabel
-                      htmlFor={value}
+                      htmlFor={data.name}
                       sx={{
                         fontSize: "12px",
                         fontWeight: "bold",
                       }}
                     >
-                      {value}
+                      {data.name}
                     </FormLabel>
                   </Sheet>
                 ))}
@@ -544,8 +545,8 @@ export default function Step3_2() {
                     onBlur={handleBlur}
                   >
                     <option>Select Industry</option>
-                    {industryData?.map((industry, idx) => (
-                      <option value={idx}>{industry["name"]}</option>
+                    {industryData?.map((data, index) => (
+                      <option value={data.id}>{data.name}</option>
                     ))}
                   </select>
                   <Box>
@@ -578,8 +579,8 @@ export default function Step3_2() {
                       [`& .${radioClasses.checked}`]: {
                         [`& .${radioClasses.action}`]: {
                           inset: -1,
-                          border: "1px solid gray",
-                          borderRadius: "10px",
+                          border: "1px solid rgba(201, 201, 201, 0.5)",
+                          borderRadius: "7px",
                           background: "#e6f4eb",
                           zIndex: "-1",
                         },
@@ -598,39 +599,43 @@ export default function Step3_2() {
                     onChange={handleChange}
                     onBlur={handleBlur}
                   >
-                    {["1-25", "26-49", "50-249", "250-749", "750+"].map(
-                      (value, idx) => (
-                        <Sheet
-                          key={idx}
-                          variant="outlined"
+                    {[
+                      { id: 1, name: "1-25" },
+                      { id: 2, name: "26-49" },
+                      { id: 3, name: "50-249" },
+                      { id: 4, name: "250-749" },
+                      { id: 5, name: "750+" },
+                    ].map((data, index) => (
+                      <Sheet
+                        key={index}
+                        variant="outlined"
+                        sx={{
+                          borderRadius: "7px",
+                          border: "1px solid rgba(201, 201, 201, 0.5)",
+                          bgcolor: "background.body",
+                          boxShadow: "sm",
+                          display: "flex",
+                          flexDirection: "column",
+                          alignItems: "center",
+                          flexWrap: "wrap",
+                          justifyContent: "center",
+                          padding: "0",
+                          width: "80px",
+                          height: "36px",
+                        }}
+                      >
+                        <Radio id={data.id} value={data.id} />
+                        <FormLabel
+                          htmlFor={data.name}
                           sx={{
-                            borderRadius: "7px",
-                            border: "1px solid gray",
-                            bgcolor: "background.body",
-                            boxShadow: "sm",
-                            display: "flex",
-                            flexDirection: "column",
-                            alignItems: "center",
-                            flexWrap: "wrap",
-                            justifyContent: "center",
-                            padding: "0",
-                            width: "80px",
-                            height: "36px",
+                            fontSize: "12px",
+                            fontWeight: "bold",
                           }}
                         >
-                          <Radio id={idx} value={value} />
-                          <FormLabel
-                            htmlFor={value}
-                            sx={{
-                              fontSize: "12px",
-                              fontWeight: "bold",
-                            }}
-                          >
-                            {value}
-                          </FormLabel>
-                        </Sheet>
-                      )
-                    )}
+                          {data.name}
+                        </FormLabel>
+                      </Sheet>
+                    ))}
                   </RadioGroup>
                   {errors.employees && touched.employees ? (
                     <small

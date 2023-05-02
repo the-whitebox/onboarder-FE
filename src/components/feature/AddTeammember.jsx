@@ -32,13 +32,7 @@ const initialValues = {
 };
 
 const names = ["Location 1", "Location 2"];
-const access = [
-  "System Administrator",
-  "Supervisor ",
-  "Employee",
-  "Location Manager",
-  "Advisor",
-];
+
 const style = {
   width: { xl: "700px", md: "auto", sm: "550px" },
   height: "auto",
@@ -78,7 +72,6 @@ export default function Addteammember(props) {
     };
     getIniviteLink();
   }, []);
-
   const { values, errors, touched, handleBlur, handleChange, handleSubmit } =
     useFormik({
       initialValues,
@@ -94,7 +87,7 @@ export default function Addteammember(props) {
               is_superuser: false,
               email: values.email,
               role: values.accessLevel,
-              business: userInfo?.business.id,
+              business: userInfo?.id,
               profile: {
                 phone_number: values.mobile,
               },
@@ -108,13 +101,13 @@ export default function Addteammember(props) {
           )
           .then((response) => {
             setLoading(false);
-            props.getBusiness();
+            // props.getBusiness();
             props.handleAddTeamClose();
             action.resetForm();
             console.log("add", response);
           })
           .catch((error) => {
-            console.log("Error", error.response);
+            console.log("Error", error);
             toast.error(error.response.data.non_field_errors[0]);
             setLoading(false);
           });
@@ -289,6 +282,9 @@ export default function Addteammember(props) {
                     p: "5px 15px 5px 15px",
                     background: "none",
                   },
+                  "& .MuiSelect-select:focus": {
+                    background: "none",
+                  },
                   "& .MuiSelect-icon": { right: "5px" },
                   borderRadius: "25px",
                   border: "none !important",
@@ -332,6 +328,9 @@ export default function Addteammember(props) {
                     p: "5px 15px 5px 15px",
                     background: "none",
                     width: "100px",
+                  },
+                  "& .MuiSelect-select:focus": {
+                    background: "none",
                   },
                   "& .MuiSelect-icon": { right: "5px" },
                   borderRadius: "25px",
@@ -394,7 +393,7 @@ export default function Addteammember(props) {
 
           <Grid container sx={{ display: "flex", alignItems: "center", mt: 2 }}>
             <Grid item xs={12} sm={12} md={3} lg={3} xl={3}>
-              <Typography>Access level</Typography>
+              <Typography>Email</Typography>
             </Grid>
             <Grid item xs={12} sm={12} md={9} lg={9} xl={9}>
               <TextField
@@ -427,7 +426,7 @@ export default function Addteammember(props) {
 
           <Grid container sx={{ display: "flex", alignItems: "center", mt: 2 }}>
             <Grid item xs={12} sm={12} md={3} lg={3} xl={3}>
-              <Typography>Other Location</Typography>
+              <Typography>Access Level</Typography>
             </Grid>
             <Grid item xs={12} sm={12} md={9} lg={9} xl={9}>
               <Select
@@ -440,6 +439,9 @@ export default function Addteammember(props) {
                 sx={{
                   "& .MuiSelect-select": {
                     p: "5px 15px 5px 15px",
+                    background: "none",
+                  },
+                  "& .MuiSelect-select:focus": {
                     background: "none",
                   },
                   "& .MuiSelect-icon": { right: "5px" },
@@ -456,9 +458,15 @@ export default function Addteammember(props) {
                 <MenuItem value="" disabled>
                   Select
                 </MenuItem>
-                {access.map((name, idx) => (
-                  <MenuItem key={name} value={idx}>
-                    {name}
+                {[
+                  { id: 1, name: "System Administrator" },
+                  { id: 2, name: "Supervisor" },
+                  { id: 3, name: "Employee" },
+                  { id: 4, name: "Location Manager" },
+                  { id: 5, name: "Advisor" },
+                ].map((data, index) => (
+                  <MenuItem key={index} value={data.id}>
+                    {data.name}
                   </MenuItem>
                 ))}
               </Select>
@@ -495,6 +503,9 @@ export default function Addteammember(props) {
                 sx={{
                   "& .MuiSelect-select": {
                     p: "5px 15px 5px 15px",
+                    background: "none",
+                  },
+                  "& .MuiSelect-select:focus": {
                     background: "none",
                   },
                   "& .MuiSelect-icon": { right: "5px" },
@@ -537,6 +548,9 @@ export default function Addteammember(props) {
                     p: "5px 15px 5px 15px",
                     background: "none",
                   },
+                  "& .MuiSelect-select:focus": {
+                    background: "none",
+                  },
                   "& .MuiSelect-icon": { right: "5px" },
                   borderRadius: "25px",
                   border: "none !important",
@@ -577,6 +591,9 @@ export default function Addteammember(props) {
                     p: "5px 15px 5px 15px",
                     background: "none",
                   },
+                  "& .MuiSelect-select:focus": {
+                    background: "none",
+                  },
                   "& .MuiSelect-icon": { right: "5px" },
                   borderRadius: "25px",
                   border: "none !important",
@@ -615,6 +632,9 @@ export default function Addteammember(props) {
                 sx={{
                   "& .MuiSelect-select": {
                     p: "5px 15px 5px 15px",
+                    background: "none",
+                  },
+                  "& .MuiSelect-select:focus": {
                     background: "none",
                   },
                   "& .MuiSelect-icon": { right: "5px" },

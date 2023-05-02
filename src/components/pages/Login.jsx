@@ -54,13 +54,12 @@ export default function SignInSide() {
                 response.data.access_token
               );
               Navigate("/dashboard");
-              setLoading(false);
               action.resetForm();
             }
+            setLoading(false);
           })
           .catch((error) => {
-            console.log(error);
-            toast.error("Something went wrong! Please try again");
+            toast.error(error.response.data.non_field_errors[0]);
             setLoading(false);
           });
       },

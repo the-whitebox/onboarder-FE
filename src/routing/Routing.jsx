@@ -32,95 +32,95 @@ function Routing() {
         <Route
           path="/step3-1"
           element={
-            // <PrivateRoute>
-            <Step3_1 />
-            // </PrivateRoute>
+            <PrivateRoute>
+              <Step3_1 />
+            </PrivateRoute>
           }
         />
         <Route
           path="/step3-2"
           element={
-            // <PrivateRoute>
-            <Step3_2 />
-            // </PrivateRoute>
+            <PrivateRoute>
+              <Step3_2 />
+            </PrivateRoute>
           }
         />
         <Route
           path="/step3-3"
           element={
-            // <PrivateRoute>
-            <Step3_3 />
-            // </PrivateRoute>
+            <PrivateRoute>
+              <Step3_3 />
+            </PrivateRoute>
           }
         />
         <Route element={<WithVerticalMenu />}>
           <Route
             path="/step3-4"
             element={
-              // <PrivateRoute>
-              <Step3_4 />
-              // </PrivateRoute>
+              <PrivateRoute>
+                <Step3_4 />
+              </PrivateRoute>
             }
           />
         </Route>
         <Route
           path="/dashboard"
           element={
-            // <PrivateRoute>
-            <Sidebar>
-              <Dashboard />
-            </Sidebar>
-            // </PrivateRoute>
+            <PrivateRoute>
+              <Sidebar>
+                <Dashboard />
+              </Sidebar>
+            </PrivateRoute>
           }
         />
         <Route
           path="/team-members"
           element={
-            // <PrivateRoute>
-            <Sidebar>
-              <AddPeople />
-            </Sidebar>
-            // </PrivateRoute>
+            <PrivateRoute>
+              <Sidebar>
+                <AddPeople />
+              </Sidebar>
+            </PrivateRoute>
           }
         />
         <Route
           path="/team-members/add-people-manually"
           element={
-            // <PrivateRoute>
-            <Sidebar>
-              <AddPeopleManually />
-            </Sidebar>
-            // </PrivateRoute>
+            <PrivateRoute>
+              <Sidebar>
+                <AddPeopleManually />
+              </Sidebar>
+            </PrivateRoute>
           }
         />
         <Route
           path="/my-account"
           element={
-            // <PrivateRoute>
-            <Sidebar>
-              <PersonalDetails />
-            </Sidebar>
-            // </PrivateRoute>
+            <PrivateRoute>
+              <Sidebar>
+                <PersonalDetails />
+              </Sidebar>
+            </PrivateRoute>
           }
         />
         <Route
           path="/my-account/employment/details"
           element={
-            // <PrivateRoute>
-            <Sidebar>
-              <EmploymentDetails />
-            </Sidebar>
-            // </PrivateRoute>
+            <PrivateRoute>
+              <Sidebar>
+                <EmploymentDetails />
+              </Sidebar>
+            </PrivateRoute>
           }
         />
         <Route
           path="*"
           element={
-            // <PrivateRoute>
-            <Sidebar>
-              <Dashboard />
-            </Sidebar>
-            // </PrivateRoute>
+            <PrivateRoute>
+              <Sidebar>
+                <Dashboard />
+              </Sidebar>
+            </PrivateRoute>
           }
         />
 
