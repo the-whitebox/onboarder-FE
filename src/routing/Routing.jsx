@@ -1,6 +1,5 @@
 import React from "react";
 import { Routes, Route } from "react-router-dom";
-import WebFont from "webfontloader";
 import PrivateRoute from "./PrivateRoute";
 import WithVerticalMenu from "./WithVerticalMenu";
 import Login from "../components/pages/Login";
@@ -19,13 +18,6 @@ import EmploymentDetails from "../components/pages/EmploymentDetails";
 
 function Routing() {
   const token = localStorage.getItem("token");
-  React.useEffect(() => {
-    WebFont.load({
-      google: {
-        families: ["Open Sans"],
-      },
-    });
-  }, []);
   return (
     <>
       <Routes>

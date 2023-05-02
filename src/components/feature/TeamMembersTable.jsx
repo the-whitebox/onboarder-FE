@@ -261,7 +261,9 @@ function TeamMembersTable() {
       setData(rows);
     } else {
       const afterFilter = rows?.filter((items) =>
-        items.name.toLowerCase().includes(query.toLowerCase())
+        Object.keys(items).some((k) =>
+          String(items[k]).toLowerCase().includes(query.toLowerCase())
+        )
       );
       setData(afterFilter);
     }
@@ -447,15 +449,15 @@ function TeamMembersTable() {
         </Box>
         <Box
           sx={{
-            mt: 2,
-            height: { xl: "680px" },
+            mt: 1,
+            height: { xl: "590px" },
           }}
         >
           <TableContainer
             component={Paper}
             sx={{
               maxWidth: "100%",
-              maxHeight: { xl: 690, sm: 560 },
+              maxHeight: { xl: 590, sm: 560 },
               overflow: "scroll",
             }}
           >

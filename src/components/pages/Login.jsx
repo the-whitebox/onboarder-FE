@@ -46,7 +46,6 @@ export default function SignInSide() {
           })
           .then((response) => {
             if (response.status === 200) {
-              // console.log("Login Response", response);
               toast.success("You have successfully LoggedIn!");
               localStorage.setItem("token", response.data.access_token);
               localStorage.setItem("userId", response.data.user.pk);

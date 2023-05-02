@@ -18,14 +18,74 @@ import icon1 from "../../assets/icons/Group 696.png";
 import icon2 from "../../assets/icons/Group 697.png";
 import DeleteOutlinedIcon from "@mui/icons-material/DeleteOutlined";
 import Setuptask from "../feature/Setuptask";
-
-const rows = [
-  { id: 1, name: "Name", email: "Optional", phone: "Optional" },
-  { id: 1, name: "Name", email: "Optional", phone: "Optional" },
-  { id: 1, name: "Name", email: "Optional", phone: "Optional" },
-];
+import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
+import { useNavigate } from "react-router-dom";
 
 function AddPeopleManually() {
+  const Navigate = useNavigate();
+  const [rows, setRows] = React.useState([
+    {
+      id: parseInt(Date.now() * Math.random()),
+      name: "",
+      email: "",
+      phone: "",
+    },
+    {
+      id: parseInt(Date.now() * Math.random()),
+      name: "",
+      email: "",
+      phone: "",
+    },
+    {
+      id: parseInt(Date.now() * Math.random()),
+      name: "",
+      email: "",
+      phone: "",
+    },
+  ]);
+  const addMorePeople = () => {
+    setRows([
+      ...rows,
+      {
+        id: parseInt(Date.now() * Math.random()),
+        name: "",
+        email: "",
+        phone: "",
+      },
+      {
+        id: parseInt(Date.now() * Math.random()),
+        name: "",
+        email: "",
+        phone: "",
+      },
+      {
+        id: parseInt(Date.now() * Math.random()),
+        name: "",
+        email: "",
+        phone: "",
+      },
+    ]);
+  };
+  const handleDelete = (data) => {
+    const afterFilter = rows?.filter((row) => row.id !== data.id);
+    setRows(afterFilter);
+  };
+
+  const updateState = (index) => (e) => {
+    const newArray = rows.map((item, i) => {
+      if (index === i) {
+        return { ...item, [e.target.name]: e.target.value };
+      } else {
+        return item;
+      }
+    });
+    setRows(newArray);
+  };
+
+  const handleSubmit = () => {
+    console.log("Rows", rows);
+  };
+
   return (
     <>
       <Grid
@@ -192,11 +252,12 @@ function AddPeopleManually() {
                     border: "1px solid #A2A2A2",
                     bgcolor: "#FFFFFF",
                     borderRadius: "5px",
-                    p: "5px 15px",
+                    p: "3px 10px 3px 10px",
                     color: "black",
                   }}
+                  endIcon={<ArrowDropDownIcon />}
                 >
-                  Import or Upload a file{" "}
+                  Import or Upload a file
                   <input hidden accept="image/*" multiple type="file" />
                 </Button>
                 <Avatar
@@ -232,7 +293,7 @@ function AddPeopleManually() {
                 </Grid>
                 <Grid item xl={2} lg={1} md={1}></Grid>
               </Box>
-              {rows?.map((data) => (
+              {rows?.map((data, index) => (
                 <Box
                   sx={{
                     display: "flex",
@@ -245,7 +306,7 @@ function AddPeopleManually() {
                     <TextField
                       fullWidth
                       type="text"
-                      name="firstname"
+                      name="name"
                       size="small"
                       placeholder="Please input"
                       variant="standard"
@@ -253,7 +314,7 @@ function AddPeopleManually() {
                         disableUnderline: true,
                       }}
                       sx={{
-                        p: "5px 10px 2px 10px",
+                        p: "10px 5px 4px 15px",
                         borderRadius: "25px",
                         border: "none",
                         outline: "none ",
@@ -261,13 +322,14 @@ function AddPeopleManually() {
                         boxSizing: "border-box",
                       }}
                       value={data.name}
+                      onChange={updateState(index)}
                     />
                   </Grid>
                   <Grid item xl={3} lg={3.5} md={3}>
                     <TextField
                       fullWidth
                       type="text"
-                      name="firstname"
+                      name="email"
                       size="small"
                       placeholder="Please input"
                       variant="standard"
@@ -275,7 +337,7 @@ function AddPeopleManually() {
                         disableUnderline: true,
                       }}
                       sx={{
-                        p: "5px 10px 2px 10px",
+                        p: "10px 5px 4px 15px",
                         borderRadius: "25px",
                         border: "none",
                         outline: "none ",
@@ -283,13 +345,14 @@ function AddPeopleManually() {
                         boxSizing: "border-box",
                       }}
                       value={data.email}
+                      onChange={updateState(index)}
                     />
                   </Grid>
                   <Grid item xl={3} lg={3.5} md={3}>
                     <TextField
                       fullWidth
                       type="text"
-                      name="firstname"
+                      name="phone"
                       size="small"
                       placeholder="Please input"
                       variant="standard"
@@ -297,7 +360,7 @@ function AddPeopleManually() {
                         disableUnderline: true,
                       }}
                       sx={{
-                        p: "5px 10px 2px 10px",
+                        p: "10px 5px 4px 15px",
                         borderRadius: "25px",
                         border: "none",
                         outline: "none ",
@@ -305,10 +368,14 @@ function AddPeopleManually() {
                         boxSizing: "border-box",
                       }}
                       value={data.phone}
+                      onChange={updateState(index)}
                     />
                   </Grid>
                   <Grid item xl={2} lg={1} md={1}>
-                    <DeleteOutlinedIcon sx={{ cursor: "pointer" }} />
+                    <DeleteOutlinedIcon
+                      sx={{ cursor: "pointer" }}
+                      onClick={() => handleDelete(data)}
+                    />
                   </Grid>
                 </Box>
               ))}
@@ -331,6 +398,7 @@ function AddPeopleManually() {
                   width: "90%",
                   py: "10px",
                 }}
+                onClick={addMorePeople}
               >
                 Add more people{" "}
                 <AddCircleOutlineOutlinedIcon
@@ -361,7 +429,18 @@ function AddPeopleManually() {
             >
               <Box sx={{ color: "#131523", fontSize: "12px" }}>
                 Send invitation Email [?]
-                <Switch defaultChecked size="small" />
+                <Switch
+                  defaultChecked
+                  size="small"
+                  sx={{
+                    "& .MuiSwitch-track": {
+                      background: "#2BB491",
+                    },
+                    "& 	.MuiSwitch-thumb": {
+                      background: "#2BB491",
+                    },
+                  }}
+                />
               </Box>
               <Box>
                 <Button
@@ -374,6 +453,7 @@ function AddPeopleManually() {
                     p: "8px 15px",
                     mr: 2,
                   }}
+                  onClick={() => Navigate("/team-members")}
                 >
                   Cancel
                 </Button>
@@ -388,6 +468,7 @@ function AddPeopleManually() {
                     fontSize: "12px",
                     p: "8px 15px",
                   }}
+                  onClick={handleSubmit}
                 >
                   Add People
                 </Button>
