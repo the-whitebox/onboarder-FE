@@ -1,0 +1,248 @@
+.avatar-size {
+  width: 120px !important;
+  height: 120px !important;
+  font-size: 45px !important;
+}
+.messageCircle {
+  width: 120px !important;
+  height: 120px !important;
+  font-size: 75px !important;
+}
+
+.flex-row {
+  display: flex !important;
+  flex-direction: row !important;
+  justify-content: space-between;
+}
+
+ul {
+  list-style-type: none !important;
+}
+
+.aTag {
+  margin: 0;
+  color: #38b492;
+  -webkit-text-decoration: underline;
+  text-decoration: underline;
+  text-decoration-color: rgba(56, 180, 146, 0.4);
+  color: #38b492;
+  cursor: pointer;
+}
+
+.aTag:hover {
+  text-decoration-color: #38b492;
+}
+
+.aTag-1 {
+  color: white;
+  text-decoration: none;
+}
+
+.all-green-btns {
+  color: white !important;
+  background-color: #2bb491 !important;
+}
+
+.all-white-btns {
+  background-color: #ffffff !important;
+}
+
+.all-blue-btns {
+  background-color: #3d1cba !important;
+}
+
+.all-red-btns {
+  background: #af1105 !important;
+}
+
+.css-lwt8hc-JoyRadio-action {
+  border: "none" !important;
+}
+
+.input-fields {
+  border-radius: 12px;
+  border: none;
+  outline: none;
+  width: 400px;
+  background: white;
+  padding: 20px 10px 20px 20px;
+  margin-top: 10px;
+  margin-bottom: 5px;
+}
+
+.input-fields:focus {
+  opacity: 0.8;
+}
+
+.input-fields-2 {
+  border-radius: 12px;
+  border: 1px solid gray;
+  outline: none;
+  width: 430px;
+  background: transparent;
+  padding: 25px 10px 25px 20px;
+  margin-top: 10px;
+  margin-bottom: 5px;
+}
+
+.input-fields-3 {
+  border-radius: 7px;
+  border: 1px solid gray;
+  outline: none;
+  width: 280px;
+  background: transparent;
+  padding: 10px 10px 10px 20px;
+  margin-top: 10px;
+}
+
+.input-fields-4 {
+  border-radius: 12px;
+  border: none;
+  outline: none;
+  width: 320px;
+  background: white;
+  padding: 20px 10px 20px 20px;
+  margin-top: 10px;
+  margin-bottom: 5px;
+}
+
+.input-fields-4:focus {
+  opacity: 0.8;
+}
+
+.PhoneInputInput {
+  padding: 10px 10px 10px 10px;
+  border-radius: 0px 7px 7px 0px;
+  border: 1px solid gray;
+  outline: none;
+  width: 230px;
+}
+
+.PhoneInputCountry {
+  border-radius: 7px 0px 0px 7px;
+  background: #f3f3f3;
+  margin-right: 0 !important;
+  padding-right: 10px;
+  padding-left: 15px;
+}
+
+.css-1pqm26d-MuiAvatar-img {
+  object-fit: contain !important;
+}
+
+.vertical-menu .verticalMenu-aTag {
+  text-decoration: none;
+  color: #5b6462;
+  width: 100%;
+  text-align: center;
+  padding: 12px 0px;
+  transition: 0.3s;
+  position: relative;
+  font-size: 28px;
+}
+
+.vertical-menu .verticalMenu-aTag:hover {
+  background: #23ce99;
+  color: white;
+}
+
+.vertical-menu .verticalMenu-aTag:hover::before {
+  content: "";
+  width: 6px;
+  height: 100%;
+  background: white;
+  position: absolute;
+  left: 0;
+  top: 0;
+  border-radius: 0px 5px 5px 0px;
+}
+
+.vertical-menu .active::before {
+  content: "";
+  width: 6px;
+  height: 100%;
+  background: white;
+  position: absolute;
+  left: 0;
+  top: 0;
+  border-radius: 0px 5px 5px 0px;
+}
+
+.vertical-menu .active {
+  background: #23ce99;
+  color: white;
+  font-weight: bolder;
+}
+
+#employment .typo {
+  background: #fafafa;
+  color: #131523;
+  font-weight: 500;
+  width: 100%;
+  text-align: center;
+  padding: 20px 0px;
+  cursor: pointer;
+  transition: 0.3s all ease;
+}
+
+#employment .typo:hover {
+  background: #2bb491;
+  color: white;
+}
+
+#employment .active {
+  background: #2bb491;
+  color: white;
+}
+
+@media screen and (max-width: 1400px) {
+  .input-fields {
+    width: 350px;
+  }
+
+  .input-fields-2 {
+    width: 350px;
+    padding: 20px 10px 20px 20px;
+  }
+
+  .input-fields-3 {
+    width: 250px;
+  }
+
+  .PhoneInputInput {
+    width: 200px;
+  }
+  .input-fields-4 {
+    width: 250px;
+    padding: 15px 10px 15px 20px;
+  }
+  .vertical-menu .verticalMenu-aTag {
+    font-size: 15px;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .avatar-size {
+    width: 60px !important;
+    height: 60px !important;
+    font-size: 30px !important;
+  }
+
+  .messageCircle {
+    width: 60px !important;
+    height: 60px !important;
+    font-size: 30px !important;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .input-fields {
+    width: 300px;
+  }
+  .input-fields-2 {
+    width: 300px;
+  }
+  .input-fields-4 {
+    width: 300px;
+  }
+}
