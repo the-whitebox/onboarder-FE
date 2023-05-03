@@ -32,6 +32,10 @@ export default function SignInSide() {
   const Navigate = useNavigate();
   const url = process.env.REACT_APP_BASE_URL;
   const [loading, setLoading] = React.useState(false);
+  const [keepme, setKeepme] = React.useState(false);
+  const keepMeSignedIn = (e) => {
+    setKeepme(e.target.checked);
+  };
 
   const { values, errors, touched, handleBlur, handleChange, handleSubmit } =
     useFormik({
@@ -49,6 +53,11 @@ export default function SignInSide() {
               toast.success("You have successfully LoggedIn!");
               localStorage.setItem("token", response.data.access_token);
               localStorage.setItem("userId", response.data.user.pk);
+              {
+                keepme
+                  ? localStorage.setItem("check", true)
+                  : localStorage.setItem("check", false);
+              }
               getLoggedInUserDetails(
                 response.data.user.pk,
                 response.data.access_token
@@ -59,6 +68,7 @@ export default function SignInSide() {
             setLoading(false);
           })
           .catch((error) => {
+            console.log(error);
             toast.error(error.response.data.non_field_errors[0]);
             setLoading(false);
           });
@@ -209,7 +219,16 @@ export default function SignInSide() {
                 mt: { xl: 2, lg: 1, xs: 1 },
               }}
             >
-              <Checkbox sx={{ color: "white" }} size="small" />
+              <Checkbox
+                sx={{
+                  color: "white",
+                  "&.Mui-checked": {
+                    color: "white",
+                  },
+                }}
+                size="small"
+                onChange={(e) => keepMeSignedIn(e)}
+              />
               <Typography sx={{ fontSize: "12px" }}>
                 Keep me signed in
               </Typography>
@@ -219,7 +238,8 @@ export default function SignInSide() {
               className="all-white-btns"
               sx={{
                 color: "#2bb491",
-                padding: "8px 40px",
+                padding: "8px 0px",
+                width: "120px",
                 borderRadius: "10px",
                 mt: { xl: 2, lg: 1, xs: 1 },
                 textTransform: "none",

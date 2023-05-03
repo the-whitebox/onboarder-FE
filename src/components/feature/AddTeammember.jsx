@@ -19,19 +19,31 @@ import GlobalContext from "../../context/GlobalContext";
 const formSchema = Yup.object({
   firstname: Yup.string().required("Please enter your firstname"),
   lastname: Yup.string().required("Please enter your lastname"),
+  mainLocation: Yup.string().required("Please select your main location"),
+  otherLocation: Yup.string().required("Please select your other location"),
   mobile: Yup.string().required("Please enter your mobile number"),
   email: Yup.string().email().required("Please enter your email"),
   accessLevel: Yup.string().required("Please select access level"),
+  employmentType: Yup.string().required("Please select employment type"),
+  payPeriod: Yup.string().required("Please select pay period"),
+  payRates: Yup.string().required("Please select pay rates"),
+  payCenter: Yup.string().required("Please select pay center"),
+  payrollID: Yup.string().required("Please enter payroll ID"),
 });
 const initialValues = {
   firstname: "",
   lastname: "",
+  mainLocation: "",
+  otherLocation: "",
   mobile: "",
   email: "",
   accessLevel: "",
+  employmentType: "",
+  payPeriod: "",
+  payRates: "",
+  payCenter: "",
+  payrollID: "",
 };
-
-const names = ["Location 1", "Location 2"];
 
 const style = {
   width: { xl: "700px", md: "auto", sm: "550px" },
@@ -72,6 +84,7 @@ export default function Addteammember(props) {
     };
     getIniviteLink();
   }, []);
+
   const { values, errors, touched, handleBlur, handleChange, handleSubmit } =
     useFormik({
       initialValues,
@@ -101,13 +114,11 @@ export default function Addteammember(props) {
           )
           .then((response) => {
             setLoading(false);
-            // props.getBusiness();
+            props.getBusiness();
             props.handleAddTeamClose();
             action.resetForm();
-            console.log("add", response);
           })
           .catch((error) => {
-            console.log("Error", error);
             toast.error(error.response.data.non_field_errors[0]);
             setLoading(false);
           });
@@ -292,22 +303,25 @@ export default function Addteammember(props) {
                   background: "#e6f4eb",
                   boxSizing: "border-box",
                 }}
-                value=""
+                value={values.mainLocation}
                 handleBlur={handleBlur}
                 onChange={handleChange}
               >
                 <MenuItem value="" disabled>
                   Select
                 </MenuItem>
-                {names.map((name) => (
-                  <MenuItem key={name} value={name}>
-                    {name}
+                {[
+                  { id: 1, name: "value 1" },
+                  { id: 2, name: "value 2" },
+                ].map((data, index) => (
+                  <MenuItem key={index} value={data.id}>
+                    {data.name}
                   </MenuItem>
                 ))}
               </Select>
-              {/* {errors.mainLocation && touched.mainLocation ? (
+              {errors.mainLocation && touched.mainLocation ? (
                 <small style={{ color: "red" }}>{errors.mainLocation}</small>
-              ) : null} */}
+              ) : null}
             </Grid>
           </Grid>
 
@@ -315,9 +329,9 @@ export default function Addteammember(props) {
             <Grid item xs={12} sm={12} md={3} lg={3} xl={3}>
               <Typography>Other Location</Typography>
             </Grid>
-            <Grid item xs={12} sm={12} md={9} lg={9} xl={9}>
+            <Grid item xs={12} sm={12} md={9} lg={9} xl={5}>
               <Select
-                // fullWidth
+                fullWidth
                 name="otherLocation"
                 displayEmpty
                 size="small"
@@ -327,7 +341,7 @@ export default function Addteammember(props) {
                   "& .MuiSelect-select": {
                     p: "5px 15px 5px 15px",
                     background: "none",
-                    width: "100px",
+                    // width: "100px",
                   },
                   "& .MuiSelect-select:focus": {
                     background: "none",
@@ -339,22 +353,25 @@ export default function Addteammember(props) {
                   background: "#e6f4eb",
                   boxSizing: "border-box",
                 }}
-                value=""
+                value={values.otherLocation}
                 handleBlur={handleBlur}
                 onChange={handleChange}
               >
                 <MenuItem value="" disabled>
                   Select
                 </MenuItem>
-                {names.map((name) => (
-                  <MenuItem key={name} value={name}>
-                    {name}
+                {[
+                  { id: 1, name: "value 1" },
+                  { id: 2, name: "value 2" },
+                ].map((data, index) => (
+                  <MenuItem key={index} value={data.id}>
+                    {data.name}
                   </MenuItem>
                 ))}
               </Select>
-              {/* {errors.otherLocation && touched.otherLocation ? (
+              {errors.otherLocation && touched.otherLocation ? (
                 <small style={{ color: "red" }}>{errors.otherLocation}</small>
-              ) : null} */}
+              ) : null}
             </Grid>
           </Grid>
 
@@ -515,19 +532,25 @@ export default function Addteammember(props) {
                   background: "#e6f4eb",
                   boxSizing: "border-box",
                 }}
-                value=""
+                value={values.employmentType}
                 handleBlur={handleBlur}
                 onChange={handleChange}
               >
                 <MenuItem value="" disabled>
                   Select
                 </MenuItem>
-                <MenuItem>Employment Type 1</MenuItem>
-                <MenuItem>Employment Type 2</MenuItem>
+                {[
+                  { id: 1, name: "value 1" },
+                  { id: 2, name: "value 2" },
+                ].map((data, index) => (
+                  <MenuItem key={index} value={data.id}>
+                    {data.name}
+                  </MenuItem>
+                ))}
               </Select>
-              {/* {errors.employmentType && touched.employmentType ? (
+              {errors.employmentType && touched.employmentType ? (
                 <small style={{ color: "red" }}>{errors.employmentType}</small>
-              ) : null} */}
+              ) : null}
             </Grid>
           </Grid>
 
@@ -558,19 +581,25 @@ export default function Addteammember(props) {
                   background: "#e6f4eb",
                   boxSizing: "border-box",
                 }}
-                value=""
+                value={values.payPeriod}
                 handleBlur={handleBlur}
                 onChange={handleChange}
               >
                 <MenuItem value="" disabled>
                   Select
                 </MenuItem>
-                <MenuItem>Pay Period 1</MenuItem>
-                <MenuItem>Pay Period 2</MenuItem>
+                {[
+                  { id: 1, name: "value 1" },
+                  { id: 2, name: "value 2" },
+                ].map((data, index) => (
+                  <MenuItem key={index} value={data.id}>
+                    {data.name}
+                  </MenuItem>
+                ))}
               </Select>
-              {/* {errors.payPeriod && touched.payPeriod ? (
+              {errors.payPeriod && touched.payPeriod ? (
                 <small style={{ color: "red" }}>{errors.payPeriod}</small>
-              ) : null} */}
+              ) : null}
             </Grid>
           </Grid>
 
@@ -601,19 +630,25 @@ export default function Addteammember(props) {
                   background: "#e6f4eb",
                   boxSizing: "border-box",
                 }}
-                value=""
+                value={values.payRates}
                 handleBlur={handleBlur}
                 onChange={handleChange}
               >
                 <MenuItem value="" disabled>
                   Select
                 </MenuItem>
-                <MenuItem>Pay Rates 1</MenuItem>
-                <MenuItem>Pay Rates 2</MenuItem>
+                {[
+                  { id: 1, name: "value 1" },
+                  { id: 2, name: "value 2" },
+                ].map((data, index) => (
+                  <MenuItem key={index} value={data.id}>
+                    {data.name}
+                  </MenuItem>
+                ))}
               </Select>
-              {/* {errors.payRates && touched.payRates ? (
+              {errors.payRates && touched.payRates ? (
                 <small style={{ color: "red" }}>{errors.payRates}</small>
-              ) : null} */}
+              ) : null}
             </Grid>
           </Grid>
 
@@ -644,19 +679,25 @@ export default function Addteammember(props) {
                   background: "#e6f4eb",
                   boxSizing: "border-box",
                 }}
-                value=""
+                value={values.payCenter}
                 handleBlur={handleBlur}
                 onChange={handleChange}
               >
                 <MenuItem value="" disabled>
                   Select
                 </MenuItem>
-                <MenuItem>Pay Center 1</MenuItem>
-                <MenuItem>Pay Center 2</MenuItem>
+                {[
+                  { id: 1, name: "value 1" },
+                  { id: 2, name: "value 2" },
+                ].map((data, index) => (
+                  <MenuItem key={index} value={data.id}>
+                    {data.name}
+                  </MenuItem>
+                ))}
               </Select>
-              {/* {errors.payCenter && touched.payCenter ? (
+              {errors.payCenter && touched.payCenter ? (
                 <small style={{ color: "red" }}>{errors.payCenter}</small>
-              ) : null} */}
+              ) : null}
             </Grid>
           </Grid>
 
@@ -683,13 +724,13 @@ export default function Addteammember(props) {
                   background: "#e6f4eb",
                   boxSizing: "border-box",
                 }}
-                // value={values.payrollID}
+                value={values.payrollID}
                 onChange={handleChange}
                 onBlur={handleBlur}
               />
-              {/* {errors.payrollID && touched.payrollID ? (
+              {errors.payrollID && touched.payrollID ? (
                 <small style={{ color: "red" }}>{errors.payrollID}</small>
-              ) : null} */}
+              ) : null}
             </Grid>
           </Grid>
 

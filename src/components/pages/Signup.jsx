@@ -54,13 +54,12 @@ export default function Signup() {
             password: values.password,
           })
           .then((response) => {
-            console.log("response", response);
-            localStorage.setItem("token", response.data.access_token);
+            // localStorage.setItem("token", response.data.access_token);
+            // localStorage.setItem("userId", response.data.user.pk);
             toast.success(
               "You have successfully registered, Please check your email for verification."
             );
-            // localStorage.setItem("userId", response.data.user.pk);
-            Navigate("/step2");
+            Navigate(`/step2/${values.email}`);
             setLoading(false);
             action.resetForm();
           })

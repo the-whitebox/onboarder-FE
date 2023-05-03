@@ -9,9 +9,11 @@ import ForgotPassword from "./ForgotPassword";
 import emailIcon from "../../assets/icons/email-icon.png";
 import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
 import bg_image2 from "../../assets/images/bg-image2.png";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
-export default function Step2() {
+export default function EmailVerify() {
+  let token = useParams();
+  console.log("token", token);
   const Navigate = useNavigate();
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
@@ -92,10 +94,10 @@ export default function Step2() {
             sx={{
               display: "flex",
               justifyContent: "flex-end",
-              mt: { xl: 17, md: 13, sm: 8, xs: 5 },
+              mt: { xl: 15, sm: 8, xs: 5 },
             }}
           >
-            {/* <Box
+            <Box
               sx={{
                 background: "#e6f4eb",
                 display: "flex",
@@ -108,7 +110,7 @@ export default function Step2() {
               <Typography sx={{ color: "#2bb491", fontSize: "12px", ml: 1 }}>
                 VERIFICATION SUCCESSFULL
               </Typography>
-            </Box> */}
+            </Box>
           </Box>
           <Box
             sx={{
@@ -166,7 +168,7 @@ export default function Step2() {
                 borderRadius: "20px",
               }}
             ></Box>
-            {/* <Button
+            <Button
               variant="contained"
               className="all-green-btns"
               sx={{
@@ -179,7 +181,7 @@ export default function Step2() {
               onClick={goNext}
             >
               Next
-            </Button> */}
+            </Button>
           </Box>
           <Box>
             <Typography

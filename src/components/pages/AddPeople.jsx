@@ -28,6 +28,7 @@ function AddPeople() {
   const userId = localStorage.getItem("userId");
   const url = process.env.REACT_APP_BASE_URL;
   const [rows, setRows] = useState([]);
+  const [skeleton, setSkeleton] = useState(true);
 
   useEffect(() => {
     const getLoggedInUserDetails = async () => {
@@ -56,8 +57,11 @@ function AddPeople() {
       })
       .then((response) => {
         setRows(response.data);
+        setSkeleton(false);
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        setSkeleton(false);
+      });
   };
 
   useEffect(() => {
@@ -226,7 +230,7 @@ function AddPeople() {
           </Box>
         </Grid>
         <Grid item xs={12}>
-          <TeamMembersTable tableData={rows} />
+          <TeamMembersTable tableData={rows} skeleton={skeleton} />
         </Grid>
       </Grid>
     </>

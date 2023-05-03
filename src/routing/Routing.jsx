@@ -15,6 +15,7 @@ import AddPeople from "../components/pages/AddPeople";
 import AddPeopleManually from "../components/pages/AddPeopleManually";
 import PersonalDetails from "../components/pages/PersonalDetails";
 import EmploymentDetails from "../components/pages/EmploymentDetails";
+import EmailVerify from "../components/pages/EmailVerify";
 
 function Routing() {
   const token = localStorage.getItem("token");
@@ -22,10 +23,18 @@ function Routing() {
     <>
       <Routes>
         <Route
-          path="/step2"
+          path="/step2/:email"
           element={
             // <PrivateRoute>
             <Step2 />
+            // </PrivateRoute>
+          }
+        />
+        <Route
+          path="/email-verify/:token"
+          element={
+            // <PrivateRoute>
+            <EmailVerify />
             // </PrivateRoute>
           }
         />
