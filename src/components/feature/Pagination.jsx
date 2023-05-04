@@ -39,7 +39,7 @@ const Pagination = ({
               color: "gray",
               backgroundColor: "#E6F4EB",
               borderRadius: "8px",
-              p: 1,
+              p: "4px 10px",
             }}
           />
         ) : (
@@ -49,7 +49,7 @@ const Pagination = ({
               cursor: "pointer",
               backgroundColor: "#E6F4EB",
               borderRadius: "8px",
-              p: 1,
+              p: "4px 10px",
             }}
             onClick={(event) => handleClick(event, currentPage - 1)}
           />
@@ -61,7 +61,7 @@ const Pagination = ({
           disableUnderline
           sx={{
             "& .MuiSelect-select": {
-              p: "8px 15px",
+              p: "3px 15px",
               background: "none",
             },
             m: "0px 15px 0px 15px",
@@ -87,7 +87,7 @@ const Pagination = ({
               color: "gray",
               backgroundColor: "#E6F4EB",
               borderRadius: "8px",
-              p: 1,
+              p: "4px 10px",
             }}
           />
         ) : (
@@ -97,7 +97,7 @@ const Pagination = ({
               cursor: "pointer",
               backgroundColor: "#E6F4EB",
               borderRadius: "8px",
-              p: 1,
+              p: "4px 10px",
             }}
             onClick={(event) => handleClick(event, currentPage + 1)}
           />

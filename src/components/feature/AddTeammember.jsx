@@ -113,13 +113,14 @@ export default function Addteammember(props) {
             }
           )
           .then((response) => {
+            toast.success("Team member added successfully");
             setLoading(false);
             props.getBusiness();
-            props.handleAddTeamClose();
+            props.handleCloseAddTeam();
             action.resetForm();
           })
           .catch((error) => {
-            toast.error(error.response.data.non_field_errors[0]);
+            toast.error(error.response.data.email[0]);
             setLoading(false);
           });
       },

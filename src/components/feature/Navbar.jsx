@@ -32,7 +32,7 @@ export default function Navbar() {
 
   const handleLogout = () => {
     localStorage.clear();
-    // Navigate("/");
+    Navigate("/");
   };
 
   return (

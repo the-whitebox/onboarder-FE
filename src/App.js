@@ -16,6 +16,8 @@ function App() {
     });
   }, []);
 
+  // e.currentTarget.performance.navigation.type === PerformanceNavigation.TYPE_RELOAD
+
   return (
     <>
       <ToastContainer position="top-right" style={{ zIndex: "9999999" }} />
