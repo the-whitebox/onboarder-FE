@@ -1,9 +1,10 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Avatar,
   Box,
   Checkbox,
   Modal,
+  Skeleton,
   TextField,
   Typography,
 } from "@mui/material";
@@ -30,159 +31,6 @@ const modalWrapper = {
   display: "flex",
 };
 
-const rows = [
-  {
-    id: "1",
-    name: "Username1",
-    connect: "Connected",
-    access: "Access",
-    main_location: "Main Location",
-    status: "Status",
-    email: "Email",
-    mobile: "Mobile",
-  },
-  {
-    id: "2",
-    name: "Username2",
-    connect: "Connected",
-    access: "Access",
-    main_location: "Main Location",
-    status: "Status",
-    email: "Email",
-    mobile: "Mobile",
-  },
-  {
-    id: "3",
-    name: "Username3",
-    connect: "Connected",
-    access: "Access",
-    main_location: "Main Location",
-    status: "Status",
-    email: "Email",
-    mobile: "Mobile",
-  },
-  {
-    id: "4",
-    name: "Username4",
-    connect: "Connected",
-    access: "Access",
-    main_location: "Main Location",
-    status: "Status",
-    email: "Email",
-    mobile: "Mobile",
-  },
-  {
-    id: "5",
-    name: "Username5",
-    connect: "Connected",
-    access: "Access",
-    main_location: "Main Location",
-    status: "Status",
-    email: "Email",
-    mobile: "Mobile",
-  },
-  {
-    id: "6",
-    name: "Username6",
-    connect: "Connected",
-    access: "Access",
-    main_location: "Main Location",
-    status: "Status",
-    email: "Email",
-    mobile: "Mobile",
-  },
-  {
-    id: "7",
-    name: "Username7",
-    connect: "Connected",
-    access: "Access",
-    main_location: "Main Location",
-    status: "Status",
-    email: "Email",
-    mobile: "Mobile",
-  },
-  {
-    id: "8",
-    name: "Username8",
-    connect: "Connected",
-    access: "Access",
-    main_location: "Main Location",
-    status: "Status",
-    email: "Email",
-    mobile: "Mobile",
-  },
-  {
-    id: "9",
-    name: "Username9",
-    connect: "Connected",
-    access: "Access",
-    main_location: "Main Location",
-    status: "Status",
-    email: "Email",
-    mobile: "Mobile",
-  },
-  {
-    id: "10",
-    name: "Username10",
-    connect: "Connected",
-    access: "Access",
-    main_location: "Main Location",
-    status: "Status",
-    email: "Email",
-    mobile: "Mobile",
-  },
-  {
-    id: "11",
-    name: "Username11",
-    connect: "Connected",
-    access: "Access",
-    main_location: "Main Location",
-    status: "Status",
-    email: "Email",
-    mobile: "Mobile",
-  },
-  {
-    id: "12",
-    name: "Username12",
-    connect: "Connected",
-    access: "Access",
-    main_location: "Main Location",
-    status: "Status",
-    email: "Email",
-    mobile: "Mobile",
-  },
-  {
-    id: "13",
-    name: "Username13",
-    connect: "Connected",
-    access: "Access",
-    main_location: "Main Location",
-    status: "Status",
-    email: "Email",
-    mobile: "Mobile",
-  },
-  {
-    id: "14",
-    name: "Username14",
-    connect: "Connected",
-    access: "Access",
-    main_location: "Main Location",
-    status: "Status",
-    email: "Email",
-    mobile: "Mobile",
-  },
-  {
-    id: "15",
-    name: "Username15",
-    connect: "Connected",
-    access: "Access",
-    main_location: "Main Location",
-    status: "Status",
-    email: "Email",
-    mobile: "Mobile",
-  },
-];
-
 const listItems = [
   { id: "1", name: "Main Location" },
   { id: "2", name: "Status" },
@@ -196,9 +44,12 @@ const listItems = [
   { id: "10", name: "Connected to" },
 ];
 
-function TeamMembersTable() {
-  const [data, setData] = useState(rows);
-  const [query, setQuery] = useState("");
+function TeamMembersTable({ tableData, skeleton }) {
+  const [data, setData] = useState([]);
+  React.useEffect(() => {
+    setData(tableData);
+  }, [tableData]);
+
   const [isCheckAll, setIsCheckAll] = useState(false);
   const [isCheck, setIsCheck] = useState([]);
   const handleSelectAll = (e) => {
@@ -210,11 +61,12 @@ function TeamMembersTable() {
   };
   const handleCheckClick = (e) => {
     const { id, checked } = e.target;
-    setIsCheck([...isCheck, id]);
+    setIsCheck([...isCheck, parseInt(id)]);
     if (!checked) {
-      setIsCheck(isCheck.filter((item) => item !== id));
+      setIsCheck(isCheck.filter((item) => item !== parseInt(id)));
     }
   };
+
   const [checkListItems, setCheckListItems] = useState([
     { id: "1", value: true },
     { id: "2", value: true },
@@ -256,11 +108,12 @@ function TeamMembersTable() {
   const endIndex = startIndex + itemsPerPage;
   const currentData = data?.slice(startIndex, endIndex);
 
+  const [query, setQuery] = useState("");
   React.useEffect(() => {
     if (query === "") {
-      setData(rows);
+      setData(tableData);
     } else {
-      const afterFilter = rows?.filter((items) =>
+      const afterFilter = tableData?.filter((items) =>
         Object.keys(items).some((k) =>
           String(items[k]).toLowerCase().includes(query.toLowerCase())
         )
@@ -541,73 +394,270 @@ function TeamMembersTable() {
                   <TableCell align="start"></TableCell>
                 </TableRow>
               </TableHead>
-              <TableBody>
-                {currentData?.map((row) => (
-                  <TableRow
-                    key={row.id}
+              {skeleton ? (
+                <TableBody>
+                  {[
+                    { id: 1 },
+                    { id: 2 },
+                    { id: 3 },
+                    { id: 4 },
+                    { id: 5 },
+                    { id: 6 },
+                  ].map((row) => (
+                    <TableRow
+                      key={row.id}
+                      sx={{
+                        "&:last-child td, &:last-child th": {
+                          border: 0,
+                        },
+                      }}
+                    >
+                      <TableCell>
+                        <Box
+                          sx={{
+                            width: "42px",
+                            height: "42px",
+                            display: "flex",
+                            justifyContent: "center",
+                            alignItems: "center",
+                          }}
+                        >
+                          <Skeleton
+                            variant="rectangular"
+                            width={18}
+                            height={18}
+                          />
+                        </Box>
+                      </TableCell>
+                      <TableCell align="start">
+                        <Box sx={{ display: "flex", alignItems: "center" }}>
+                          <Skeleton variant="circular" width={30} height={30} />
+                          <Skeleton
+                            variant="rectangular"
+                            width={100}
+                            height={15}
+                            sx={{ ml: 1 }}
+                          />
+                        </Box>
+                      </TableCell>
+                      {checkListItems[9].value === true ? (
+                        <TableCell align="start">
+                          <Skeleton
+                            variant="rectangular"
+                            width={100}
+                            height={15}
+                          />
+                        </TableCell>
+                      ) : null}
+                      <TableCell align="start">
+                        <Skeleton
+                          variant="rectangular"
+                          width={100}
+                          height={15}
+                        />
+                      </TableCell>
+                      {checkListItems[0].value === true ? (
+                        <TableCell align="start">
+                          <Skeleton
+                            variant="rectangular"
+                            width={100}
+                            height={15}
+                          />
+                        </TableCell>
+                      ) : null}
+                      {checkListItems[1].value === true ? (
+                        <TableCell align="start">
+                          <Skeleton
+                            variant="rectangular"
+                            width={100}
+                            height={15}
+                          />
+                        </TableCell>
+                      ) : null}
+                      {checkListItems[2].value === true ? (
+                        <TableCell align="start">
+                          <Skeleton
+                            variant="rectangular"
+                            width={100}
+                            height={15}
+                          />
+                        </TableCell>
+                      ) : null}
+                      {checkListItems[3].value === true ? (
+                        <TableCell align="start">
+                          <Skeleton
+                            variant="rectangular"
+                            width={100}
+                            height={15}
+                          />
+                        </TableCell>
+                      ) : null}
+                      {checkListItems[4].value === true ? (
+                        <TableCell align="start">
+                          <Skeleton
+                            variant="rectangular"
+                            width={100}
+                            height={15}
+                          />
+                        </TableCell>
+                      ) : null}
+                      {checkListItems[5].value === true ? (
+                        <TableCell align="start">
+                          <Skeleton
+                            variant="rectangular"
+                            width={100}
+                            height={15}
+                          />
+                        </TableCell>
+                      ) : null}
+                      {checkListItems[6].value === true ? (
+                        <TableCell align="start">
+                          <Skeleton
+                            variant="rectangular"
+                            width={100}
+                            height={15}
+                          />
+                        </TableCell>
+                      ) : null}
+                      {checkListItems[7].value === true ? (
+                        <TableCell align="start">
+                          <Skeleton
+                            variant="rectangular"
+                            width={100}
+                            height={15}
+                          />
+                        </TableCell>
+                      ) : null}
+                      {checkListItems[8].value === true ? (
+                        <TableCell align="start">
+                          <Skeleton
+                            variant="rectangular"
+                            width={100}
+                            height={15}
+                          />
+                        </TableCell>
+                      ) : null}
+                      <TableCell align="start">
+                        <Box sx={{ display: "flex" }}>
+                          <Skeleton
+                            variant="rectangular"
+                            width={5}
+                            height={5}
+                          />
+                          <Skeleton
+                            variant="rectangular"
+                            width={5}
+                            height={5}
+                            sx={{ mx: "2px" }}
+                          />
+                          <Skeleton
+                            variant="rectangular"
+                            width={5}
+                            height={5}
+                          />
+                        </Box>
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              ) : (
+                <>
+                  {currentData.length > 0 ? (
+                    <TableBody>
+                      {currentData?.map((row) => (
+                        <TableRow
+                          key={row.id}
+                          sx={{
+                            "&:last-child td, &:last-child th": {
+                              border: 0,
+                            },
+                          }}
+                        >
+                          <TableCell>
+                            <Checkbox
+                              sx={{
+                                "&.Mui-checked": {
+                                  color: "#2BB491",
+                                },
+                              }}
+                              id={row.id}
+                              // name={row.name}
+                              onChange={handleCheckClick}
+                              checked={isCheck.includes(row.id)}
+                            />
+                          </TableCell>
+                          <TableCell align="start">
+                            <Box sx={{ display: "flex", alignItems: "center" }}>
+                              <Avatar
+                                sx={{ width: "30px", height: "30px", mr: 1 }}
+                              />
+                              <Typography>
+                                {row.first_name} {row.last_name}
+                              </Typography>
+                            </Box>
+                          </TableCell>
+                          {checkListItems[9].value === true ? (
+                            <TableCell align="start">Connect to</TableCell>
+                          ) : null}
+                          <TableCell align="start">Access</TableCell>
+                          {checkListItems[0].value === true ? (
+                            <TableCell align="start">Main Location</TableCell>
+                          ) : null}
+                          {checkListItems[1].value === true ? (
+                            <TableCell align="start">Status</TableCell>
+                          ) : null}
+                          {checkListItems[2].value === true ? (
+                            <TableCell align="start">Email</TableCell>
+                          ) : null}
+                          {checkListItems[3].value === true ? (
+                            <TableCell align="start">Mobile</TableCell>
+                          ) : null}
+                          {checkListItems[4].value === true ? (
+                            <TableCell align="start">Stress Profile</TableCell>
+                          ) : null}
+                          {checkListItems[5].value === true ? (
+                            <TableCell align="start">Training</TableCell>
+                          ) : null}
+                          {checkListItems[6].value === true ? (
+                            <TableCell align="start">Pay Rates</TableCell>
+                          ) : null}
+                          {checkListItems[7].value === true ? (
+                            <TableCell align="start">Payroll ID</TableCell>
+                          ) : null}
+                          {checkListItems[8].value === true ? (
+                            <TableCell align="start">Leave Balance</TableCell>
+                          ) : null}
+                          <TableCell align="start">
+                            <MoreHorizIcon sx={{ cursor: "pointer" }} />
+                          </TableCell>
+                        </TableRow>
+                      ))}
+                    </TableBody>
+                  ) : (
+                    <></>
+                  )}
+                </>
+              )}
+            </Table>
+            {skeleton ? (
+              <></>
+            ) : (
+              <>
+                {currentData.length < 1 ? (
+                  <Typography
                     sx={{
-                      "&:last-child td, &:last-child th": {
-                        border: 0,
-                      },
+                      width: "100%",
+                      py: 10,
+                      textAlign: "center",
                     }}
                   >
-                    <TableCell>
-                      <Checkbox
-                        sx={{
-                          "&.Mui-checked": {
-                            color: "#2BB491",
-                          },
-                        }}
-                        id={row.id}
-                        name={row.name}
-                        onChange={handleCheckClick}
-                        checked={isCheck.includes(row.id)}
-                      />
-                    </TableCell>
-                    <TableCell align="start">
-                      <Box sx={{ display: "flex", alignItems: "center" }}>
-                        <Avatar sx={{ width: "30px", height: "30px", mr: 1 }} />
-                        <Typography>{row.name}</Typography>
-                      </Box>
-                    </TableCell>
-                    {checkListItems[9].value === true ? (
-                      <TableCell align="start">Connect to</TableCell>
-                    ) : null}
-                    <TableCell align="start">Access</TableCell>
-                    {checkListItems[0].value === true ? (
-                      <TableCell align="start">Main Location</TableCell>
-                    ) : null}
-                    {checkListItems[1].value === true ? (
-                      <TableCell align="start">Status</TableCell>
-                    ) : null}
-                    {checkListItems[2].value === true ? (
-                      <TableCell align="start">Email</TableCell>
-                    ) : null}
-                    {checkListItems[3].value === true ? (
-                      <TableCell align="start">Mobile</TableCell>
-                    ) : null}
-                    {checkListItems[4].value === true ? (
-                      <TableCell align="start">Stress Profile</TableCell>
-                    ) : null}
-                    {checkListItems[5].value === true ? (
-                      <TableCell align="start">Training</TableCell>
-                    ) : null}
-                    {checkListItems[6].value === true ? (
-                      <TableCell align="start">Pay Rates</TableCell>
-                    ) : null}
-                    {checkListItems[7].value === true ? (
-                      <TableCell align="start">Payroll ID</TableCell>
-                    ) : null}
-                    {checkListItems[8].value === true ? (
-                      <TableCell align="start">Leave Balance</TableCell>
-                    ) : null}
-                    <TableCell align="start">
-                      <MoreHorizIcon sx={{ cursor: "pointer" }} />
-                    </TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
+                    No team members found
+                  </Typography>
+                ) : (
+                  <></>
+                )}
+              </>
+            )}
           </TableContainer>
         </Box>
         <Box
@@ -622,13 +672,17 @@ function TeamMembersTable() {
           <Box sx={{ mr: 2 }}>
             <Setuptask />
           </Box>
-          <Pagination
-            currentPage={currentPage}
-            setCurrentPage={setCurrentPage}
-            totalPages={totalPages}
-            currentData={currentData}
-            rows={data}
-          />
+          {data.length > 0 ? (
+            <Pagination
+              currentPage={currentPage}
+              setCurrentPage={setCurrentPage}
+              totalPages={totalPages}
+              currentData={currentData}
+              rows={data}
+            />
+          ) : (
+            <></>
+          )}
         </Box>
       </Box>
     </>

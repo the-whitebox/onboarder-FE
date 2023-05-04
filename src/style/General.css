@@ -87,7 +87,7 @@ ul {
 
 .input-fields-3 {
   border-radius: 7px;
-  border: 1px solid gray;
+  border: 1px solid rgba(201, 201, 201, 0.5);
   outline: none;
   width: 280px;
   background: transparent;
@@ -113,7 +113,7 @@ ul {
 .PhoneInputInput {
   padding: 10px 10px 10px 10px;
   border-radius: 0px 7px 7px 0px;
-  border: 1px solid gray;
+  border: 1px solid rgba(201, 201, 201, 0.5);
   outline: none;
   width: 230px;
 }

@@ -31,9 +31,8 @@ export default function Navbar() {
   };
 
   const handleLogout = () => {
-    localStorage.removeItem("token");
-    localStorage.removeItem("userId");
-    Navigate("/");
+    localStorage.clear();
+    // Navigate("/");
   };
 
   return (
@@ -109,7 +108,6 @@ export default function Navbar() {
               sx={{ color: "#131523", textTransform: "none", ml: 1 }}
             >
               {userInfo?.first_name} {userInfo?.last_name}
-              Username
             </Button>
             <Menu
               id="basic-menu"
@@ -146,7 +144,7 @@ export default function Navbar() {
               </Typography>
               <Divider sx={{ mx: 2 }} />
               <Box sx={{ mt: 2, mb: 10 }}>
-                <Typography sx={{ color: "#707070", ml: 2, px: 5 }}>
+                <Typography sx={{ color: "#707070", px: 5 }}>
                   {userInfo?.first_name} {userInfo?.last_name}
                 </Typography>
                 <MenuItem onClick={handleClose} sx={{ px: 5 }}>

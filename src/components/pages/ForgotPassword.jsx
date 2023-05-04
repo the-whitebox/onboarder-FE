@@ -47,7 +47,6 @@ export default function ForgotPassword(props) {
             email: values.email,
           })
           .then((response) => {
-            console.log("Login Response", response);
             toast.success(response.data.detail);
             setLoading(false);
           })
@@ -121,9 +120,6 @@ export default function ForgotPassword(props) {
               <small style={{ color: "#FF0000" }}>{errors.email}</small>
             ) : null}
           </Box>
-          {/* <MarkEmailReadOutlinedIcon
-            sx={{ fontSize: "40px", color: "white", mt: 1 }}
-          /> */}
           <Avatar
             src={emailIcon}
             aria-label="Busy Man"
@@ -157,6 +153,7 @@ export default function ForgotPassword(props) {
                 ml: "3px",
                 cursor: "pointer",
               }}
+              onClick={handleSubmit}
             >
               Resend Recovery mail
             </Link>

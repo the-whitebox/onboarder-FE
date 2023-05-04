@@ -44,7 +44,6 @@ export default function LoginSidebar(props) {
           })
           .then((response) => {
             if (response.status === 200) {
-              // console.log("Login Response", response);
               toast.success("You have successfully LoggedIn!");
               localStorage.setItem("token", response.data.access_token);
               localStorage.setItem("userId", response.data.user.pk);
@@ -53,13 +52,12 @@ export default function LoginSidebar(props) {
                 response.data.access_token
               );
               Navigate("/dashboard");
-              setLoading(false);
               action.resetForm();
             }
+            setLoading(false);
           })
           .catch((error) => {
-            console.log(error);
-            toast.error("Something went wrong! Please try again");
+            toast.error(error.response.data.non_field_errors[0]);
             setLoading(false);
           });
       },

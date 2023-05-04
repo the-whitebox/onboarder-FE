@@ -59,43 +59,24 @@ export default function Step3_3() {
             if (response.status === 201) {
               Navigate("/step3-4");
               setLoading(false);
+              toast.success("Bussiness Successfully Registered");
             }
           })
           .catch((error) => {
-            console.log("Error", error.response);
+            toast.error("Something wrent wrong! Please try again");
             setLoading(false);
           });
       },
     });
 
   const handlePurposeChange = (e) => {
-    setFieldValue("purpose", parseInt(e.target.id));
+    setFieldValue("purpose", e.target.value);
   };
 
   const handlePayrollChange = (e) => {
-    setFieldValue("payroll", parseInt(e.target.id));
+    setFieldValue("payroll", e.target.value);
   };
 
-  const description = [
-    {
-      name: "Save Time Schedule",
-      des: "I want to know my teams availability, so I can create and share schedules",
-    },
-    {
-      name: "Track hours work",
-      des: "I want a record of when my team works, so I can pay them correctly",
-    },
-    {
-      name: "Process your team's pay",
-      des: "I want to be able to process pay cycle without headaches",
-    },
-  ];
-  const payrollArr = [
-    {
-      name: "XERO",
-      des: "XERO",
-    },
-  ];
   return (
     <>
       <Grid container sx={{ pb: { xs: 5, md: 0 }, minHeight: "100vh" }}>
@@ -284,8 +265,8 @@ export default function Step3_3() {
                   [`& .${radioClasses.checked}`]: {
                     [`& .${radioClasses.action}`]: {
                       inset: -1,
-                      border: "1px solid #38b492",
-                      borderRadius: "8px",
+                      border: "1px solid rgba(33, 213, 155, 0.5)",
+                      borderRadius: "15px",
                       background: "#e6f4eb",
                       zIndex: "-1",
                     },
@@ -305,13 +286,30 @@ export default function Step3_3() {
                 onChange={handlePurposeChange}
                 onBlur={handleBlur}
               >
-                {description.map((value, idx) => (
+                {[
+                  {
+                    id: 1,
+                    name: "Save Time Schedule",
+                    des: "I want to know my teams availability, so I can create and share schedules",
+                  },
+                  {
+                    id: 2,
+                    name: "Track hours work",
+                    des: "I want a record of when my team works, so I can pay them correctly",
+                  },
+                  {
+                    id: 3,
+                    name: "Process your team's pay",
+                    des: "I want to be able to process pay cycle without headaches",
+                  },
+                ].map((data, index) => (
                   <Sheet
-                    key={idx}
+                    key={index}
                     variant="outlined"
                     sx={{
                       borderRadius: "15px",
-                      border: "1px solid #38b492",
+                      border: "1px solid rgba(33, 213, 155, 0.5)",
+                      boxShadow: "0px 1px 2px rgba(21,34,50,0.08 )",
                       bgcolor: "background.body",
                       boxShadow: "sm",
                       display: "flex",
@@ -323,7 +321,7 @@ export default function Step3_3() {
                       height: { xl: "175px", sm: "150px" },
                     }}
                   >
-                    <Radio id={idx} value={value.name} />
+                    <Radio id={data.id} value={data.id} />
                     <Avatar
                       sx={{
                         borderRadius: 0,
@@ -332,23 +330,23 @@ export default function Step3_3() {
                         mt: 1,
                         mb: { xl: 2, sm: 1 },
                       }}
-                      src={icons[idx]}
+                      src={icons[index]}
                     />
-                    <FormLabel htmlFor={value}>
+                    <FormLabel htmlFor={data}>
                       <Typography
                         sx={{
                           fontSize: "12px",
                           fontWeight: "bold",
                         }}
                       >
-                        {value.name}
+                        {data.name}
                       </Typography>
                       <Typography
                         sx={{
                           fontSize: "11px",
                         }}
                       >
-                        {value.des}
+                        {data.des}
                       </Typography>
                     </FormLabel>
                   </Sheet>
@@ -453,8 +451,8 @@ export default function Step3_3() {
                     [`& .${radioClasses.checked}`]: {
                       [`& .${radioClasses.action}`]: {
                         inset: -1,
-                        border: "1px solid #2bb491",
-                        borderRadius: "8px",
+                        border: "1px solid rgba(33, 213, 155, 0.5)",
+                        borderRadius: "15px",
                         background: "#e6f4eb",
                         zIndex: "-1",
                       },
@@ -473,13 +471,20 @@ export default function Step3_3() {
                   onChange={handlePayrollChange}
                   onBlur={handleBlur}
                 >
-                  {payrollArr.map((value, idx) => (
+                  {[
+                    {
+                      id: 1,
+                      name: "XERO",
+                      des: "XERO",
+                    },
+                  ].map((data, index) => (
                     <Sheet
-                      key={idx}
+                      key={index}
                       variant="outlined"
                       sx={{
                         borderRadius: "15px",
-                        border: "1px solid #2bb491",
+                        border: "1px solid rgba(33, 213, 155, 0.5)",
+                        boxShadow: "0px 1px 2px rgba(21,34,50,0.08 )",
                         bgcolor: "background.body",
                         boxShadow: "sm",
                         display: "flex",
@@ -496,9 +501,9 @@ export default function Step3_3() {
                         src={XeroIcon}
                         sx={{ mr: 1 }}
                       />
-                      <Radio id={idx} value={value.name} />
+                      <Radio id={data.id} value={data.name} />
                       <FormLabel
-                        htmlFor={value}
+                        htmlFor={data}
                         sx={{ display: "flex", flexDirection: "column" }}
                       >
                         <Typography
@@ -507,14 +512,14 @@ export default function Step3_3() {
                             fontWeight: "bold",
                           }}
                         >
-                          {value.name}
+                          {data.name}
                         </Typography>
                         <Typography
                           sx={{
                             fontSize: "12px",
                           }}
                         >
-                          {value.des}
+                          {data.des}
                         </Typography>
                       </FormLabel>
                     </Sheet>
