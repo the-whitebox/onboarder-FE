@@ -10,7 +10,6 @@ import emailIcon from "../../assets/icons/email-icon.png";
 import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
 import bg_image2 from "../../assets/images/bg-image2.png";
 import { useNavigate, useParams } from "react-router-dom";
-import axios from "axios";
 
 export default function EmailVerify() {
   let token = useParams();
@@ -24,23 +23,27 @@ export default function EmailVerify() {
 
   React.useEffect(() => {
     function verifyEmail() {
-      if (token) {
-        axios
-          .get(`${url}/verify_email/`, {
-            body: JSON.stringify({
-              token: token.token,
-            }),
-          })
-          .then((response) => {
-            console.log("response", response);
+      fetch(url + "/verify_email/", {
+        method: "post",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          token: token.token,
+        }),
+      })
+        .then((res) => res.json())
+        .then((response) => {
+          if (response.status === "success") {
+            setLoading(false);
             setShowStatus(true);
+            localStorage.setItem("token", response.access);
+            localStorage.setItem("userId", response.user_id);
+          } else if (response.status === "failed") {
             setLoading(false);
-          })
-          .catch((error) => {
-            console.log("Error", error);
-            setLoading(false);
-          });
-      }
+          }
+        });
     }
     verifyEmail();
   }, []);
@@ -120,7 +123,7 @@ export default function EmailVerify() {
             sx={{
               display: "flex",
               justifyContent: "flex-end",
-              mt: { xl: 15, sm: 8, xs: 5 },
+              mt: { xl: 13, sm: 8, xs: 5 },
             }}
           >
             {showStatus ? (
@@ -148,7 +151,7 @@ export default function EmailVerify() {
               flexDirection: "column",
               alignItems: "center",
               justifyContent: "center",
-              mt: { xl: 20, lg: 5, md: 5, sm: 5, xs: 5 },
+              mt: { xl: 15, lg: 5, md: 5, sm: 5, xs: 5 },
             }}
           >
             <Avatar
@@ -216,7 +219,8 @@ export default function EmailVerify() {
               className="all-green-btns"
               sx={{
                 color: "white",
-                padding: "8px 40px",
+                padding: "8px 0px",
+                width: "120px",
                 borderRadius: "10px",
                 mt: "-30px",
                 textTransform: "none",

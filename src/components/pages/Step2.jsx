@@ -134,7 +134,7 @@ export default function Step2() {
             <Typography
               sx={{ color: "#2bb491", textAlign: "center", fontSize: "18px" }}
             >
-              Verification has been sent to your email address
+              Verification link has been sent to your email address
             </Typography>
             <Typography
               sx={{

@@ -100,7 +100,7 @@ export default function Addteammember(props) {
               is_superuser: false,
               email: values.email,
               role: values.accessLevel,
-              business: userInfo?.id,
+              business: [userInfo?.business[0].id],
               profile: {
                 phone_number: values.mobile,
               },
@@ -120,6 +120,7 @@ export default function Addteammember(props) {
             action.resetForm();
           })
           .catch((error) => {
+            console.log(error);
             toast.error(error.response.data.email[0]);
             setLoading(false);
           });

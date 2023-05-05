@@ -269,7 +269,7 @@ export default function SignInSide() {
               }}
               onClick={handleOpen}
             >
-              Forgot <sapn style={{ fontWeight: "bold" }}>MAX</sapn>pilot ID or
+              Forgot <span style={{ fontWeight: "bold" }}>MAX</span>pilot ID or
               password?
             </Box>
             <Link to="/step1" className="aTag-1">
@@ -300,7 +300,7 @@ export default function SignInSide() {
             </Box>
             <Box sx={{ color: "white", fontSize: "10px", textAlign: "center" }}>
               Terms & Conditions | Privacy Policy | Copyright &#169; 2023
-              <sapn style={{ fontWeight: "bold" }}> MAX</sapn>pilot all rights
+              <span style={{ fontWeight: "bold" }}> MAX</span>pilot all rights
               reserved.
             </Box>
           </Box>

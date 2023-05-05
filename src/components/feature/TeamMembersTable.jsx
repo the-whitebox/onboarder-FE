@@ -278,7 +278,16 @@ function TeamMembersTable({ tableData, skeleton }) {
               anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
             >
               {listItems?.map((data) => (
-                <MenuItem sx={{ p: 0 }} key={data.id}>
+                <MenuItem
+                  sx={{
+                    p: 0,
+                    "&:hover": {
+                      backgroundColor: "transparent",
+                    },
+                    cursor: "auto",
+                  }}
+                  key={data.id}
+                >
                   <Checkbox
                     size="small"
                     sx={{

@@ -147,7 +147,15 @@ export default function Navbar() {
                 <Typography sx={{ color: "#707070", px: 5 }}>
                   {userInfo?.first_name} {userInfo?.last_name}
                 </Typography>
-                <MenuItem onClick={handleClose} sx={{ px: 5 }}>
+                <MenuItem
+                  onClick={handleClose}
+                  sx={{
+                    px: 5,
+                    "&:hover": {
+                      backgroundColor: "#E6F4EB !important",
+                    },
+                  }}
+                >
                   <ListItemIcon>
                     <TextSnippetOutlinedIcon sx={{ color: "black" }} />
                   </ListItemIcon>
@@ -163,7 +171,15 @@ export default function Navbar() {
                 <Typography sx={{ color: "#707070", mt: 3, ml: 5 }}>
                   Business Name
                 </Typography>
-                <MenuItem onClick={handleClose} sx={{ px: 5 }}>
+                <MenuItem
+                  onClick={handleClose}
+                  sx={{
+                    px: 5,
+                    "&:hover": {
+                      backgroundColor: "#E6F4EB !important",
+                    },
+                  }}
+                >
                   <ListItemIcon>
                     <Person2Icon fontSize="small" sx={{ color: "black" }} />
                   </ListItemIcon>
@@ -171,7 +187,15 @@ export default function Navbar() {
                     Profile
                   </Typography>
                 </MenuItem>
-                <MenuItem onClick={handleClose} sx={{ px: 5 }}>
+                <MenuItem
+                  onClick={handleClose}
+                  sx={{
+                    px: 5,
+                    "&:hover": {
+                      backgroundColor: "#E6F4EB !important",
+                    },
+                  }}
+                >
                   <ListItemIcon>
                     <CorporateFareIcon
                       fontSize="small"
@@ -182,7 +206,15 @@ export default function Navbar() {
                     Business
                   </Typography>
                 </MenuItem>
-                <MenuItem onClick={handleClose} sx={{ px: 5 }}>
+                <MenuItem
+                  onClick={handleClose}
+                  sx={{
+                    px: 5,
+                    "&:hover": {
+                      backgroundColor: "#E6F4EB !important",
+                    },
+                  }}
+                >
                   <ListItemIcon>
                     <CorporateFareIcon
                       fontSize="small"
