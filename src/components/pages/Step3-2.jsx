@@ -546,7 +546,9 @@ export default function Step3_2() {
                   >
                     <option>Select Industry</option>
                     {industryData?.map((data, index) => (
-                      <option value={data.id}>{data.name}</option>
+                      <option key={index} value={data.id}>
+                        {data.name}
+                      </option>
                     ))}
                   </select>
                   <Box>

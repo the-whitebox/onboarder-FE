@@ -49,7 +49,7 @@ function AddPeople() {
 
   const getBusiness = async () => {
     await axios
-      .get(`${url}/people/?business_id=${userInfo?.id}`, {
+      .get(`${url}/people/?business_id=${userInfo?.business[0].id}`, {
         headers: {
           Authorization: `Bearer ${token}`,
           "Content-Type": "application/json",
