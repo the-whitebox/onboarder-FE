@@ -35,6 +35,7 @@ const icons = [ScheduleIcon, TrackHoursIcon, PayIcon];
 
 export default function Step3_3() {
   const url = process.env.REACT_APP_BASE_URL;
+  const token = localStorage.getItem("token");
   const Navigate = useNavigate();
   const location = useLocation();
   const [loading, setLoading] = React.useState(false);
@@ -46,15 +47,24 @@ export default function Step3_3() {
       onSubmit: async (values, action) => {
         setLoading(true);
         await axios
-          .post(`${url}/business/`, {
-            business_name: location.state.business,
-            mobile_number: location.state.mobile,
-            business_type: location.state.businessType,
-            industry_type: location.state.industry,
-            employess_range: location.state.employees,
-            joining_purpose: values.purpose,
-            payroll_type: values.payroll,
-          })
+          .post(
+            `${url}/business/`,
+            {
+              business_name: location.state.business,
+              mobile_number: location.state.mobile,
+              business_type: location.state.businessType,
+              industry_type: location.state.industry,
+              employess_range: location.state.employees,
+              joining_purpose: values.purpose,
+              payroll_type: values.payroll,
+            },
+            {
+              headers: {
+                Authorization: `Bearer ${token}`,
+                "Content-Type": "application/json",
+              },
+            }
+          )
           .then((response) => {
             if (response.status === 201) {
               Navigate("/step3-4");
@@ -501,7 +511,7 @@ export default function Step3_3() {
                         src={XeroIcon}
                         sx={{ mr: 1 }}
                       />
-                      <Radio id={data.id} value={data.name} />
+                      <Radio id={data.id} value={data.id} />
                       <FormLabel
                         htmlFor={data}
                         sx={{ display: "flex", flexDirection: "column" }}

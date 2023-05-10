@@ -17,6 +17,7 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import GlobalContext from "../../context/GlobalContext";
 const formSchema = Yup.object({
+  // business: Yup.string().required("Please select business"),
   firstname: Yup.string().required("Please enter your firstname"),
   lastname: Yup.string().required("Please enter your lastname"),
   mainLocation: Yup.string().required("Please select your main location"),
@@ -31,6 +32,7 @@ const formSchema = Yup.object({
   payrollID: Yup.string().required("Please enter payroll ID"),
 });
 const initialValues = {
+  business: [],
   firstname: "",
   lastname: "",
   mainLocation: "",
@@ -62,6 +64,7 @@ const style = {
 
 export default function Addteammember(props) {
   const { userInfo } = React.useContext(GlobalContext);
+
   const token = localStorage.getItem("token");
   const url = process.env.REACT_APP_BASE_URL;
   const [loading, setLoading] = React.useState(false);
@@ -90,6 +93,7 @@ export default function Addteammember(props) {
       initialValues,
       validationSchema: formSchema,
       onSubmit: async (values, action) => {
+        console.log(values);
         setLoading(true);
         await axios
           .post(
@@ -100,7 +104,7 @@ export default function Addteammember(props) {
               is_superuser: false,
               email: values.email,
               role: values.accessLevel,
-              business: userInfo?.id,
+              business: values.business,
               profile: {
                 phone_number: values.mobile,
               },
@@ -113,13 +117,15 @@ export default function Addteammember(props) {
             }
           )
           .then((response) => {
+            toast.success("Team member added successfully");
             setLoading(false);
             props.getBusiness();
-            props.handleAddTeamClose();
+            props.handleCloseAddTeam();
             action.resetForm();
           })
           .catch((error) => {
-            toast.error(error.response.data.non_field_errors[0]);
+            console.log("error", error);
+            toast.error(error.response.data.email[0]);
             setLoading(false);
           });
       },
@@ -211,6 +217,59 @@ export default function Addteammember(props) {
         </Box>
         <Box sx={{ px: { sm: 5, xl: 8 }, mt: 5 }}>
           <Grid container sx={{ display: "flex", alignItems: "center" }}>
+            <Grid item xs={12} sm={12} md={3} lg={3} xl={3}>
+              <Typography>Business</Typography>
+            </Grid>
+            <Grid item xs={12} sm={12} md={9} lg={9} xl={9}>
+              <Select
+                fullWidth
+                name="business"
+                multiple
+                displayEmpty
+                size="small"
+                variant="standard"
+                disableUnderline
+                sx={{
+                  "& .MuiSelect-select": {
+                    p: "5px 15px 5px 15px",
+                    background: "none",
+                  },
+                  "& .MuiSelect-select:focus": {
+                    background: "none",
+                  },
+                  "& .MuiSelect-icon": { right: "5px" },
+                  borderRadius: "25px",
+                  border: "none !important",
+                  outline: "none !important",
+                  background: "#e6f4eb",
+                  boxSizing: "border-box",
+                }}
+                // renderValue={(selected) => {
+                //   if (selected.length === 0) {
+                //     return <>Select</>;
+                //   }
+                //   return selected.join(", ");
+                // }}
+                value={values.business}
+                handleBlur={handleBlur}
+                onChange={handleChange}
+              >
+                <MenuItem value="" disabled>
+                  Select
+                </MenuItem>
+                {userInfo?.business.map((data, index) => (
+                  <MenuItem key={index} value={data.id}>
+                    {data.business_name}
+                  </MenuItem>
+                ))}
+              </Select>
+              {errors.business && touched.business ? (
+                <small style={{ color: "red" }}>{errors.business}</small>
+              ) : null}
+            </Grid>
+          </Grid>
+
+          <Grid container sx={{ display: "flex", alignItems: "center", mt: 2 }}>
             <Grid item xs={12} sm={12} md={3} lg={3} xl={3}>
               <Typography>First Name</Typography>
             </Grid>

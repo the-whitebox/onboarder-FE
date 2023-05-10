@@ -22,22 +22,8 @@ function Routing() {
   return (
     <>
       <Routes>
-        <Route
-          path="/step2/:email"
-          element={
-            // <PrivateRoute>
-            <Step2 />
-            // </PrivateRoute>
-          }
-        />
-        <Route
-          path="/email-verify/:token"
-          element={
-            // <PrivateRoute>
-            <EmailVerify />
-            // </PrivateRoute>
-          }
-        />
+        <Route path="/step2/:email" element={<Step2 />} />
+        <Route path="/verify_email/:token" element={<EmailVerify />} />
         <Route
           path="/step3-1"
           element={

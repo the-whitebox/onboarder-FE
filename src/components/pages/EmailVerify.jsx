@@ -3,7 +3,7 @@ import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
-import { Avatar, Modal } from "@mui/material";
+import { Avatar, CircularProgress, Modal } from "@mui/material";
 import LoginSidebar from "../feature/LoginSidebar";
 import ForgotPassword from "./ForgotPassword";
 import emailIcon from "../../assets/icons/email-icon.png";
@@ -13,11 +13,40 @@ import { useNavigate, useParams } from "react-router-dom";
 
 export default function EmailVerify() {
   let token = useParams();
-  console.log("token", token);
+  const url = process.env.REACT_APP_BASE_URL;
   const Navigate = useNavigate();
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+  const [showStatus, setShowStatus] = React.useState(false);
+  const [loading, setLoading] = React.useState(true);
+
+  React.useEffect(() => {
+    function verifyEmail() {
+      fetch(url + "/verify_email/", {
+        method: "post",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          token: token.token,
+        }),
+      })
+        .then((res) => res.json())
+        .then((response) => {
+          if (response.status === "success") {
+            setLoading(false);
+            setShowStatus(true);
+            localStorage.setItem("token", response.access);
+            localStorage.setItem("userId", response.user_id);
+          } else if (response.status === "failed") {
+            setLoading(false);
+          }
+        });
+    }
+    verifyEmail();
+  }, []);
 
   const goNext = () => {
     Navigate("/step3-1");
@@ -94,23 +123,27 @@ export default function EmailVerify() {
             sx={{
               display: "flex",
               justifyContent: "flex-end",
-              mt: { xl: 15, sm: 8, xs: 5 },
+              mt: { xl: 13, sm: 8, xs: 5 },
             }}
           >
-            <Box
-              sx={{
-                background: "#e6f4eb",
-                display: "flex",
-                alignItems: "center",
-                padding: "20px 50px 20px 20px",
-                borderRadius: "40px 0px 0px 40px",
-              }}
-            >
-              <CheckCircleOutlineIcon sx={{ color: "#2bb491" }} />
-              <Typography sx={{ color: "#2bb491", fontSize: "12px", ml: 1 }}>
-                VERIFICATION SUCCESSFULL
-              </Typography>
-            </Box>
+            {showStatus ? (
+              <Box
+                sx={{
+                  background: "#e6f4eb",
+                  display: "flex",
+                  alignItems: "center",
+                  padding: "20px 50px 20px 20px",
+                  borderRadius: "40px 0px 0px 40px",
+                }}
+              >
+                <CheckCircleOutlineIcon sx={{ color: "#2bb491" }} />
+                <Typography sx={{ color: "#2bb491", fontSize: "12px", ml: 1 }}>
+                  VERIFICATION SUCCESSFULL
+                </Typography>
+              </Box>
+            ) : (
+              <></>
+            )}
           </Box>
           <Box
             sx={{
@@ -118,7 +151,7 @@ export default function EmailVerify() {
               flexDirection: "column",
               alignItems: "center",
               justifyContent: "center",
-              mt: { xl: 20, lg: 5, md: 5, sm: 5, xs: 5 },
+              mt: { xl: 15, lg: 5, md: 5, sm: 5, xs: 5 },
             }}
           >
             <Avatar
@@ -136,19 +169,32 @@ export default function EmailVerify() {
             <Typography
               sx={{ color: "#2bb491", textAlign: "center", fontSize: "18px" }}
             >
-              Verification has been sent to your email address
+              {loading ? (
+                <>Loading...</>
+              ) : (
+                <>
+                  {showStatus ? (
+                    <>Verification successfull</>
+                  ) : (
+                    <>Verification has been failed, Please try again</>
+                  )}
+                </>
+              )}
             </Typography>
             <Typography
               sx={{
+                width: "260px",
+                height: "15px",
                 background: "#354052",
                 color: "white",
                 fontSize: "10px",
                 padding: "2px 8px",
                 borderRadius: "20px",
                 mt: 1,
+                textAlign: "center",
               }}
             >
-              CONFIRM YOUR IDENTIFICATION FROM YOUR EMAIL
+              {showStatus ? <>IDENTIFICATION CONFIRMED</> : <></>}
             </Typography>
             <Box
               sx={{
@@ -173,14 +219,19 @@ export default function EmailVerify() {
               className="all-green-btns"
               sx={{
                 color: "white",
-                padding: "8px 40px",
+                padding: "8px 0px",
+                width: "120px",
                 borderRadius: "10px",
                 mt: "-30px",
                 textTransform: "none",
               }}
-              onClick={goNext}
+              onClick={showStatus ? goNext : null}
             >
-              Next
+              {loading ? (
+                <CircularProgress color="inherit" size={25} />
+              ) : (
+                <>{showStatus ? <>Next</> : <>Invalid</>}</>
+              )}
             </Button>
           </Box>
           <Box>

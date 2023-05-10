@@ -56,16 +56,14 @@ export default function Signup() {
           .then((response) => {
             // localStorage.setItem("token", response.data.access_token);
             // localStorage.setItem("userId", response.data.user.pk);
-            toast.success(
-              "You have successfully registered, Please check your email for verification."
-            );
+            toast.success("Please check your email for verification.");
             Navigate(`/step2/${values.email}`);
             setLoading(false);
             action.resetForm();
           })
           .catch((error) => {
-            toast.error(error.response.data.data);
             setLoading(false);
+            toast.error(error.response.data.data);
           });
       },
     });
@@ -148,7 +146,7 @@ export default function Signup() {
               flexDirection: "column",
               alignItems: "center",
               justifyContent: "center",
-              mt: { xl: 30, lg: 5, xs: 5 },
+              mt: { xl: 28, lg: 5, xs: 5 },
             }}
           >
             <Box
@@ -192,7 +190,7 @@ export default function Signup() {
             <Box sx={{ display: "flex", flexDirection: "column" }}>
               <input
                 className="input-fields-2"
-                placeholder="Enter you email address"
+                placeholder="Enter your email address"
                 name="email"
                 value={values.email}
                 onChange={handleChange}
@@ -223,6 +221,11 @@ export default function Signup() {
                 onChange={handleChange}
                 onBlur={handleBlur}
                 value={values.check}
+                sx={{
+                  "&.Mui-checked": {
+                    color: "#2BB491",
+                  },
+                }}
               />
               <Typography sx={{ fontSize: "10px", mb: 0 }}>
                 I agree to the terms of the Subscription Agreement & Privacy

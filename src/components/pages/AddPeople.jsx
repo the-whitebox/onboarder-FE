@@ -49,7 +49,7 @@ function AddPeople() {
 
   const getBusiness = async () => {
     await axios
-      .get(`${url}/people/?business_id=${userInfo?.id}`, {
+      .get(`${url}/people/?business_id=${userInfo?.business[0].id}`, {
         headers: {
           Authorization: `Bearer ${token}`,
           "Content-Type": "application/json",
@@ -178,7 +178,14 @@ function AddPeople() {
                 anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
               >
                 <Box sx={{ mt: 1, mb: 2 }}>
-                  <MenuItem onClick={handleClose}>
+                  <MenuItem
+                    onClick={handleClose}
+                    sx={{
+                      "&:hover": {
+                        backgroundColor: "#E6F4EB !important",
+                      },
+                    }}
+                  >
                     <ListItemIcon>
                       <FaUserPlus
                         style={{ color: "#2BB491", fontSize: "22px" }}
@@ -194,7 +201,15 @@ function AddPeople() {
                     </Box>
                   </MenuItem>
                   <Divider sx={{ mx: 2 }} />
-                  <MenuItem onClick={routeToManuallyAdd} sx={{ mt: 2 }}>
+                  <MenuItem
+                    onClick={routeToManuallyAdd}
+                    sx={{
+                      mt: 2,
+                      "&:hover": {
+                        backgroundColor: "#E6F4EB !important",
+                      },
+                    }}
+                  >
                     <ListItemIcon>
                       <CgUserList
                         style={{ color: "black", fontSize: "22px" }}
@@ -204,7 +219,14 @@ function AddPeople() {
                       Add Multiple Team Members
                     </Typography>
                   </MenuItem>
-                  <MenuItem onClick={handleClose}>
+                  <MenuItem
+                    onClick={handleClose}
+                    sx={{
+                      "&:hover": {
+                        backgroundColor: "#E6F4EB !important",
+                      },
+                    }}
+                  >
                     <ListItemIcon>
                       <MdImportExport
                         style={{ color: "black", fontSize: "22px" }}
@@ -214,7 +236,14 @@ function AddPeople() {
                       Import via integration
                     </Typography>
                   </MenuItem>
-                  <MenuItem onClick={modal1Click}>
+                  <MenuItem
+                    onClick={modal1Click}
+                    sx={{
+                      "&:hover": {
+                        backgroundColor: "#E6F4EB !important",
+                      },
+                    }}
+                  >
                     <ListItemIcon>
                       <MdCloudUpload
                         style={{ color: "black", fontSize: "22px" }}

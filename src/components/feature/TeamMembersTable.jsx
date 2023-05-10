@@ -137,6 +137,7 @@ function TeamMembersTable({ tableData, skeleton }) {
         <Box
           sx={{
             mt: { xl: 2, xs: 2 },
+            width: "95%",
             bgcolor: "white",
             boxShadow: 3,
             border: "0.5px solid #e4e4e4",
@@ -145,7 +146,7 @@ function TeamMembersTable({ tableData, skeleton }) {
             alignItems: "center",
             justifyContent: "space-between",
             px: 2,
-            py: 2,
+            py: "10px",
             boxSizing: "border-box",
           }}
         >
@@ -277,7 +278,16 @@ function TeamMembersTable({ tableData, skeleton }) {
               anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
             >
               {listItems?.map((data) => (
-                <MenuItem sx={{ p: 0 }} key={data.id}>
+                <MenuItem
+                  sx={{
+                    p: 0,
+                    "&:hover": {
+                      backgroundColor: "transparent",
+                    },
+                    cursor: "auto",
+                  }}
+                  key={data.id}
+                >
                   <Checkbox
                     size="small"
                     sx={{
@@ -591,9 +601,7 @@ function TeamMembersTable({ tableData, skeleton }) {
                               <Avatar
                                 sx={{ width: "30px", height: "30px", mr: 1 }}
                               />
-                              <Typography>
-                                {row.first_name} {row.last_name}
-                              </Typography>
+                              <Typography>{row.first_name}</Typography>
                             </Box>
                           </TableCell>
                           {checkListItems[9].value === true ? (
@@ -607,10 +615,12 @@ function TeamMembersTable({ tableData, skeleton }) {
                             <TableCell align="start">Status</TableCell>
                           ) : null}
                           {checkListItems[2].value === true ? (
-                            <TableCell align="start">Email</TableCell>
+                            <TableCell align="start">{row.email}</TableCell>
                           ) : null}
                           {checkListItems[3].value === true ? (
-                            <TableCell align="start">Mobile</TableCell>
+                            <TableCell align="start">
+                              {row.profile.phone_number}
+                            </TableCell>
                           ) : null}
                           {checkListItems[4].value === true ? (
                             <TableCell align="start">Stress Profile</TableCell>

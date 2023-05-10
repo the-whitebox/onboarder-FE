@@ -144,7 +144,7 @@ export default function ForgotPassword(props) {
           >
             <RefreshOutlinedIcon sx={{ fontSize: "20px", color: "white" }} />
             <Typography sx={{ color: "white", fontSize: "12px" }}>
-              Don"t receive any mail,
+              Didn't Receive any mail |
             </Typography>
             <Link
               sx={{

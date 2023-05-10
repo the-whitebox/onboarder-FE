@@ -68,9 +68,12 @@ export default function SignInSide() {
             setLoading(false);
           })
           .catch((error) => {
-            console.log(error);
-            toast.error(error.response.data.non_field_errors[0]);
             setLoading(false);
+            if (error.response.status == 401) {
+              toast.error(error.response.data.detail);
+            } else {
+              toast.error(error.response.data.non_field_errors[0]);
+            }
           });
       },
     });
@@ -183,75 +186,86 @@ export default function SignInSide() {
                 mt: 1,
               }}
             />
-            <Box sx={{ display: "flex", flexDirection: "column" }}>
-              <input
-                className="input-fields"
-                placeholder="Enter your email address"
-                type="text"
-                name="email"
-                value={values.email}
-                onChange={handleChange}
-                onBlur={handleBlur}
-              />
-              {errors.email && touched.email ? (
-                <small style={{ color: "#FF0000" }}>{errors.email}</small>
-              ) : null}
-            </Box>
-            <Box sx={{ display: "flex", flexDirection: "column" }}>
-              <input
-                className="input-fields"
-                placeholder="Please enter your password"
-                type="password"
-                name="password"
-                value={values.password}
-                onChange={handleChange}
-                onBlur={handleBlur}
-              />
-              {errors.password && touched.password ? (
-                <small style={{ color: "#FF0000" }}>{errors.password}</small>
-              ) : null}
-            </Box>
-            <Box
-              sx={{
+            <form
+              onSubmit={handleSubmit}
+              style={{
                 display: "flex",
+                flexDirection: "column",
                 alignItems: "center",
-                color: "white",
-                mt: { xl: 2, lg: 1, xs: 1 },
+                justifyContent: "center",
               }}
             >
-              <Checkbox
+              <Box sx={{ display: "flex", flexDirection: "column" }}>
+                <input
+                  className="input-fields"
+                  placeholder="Enter your email address"
+                  type="text"
+                  name="email"
+                  autoFocus
+                  value={values.email}
+                  onChange={handleChange}
+                  // onBlur={handleBlur}
+                />
+                {errors.email && touched.email ? (
+                  <small style={{ color: "#FF0000" }}>{errors.email}</small>
+                ) : null}
+              </Box>
+              <Box sx={{ display: "flex", flexDirection: "column" }}>
+                <input
+                  className="input-fields"
+                  placeholder="Please enter your password"
+                  type="password"
+                  name="password"
+                  value={values.password}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                />
+                {errors.password && touched.password ? (
+                  <small style={{ color: "#FF0000" }}>{errors.password}</small>
+                ) : null}
+              </Box>
+              <Box
                 sx={{
+                  display: "flex",
+                  alignItems: "center",
                   color: "white",
-                  "&.Mui-checked": {
-                    color: "white",
-                  },
+                  mt: { xl: 2, lg: 1, xs: 1 },
                 }}
-                size="small"
-                onChange={(e) => keepMeSignedIn(e)}
-              />
-              <Typography sx={{ fontSize: "12px" }}>
-                Keep me signed in
-              </Typography>
-            </Box>
-            <Button
-              variant="contained"
-              className="all-white-btns"
-              sx={{
-                color: "#2bb491",
-                padding: "8px 0px",
-                width: "120px",
-                borderRadius: "10px",
-                mt: { xl: 2, lg: 1, xs: 1 },
-                textTransform: "none",
-              }}
-              onClick={handleSubmit}
-            >
-              {loading ? (
-                <CircularProgress color="inherit" size={25} />
-              ) : (
-                <>Login</>
-              )}
-            </Button>
+              >
+                <Checkbox
+                  sx={{
+                    color: "white",
+                    "&.Mui-checked": {
+                      color: "white",
+                    },
+                  }}
+                  size="small"
+                  onChange={(e) => keepMeSignedIn(e)}
+                />
+                <Typography sx={{ fontSize: "12px" }}>
+                  Keep me signed in
+                </Typography>
+              </Box>
+              <Button
+                type="submit"
+                variant="contained"
+                className="all-white-btns"
+                sx={{
+                  color: "#2bb491",
+                  padding: "8px 0px",
+                  width: "120px",
+                  borderRadius: "10px",
+                  mt: { xl: 2, lg: 1, xs: 1 },
+                  textTransform: "none",
+                }}
+              >
+                {loading ? (
+                  <CircularProgress color="inherit" size={25} />
+                ) : (
+                  <>Login</>
+                )}
+              </Button>
+            </form>
             <Box
               sx={{
                 background: "white",
@@ -269,7 +283,7 @@ export default function SignInSide() {
               }}
               onClick={handleOpen}
             >
-              Forgot <sapn style={{ fontWeight: "bold" }}>MAX</sapn>pilot ID or
+              Forgot <span style={{ fontWeight: "bold" }}>MAX</span>pilot ID or
               password?
             </Box>
             <Link to="/step1" className="aTag-1">
@@ -300,7 +314,7 @@ export default function SignInSide() {
             </Box>
             <Box sx={{ color: "white", fontSize: "10px", textAlign: "center" }}>
               Terms & Conditions | Privacy Policy | Copyright &#169; 2023
-              <sapn style={{ fontWeight: "bold" }}> MAX</sapn>pilot all rights
+              <span style={{ fontWeight: "bold" }}> MAX</span>pilot all rights
               reserved.
             </Box>
           </Box>

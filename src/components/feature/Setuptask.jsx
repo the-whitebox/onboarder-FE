@@ -93,7 +93,14 @@ function Setuptask() {
           transformOrigin={{ horizontal: "right", vertical: "bottom" }}
           anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
         >
-          <MenuItem onClick={handleClose}>
+          <MenuItem
+            onClick={handleClose}
+            sx={{
+              "&:hover": {
+                backgroundColor: "#E6F4EB !important",
+              },
+            }}
+          >
             <ListItemIcon>
               <Avatar
                 src={icon1}
@@ -108,7 +115,14 @@ function Setuptask() {
               What's new
             </Typography>
           </MenuItem>
-          <MenuItem onClick={handleClose}>
+          <MenuItem
+            onClick={handleClose}
+            sx={{
+              "&:hover": {
+                backgroundColor: "#E6F4EB !important",
+              },
+            }}
+          >
             <ListItemIcon>
               <Avatar
                 src={icon2}
@@ -124,7 +138,14 @@ function Setuptask() {
             </Typography>
           </MenuItem>
           <Divider sx={{ mx: 2, boxSizing: "border-box" }} />
-          <MenuItem onClick={handleClose}>
+          <MenuItem
+            onClick={handleClose}
+            sx={{
+              "&:hover": {
+                backgroundColor: "#E6F4EB !important",
+              },
+            }}
+          >
             <ListItemIcon>
               <Avatar
                 src={icon3}
@@ -139,7 +160,14 @@ function Setuptask() {
               Learning center
             </Typography>
           </MenuItem>
-          <MenuItem onClick={handleClose}>
+          <MenuItem
+            onClick={handleClose}
+            sx={{
+              "&:hover": {
+                backgroundColor: "#E6F4EB !important",
+              },
+            }}
+          >
             <ListItemIcon>
               <Avatar
                 src={icon4}
@@ -155,7 +183,14 @@ function Setuptask() {
             </Typography>
           </MenuItem>
           <Divider sx={{ mx: 2, boxSizing: "border-box" }} />
-          <MenuItem onClick={handleClose}>
+          <MenuItem
+            onClick={handleClose}
+            sx={{
+              "&:hover": {
+                backgroundColor: "#E6F4EB !important",
+              },
+            }}
+          >
             <ListItemIcon>
               <Avatar
                 src={icon5}
@@ -183,7 +218,14 @@ function Setuptask() {
               </Box>
             </Typography>
           </MenuItem>
-          <MenuItem onClick={handleClose}>
+          <MenuItem
+            onClick={handleClose}
+            sx={{
+              "&:hover": {
+                backgroundColor: "#E6F4EB !important",
+              },
+            }}
+          >
             <ListItemIcon>
               <Avatar
                 src={icon6}
@@ -198,7 +240,14 @@ function Setuptask() {
               Help and Support
             </Typography>
           </MenuItem>
-          <MenuItem onClick={handleClose}>
+          <MenuItem
+            onClick={handleClose}
+            sx={{
+              "&:hover": {
+                backgroundColor: "#E6F4EB !important",
+              },
+            }}
+          >
             <ListItemIcon>
               <Avatar
                 src={icon7}

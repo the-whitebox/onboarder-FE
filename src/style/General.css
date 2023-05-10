@@ -65,13 +65,15 @@ ul {
   outline: none;
   width: 400px;
   background: white;
+  opacity: 0.8;
   padding: 20px 10px 20px 20px;
   margin-top: 10px;
   margin-bottom: 5px;
 }
 
 .input-fields:focus {
-  opacity: 0.8;
+  background: white;
+  opacity: unset;
 }
 
 .input-fields-2 {
@@ -101,13 +103,15 @@ ul {
   outline: none;
   width: 320px;
   background: white;
+  opacity: 0.8;
   padding: 20px 10px 20px 20px;
   margin-top: 10px;
   margin-bottom: 5px;
 }
 
 .input-fields-4:focus {
-  opacity: 0.8;
+  background: white;
+  opacity: unset;
 }
 
 .PhoneInputInput {
