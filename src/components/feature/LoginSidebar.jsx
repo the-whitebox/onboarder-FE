@@ -66,8 +66,12 @@ export default function LoginSidebar(props) {
             setLoading(false);
           })
           .catch((error) => {
-            toast.error(error.response.data.non_field_errors[0]);
             setLoading(false);
+            if (error.response.status == 401) {
+              toast.error(error.response.data.detail);
+            } else {
+              toast.error(error.response.data.non_field_errors[0]);
+            }
           });
       },
     });

@@ -62,8 +62,8 @@ export default function Signup() {
             action.resetForm();
           })
           .catch((error) => {
-            toast.error(error.response.data.data);
             setLoading(false);
+            toast.error(error.response.data.data);
           });
       },
     });

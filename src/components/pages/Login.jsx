@@ -68,9 +68,12 @@ export default function SignInSide() {
             setLoading(false);
           })
           .catch((error) => {
-            console.log(error);
-            toast.error(error.response.data.non_field_errors[0]);
             setLoading(false);
+            if (error.response.status == 401) {
+              toast.error(error.response.data.detail);
+            } else {
+              toast.error(error.response.data.non_field_errors[0]);
+            }
           });
       },
     });
@@ -201,7 +204,7 @@ export default function SignInSide() {
                   autoFocus
                   value={values.email}
                   onChange={handleChange}
-                  onBlur={handleBlur}
+                  // onBlur={handleBlur}
                 />
                 {errors.email && touched.email ? (
                   <small style={{ color: "#FF0000" }}>{errors.email}</small>
