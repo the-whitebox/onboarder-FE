@@ -27,7 +27,7 @@ const formSchema = Yup.object({
   //   ),
   check: Yup.boolean().oneOf(
     [true],
-    "Please accept the terms and privacy policy before get started!"
+    "Please accept the terms and privacy policy before getting started!"
   ),
 });
 const initialValues = {

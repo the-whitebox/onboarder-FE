@@ -21,6 +21,7 @@ export default function EmailVerify() {
   const [showStatus, setShowStatus] = React.useState(false);
   const [loading, setLoading] = React.useState(true);
 
+  console.log("I am inside the email verify page");
   React.useEffect(() => {
     function verifyEmail() {
       fetch(url + "/verify_email/", {
@@ -138,7 +139,7 @@ export default function EmailVerify() {
               >
                 <CheckCircleOutlineIcon sx={{ color: "#2bb491" }} />
                 <Typography sx={{ color: "#2bb491", fontSize: "12px", ml: 1 }}>
-                  VERIFICATION SUCCESSFULL
+                  VERIFICATION SUCCESSFUL
                 </Typography>
               </Box>
             ) : (
@@ -174,7 +175,7 @@ export default function EmailVerify() {
               ) : (
                 <>
                   {showStatus ? (
-                    <>Verification successfull</>
+                    <>Verification successful</>
                   ) : (
                     <>Verification has been failed, Please try again</>
                   )}
