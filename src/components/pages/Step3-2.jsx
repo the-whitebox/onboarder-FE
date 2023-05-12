@@ -128,7 +128,7 @@ export default function Step3_2() {
                   mr: { md: 2, xs: 0 },
                 }}
               >
-                STEP 3 | COMPLETE YOUR PROFILE
+                STEP 3 | Complete your profile
               </Typography>
               <Box sx={{ display: "flex", mt: { xs: 1, md: 0 } }}>
                 <Box
@@ -196,7 +196,7 @@ export default function Step3_2() {
                 fontSize: { md: "18px", xs: "10px" },
               }}
             >
-              PROVIDE US WITH SOME INFORMATION ABOUT YOUR BUSINESS?
+              Provide us with some information about your business?
             </Typography>
             <Typography
               sx={{
@@ -276,11 +276,11 @@ export default function Step3_2() {
                     fontSize: "16px",
                   }}
                 >
-                  Your Business Name?
+                  Your Business Name
                 </Typography>
                 <input
                   className="input-fields-3"
-                  placeholder="Business"
+                  placeholder="Some Text here..."
                   name="business"
                   value={values.business}
                   onChange={handleChange}
@@ -365,7 +365,7 @@ export default function Step3_2() {
                     fontSize: "16px",
                   }}
                 >
-                  Select your business type?
+                  Select your business type
                 </Typography>
                 <Box
                   sx={{
@@ -754,12 +754,14 @@ export default function Step3_2() {
               paddding: "0px 10px",
             }}
           >
-            Lorem Ipsum is simply dummy text of the printing and typesetting
-            industry. Lorem Ipsum has been the industry's <br />
-            standard dummy text ever since the 1500s, when an unknown printer
-            took a galley of type and scrambled it to make a type specimen book.{" "}
+            Your MAXpilot information is used to allow you to sign in securely
+            and access your data. We take your privacy seriously.
+            <br /> Any information you provide on this page will be used solely
+            for the purpose of authentication and will be kept confidential. We
+            do not share your information with third parties.
             <br />
-            It has survived not only five centuries.
+            For more information on our privacy policy, please visit our
+            website.
           </Typography>
           <Avatar
             src={bg_image4}

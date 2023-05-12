@@ -107,7 +107,13 @@ export default function Navbar() {
               endIcon={<KeyboardArrowDownIcon />}
               sx={{ color: "#131523", textTransform: "none", ml: 1 }}
             >
-              {userInfo?.first_name} {userInfo?.last_name}
+              {userInfo?.first_name && userInfo?.last_name ? (
+                <>
+                  {userInfo?.first_name} {userInfo?.last_name}
+                </>
+              ) : (
+                <>{userInfo?.username}</>
+              )}
             </Button>
             <Menu
               id="basic-menu"
@@ -145,7 +151,13 @@ export default function Navbar() {
               <Divider sx={{ mx: 2 }} />
               <Box sx={{ mt: 2, mb: 10 }}>
                 <Typography sx={{ color: "#707070", px: 5 }}>
-                  {userInfo?.first_name} {userInfo?.last_name}
+                  {userInfo?.first_name && userInfo?.last_name ? (
+                    <>
+                      {userInfo?.first_name} {userInfo?.last_name}
+                    </>
+                  ) : (
+                    <>{userInfo?.username}</>
+                  )}
                 </Typography>
                 <MenuItem
                   onClick={handleClose}

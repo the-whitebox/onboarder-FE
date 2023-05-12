@@ -54,8 +54,6 @@ export default function Signup() {
             password: values.password,
           })
           .then((response) => {
-            // localStorage.setItem("token", response.data.access_token);
-            // localStorage.setItem("userId", response.data.user.pk);
             toast.success("Please check your email for verification.");
             Navigate(`/step2/${values.email}`);
             setLoading(false);
@@ -109,7 +107,7 @@ export default function Signup() {
           >
             <Box sx={{ display: "flex", alignItems: "center" }}>
               <Typography sx={{ fontSize: "12px", mr: 2 }}>
-                STEP 1 | ENTER YOUR INFO
+                STEP 1 | enter your info
               </Typography>
               <Box
                 sx={{
@@ -228,7 +226,7 @@ export default function Signup() {
                 }}
               />
               <Typography sx={{ fontSize: "10px", mb: 0 }}>
-                I agree to the terms of the Subscription Agreement & Privacy
+                I agree to the terms of the subscription agreement & Privacy
                 Policy
               </Typography>
             </Box>
@@ -268,12 +266,14 @@ export default function Signup() {
                 paddding: "0px 10px",
               }}
             >
-              Lorem Ipsum is simply dummy text of the printing and typesetting
-              industry. Lorem Ipsum has been the industry's <br />
-              standard dummy text ever since the 1500s, when an unknown printer
-              took a galley of type and scrambled it to make a type specimen
-              book. <br />
-              It has survived not only five centuries.
+              Your MAXpilot information is used to allow you to sign in securely
+              and access your data. We take your privacy seriously.
+              <br /> Any information you provide on this page will be used
+              solely for the purpose of authentication and will be kept
+              confidential. We do not share your information with third parties.
+              <br />
+              For more information on our privacy policy, please visit our
+              website.
             </Typography>
             <Avatar
               src={bg_image1}

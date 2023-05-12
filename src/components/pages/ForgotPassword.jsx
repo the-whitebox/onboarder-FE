@@ -88,8 +88,7 @@ export default function ForgotPassword(props) {
           <Typography
             sx={{ color: "white", fontSize: "25px", mt: { xl: 15, xs: 10 } }}
           >
-            MAX
-            <em>pilot</em>
+            <em>MAXpilot</em>
           </Typography>
           <Typography sx={{ color: "white", mt: 1, fontSize: "20px" }}>
             Recover your Previous Login ID

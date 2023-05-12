@@ -43,7 +43,8 @@ export default function EmailVerify() {
           } else if (response.status === "failed") {
             setLoading(false);
           }
-        });
+        })
+        .catch((error) => setLoading(false));
     }
     verifyEmail();
   }, []);
@@ -138,7 +139,7 @@ export default function EmailVerify() {
               >
                 <CheckCircleOutlineIcon sx={{ color: "#2bb491" }} />
                 <Typography sx={{ color: "#2bb491", fontSize: "12px", ml: 1 }}>
-                  VERIFICATION SUCCESSFULL
+                  Verification Successfull
                 </Typography>
               </Box>
             ) : (
@@ -246,12 +247,14 @@ export default function EmailVerify() {
                 paddding: "0px 10px",
               }}
             >
-              Lorem Ipsum is simply dummy text of the printing and typesetting
-              industry. Lorem Ipsum has been the industry's <br />
-              standard dummy text ever since the 1500s, when an unknown printer
-              took a galley of type and scrambled it to make a type specimen
-              book. <br />
-              It has survived not only five centuries.
+              Your MAXpilot information is used to allow you to sign in securely
+              and access your data. We take your privacy seriously.
+              <br /> Any information you provide on this page will be used
+              solely for the purpose of authentication and will be kept
+              confidential. We do not share your information with third parties.
+              <br />
+              For more information on our privacy policy, please visit our
+              website.
             </Typography>
             <Avatar
               src={bg_image2}

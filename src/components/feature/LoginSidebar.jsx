@@ -234,8 +234,7 @@ export default function LoginSidebar(props) {
             sx={{ mt: 1, color: "white", cursor: "pointer", fontSize: "15px" }}
             onClick={props.handleOpen}
           >
-            Forgot <span style={{ fontWeight: "bold" }}>MAX</span>pilot ID or
-            password?
+            Forgot <em>MAXpilot</em> ID or password?
           </Box>
           <Link to="/step1" className="aTag-1">
             <Typography
@@ -271,9 +270,8 @@ export default function LoginSidebar(props) {
               padding: { xl: 0, sm: "0px 5px" },
             }}
           >
-            Terms & Conditions | Privacy Policy | Copyright &#169; 2023
-            <span style={{ fontWeight: "bold" }}> MAX</span>pilot all rights
-            reserved.
+            Terms & Condition | Privacy policy | Copyright &#169; 2023
+            <em> MAXpilot</em> all rights reserved.
           </Box>
         </Box>
       </Grid>
