@@ -15,9 +15,20 @@ import { toast } from "react-toastify";
 import LoginSidebar from "../feature/LoginSidebar";
 import ForgotPassword from "./ForgotPassword";
 import * as Yup from "yup";
+import isEmailValidator from "validator/lib/isEmail";
 const formSchema = Yup.object({
   username: Yup.string().required("Please enter your username"),
-  email: Yup.string().email().required("Please enter your email"),
+  email: Yup.string()
+    .email("Invalid email format")
+    .required("Please enter your email")
+    .test(
+      "is-valid",
+      (message) => `${message.path} is invalid`,
+      (value) =>
+        value
+          ? isEmailValidator(value)
+          : new Yup.ValidationError("Invalid value")
+    ),
   password: Yup.string().required("Please enter your password"),
   // password: Yup.string()
   //   .required("Please enter your password")
