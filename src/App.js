@@ -8,7 +8,6 @@ import { GlobalProvider } from "./context/GlobalContext";
 
 function App() {
   const check = localStorage.getItem("check");
-
   useEffect(() => {
     window.addEventListener("beforeunload", function (e) {
       if (

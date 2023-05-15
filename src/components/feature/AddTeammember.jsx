@@ -17,9 +17,10 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import GlobalContext from "../../context/GlobalContext";
 const formSchema = Yup.object({
-  business: Yup.array()
-    .min(1, "Please select a business")
-    .required("Please select a business"),
+  // business: Yup.array()
+  //   .min(1, "Please select a business")
+  //   .required("Please select a business"),
+  business: Yup.string().required("Please select a business"),
   firstname: Yup.string().required("Please enter your firstname"),
   lastname: Yup.string().required("Please enter your lastname"),
   mainLocation: Yup.string().required("Please select your main location"),
@@ -34,7 +35,8 @@ const formSchema = Yup.object({
   payrollID: Yup.string().required("Please enter payroll ID"),
 });
 const initialValues = {
-  business: [],
+  // business: [],
+  business: "",
   firstname: "",
   lastname: "",
   mainLocation: "",
@@ -95,7 +97,6 @@ export default function Addteammember(props) {
       initialValues,
       validationSchema: formSchema,
       onSubmit: async (values, action) => {
-        console.log(values);
         setLoading(true);
         await axios
           .post(
@@ -106,7 +107,7 @@ export default function Addteammember(props) {
               is_superuser: false,
               email: values.email,
               role: values.accessLevel,
-              business: values.business,
+              business: [values.business],
               profile: {
                 phone_number: values.mobile,
               },
@@ -126,7 +127,6 @@ export default function Addteammember(props) {
             action.resetForm();
           })
           .catch((error) => {
-            console.log("error", error);
             toast.error(error.response.data.email[0]);
             setLoading(false);
           });
@@ -226,7 +226,7 @@ export default function Addteammember(props) {
               <Select
                 fullWidth
                 name="business"
-                multiple
+                // multiple
                 displayEmpty
                 size="small"
                 variant="standard"
@@ -249,13 +249,13 @@ export default function Addteammember(props) {
                 value={values.business}
                 handleBlur={handleBlur}
                 onChange={handleChange}
-                renderValue={(selected) => {
-                  if (selected.length === 0) {
-                    return <>Select</>;
-                  }
+                // renderValue={(selected) => {
+                //   if (selected.length === 0) {
+                //     return <>Select</>;
+                //   }
 
-                  return selected.join(", ");
-                }}
+                //   return selected.join(", ");
+                // }}
               >
                 <MenuItem value="" disabled>
                   Select
