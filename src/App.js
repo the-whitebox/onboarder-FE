@@ -8,15 +8,18 @@ import { GlobalProvider } from "./context/GlobalContext";
 
 function App() {
   const check = localStorage.getItem("check");
+
   useEffect(() => {
     window.addEventListener("beforeunload", function (e) {
-      if (check === "false") {
+      if (
+        e.currentTarget.performance.navigation.type !==
+          PerformanceNavigation.TYPE_RELOAD &&
+        check === "false"
+      ) {
         localStorage.clear();
       }
     });
   }, []);
-
-  // e.currentTarget.performance.navigation.type === PerformanceNavigation.TYPE_RELOAD
 
   return (
     <>

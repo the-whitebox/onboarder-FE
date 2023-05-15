@@ -10,12 +10,38 @@ import { useNavigate } from "react-router-dom";
 import image1 from "../../assets/images/welcome1.png";
 import image2 from "../../assets/images/welcome2.png";
 import bg_image3 from "../../assets/images/bg-image3.png";
+import GlobalContext from "../../context/GlobalContext";
+import axios from "axios";
 
 export default function Step2() {
+  const { setUserInfo, userInfo } = React.useContext(GlobalContext);
+  const url = process.env.REACT_APP_BASE_URL;
+  const token = localStorage.getItem("token");
+  const userId = localStorage.getItem("userId");
   const Navigate = useNavigate();
   const nextpage = () => {
     Navigate("/step3-2");
   };
+
+  React.useEffect(() => {
+    const getLoggedInUserDetails = async () => {
+      await axios
+        .get(`${url}/people/${userId}/`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        })
+        .then((response) => {
+          setUserInfo(response.data);
+        })
+        .catch((error) => console.log("Error", error));
+    };
+    getLoggedInUserDetails();
+  }, []);
+
+  console.log(userInfo);
+
   return (
     <>
       <Grid
@@ -121,7 +147,16 @@ export default function Step2() {
               <i>
                 <span style={{ color: "#555555" }}>MAXpilot, </span>
               </i>
-              <span>(Name)</span>
+              <span>
+                {userInfo?.first_name && userInfo?.last_name ? (
+                  <>
+                    {userInfo?.first_name}
+                    {userInfo?.last_name}
+                  </>
+                ) : (
+                  <>{userInfo?.username}</>
+                )}
+              </span>
             </Typography>
             <Box
               sx={{

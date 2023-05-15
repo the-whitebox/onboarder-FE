@@ -10,8 +10,10 @@ import emailIcon from "../../assets/icons/email-icon.png";
 import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
 import bg_image2 from "../../assets/images/bg-image2.png";
 import { useNavigate, useParams } from "react-router-dom";
+import GlobalContext from "../../context/GlobalContext";
 
 export default function EmailVerify() {
+  const { setUserInfo } = React.useContext(GlobalContext);
   let token = useParams();
   const url = process.env.REACT_APP_BASE_URL;
   const Navigate = useNavigate();
@@ -40,6 +42,8 @@ export default function EmailVerify() {
             setShowStatus(true);
             localStorage.setItem("token", response.access);
             localStorage.setItem("userId", response.user_id);
+            localStorage.setItem("check", true);
+            getLoggedInUserDetails(response.user_id, response.access);
           } else if (response.status === "failed") {
             setLoading(false);
           }
@@ -48,6 +52,20 @@ export default function EmailVerify() {
     }
     verifyEmail();
   }, []);
+
+  const getLoggedInUserDetails = async (id, token) => {
+    await axios
+      .get(`${url}/people/${id}/`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+      })
+      .then((response) => {
+        setUserInfo(response.data);
+      })
+      .catch((error) => console.log("Error", error));
+  };
 
   const goNext = () => {
     Navigate("/step3-1");

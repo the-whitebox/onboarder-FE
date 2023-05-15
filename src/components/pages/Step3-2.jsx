@@ -40,6 +40,7 @@ const icons = [Icon1, Icon2, Icon3, Icon4, Icon5];
 
 export default function Step3_2() {
   const url = process.env.REACT_APP_BASE_URL;
+  const token = localStorage.getItem("token");
   const Navigate = useNavigate();
   const [industryData, setIndustryData] = React.useState([]);
 
@@ -68,8 +69,7 @@ export default function Step3_2() {
   });
 
   const handleBusinessTypeChange = (e) => {
-    console.log(e.target.value);
-    setFieldValue("businessType", e.target.value);
+    setFieldValue("businessType", e.target.id);
     getIndustries(e.target.value);
   };
 
@@ -81,13 +81,32 @@ export default function Step3_2() {
     setFieldValue("mobile", e);
   };
 
-  const getIndustries = async (id) => {
-    await axios
-      .get(`${url}/enums/${id}/`)
-      .then((response) => {
-        setIndustryData([response.data]);
-      })
-      .catch((err) => console.log(err));
+  const getIndustries = async (group) => {
+    if (group === "Retail & Hospitality") {
+      await axios
+        .get(`${url}/Enumsreturn/?group=Retail %26 Hospitality`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        })
+        .then((response) => {
+          setIndustryData(response.data);
+        })
+        .catch((err) => console.log("Error", err));
+    } else {
+      await axios
+        .get(`${url}/Enumsreturn/?group=${group}`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        })
+        .then((response) => {
+          setIndustryData(response.data);
+        })
+        .catch((err) => console.log("Error", err));
+    }
   };
   return (
     <>
@@ -440,7 +459,7 @@ export default function Step3_2() {
                       height: "auto",
                     }}
                   >
-                    <Radio id={data.id} value={data.id} />
+                    <Radio id={data.id} value={data.name} />
                     <Box
                       sx={{
                         background: "#e6f4eb",
@@ -544,9 +563,11 @@ export default function Step3_2() {
                     onChange={handleIndustryChange}
                     onBlur={handleBlur}
                   >
-                    <option>Select Industry</option>
+                    <option selected value="" disabled>
+                      Select Industry
+                    </option>
                     {industryData?.map((data, index) => (
-                      <option key={index} value={data.id}>
+                      <option key={index} value={data.reference_id}>
                         {data.name}
                       </option>
                     ))}
