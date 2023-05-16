@@ -36,7 +36,7 @@ function WorkDetails() {
               MAXPilot access level
             </Typography>
             <Typography sx={{ color: "#131523", fontSize: "12px", mt: "2px" }}>
-              A set f permissions that control what a team member can do in
+              A set of permissions that control what a team member can do in
               MAXPilot.
             </Typography>
             <Typography

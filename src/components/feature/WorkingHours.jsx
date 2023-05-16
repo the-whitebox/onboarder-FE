@@ -66,7 +66,7 @@ export default function WorkingHours() {
             <Typography
               sx={{ color: "#131523", fontSize: "12px", mt: "2px", pr: 3 }}
             >
-              The period used to calculate overtime. This overrides the defaults
+              The period used to calculate overtime. This overrides the default
               location setting.
             </Typography>
             <Typography
