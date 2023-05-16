@@ -6,6 +6,7 @@ import CloseIcon from "@mui/icons-material/Close";
 import InfoIcon from "@mui/icons-material/Info";
 import { useEffect } from "react";
 import axios from "axios";
+import Cookies from "js-cookie";
 
 const style = {
   position: "absolute",
@@ -22,7 +23,7 @@ const style = {
 };
 
 export default function SyncPayroll(props) {
-  const token = localStorage.getItem("token");
+  const token = Cookies.get("token");
   const url = process.env.REACT_APP_BASE_URL;
 
   return (

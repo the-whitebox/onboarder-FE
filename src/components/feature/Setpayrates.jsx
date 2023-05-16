@@ -16,6 +16,7 @@ import CircularProgress from "@mui/material/CircularProgress";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { toast } from "react-toastify";
+import Cookies from "js-cookie";
 const formSchema = Yup.object({
   payRates: Yup.array().required("Please enter pay rates"),
   mondays: Yup.string().required("Please enter mondays rates"),
@@ -42,8 +43,8 @@ const style = {
 
 export default function Setpayrates(props) {
   const theme = useTheme();
-  const userId = localStorage.getItem("userId");
-  const token = localStorage.getItem("token");
+  const token = Cookies.get("token");
+  const userId = Cookies.get("pk");
   const url = process.env.REACT_APP_BASE_URL + `/people/${userId}/`;
   const [loading, setLoading] = useState(false);
 

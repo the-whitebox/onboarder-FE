@@ -1,7 +1,7 @@
 import * as React from "react";
 import { Box, Typography, Button, Grid } from "@mui/material";
 import { CircularProgress } from "@mui/material";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { useFormik } from "formik";
@@ -10,10 +10,11 @@ import * as Yup from "yup";
 const formSchema = Yup.object({
   password: Yup.string()
     .required("Please enter your password")
-    .matches(
-      "^(?=.*[A-Za-z])(?=.*d)(?=.*[@$!%*#?&])[A-Za-zd@$!%*#?&]{8,}$",
-      "Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and one special case Character"
-    ),
+    .min(8, "Must be 8 characters or more")
+    .matches(/[a-z]+/, "One lowercase character")
+    .matches(/[A-Z]+/, "One uppercase character")
+    .matches(/[@$!%*#?&]+/, "One special character")
+    .matches(/\d+/, "One number"),
   confirm_password: Yup.string()
     .label("confirm password")
     .required("Please enter your confirm password")
@@ -21,6 +22,7 @@ const formSchema = Yup.object({
 });
 
 export default function SignInSide() {
+  const Navigate = useNavigate();
   const url = process.env.REACT_APP_BASE_URL;
   let { uid, token } = useParams();
   const [loading, setLoading] = React.useState(false);

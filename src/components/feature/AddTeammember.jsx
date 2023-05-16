@@ -16,6 +16,7 @@ import { toast } from "react-toastify";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import GlobalContext from "../../context/GlobalContext";
+import Cookies from "js-cookie";
 const formSchema = Yup.object({
   // business: Yup.array()
   //   .min(1, "Please select a business")
@@ -68,8 +69,7 @@ const style = {
 
 export default function Addteammember(props) {
   const { userInfo } = React.useContext(GlobalContext);
-
-  const token = localStorage.getItem("token");
+  const token = Cookies.get("token");
   const url = process.env.REACT_APP_BASE_URL;
   const [loading, setLoading] = React.useState(false);
   const [inviteLink, setInviteLink] = React.useState("");

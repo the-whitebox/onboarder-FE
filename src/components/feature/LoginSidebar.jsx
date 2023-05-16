@@ -15,6 +15,7 @@ import { toast } from "react-toastify";
 import { useFormik } from "formik";
 import axios from "axios";
 import * as Yup from "yup";
+import Cookies from "js-cookie";
 
 const LoginSchema = Yup.object({
   email: Yup.string().email().required("Please enter your email"),
@@ -52,9 +53,25 @@ export default function LoginSidebar(props) {
               localStorage.setItem("token", response.data.access_token);
               localStorage.setItem("userId", response.data.user.pk);
               {
-                keepme
-                  ? localStorage.setItem("check", true)
-                  : localStorage.setItem("check", false);
+                keepme ? (
+                  <>
+                    {
+                      (Cookies.set("token", response.data.access_token, {
+                        expires: 30,
+                      }),
+                      Cookies.set("pk", response.data.user.pk, {
+                        expires: 30,
+                      }))
+                    }
+                  </>
+                ) : (
+                  <>
+                    {
+                      (Cookies.set("token", response.data.access_token),
+                      Cookies.set("pk", response.data.user.pk))
+                    }
+                  </>
+                );
               }
               getLoggedInUserDetails(
                 response.data.user.pk,

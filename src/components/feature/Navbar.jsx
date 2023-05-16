@@ -17,6 +17,7 @@ import Divider from "@mui/material/Divider";
 import TextSnippetOutlinedIcon from "@mui/icons-material/TextSnippetOutlined";
 import Person2Icon from "@mui/icons-material/Person2";
 import CorporateFareIcon from "@mui/icons-material/CorporateFare";
+import Cookies from "js-cookie";
 
 export default function Navbar() {
   const { userInfo } = React.useContext(GlobalContext);
@@ -31,8 +32,10 @@ export default function Navbar() {
   };
 
   const handleLogout = () => {
-    localStorage.clear();
-    Navigate("/");
+    Cookies.remove("token");
+    Cookies.remove("pk");
+    // Navigate("/");
+    window.location.href = "/";
   };
 
   return (

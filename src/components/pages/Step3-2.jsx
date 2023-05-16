@@ -21,6 +21,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useFormik } from "formik";
 import * as Yup from "yup";
+import Cookies from "js-cookie";
 const formSchema = Yup.object({
   business: Yup.string().required("Please enter your business name"),
   mobile: Yup.string().required("Please enter your contact number"),
@@ -40,7 +41,7 @@ const icons = [Icon1, Icon2, Icon3, Icon4, Icon5];
 
 export default function Step3_2() {
   const url = process.env.REACT_APP_BASE_URL;
-  const token = localStorage.getItem("token");
+  const token = Cookies.get("token");
   const Navigate = useNavigate();
   const [industryData, setIndustryData] = React.useState([]);
 

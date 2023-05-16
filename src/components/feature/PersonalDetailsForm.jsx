@@ -11,6 +11,7 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import { Grid } from "@mui/material";
 import GlobalContext from "../../context/GlobalContext";
+import Cookies from "js-cookie";
 const formSchema = Yup.object({
   email: Yup.string().email().required("Please enter your email"),
   firstName: Yup.string().required("Please enter your first name"),
@@ -22,8 +23,8 @@ const formSchema = Yup.object({
 
 function PersonalDetailsForm() {
   const { userInfo } = React.useContext(GlobalContext);
-  const userId = localStorage.getItem("userId");
-  const token = localStorage.getItem("token");
+  const token = Cookies.get("token");
+  const userId = Cookies.get("pk");
   const url = process.env.REACT_APP_BASE_URL + `/people/${userId}/`;
   const [loading, setLoading] = useState(false);
 

@@ -17,11 +17,13 @@ import axios from "axios";
 import * as Yup from "yup";
 import ForgotPassword from "./ForgotPassword";
 import { Modal } from "@mui/material";
+import Cookies from "js-cookie";
 
 const LoginSchema = Yup.object({
   email: Yup.string().email().required("Please enter your email"),
   password: Yup.string().required("Please enter your password"),
 });
+
 const initialValues = {
   email: "",
   password: "",
@@ -51,12 +53,26 @@ export default function SignInSide() {
           .then((response) => {
             if (response.status === 200) {
               toast.success("You have successfully LoggedIn!");
-              localStorage.setItem("token", response.data.access_token);
-              localStorage.setItem("userId", response.data.user.pk);
               {
-                keepme
-                  ? localStorage.setItem("check", true)
-                  : localStorage.setItem("check", false);
+                keepme ? (
+                  <>
+                    {
+                      (Cookies.set("token", response.data.access_token, {
+                        expires: 30,
+                      }),
+                      Cookies.set("pk", response.data.user.pk, {
+                        expires: 30,
+                      }))
+                    }
+                  </>
+                ) : (
+                  <>
+                    {
+                      (Cookies.set("token", response.data.access_token),
+                      Cookies.set("pk", response.data.user.pk))
+                    }
+                  </>
+                );
               }
               getLoggedInUserDetails(
                 response.data.user.pk,

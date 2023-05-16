@@ -22,6 +22,7 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useFormik } from "formik";
 import * as Yup from "yup";
+import Cookies from "js-cookie";
 const formSchema = Yup.object({
   purpose: Yup.string().required("What is the purpose to join?"),
   payroll: Yup.string().required("Please provide a payroll"),
@@ -35,7 +36,7 @@ const icons = [ScheduleIcon, TrackHoursIcon, PayIcon];
 
 export default function Step3_3() {
   const url = process.env.REACT_APP_BASE_URL;
-  const token = localStorage.getItem("token");
+  const token = Cookies.get("token");
   const Navigate = useNavigate();
   const location = useLocation();
   const [loading, setLoading] = React.useState(false);

@@ -17,9 +17,11 @@ import PersonalDetails from "../components/pages/PersonalDetails";
 import EmploymentDetails from "../components/pages/EmploymentDetails";
 import EmailVerify from "../components/pages/EmailVerify";
 import ResetPassword from "../components/pages/ResetPassword";
+import Cookies from "js-cookie";
 
 function Routing() {
-  const token = localStorage.getItem("token");
+  const token = Cookies.get("token");
+
   return (
     <>
       <Routes>

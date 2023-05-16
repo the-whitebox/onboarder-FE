@@ -12,12 +12,13 @@ import image2 from "../../assets/images/welcome2.png";
 import bg_image3 from "../../assets/images/bg-image3.png";
 import GlobalContext from "../../context/GlobalContext";
 import axios from "axios";
+import Cookies from "js-cookie";
 
 export default function Step2() {
   const { setUserInfo, userInfo } = React.useContext(GlobalContext);
   const url = process.env.REACT_APP_BASE_URL;
-  const token = localStorage.getItem("token");
-  const userId = localStorage.getItem("userId");
+  const token = Cookies.get("token");
+  const userId = Cookies.get("pk");
   const Navigate = useNavigate();
   const nextpage = () => {
     Navigate("/step3-2");

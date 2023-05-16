@@ -40,9 +40,8 @@ export default function EmailVerify() {
           if (response.status === "success") {
             setLoading(false);
             setShowStatus(true);
-            localStorage.setItem("token", response.access);
-            localStorage.setItem("userId", response.user_id);
-            localStorage.setItem("check", true);
+            Cookies.set("token", response.access);
+            Cookies.set("pk", response.user_id);
             getLoggedInUserDetails(response.user_id, response.access);
           } else if (response.status === "failed") {
             setLoading(false);

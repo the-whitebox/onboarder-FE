@@ -16,6 +16,7 @@ import GlobalContext from "../../context/GlobalContext";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import BulkImportUpdateModal from "../feature/BulkImportUpdateModal";
+import Cookies from "js-cookie";
 const modalWrapper = {
   overflow: "auto",
   display: "flex",
@@ -24,8 +25,8 @@ const modalWrapper = {
 function AddPeople() {
   const Navigate = useNavigate();
   const { userInfo, setUserInfo } = React.useContext(GlobalContext);
-  const token = localStorage.getItem("token");
-  const userId = localStorage.getItem("userId");
+  const token = Cookies.get("token");
+  const userId = Cookies.get("pk");
   const url = process.env.REACT_APP_BASE_URL;
   const [rows, setRows] = useState([]);
   const [skeleton, setSkeleton] = useState(true);
