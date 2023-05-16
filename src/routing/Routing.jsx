@@ -16,9 +16,12 @@ import AddPeopleManually from "../components/pages/AddPeopleManually";
 import PersonalDetails from "../components/pages/PersonalDetails";
 import EmploymentDetails from "../components/pages/EmploymentDetails";
 import EmailVerify from "../components/pages/EmailVerify";
+import ResetPassword from "../components/pages/ResetPassword";
+import Cookies from "js-cookie";
 
 function Routing() {
-  const token = localStorage.getItem("token");
+  const token = Cookies.get("token");
+
   return (
     <>
       <Routes>
@@ -125,6 +128,10 @@ function Routing() {
           <>
             <Route path="/" element={<Login />} />
             <Route path="/step1" element={<Signup />} />
+            <Route
+              path="/auth/password/reset/confirm/:uid/:token"
+              element={<ResetPassword />}
+            />
             <Route path="*" element={<Login />} />
           </>
         )}

@@ -10,8 +10,10 @@ import emailIcon from "../../assets/icons/email-icon.png";
 import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
 import bg_image2 from "../../assets/images/bg-image2.png";
 import { useNavigate, useParams } from "react-router-dom";
+import GlobalContext from "../../context/GlobalContext";
 
 export default function EmailVerify() {
+  const { setUserInfo } = React.useContext(GlobalContext);
   let token = useParams();
   const url = process.env.REACT_APP_BASE_URL;
   const Navigate = useNavigate();
@@ -38,15 +40,31 @@ export default function EmailVerify() {
           if (response.status === "success") {
             setLoading(false);
             setShowStatus(true);
-            localStorage.setItem("token", response.access);
-            localStorage.setItem("userId", response.user_id);
+            Cookies.set("token", response.access);
+            Cookies.set("pk", response.user_id);
+            getLoggedInUserDetails(response.user_id, response.access);
           } else if (response.status === "failed") {
             setLoading(false);
           }
-        });
+        })
+        .catch((error) => setLoading(false));
     }
     verifyEmail();
   }, []);
+
+  const getLoggedInUserDetails = async (id, token) => {
+    await axios
+      .get(`${url}/people/${id}/`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+      })
+      .then((response) => {
+        setUserInfo(response.data);
+      })
+      .catch((error) => console.log("Error", error));
+  };
 
   const goNext = () => {
     Navigate("/step3-1");
@@ -138,7 +156,7 @@ export default function EmailVerify() {
               >
                 <CheckCircleOutlineIcon sx={{ color: "#2bb491" }} />
                 <Typography sx={{ color: "#2bb491", fontSize: "12px", ml: 1 }}>
-                  VERIFICATION SUCCESSFULL
+                  Verification Successfull
                 </Typography>
               </Box>
             ) : (
@@ -246,12 +264,14 @@ export default function EmailVerify() {
                 paddding: "0px 10px",
               }}
             >
-              Lorem Ipsum is simply dummy text of the printing and typesetting
-              industry. Lorem Ipsum has been the industry's <br />
-              standard dummy text ever since the 1500s, when an unknown printer
-              took a galley of type and scrambled it to make a type specimen
-              book. <br />
-              It has survived not only five centuries.
+              Your MAXpilot information is used to allow you to sign in securely
+              and access your data. We take your privacy seriously.
+              <br /> Any information you provide on this page will be used
+              solely for the purpose of authentication and will be kept
+              confidential. We do not share your information with third parties.
+              <br />
+              For more information on our privacy policy, please visit our
+              website.
             </Typography>
             <Avatar
               src={bg_image2}

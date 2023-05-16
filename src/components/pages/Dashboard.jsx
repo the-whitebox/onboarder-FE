@@ -15,12 +15,13 @@ import TodayIcon from "@mui/icons-material/Today";
 import bg_image7 from "../../assets/images/bg-image7.png";
 import GlobalContext from "../../context/GlobalContext";
 import axios from "axios";
+import Cookies from "js-cookie";
 
 function Dashboard() {
   const { setUserInfo } = React.useContext(GlobalContext);
   const url = process.env.REACT_APP_BASE_URL;
-  const token = localStorage.getItem("token");
-  const userId = localStorage.getItem("userId");
+  const token = Cookies.get("token");
+  const userId = Cookies.get("pk");
   React.useEffect(() => {
     const getLoggedInUserDetails = async () => {
       await axios

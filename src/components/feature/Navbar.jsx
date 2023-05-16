@@ -17,6 +17,7 @@ import Divider from "@mui/material/Divider";
 import TextSnippetOutlinedIcon from "@mui/icons-material/TextSnippetOutlined";
 import Person2Icon from "@mui/icons-material/Person2";
 import CorporateFareIcon from "@mui/icons-material/CorporateFare";
+import Cookies from "js-cookie";
 
 export default function Navbar() {
   const { userInfo } = React.useContext(GlobalContext);
@@ -31,8 +32,10 @@ export default function Navbar() {
   };
 
   const handleLogout = () => {
-    localStorage.clear();
-    Navigate("/");
+    Cookies.remove("token");
+    Cookies.remove("pk");
+    // Navigate("/");
+    window.location.href = "/";
   };
 
   return (
@@ -107,7 +110,13 @@ export default function Navbar() {
               endIcon={<KeyboardArrowDownIcon />}
               sx={{ color: "#131523", textTransform: "none", ml: 1 }}
             >
-              {userInfo?.first_name} {userInfo?.last_name}
+              {userInfo?.first_name && userInfo?.last_name ? (
+                <>
+                  {userInfo?.first_name} {userInfo?.last_name}
+                </>
+              ) : (
+                <>{userInfo?.username}</>
+              )}
             </Button>
             <Menu
               id="basic-menu"
@@ -145,7 +154,13 @@ export default function Navbar() {
               <Divider sx={{ mx: 2 }} />
               <Box sx={{ mt: 2, mb: 10 }}>
                 <Typography sx={{ color: "#707070", px: 5 }}>
-                  {userInfo?.first_name} {userInfo?.last_name}
+                  {userInfo?.first_name && userInfo?.last_name ? (
+                    <>
+                      {userInfo?.first_name} {userInfo?.last_name}
+                    </>
+                  ) : (
+                    <>{userInfo?.username}</>
+                  )}
                 </Typography>
                 <MenuItem
                   onClick={handleClose}

@@ -15,9 +15,14 @@ import { toast } from "react-toastify";
 import LoginSidebar from "../feature/LoginSidebar";
 import ForgotPassword from "./ForgotPassword";
 import * as Yup from "yup";
+import Cookies from "js-cookie";
+let EMAIL_REGX = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+
 const formSchema = Yup.object({
   username: Yup.string().required("Please enter your username"),
-  email: Yup.string().email().required("Please enter your email"),
+  email: Yup.string()
+    .required("Please enter your email")
+    .matches(EMAIL_REGX, "Invalid email address"),
   password: Yup.string().required("Please enter your password"),
   // password: Yup.string()
   //   .required("Please enter your password")
@@ -30,6 +35,7 @@ const formSchema = Yup.object({
     "Please accept the terms and privacy policy before get started!"
   ),
 });
+
 const initialValues = {
   username: "",
   email: "",
@@ -54,8 +60,6 @@ export default function Signup() {
             password: values.password,
           })
           .then((response) => {
-            // localStorage.setItem("token", response.data.access_token);
-            // localStorage.setItem("userId", response.data.user.pk);
             toast.success("Please check your email for verification.");
             Navigate(`/step2/${values.email}`);
             setLoading(false);
@@ -67,6 +71,13 @@ export default function Signup() {
           });
       },
     });
+
+  React.useEffect(() => {
+    const token = Cookies.get("token");
+    if (token) {
+      Navigate("/dashboard");
+    }
+  }, []);
 
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
@@ -109,7 +120,7 @@ export default function Signup() {
           >
             <Box sx={{ display: "flex", alignItems: "center" }}>
               <Typography sx={{ fontSize: "12px", mr: 2 }}>
-                STEP 1 | ENTER YOUR INFO
+                STEP 1 | enter your info
               </Typography>
               <Box
                 sx={{
@@ -228,7 +239,7 @@ export default function Signup() {
                 }}
               />
               <Typography sx={{ fontSize: "10px", mb: 0 }}>
-                I agree to the terms of the Subscription Agreement & Privacy
+                I agree to the terms of the subscription agreement & Privacy
                 Policy
               </Typography>
             </Box>
@@ -268,12 +279,14 @@ export default function Signup() {
                 paddding: "0px 10px",
               }}
             >
-              Lorem Ipsum is simply dummy text of the printing and typesetting
-              industry. Lorem Ipsum has been the industry's <br />
-              standard dummy text ever since the 1500s, when an unknown printer
-              took a galley of type and scrambled it to make a type specimen
-              book. <br />
-              It has survived not only five centuries.
+              Your MAXpilot information is used to allow you to sign in securely
+              and access your data. We take your privacy seriously.
+              <br /> Any information you provide on this page will be used
+              solely for the purpose of authentication and will be kept
+              confidential. We do not share your information with third parties.
+              <br />
+              For more information on our privacy policy, please visit our
+              website.
             </Typography>
             <Avatar
               src={bg_image1}

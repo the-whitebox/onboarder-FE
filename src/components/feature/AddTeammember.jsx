@@ -16,8 +16,12 @@ import { toast } from "react-toastify";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import GlobalContext from "../../context/GlobalContext";
+import Cookies from "js-cookie";
 const formSchema = Yup.object({
-  // business: Yup.string().required("Please select business"),
+  // business: Yup.array()
+  //   .min(1, "Please select a business")
+  //   .required("Please select a business"),
+  business: Yup.string().required("Please select a business"),
   firstname: Yup.string().required("Please enter your firstname"),
   lastname: Yup.string().required("Please enter your lastname"),
   mainLocation: Yup.string().required("Please select your main location"),
@@ -32,7 +36,8 @@ const formSchema = Yup.object({
   payrollID: Yup.string().required("Please enter payroll ID"),
 });
 const initialValues = {
-  business: [],
+  // business: [],
+  business: "",
   firstname: "",
   lastname: "",
   mainLocation: "",
@@ -64,8 +69,7 @@ const style = {
 
 export default function Addteammember(props) {
   const { userInfo } = React.useContext(GlobalContext);
-
-  const token = localStorage.getItem("token");
+  const token = Cookies.get("token");
   const url = process.env.REACT_APP_BASE_URL;
   const [loading, setLoading] = React.useState(false);
   const [inviteLink, setInviteLink] = React.useState("");
@@ -93,7 +97,6 @@ export default function Addteammember(props) {
       initialValues,
       validationSchema: formSchema,
       onSubmit: async (values, action) => {
-        console.log(values);
         setLoading(true);
         await axios
           .post(
@@ -104,7 +107,7 @@ export default function Addteammember(props) {
               is_superuser: false,
               email: values.email,
               role: values.accessLevel,
-              business: values.business,
+              business: [values.business],
               profile: {
                 phone_number: values.mobile,
               },
@@ -124,7 +127,6 @@ export default function Addteammember(props) {
             action.resetForm();
           })
           .catch((error) => {
-            console.log("error", error);
             toast.error(error.response.data.email[0]);
             setLoading(false);
           });
@@ -145,7 +147,7 @@ export default function Addteammember(props) {
           <Typography
             sx={{ color: "#131523", fontSize: "24px", fontWeight: "bold" }}
           >
-            Add Team member
+            Add Team members
           </Typography>
           <CloseIcon
             onClick={props.handleCloseAddTeam}
@@ -178,9 +180,9 @@ export default function Addteammember(props) {
               Invite with a unique link
             </Typography>
             <Typography sx={{ mt: "5px", fontSize: "14px" }}>
-              Don't know your team's email addresses? Share the unique link
-              below to get your team onto your uRoaster workplace faster. To
-              keep things secured, you will need to approve each request.
+              Don’t know your team’s email addresses? Share the unique link
+              below to get your Team onto your MAXpilot Workplace faster. To
+              keep things secured, you will need to Approve each request.
             </Typography>
             <Box
               sx={{
@@ -224,7 +226,7 @@ export default function Addteammember(props) {
               <Select
                 fullWidth
                 name="business"
-                multiple
+                // multiple
                 displayEmpty
                 size="small"
                 variant="standard"
@@ -244,15 +246,16 @@ export default function Addteammember(props) {
                   background: "#e6f4eb",
                   boxSizing: "border-box",
                 }}
+                value={values.business}
+                handleBlur={handleBlur}
+                onChange={handleChange}
                 // renderValue={(selected) => {
                 //   if (selected.length === 0) {
                 //     return <>Select</>;
                 //   }
+
                 //   return selected.join(", ");
                 // }}
-                value={values.business}
-                handleBlur={handleBlur}
-                onChange={handleChange}
               >
                 <MenuItem value="" disabled>
                   Select
@@ -814,7 +817,13 @@ export default function Addteammember(props) {
                 <Checkbox
                   name="inviteCheckbox"
                   size="small"
-                  sx={{ pr: "5px", color: "#2BB491" }}
+                  sx={{
+                    pr: "5px",
+                    color: "#2BB491",
+                    "&.Mui-checked": {
+                      color: "#2BB491",
+                    },
+                  }}
                 />
                 <Typography sx={{ color: "rgba(95, 91, 81, 0.518)" }}>
                   Invite to use MAXpilot

@@ -15,6 +15,7 @@ import { toast } from "react-toastify";
 import { useFormik } from "formik";
 import axios from "axios";
 import * as Yup from "yup";
+import Cookies from "js-cookie";
 
 const LoginSchema = Yup.object({
   email: Yup.string().email().required("Please enter your email"),
@@ -52,9 +53,25 @@ export default function LoginSidebar(props) {
               localStorage.setItem("token", response.data.access_token);
               localStorage.setItem("userId", response.data.user.pk);
               {
-                keepme
-                  ? localStorage.setItem("check", true)
-                  : localStorage.setItem("check", false);
+                keepme ? (
+                  <>
+                    {
+                      (Cookies.set("token", response.data.access_token, {
+                        expires: 30,
+                      }),
+                      Cookies.set("pk", response.data.user.pk, {
+                        expires: 30,
+                      }))
+                    }
+                  </>
+                ) : (
+                  <>
+                    {
+                      (Cookies.set("token", response.data.access_token),
+                      Cookies.set("pk", response.data.user.pk))
+                    }
+                  </>
+                );
               }
               getLoggedInUserDetails(
                 response.data.user.pk,
@@ -234,8 +251,7 @@ export default function LoginSidebar(props) {
             sx={{ mt: 1, color: "white", cursor: "pointer", fontSize: "15px" }}
             onClick={props.handleOpen}
           >
-            Forgot <span style={{ fontWeight: "bold" }}>MAX</span>pilot ID or
-            password?
+            Forgot <em>MAXpilot</em> ID or password?
           </Box>
           <Link to="/step1" className="aTag-1">
             <Typography
@@ -271,9 +287,8 @@ export default function LoginSidebar(props) {
               padding: { xl: 0, sm: "0px 5px" },
             }}
           >
-            Terms & Conditions | Privacy Policy | Copyright &#169; 2023
-            <span style={{ fontWeight: "bold" }}> MAX</span>pilot all rights
-            reserved.
+            Terms & Condition | Privacy policy | Copyright &#169; 2023
+            <em> MAXpilot</em> all rights reserved.
           </Box>
         </Box>
       </Grid>

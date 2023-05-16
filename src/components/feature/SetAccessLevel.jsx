@@ -13,6 +13,7 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import { toast } from "react-toastify";
 import GlobalContext from "../../context/GlobalContext";
+import Cookies from "js-cookie";
 const formSchema = Yup.object({
   role: Yup.string().required("Please select your role"),
 });
@@ -39,8 +40,8 @@ const role = [
 
 export default function SetAccessLevel(props) {
   const { userInfo } = React.useContext(GlobalContext);
-  const token = localStorage.getItem("token");
-  const userId = localStorage.getItem("userId");
+  const token = Cookies.get("token");
+  const userId = Cookies.get("pk");
   const url = process.env.REACT_APP_BASE_URL;
   const [loading, setLoading] = useState(false);
 

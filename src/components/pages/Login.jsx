@@ -17,11 +17,13 @@ import axios from "axios";
 import * as Yup from "yup";
 import ForgotPassword from "./ForgotPassword";
 import { Modal } from "@mui/material";
+import Cookies from "js-cookie";
 
 const LoginSchema = Yup.object({
   email: Yup.string().email().required("Please enter your email"),
   password: Yup.string().required("Please enter your password"),
 });
+
 const initialValues = {
   email: "",
   password: "",
@@ -51,12 +53,26 @@ export default function SignInSide() {
           .then((response) => {
             if (response.status === 200) {
               toast.success("You have successfully LoggedIn!");
-              localStorage.setItem("token", response.data.access_token);
-              localStorage.setItem("userId", response.data.user.pk);
               {
-                keepme
-                  ? localStorage.setItem("check", true)
-                  : localStorage.setItem("check", false);
+                keepme ? (
+                  <>
+                    {
+                      (Cookies.set("token", response.data.access_token, {
+                        expires: 30,
+                      }),
+                      Cookies.set("pk", response.data.user.pk, {
+                        expires: 30,
+                      }))
+                    }
+                  </>
+                ) : (
+                  <>
+                    {
+                      (Cookies.set("token", response.data.access_token),
+                      Cookies.set("pk", response.data.user.pk))
+                    }
+                  </>
+                );
               }
               getLoggedInUserDetails(
                 response.data.user.pk,
@@ -77,6 +93,13 @@ export default function SignInSide() {
           });
       },
     });
+
+  React.useEffect(() => {
+    const token = Cookies.get("token");
+    if (token) {
+      Navigate("/dashboard");
+    }
+  }, []);
 
   const getLoggedInUserDetails = async (id, token) => {
     await axios
@@ -283,8 +306,7 @@ export default function SignInSide() {
               }}
               onClick={handleOpen}
             >
-              Forgot <span style={{ fontWeight: "bold" }}>MAX</span>pilot ID or
-              password?
+              Forgot <em>MAXpilot</em> ID or password?
             </Box>
             <Link to="/step1" className="aTag-1">
               <Typography
@@ -313,7 +335,7 @@ export default function SignInSide() {
               <HelpOutlineIcon sx={{ ml: "5px", fontSize: "20px" }} />
             </Box>
             <Box sx={{ color: "white", fontSize: "10px", textAlign: "center" }}>
-              Terms & Conditions | Privacy Policy | Copyright &#169; 2023
+              Terms & Condition | Privacy policy | Copyright &#169; 2023
               <span style={{ fontWeight: "bold" }}> MAX</span>pilot all rights
               reserved.
             </Box>

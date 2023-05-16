@@ -3,8 +3,10 @@ import { Avatar, Box, Divider, Typography } from "@mui/material";
 import Ellipse136 from "../../assets/images/Ellipse 136.png";
 import { NavLink } from "react-router-dom";
 import "../../style/Sidebar.css";
+import GlobalContext from "../../context/GlobalContext";
 
 function ProfileSidebar() {
+  const { userInfo } = React.useContext(GlobalContext);
   return (
     <>
       <Box
@@ -16,7 +18,7 @@ function ProfileSidebar() {
           sx={{ width: "60px", height: "60px", mt: 1 }}
         />
         <Typography sx={{ color: "#131523", fontSize: "12px", mt: 1 }}>
-          Steve Holland
+          {userInfo?.username}
         </Typography>
         <Typography sx={{ color: "#A2A2A2", fontSize: "12px" }}>
           Admin

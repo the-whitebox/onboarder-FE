@@ -16,6 +16,7 @@ import CircularProgress from "@mui/material/CircularProgress";
 import { toast } from "react-toastify";
 import { useFormik } from "formik";
 import * as Yup from "yup";
+import Cookies from "js-cookie";
 const formSchema = Yup.object({
   leave: Yup.string().required("Please select leave entitlement"),
 });
@@ -57,9 +58,8 @@ const style = {
 };
 
 export default function Addleaveentitlement(props) {
-  const theme = useTheme();
-  const token = localStorage.getItem("token");
-  const userId = localStorage.getItem("userId");
+  const token = Cookies.get("token");
+  const userId = Cookies.get("pk");
   const url = process.env.REACT_APP_BASE_URL;
   const [loading, setLoading] = React.useState(false);
 

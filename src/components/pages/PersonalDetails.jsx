@@ -16,8 +16,32 @@ import icon9 from "../../assets/icons/key-sharp.png";
 import icon10 from "../../assets/icons/person-workspace.png";
 import icon11 from "../../assets/icons/devices.png";
 import Setuptask from "../feature/Setuptask";
+import GlobalContext from "../../context/GlobalContext";
+import Cookies from "js-cookie";
+import axios from "axios";
 
 export default function PersonalDetails() {
+  const { setUserInfo, userInfo } = React.useContext(GlobalContext);
+  const url = process.env.REACT_APP_BASE_URL;
+  const token = Cookies.get("token");
+  const userId = Cookies.get("pk");
+  React.useEffect(() => {
+    const getLoggedInUserDetails = async () => {
+      await axios
+        .get(`${url}/people/${userId}/`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        })
+        .then((response) => {
+          setUserInfo(response.data);
+        })
+        .catch((error) => console.log("Error", error));
+    };
+    getLoggedInUserDetails();
+  }, []);
+
   return (
     <>
       <Grid
@@ -171,7 +195,7 @@ export default function PersonalDetails() {
                   />
                 </Box>
                 <Typography sx={{ fontSize: "12px", color: "#131523", mt: 1 }}>
-                  Steve Holland
+                  {userInfo?.username}
                 </Typography>
                 <Box
                   sx={{
@@ -184,7 +208,7 @@ export default function PersonalDetails() {
                     Preferred name
                   </Typography>
                   <Typography sx={{ color: "#38A57D", fontSize: "11px" }}>
-                    Steve
+                    {userInfo?.username}
                   </Typography>
                 </Box>
               </Box>
@@ -317,7 +341,7 @@ export default function PersonalDetails() {
                   />
                 </Box>
                 <Typography sx={{ fontSize: "12px", color: "#131523", mt: 2 }}>
-                  steve111@gmail.com
+                  {userInfo?.email}
                 </Typography>
               </Box>
               {/* Box 6 */}

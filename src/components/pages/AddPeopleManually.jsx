@@ -308,7 +308,7 @@ function AddPeopleManually() {
                       type="text"
                       name="name"
                       size="small"
-                      placeholder="Please input"
+                      placeholder="Name"
                       variant="standard"
                       InputProps={{
                         disableUnderline: true,
@@ -331,7 +331,7 @@ function AddPeopleManually() {
                       type="text"
                       name="email"
                       size="small"
-                      placeholder="Please input"
+                      placeholder="Optional"
                       variant="standard"
                       InputProps={{
                         disableUnderline: true,
@@ -354,7 +354,7 @@ function AddPeopleManually() {
                       type="text"
                       name="phone"
                       size="small"
-                      placeholder="Please input"
+                      placeholder="Optional"
                       variant="standard"
                       InputProps={{
                         disableUnderline: true,
@@ -402,7 +402,7 @@ function AddPeopleManually() {
               >
                 Add more people{" "}
                 <AddCircleOutlineOutlinedIcon
-                  sx={{ cursor: "pointer", ml: 3 }}
+                  sx={{ cursor: "pointer", ml: 1 }}
                 />
               </Button>
             </Grid>
@@ -433,7 +433,7 @@ function AddPeopleManually() {
                   defaultChecked
                   size="small"
                   sx={{
-                    "& .MuiSwitch-track": {
+                    "& .MuiSwitch-switchBase.Mui-checked + .MuiSwitch-track": {
                       background: "#2BB491",
                     },
                     "& 	.MuiSwitch-thumb": {

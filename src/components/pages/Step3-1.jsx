@@ -10,12 +10,39 @@ import { useNavigate } from "react-router-dom";
 import image1 from "../../assets/images/welcome1.png";
 import image2 from "../../assets/images/welcome2.png";
 import bg_image3 from "../../assets/images/bg-image3.png";
+import GlobalContext from "../../context/GlobalContext";
+import axios from "axios";
+import Cookies from "js-cookie";
 
 export default function Step2() {
+  const { setUserInfo, userInfo } = React.useContext(GlobalContext);
+  const url = process.env.REACT_APP_BASE_URL;
+  const token = Cookies.get("token");
+  const userId = Cookies.get("pk");
   const Navigate = useNavigate();
   const nextpage = () => {
     Navigate("/step3-2");
   };
+
+  React.useEffect(() => {
+    const getLoggedInUserDetails = async () => {
+      await axios
+        .get(`${url}/people/${userId}/`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        })
+        .then((response) => {
+          setUserInfo(response.data);
+        })
+        .catch((error) => console.log("Error", error));
+    };
+    getLoggedInUserDetails();
+  }, []);
+
+  console.log(userInfo);
+
   return (
     <>
       <Grid
@@ -72,7 +99,7 @@ export default function Step2() {
                   mr: { md: 2, xs: 0 },
                 }}
               >
-                STEP 3 | COMPLETE YOUR PROFILE
+                STEP 3 | Complete your profile
               </Typography>
               <Box sx={{ display: "flex", mt: { xs: 1, md: 0 } }}>
                 <Box
@@ -119,10 +146,18 @@ export default function Step2() {
             <Typography sx={{ fontWeight: "bold", fontSize: "25px" }}>
               <span style={{ color: "#2bb491" }}>Welcome to </span>
               <i>
-                <span>MAX</span>
-                <span style={{ color: "#555555" }}>pilot, </span>
+                <span style={{ color: "#555555" }}>MAXpilot, </span>
               </i>
-              <span>(Name)</span>
+              <span>
+                {userInfo?.first_name && userInfo?.last_name ? (
+                  <>
+                    {userInfo?.first_name}
+                    {userInfo?.last_name}
+                  </>
+                ) : (
+                  <>{userInfo?.username}</>
+                )}
+              </span>
             </Typography>
             <Box
               sx={{
@@ -260,7 +295,7 @@ export default function Step2() {
                   ml: 1,
                 }}
               >
-                COMPLETE BY ADDING YOUR PROFILE INFORMATION
+                Complete by adding your profile information
               </Typography>
             </Box>
           </Box>
@@ -333,12 +368,14 @@ export default function Step2() {
               paddding: "0px 10px",
             }}
           >
-            Lorem Ipsum is simply dummy text of the printing and typesetting
-            industry. Lorem Ipsum has been the industry's <br />
-            standard dummy text ever since the 1500s, when an unknown printer
-            took a galley of type and scrambled it to make a type specimen book.{" "}
+            Your MAXpilot information is used to allow you to sign in securely
+            and access your data. We take your privacy seriously.
+            <br /> Any information you provide on this page will be used solely
+            for the purpose of authentication and will be kept confidential. We
+            do not share your information with third parties.
             <br />
-            It has survived not only five centuries.
+            For more information on our privacy policy, please visit our
+            website.
           </Typography>
           <Avatar
             src={bg_image3}
