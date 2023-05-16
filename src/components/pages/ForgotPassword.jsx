@@ -5,14 +5,26 @@ import CloseIcon from "@mui/icons-material/Close";
 import ArrowCircleRightIcon from "@mui/icons-material/ArrowCircleRight";
 import RefreshOutlinedIcon from "@mui/icons-material/RefreshOutlined";
 import emailIcon from "../../assets/icons/forgotEmail.png";
-import axios from "axios";
 import CircularProgress from "@mui/material/CircularProgress";
+import { Avatar, Link } from "@mui/material";
 import { toast } from "react-toastify";
+import axios from "axios";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import { Avatar, Link } from "@mui/material";
+import isEmailValidator from "validator/lib/isEmail";
+
 const formSchema = Yup.object({
-  email: Yup.string().email().required("Please enter your email"),
+  email: Yup.string()
+    .email("Invalid email format")
+    .required("Please enter your email")
+    .test(
+      "is-valid",
+      (message) => `${message.path} is invalid`,
+      (value) =>
+        value
+          ? isEmailValidator(value)
+          : new Yup.ValidationError("Invalid value")
+    ),
 });
 const initialValues = {
   email: "",
@@ -35,6 +47,7 @@ const style = {
 export default function ForgotPassword(props) {
   const url = process.env.REACT_APP_BASE_URL;
   const [loading, setLoading] = React.useState(false);
+  const [message, setMessage] = React.useState(false);
 
   const { values, errors, touched, handleBlur, handleChange, handleSubmit } =
     useFormik({
@@ -49,6 +62,7 @@ export default function ForgotPassword(props) {
           .then((response) => {
             toast.success(response.data.detail);
             setLoading(false);
+            setMessage(true);
           })
           .catch((error) => {
             toast.error("Something went wrong! Please try again");
@@ -132,7 +146,9 @@ export default function ForgotPassword(props) {
             }}
           />
           <Typography sx={{ color: "white", fontSize: "12px", mt: 1 }}>
-            Verification email has been sent to your mail address
+            {message
+              ? "Verification email has been sent to your mail address"
+              : ""}
           </Typography>
           <Box
             sx={{
