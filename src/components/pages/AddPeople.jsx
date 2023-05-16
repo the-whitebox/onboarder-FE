@@ -197,7 +197,7 @@ function AddPeople() {
                         Add New Team Member
                       </Typography>
                       <Typography sx={{ color: "#555555", fontSize: "10px" }}>
-                        Quick and employees into MAXpilot
+                        Quick add employees into MAXpilot
                       </Typography>
                     </Box>
                   </MenuItem>

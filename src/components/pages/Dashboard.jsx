@@ -147,7 +147,7 @@ function Dashboard() {
             <Typography
               sx={{ fontSize: "11px", color: "#555555", fontWeight: "500" }}
             >
-              I wnat to be able to
+              I want to be able to
               <br /> process pay cycles without
               <br /> headaches
             </Typography>
@@ -184,12 +184,12 @@ function Dashboard() {
             <Typography
               sx={{ fontSize: "12px", color: "#131523", fontWeight: "400" }}
             >
-              Add New team Memebers
+              Add New team Members
             </Typography>
             <Typography
               sx={{ fontSize: "11px", color: "#555555", fontWeight: "500" }}
             >
-              I wnat to be able to
+              I want to be able to
               <br /> process pay cycles without
               <br /> headaches
             </Typography>
@@ -232,12 +232,12 @@ function Dashboard() {
             <Typography
               sx={{ fontSize: "12px", color: "#131523", fontWeight: "400" }}
             >
-              Add New team Memebers
+              Add New team Members
             </Typography>
             <Typography
               sx={{ fontSize: "11px", color: "#555555", fontWeight: "500" }}
             >
-              I wnat to be able to
+              I want to be able to
               <br /> process pay cycles without
               <br /> headaches
             </Typography>
@@ -278,12 +278,12 @@ function Dashboard() {
             <Typography
               sx={{ fontSize: "12px", color: "#131523", fontWeight: "400" }}
             >
-              Add New team Memebers
+              Add New team Members
             </Typography>
             <Typography
               sx={{ fontSize: "11px", color: "#555555", fontWeight: "500" }}
             >
-              I wnat to be able to
+              I want to be able to
               <br /> process pay cycles without
               <br /> headaches
             </Typography>
@@ -313,12 +313,12 @@ function Dashboard() {
             <Typography
               sx={{ fontSize: "12px", color: "#131523", fontWeight: "400" }}
             >
-              Add New team Memebers
+              Add New team Members
             </Typography>
             <Typography
               sx={{ fontSize: "11px", color: "#555555", fontWeight: "500" }}
             >
-              I wnat to be able to
+              I want to be able to
               <br /> process pay cycles without
               <br /> headaches
             </Typography>
@@ -414,7 +414,7 @@ function Dashboard() {
             <Typography
               sx={{ fontSize: "11px", color: "#555555", fontWeight: "500" }}
             >
-              I wnat to be able to
+              I want to be able to
               <br /> process pay cycles without
               <br /> headaches
             </Typography>

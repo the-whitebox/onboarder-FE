@@ -129,9 +129,9 @@ function AddPeopleManually() {
                 Invite with link
               </Typography>
               <Typography sx={{ mt: "5px", fontSize: "14px" }}>
-                Share a link with your team to get them on to your Deputy
+                Share a link with your team to get them on to your MAXpilot
                 workplace.
-                <br /> You approve each request to keep your Deputy secure.
+                <br /> You approve each request to keep your MAXpilot secure.
               </Typography>
               <Box
                 sx={{
