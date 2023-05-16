@@ -94,6 +94,13 @@ export default function SignInSide() {
       },
     });
 
+  React.useEffect(() => {
+    const token = Cookies.get("token");
+    if (token) {
+      Navigate("/dashboard");
+    }
+  }, []);
+
   const getLoggedInUserDetails = async (id, token) => {
     await axios
       .get(`${url}/people/${id}/`, {

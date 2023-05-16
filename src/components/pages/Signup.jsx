@@ -15,20 +15,14 @@ import { toast } from "react-toastify";
 import LoginSidebar from "../feature/LoginSidebar";
 import ForgotPassword from "./ForgotPassword";
 import * as Yup from "yup";
-import isEmailValidator from "validator/lib/isEmail";
+import Cookies from "js-cookie";
+let EMAIL_REGX = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+
 const formSchema = Yup.object({
   username: Yup.string().required("Please enter your username"),
   email: Yup.string()
-    .email("Invalid email format")
     .required("Please enter your email")
-    .test(
-      "is-valid",
-      (message) => `${message.path} is invalid`,
-      (value) =>
-        value
-          ? isEmailValidator(value)
-          : new Yup.ValidationError("Invalid value")
-    ),
+    .matches(EMAIL_REGX, "Invalid email address"),
   password: Yup.string().required("Please enter your password"),
   // password: Yup.string()
   //   .required("Please enter your password")
@@ -41,6 +35,7 @@ const formSchema = Yup.object({
     "Please accept the terms and privacy policy before get started!"
   ),
 });
+
 const initialValues = {
   username: "",
   email: "",
@@ -76,6 +71,13 @@ export default function Signup() {
           });
       },
     });
+
+  React.useEffect(() => {
+    const token = Cookies.get("token");
+    if (token) {
+      Navigate("/dashboard");
+    }
+  }, []);
 
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
