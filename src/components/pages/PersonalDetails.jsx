@@ -195,7 +195,9 @@ export default function PersonalDetails() {
                   />
                 </Box>
                 <Typography sx={{ fontSize: "12px", color: "#131523", mt: 1 }}>
-                  {userInfo?.username}
+                  {userInfo?.profile.username
+                    ? userInfo?.profile.username
+                    : "Not Availabe "}
                 </Typography>
                 <Box
                   sx={{
@@ -208,7 +210,7 @@ export default function PersonalDetails() {
                     Preferred name
                   </Typography>
                   <Typography sx={{ color: "#38A57D", fontSize: "11px" }}>
-                    {userInfo?.username}
+                    {userInfo?.username ? userInfo.username : "Not Availabe"}
                   </Typography>
                 </Box>
               </Box>
@@ -242,7 +244,9 @@ export default function PersonalDetails() {
                   />
                 </Box>
                 <Typography sx={{ fontSize: "12px", color: "#131523", mt: 2 }}>
-                  27 July, 1995
+                  {userInfo?.profile.date_of_birth
+                    ? userInfo?.profile.date_of_birth
+                    : "Not Available"}
                 </Typography>
               </Box>
               {/* Box 3 */}
@@ -275,7 +279,9 @@ export default function PersonalDetails() {
                   />
                 </Box>
                 <Typography sx={{ fontSize: "12px", color: "#131523", mt: 2 }}>
-                  Male
+                  {userInfo?.profile.gender
+                    ? userInfo?.profile.gender
+                    : "Not Availabe"}
                 </Typography>
               </Box>
               {/* Box 4 */}
@@ -308,7 +314,9 @@ export default function PersonalDetails() {
                   />
                 </Box>
                 <Typography sx={{ fontSize: "12px", color: "#131523", mt: 2 }}>
-                  +92001234567
+                  {userInfo?.profile.phone_number
+                    ? userInfo?.profile.phone_number
+                    : "Not Available"}
                 </Typography>
               </Box>
               {/* Box 5 */}
@@ -374,8 +382,9 @@ export default function PersonalDetails() {
                   />
                 </Box>
                 <Typography sx={{ fontSize: "12px", color: "#131523", mt: 2 }}>
-                  19 Millstream Place,
-                  <br /> Pimpama 4209, Queensland, Australia
+                  {userInfo?.profile.address
+                    ? userInfo?.profile.address
+                    : "Not Availabe"}
                 </Typography>
               </Box>
               {/* Box 7 */}

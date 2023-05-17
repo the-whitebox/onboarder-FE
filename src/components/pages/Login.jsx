@@ -57,7 +57,7 @@ export default function SignInSide() {
                 keepme ? (
                   <>
                     {
-                      (Cookies.set("token", response.data.access_token, {
+                      (Cookies.set("token", response.data.access, {
                         expires: 30,
                       }),
                       Cookies.set("pk", response.data.user.pk, {
@@ -68,7 +68,7 @@ export default function SignInSide() {
                 ) : (
                   <>
                     {
-                      (Cookies.set("token", response.data.access_token),
+                      (Cookies.set("token", response.data.access),
                       Cookies.set("pk", response.data.user.pk))
                     }
                   </>
@@ -76,7 +76,7 @@ export default function SignInSide() {
               }
               getLoggedInUserDetails(
                 response.data.user.pk,
-                response.data.access_token
+                response.data.access
               );
               Navigate("/dashboard");
               action.resetForm();

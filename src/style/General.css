@@ -199,6 +199,16 @@ ul {
   color: white;
 }
 
+.profile-inputs {
+  width: 100%;
+  border: none;
+  outline: none;
+  padding: 3px 0px 3px 0px;
+}
+/* .profile-inputs:focus {
+  border: 1px solid gray;
+} */
+
 @media screen and (max-width: 1400px) {
   .input-fields {
     width: 350px;

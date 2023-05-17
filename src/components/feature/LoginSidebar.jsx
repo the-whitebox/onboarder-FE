@@ -50,13 +50,13 @@ export default function LoginSidebar(props) {
           .then((response) => {
             if (response.status === 200) {
               toast.success("You have successfully LoggedIn!");
-              localStorage.setItem("token", response.data.access_token);
+              localStorage.setItem("token", response.data.access);
               localStorage.setItem("userId", response.data.user.pk);
               {
                 keepme ? (
                   <>
                     {
-                      (Cookies.set("token", response.data.access_token, {
+                      (Cookies.set("token", response.data.access, {
                         expires: 30,
                       }),
                       Cookies.set("pk", response.data.user.pk, {
@@ -67,7 +67,7 @@ export default function LoginSidebar(props) {
                 ) : (
                   <>
                     {
-                      (Cookies.set("token", response.data.access_token),
+                      (Cookies.set("token", response.data.access),
                       Cookies.set("pk", response.data.user.pk))
                     }
                   </>
