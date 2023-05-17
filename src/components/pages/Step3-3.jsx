@@ -127,7 +127,7 @@ export default function Step3_3() {
                   mr: { sm: 2, xs: 0 },
                 }}
               >
-                STEP 3 | COMPLETE YOUR PROFILE
+                STEP 3 | Complete your profile
               </Typography>
               <Box sx={{ display: "flex", mt: { xs: 1, md: 0 } }}>
                 <Box
@@ -195,7 +195,7 @@ export default function Step3_3() {
                 fontSize: { md: "18px", xs: "10px" },
               }}
             >
-              LET US KNOW SOME OF THE THINGS
+              Let Us Know Some Of The Things
             </Typography>
             <Typography
               sx={{

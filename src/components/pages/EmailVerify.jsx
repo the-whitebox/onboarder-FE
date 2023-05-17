@@ -42,6 +42,9 @@ export default function EmailVerify() {
             setShowStatus(true);
             Cookies.set("token", response.access);
             Cookies.set("pk", response.user_id);
+            console.log("Token: ", Cookies.get("token"));
+            console.log("Pk: ", Cookies.get("pk"));
+
             getLoggedInUserDetails(response.user_id, response.access);
           } else if (response.status === "failed") {
             setLoading(false);
