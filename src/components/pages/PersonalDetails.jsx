@@ -197,7 +197,7 @@ export default function PersonalDetails() {
                 <Typography sx={{ fontSize: "12px", color: "#131523", mt: 1 }}>
                   {userInfo?.profile.username
                     ? userInfo?.profile.username
-                    : "Not Availabe "}
+                    : "Not Available "}
                 </Typography>
                 <Box
                   sx={{
@@ -210,7 +210,7 @@ export default function PersonalDetails() {
                     Preferred name
                   </Typography>
                   <Typography sx={{ color: "#38A57D", fontSize: "11px" }}>
-                    {userInfo?.username ? userInfo.username : "Not Availabe"}
+                    {userInfo?.username ? userInfo.username : "Not Available"}
                   </Typography>
                 </Box>
               </Box>
@@ -279,9 +279,11 @@ export default function PersonalDetails() {
                   />
                 </Box>
                 <Typography sx={{ fontSize: "12px", color: "#131523", mt: 2 }}>
-                  {userInfo?.profile.gender
-                    ? userInfo?.profile.gender
-                    : "Not Availabe"}
+                  {userInfo?.profile.gender === 0
+                    ? "Male"
+                    : userInfo?.profile.gender === 1
+                    ? "Female"
+                    : "Not available"}
                 </Typography>
               </Box>
               {/* Box 4 */}
@@ -384,7 +386,7 @@ export default function PersonalDetails() {
                 <Typography sx={{ fontSize: "12px", color: "#131523", mt: 2 }}>
                   {userInfo?.profile.address
                     ? userInfo?.profile.address
-                    : "Not Availabe"}
+                    : "Not Available"}
                 </Typography>
               </Box>
               {/* Box 7 */}
@@ -532,7 +534,7 @@ export default function PersonalDetails() {
                   />
                 </Box>
                 <Typography sx={{ fontSize: "12px", color: "#131523", mt: 2 }}>
-                  steveholland247
+                  {userInfo?.username ? userInfo.username : "Not Available"}
                 </Typography>
               </Box>
               {/* Box 11 */}

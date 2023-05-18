@@ -607,7 +607,7 @@ function TeamMembersTable({ tableData, skeleton }) {
                           {checkListItems[9].value === true ? (
                             <TableCell align="start">Connect to</TableCell>
                           ) : null}
-                          <TableCell align="start">Access</TableCell>
+                          <TableCell align="start">{row.role.role}</TableCell>
                           {checkListItems[0].value === true ? (
                             <TableCell align="start">Main Location</TableCell>
                           ) : null}

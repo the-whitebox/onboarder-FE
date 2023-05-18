@@ -11,6 +11,7 @@ import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
 import bg_image2 from "../../assets/images/bg-image2.png";
 import { useNavigate, useParams } from "react-router-dom";
 import GlobalContext from "../../context/GlobalContext";
+import Cookies from "js-cookie";
 
 export default function EmailVerify() {
   const { setUserInfo } = React.useContext(GlobalContext);
